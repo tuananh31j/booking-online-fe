@@ -1,0 +1,8 @@
+package.json
+package-lock.json
+tsconfig.json
+next-env.d.ts
+public/*
+src/assets/*
+*.d.ts
+src/__generated__/*

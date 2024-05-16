@@ -1,0 +1,19 @@
+{
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 4,
+  "editor.wordWrapColumn": 100,
+  "html.format.wrapLineLength": 100,
+  "editor.wordWrap": "on",
+  "notebook.editorOptionsCustomizations": {},
+  "css.validate": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  "git.confirmSync": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "workbench.colorTheme": "Default Dark Modern",
+  "json.schemas": []
+}

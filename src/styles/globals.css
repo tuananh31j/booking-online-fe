@@ -1,0 +1,23 @@
+@import 'normalize.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @import url(_vars.css);
+}
+
+@layer base {
+    html,
+    body,
+    :root {
+        height: 100vh;
+    }
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}

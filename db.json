@@ -1,0 +1,283 @@
+{
+    "shops": [
+        {
+            "id": "a1b2c3d4",
+            "name": "Shop 1",
+            "address": "Address 1",
+            "phone": "111111111"
+        },
+        {
+            "id": "e5f6g7h8",
+            "name": "Shop 2",
+            "address": "Address 2",
+            "phone": "222222222"
+        },
+        {
+            "id": "i9j0k1l2",
+            "name": "Shop 3",
+            "address": "Address 3",
+            "phone": "333333333"
+        },
+        {
+            "id": "m3n4o5p6",
+            "name": "Shop 4",
+            "address": "Address 4",
+            "phone": "444444444"
+        },
+        {
+            "id": "q7r8s9t0",
+            "name": "Shop 5",
+            "address": "Address 5",
+            "phone": "555555555"
+        }
+    ],
+    "users": [
+        {
+            "id": "u1v2w3x4",
+            "name": "User 1",
+            "avt": "avatar1.jpg",
+            "phone": "123456789",
+            "role": 0
+        },
+        {
+            "id": "y5z6a7b8",
+            "name": "User 2",
+            "avt": "avatar2.jpg",
+            "phone": "987654321",
+            "role": 0
+        },
+        {
+            "id": "c9d0e1f2",
+            "name": "User 3",
+            "avt": "avatar3.jpg",
+            "phone": "456123789",
+            "role": 0
+        },
+        {
+            "id": "g3h4i5j6",
+            "name": "User 4",
+            "avt": "avatar4.jpg",
+            "phone": "789321456",
+            "role": 0
+        },
+        {
+            "id": "k7l8m9n0",
+            "name": "User 5",
+            "avt": "avatar5.jpg",
+            "phone": "321789654",
+            "role": 0
+        },
+        {
+            "id": "o1p2q3r4",
+            "name": "User 6",
+            "avt": "avatar6.jpg",
+            "phone": "654987321",
+            "role": 0
+        },
+        {
+            "id": "s5t6u7v8",
+            "name": "User 7",
+            "avt": "avatar7.jpg",
+            "phone": "987321654",
+            "role": 0
+        },
+        {
+            "id": "w9x0y1z2",
+            "name": "User 8",
+            "avt": "avatar8.jpg",
+            "phone": "321654987",
+            "role": 0
+        },
+        {
+            "id": "a3b4c5d6",
+            "name": "User 9",
+            "avt": "avatar9.jpg",
+            "phone": "654321987",
+            "role": 0
+        },
+        {
+            "id": "e7f8g9h0",
+            "name": "User 10",
+            "avt": "avatar10.jpg",
+            "phone": "123789456",
+            "role": 0
+        }
+    ],
+    "admin": [
+        {
+            "id": "i1j2k3l4",
+            "name": "Admin 1",
+            "avt": "avatar1.jpg",
+            "phone": "123456789",
+            "role": 2
+        },
+        {
+            "id": "m5n6o7p8",
+            "name": "Admin 2",
+            "avt": "avatar2.jpg",
+            "phone": "987654321",
+            "role": 2
+        },
+        {
+            "id": "q9r0s1t2",
+            "name": "Admin 3",
+            "avt": "avatar3.jpg",
+            "phone": "456123789",
+            "role": 2
+        },
+        {
+            "id": "u3v4w5x6",
+            "name": "Admin 4",
+            "avt": "avatar4.jpg",
+            "phone": "789321456",
+            "role": 2
+        }
+    ],
+    "staff": [
+        {
+            "id": "y7z8a9b0",
+            "name": "Staff 1",
+            "avt": "avatar1.jpg",
+            "phone": "123456789",
+            "major": "IT",
+            "role": 1
+        },
+        {
+            "id": "c1d2e3f4",
+            "name": "Staff 2",
+            "avt": "avatar2.jpg",
+            "phone": "987654321",
+            "major": "Marketing",
+            "role": 1
+        },
+        {
+            "id": "g5h6i7j8",
+            "name": "Staff 3",
+            "avt": "avatar3.jpg",
+            "phone": "456123789",
+            "major": "Finance",
+            "role": 1
+        },
+        {
+            "id": "k9l0m1n2",
+            "name": "Staff 4",
+            "avt": "avatar4.jpg",
+            "phone": "789321456",
+            "major": "HR",
+            "role": 1
+        },
+        {
+            "id": "o3p4q5r6",
+            "name": "Staff 5",
+            "avt": "avatar5.jpg",
+            "phone": "321789654",
+            "major": "Operations",
+            "role": 1
+        },
+        {
+            "id": "s7t8u9v0",
+            "name": "Staff 6",
+            "avt": "avatar6.jpg",
+            "phone": "654987321",
+            "major": "Sales",
+            "role": 1
+        },
+        {
+            "id": "w1x2y3z4",
+            "name": "Staff 7",
+            "avt": "avatar7.jpg",
+            "phone": "987321654",
+            "major": "Customer Service",
+            "role": 1
+        }
+    ],
+    "products": [
+        {
+            "id": "a5b6c7d8",
+            "name": "Object 1",
+            "description": "Description 1",
+            "date": "2022-12-31",
+            "price": 10
+        },
+        {
+            "id": "e9f0g1h2",
+            "name": "Object 2",
+            "description": "Description 2",
+            "date": "2022-12-30",
+            "price": 20
+        },
+        {
+            "id": "i3j4k5l6",
+            "name": "Object 3",
+            "description": "Description 3",
+            "date": "2022-12-29",
+            "price": 30
+        },
+        {
+            "id": "m7n8o9p0",
+            "name": "Object 4",
+            "description": "Description 4",
+            "date": "2022-12-28",
+            "price": 40
+        },
+        {
+            "id": "q1r2s3t4",
+            "name": "Object 5",
+            "description": "Description 5",
+            "date": "2022-12-27",
+            "price": 50
+        },
+        {
+            "id": "u5v6w7x8",
+            "name": "Object 6",
+            "description": "Description 6",
+            "date": "2022-12-26",
+            "price": 60
+        },
+        {
+            "id": "y9z0a1b2",
+            "name": "Object 7",
+            "description": "Description 7",
+            "date": "2022-12-25",
+            "price": 70
+        },
+        {
+            "id": "c3d4e5f6",
+            "name": "Object 8",
+            "description": "Description 8",
+            "date": "2022-12-24",
+            "price": 80
+        },
+        {
+            "id": "g7h8i9j0",
+            "name": "Object 9",
+            "description": "Description 9",
+            "date": "2022-12-23",
+            "price": 90
+        },
+        {
+            "id": "k1l2m3n4",
+            "name": "Object 10",
+            "description": "Description 10",
+            "date": "2022-12-22",
+            "price": 100
+        }
+    ],
+    "fonts": [
+        {
+            "font_url": "https://res.cloudinary.com/dj4omgwmi/raw/upload/v1715524877/iJWKBXyIfDnIV7nErXyi0A_ebxcvu.woff2",
+            "font_family": "font_1"
+        },
+        {
+            "font_url": "https://res.cloudinary.com/dj4omgwmi/raw/upload/v1715529429/PoetsenOne-Regular_gi8ixe.ttf",
+            "font_family": "font_2"
+        }
+    ],
+    "font_default": {
+        "font_url": "https://res.cloudinary.com/dpplfiyki/raw/upload/v1715655815/Itim-Regular_lids1l.ttf",
+        "font_family": "font_df"
+    },
+    "logosystem": {
+        "logo": "https://logos-world.net/wp-content/uploads/2023/05/Genshin-Impact-Logo.png"
+    }
+}
