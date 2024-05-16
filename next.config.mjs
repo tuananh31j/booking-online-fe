@@ -2,10 +2,20 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  reactStrictMode: true,
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**',
+                port: '',
+                pathname: '/**',
+            },
+        ],
+    },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
+    reactStrictMode: true,
 };
 
 export default nextConfig;

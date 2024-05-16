@@ -22,6 +22,7 @@ module.exports = {
         'import/no-extraneous-dependencies': 'off',
         'import/no-unresolved': 'warn',
         'import/order': 'off',
+        'no-restricted-exports': 'off',
         'import/prefer-default-export': 'off',
         'no-param-reassign': 'off',
         'react/jsx-sort-props': 'off',

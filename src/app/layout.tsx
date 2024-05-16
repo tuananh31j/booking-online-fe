@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Itim } from 'next/font/google';
 import Providers from './providers';
 
-const inter = Inter({ subsets: ['latin'] });
+const itim = Itim({ subsets: ['vietnamese'], weight: '400' });
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -17,7 +17,7 @@ export default function RootLayout({
     return (
         <html lang='en' suppressHydrationWarning>
             <link href='/favicon.ico' rel='icon' />
-            <body className={inter.className}>
+            <body className={itim.className}>
                 <Providers>{children}</Providers>
             </body>
         </html>
