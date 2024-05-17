@@ -6,6 +6,7 @@ import Facebook from '~/components/_icons/facebook';
 import Instagram from '~/components/_icons/instagram';
 import Mail from '~/components/_icons/mailicon';
 import { ModeToggle } from '~/components/elements/ModeToggle';
+import PopupStaffCard from '~/components/elements/ModelStaffProfile';
 import { useSettingQuery } from '~/hooks/useSettingQuery';
 
 const Header = () => {
