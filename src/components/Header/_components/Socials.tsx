@@ -19,7 +19,7 @@ export default function Socials() {
                         quality={100}
                     />
                 </div>
-                <div className=' justify-between  xl:flex xl:flex-col'>
+                <div className='grid content-between'>
                     <span className='flex h-[57px] items-center dark:text-white'>Liên hệ hỗ trợ: 0898737406</span>
                     <div className='flex items-center gap-2'>
                         <a href='/'>
