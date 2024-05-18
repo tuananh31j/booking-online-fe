@@ -18,6 +18,7 @@ module.exports = {
     plugins: ['react', 'import', 'prettier'],
     rules: {
         'import/extensions': 'off',
+        'no-nested-ternary': 'off',
         'no-console': 'off',
         'global-require': 'off',
         'import/no-extraneous-dependencies': 'off',
