@@ -12,7 +12,7 @@ const Header = () => {
                     <SwitchOptions />
                 </div>
             </div>
-            <div className='mt-[17px] h-[1px] w-full bg-[#7777] dark:bg-white'></div>
+            <div className='mt-[17px] h-[1px] w-full bg-default'></div>
         </header>
     );
 };

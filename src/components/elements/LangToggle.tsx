@@ -15,7 +15,7 @@ import FlagUS from '~/components/_icons/flagus';
 export function LangToggle({ className }: { className?: string }) {
     const [langMode, setLanmode] = React.useState({
         name: 'Việt Nam',
-        img: <FlagUS className='h-[20px] w-[30px]' />,
+        img: <VietNam className='h-[20px] w-[30px]' />,
     });
     return (
         <DropdownMenu>
@@ -25,7 +25,7 @@ export function LangToggle({ className }: { className?: string }) {
                     {langMode.img}
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align='end' className=' bg-[#D5DFEB] dark:text-black'>
+            <DropdownMenuContent align='end' className='bg-langtoogle '>
                 <DropdownMenuItem
                     onClick={() => setLanmode({ name: 'English', img: <FlagUS className='h-[20px] w-[30px]' /> })}
                 >

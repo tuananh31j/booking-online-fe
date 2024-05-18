@@ -10,7 +10,7 @@ const StaffCard = () => {
                     }}
                 ></div>
             </a>
-            <h4 className='bg-card-foreground py-4 text-center text-lg'>Staffs name</h4>
+            <h4 className='bg-card py-4 text-center text-lg'>Staffs name</h4>
         </div>
     );
 };
