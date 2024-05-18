@@ -14,38 +14,53 @@ const config = {
         },
         extend: {
             colors: {
-                border: 'hsl(var(--border))',
-                input: 'hsl(var(--input))',
-                ring: 'hsl(var(--ring))',
-                background: 'hsl(var(--background))',
-                foreground: 'hsl(var(--foreground))',
+                border: 'var(--border)',
+                input: 'var(--input)',
+                ring: 'var(--ring)',
+                background: 'var(--background)',
+                foreground: 'var(--foreground)',
                 primary: {
-                    DEFAULT: 'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))',
+                    DEFAULT: 'var(--primary)',
+                    foreground: 'var(--primary-foreground)',
                 },
                 secondary: {
-                    DEFAULT: 'hsl(var(--secondary))',
-                    foreground: 'hsl(var(--secondary-foreground))',
+                    DEFAULT: 'var(--secondary)',
+                    foreground: 'var(--secondary-foreground)',
                 },
                 destructive: {
-                    DEFAULT: 'hsl(var(--destructive))',
-                    foreground: 'hsl(var(--destructive-foreground))',
+                    DEFAULT: 'var(--destructive)',
+                    foreground: 'var(--destructive-foreground)',
                 },
                 muted: {
-                    DEFAULT: 'hsl(var(--muted))',
-                    foreground: 'hsl(var(--muted-foreground))',
+                    DEFAULT: 'var(--muted)',
+                    foreground: 'var(--muted-foreground)',
                 },
                 accent: {
-                    DEFAULT: 'hsl(var(--accent))',
-                    foreground: 'hsl(var(--accent-foreground))',
+                    DEFAULT: 'var(--accent)',
+                    foreground: 'var(--accent-foreground)',
                 },
                 popover: {
-                    DEFAULT: 'hsl(var(--popover))',
-                    foreground: 'hsl(var(--popover-foreground))',
+                    DEFAULT: 'var(--popover)',
+                    foreground: 'var(--popover-foreground)',
                 },
                 card: {
                     DEFAULT: 'var(--card)',
                     foreground: 'var(--card-foreground)',
+                },
+                // class for language toggle
+                langtoggle: {
+                    DEFAULT: 'var(--btn-lang)',
+                    foreground: 'var(--btn-lang-foreground)',
+                },
+                // use this class if you need light mode element color black and night mode element color white "example: text-default bg-default"
+                default: {
+                    DEFAULT: 'var(--text)',
+                    foreground: 'var(--text-foreground)',
+                },
+                // use this class if you need light mode element color white and night mode element color black "example: text-reverse bg-reverse"
+                reverse: {
+                    DEFAULT: 'var(--text-reverse)',
+                    foreground: 'var(--text-reverse-forground)',
                 },
             },
             borderRadius: {

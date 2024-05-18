@@ -12,7 +12,7 @@ export default function Socials() {
                 <div>
                     <Image
                         src='https://i.redd.it/030mmgcrecta1.png'
-                        className=' rounded-lg duration-300 dark:border-2 dark:border-gray-700  lg:h-[198px] lg:w-[208px]'
+                        className=' rounded-lg duration-300 dark:border-2   lg:h-[198px] lg:w-[208px]'
                         alt='logostaff'
                         width={208}
                         height={198}
@@ -20,7 +20,7 @@ export default function Socials() {
                     />
                 </div>
                 <div className='grid content-between'>
-                    <span className='flex h-[57px] items-center dark:text-white'>Liên hệ hỗ trợ: 0898737406</span>
+                    <span className='flex h-[57px] items-center text-default'>Liên hệ hỗ trợ: 0898737406</span>
                     <div className='flex items-center gap-2'>
                         <a href='/'>
                             <Facebook className='h-[40px] w-[40px] xl:h-[60px] xl:w-[60px]' />
