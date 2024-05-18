@@ -15,7 +15,7 @@ const useArrowControlBooking = () => {
 
     const prevStep = () => {
         setStep((prevStep) => {
-            if (prevStep > 0) return prevStep - 1;
+            if (prevStep > 1) return prevStep - 1;
             return prevStep;
         });
     };

@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import { useState } from 'react';
-import { Button } from '~/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -10,11 +8,11 @@ import {
     DialogTrigger,
 } from '~/components/ui/dialog';
 
-const PopupStaffCard = () => {
+const PopupStaffProfile = ({ children }: { children: React.ReactNode }) => {
     return (
         <div>
             <Dialog>
-                <DialogTrigger>Open</DialogTrigger>
+                <DialogTrigger>{children}</DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>
@@ -63,4 +61,4 @@ const PopupStaffCard = () => {
         </div>
     );
 };
-export default PopupStaffCard;
+export default PopupStaffProfile;

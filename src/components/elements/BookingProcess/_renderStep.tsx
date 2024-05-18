@@ -1,4 +1,4 @@
-import { BookingCalendar, BookingForm, ChooseLocation, ChooseService, ChooseStaff } from './Steps';
+import { BookingCalendar, ConfirmationForm, ChooseLocation, ChooseService, ChooseStaff } from './Steps';
 
 const RenderStep = ({ step }: { step: number }) => {
     switch (step) {
@@ -11,7 +11,7 @@ const RenderStep = ({ step }: { step: number }) => {
         case 4:
             return <BookingCalendar />;
         case 5:
-            return <BookingForm />;
+            return <ConfirmationForm />;
         default:
             return <div>Unknown step</div>;
     }
