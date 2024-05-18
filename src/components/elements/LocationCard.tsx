@@ -15,11 +15,13 @@ import Image from 'next/image';
 const LocationCard = () => {
     return (
         <>
-            <div className='border-gray mx-auto mt-5 flex h-[75px] max-w-[1342px] justify-between rounded-lg border-b-[3px] border-l-2 border-r-2 px-[32px] py-[8px] hover:border-t-[1px] hover:border-pink-300 dark:border-white'>
+            <div className='border-gray mx-auto mt-5 flex rounded-lg border-b-[3px] border-l-2 border-r-2 px-1 py-[8px] hover:border-t-[1px] hover:border-pink-300 dark:border-white md:gap-5 md:px-[16p] lg:px-[32px]'>
                 <Dialog>
-                    <DialogTrigger>
-                        <MapIcon className='dark:invert' />
-                    </DialogTrigger>
+                    <div className='hidden md:flex md:items-center'>
+                        <DialogTrigger>
+                            <MapIcon className='dark:invert' />
+                        </DialogTrigger>
+                    </div>
 
                     <DialogContent>
                         <DialogHeader>
@@ -49,17 +51,21 @@ const LocationCard = () => {
                     </DialogContent>
                 </Dialog>
 
-                <div className='details'>
-                    <div className='address h-[37px] w-[1018px] text-2xl font-medium dark:text-white'>
-                        Nailkitchen 1 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)
+                <div className='flex w-full justify-between'>
+                    <div className='details'>
+                        <div className='address text-2xl font-medium dark:text-white'>
+                            Nailkitchen 1 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)
+                        </div>
+
+                        <div className='small-address text-lg font-medium dark:text-white'>
+                            62 Từ Hoa, Hanoi, Hanoi, 10000.
+                        </div>
                     </div>
 
-                    <div className='small-address text-lg font-medium dark:text-white'>
-                        62 Từ Hoa, Hanoi, Hanoi, 10000.
+                    <div className='flex items-center'>
+                        <ArrowIcon className='dark:invert' />
                     </div>
                 </div>
-
-                <ArrowIcon className='dark:invert' />
             </div>
         </>
     );
