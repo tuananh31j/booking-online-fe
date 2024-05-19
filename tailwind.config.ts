@@ -62,6 +62,10 @@ const config = {
                     DEFAULT: 'var(--text-reverse)',
                     foreground: 'var(--text-reverse-forground)',
                 },
+                content: {
+                    DEFAULT: 'var(--bg-content)',
+                    foreground: 'var(--bg-content-forground)',
+                },
             },
             borderRadius: {
                 lg: 'var(--radius)',
