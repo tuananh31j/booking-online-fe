@@ -9,9 +9,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '../../../ui/popover';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
 import { cn } from '~/lib/utils';
+import { useTranslations } from 'next-intl';
 
 const ConfirmationForm = () => {
     const [date, setDate] = useState<Date>();
+    const t = useTranslations('ConfirmBookingForm');
+
     const inputId = {
         fullnameId: useId(),
         emailId: useId(),
@@ -22,24 +25,24 @@ const ConfirmationForm = () => {
             <form className='mb-4 w-[500px]'>
                 <div className='mb-3'>
                     <Label className='text-base' htmlFor={inputId.fullnameId}>
-                        Fullname
+                        {t('Fullname.label')}
                     </Label>
-                    <Input placeholder='Enter your full name' id={inputId.fullnameId}></Input>
+                    <Input placeholder={t('Fullname.placeholder')} id={inputId.fullnameId}></Input>
                 </div>
                 <div className='mb-3'>
                     <Label className='text-base' htmlFor={inputId.emailId}>
-                        Email
+                        {t('Email.label')}
                     </Label>
-                    <Input placeholder='Enter your email' id={inputId.emailId}></Input>
+                    <Input placeholder={t('Email.placeholder')} id={inputId.emailId}></Input>
                 </div>
 
                 <div className='mb-3'>
                     <Label className='text-base' htmlFor={inputId.phoneNumberId}>
-                        Phone number
+                        {t('phonenumber.label')}
                     </Label>
                     <div className='flex items-center justify-between gap-3'>
                         <Input
-                            placeholder='Enter your phone number'
+                            placeholder={t('phonenumber.placeholder')}
                             className='md:w-[50%]'
                             id={inputId.phoneNumberId}
                         ></Input>
@@ -64,7 +67,7 @@ const ConfirmationForm = () => {
                     </div>
                 </div>
                 <Button type='submit' className='mt-2 w-full rounded-lg'>
-                    Submit
+                    {t('confirm')}
                 </Button>
             </form>
         </div>

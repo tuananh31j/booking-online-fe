@@ -1,8 +1,46 @@
 {
-    "Index": {
-        "title": "Hello world!"
-    },
     "Header": {
-        "contact": "contact EN"
+        "contact": "Contact"
+    },
+    "ConfirmBookingForm": {
+        "Fullname": {
+            "label": "Full Name",
+            "placeholder": "Enter your fullname"
+        },
+        "Email": {
+            "label": "Email",
+            "placeholder": "Enter your email"
+        },
+        "phonenumber": {
+            "label": "Phone number",
+            "placeholder": "Enter your phone number"
+        },
+        "confirm": "Submit"
+    },
+    "Calendar": {
+        "confirm": "Confirm",
+        "validate": "Please pick a date!"
+    },
+    "StepBooking": {
+        "step1": "Choose a location"
+    },
+    "Location": {
+        "title": "You can find us here"
+    },
+    "Setting": {
+        "ThemeMode": {
+            "light": "Light",
+            "dark": "Dark",
+            "system": "System"
+        }
+    },
+    "StaffInformation": {
+        "title": "Information",
+        "name": "Name",
+        "age": "Age",
+        "country": "Country",
+        "phone": "Phone",
+        "exp": "Experience",
+        "desc": "Describe"
     }
 }

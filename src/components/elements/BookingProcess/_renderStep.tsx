@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { BookingCalendar, ConfirmationForm, ChooseLocation, ChooseService, ChooseStaff } from './Steps';
 
 const RenderStep = ({ step }: { step: number }) => {

@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import {
     Dialog,
@@ -9,6 +10,7 @@ import {
 } from '~/components/ui/dialog';
 
 const PopupStaffProfile = ({ children }: { children: React.ReactNode }) => {
+    const t = useTranslations('StaffInformation');
     return (
         <div>
             <Dialog>
@@ -16,7 +18,7 @@ const PopupStaffProfile = ({ children }: { children: React.ReactNode }) => {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>
-                            <p className='da pl-2 text-2xl font-normal dark:text-white'>Information</p>
+                            <p className='da pl-2 text-2xl font-normal dark:text-white'>{t('title')}</p>
                         </DialogTitle>
                         <DialogDescription>
                             <div className='flex space-x-5 p-5'>
@@ -30,28 +32,28 @@ const PopupStaffProfile = ({ children }: { children: React.ReactNode }) => {
                                 />
                                 <div className='space-y-2 text-lg dark:text-white'>
                                     <p className='mb-2'>
-                                        <strong>Name:</strong> Staffs Name{' '}
+                                        <strong>{t('name')}:</strong> Staffs Name{' '}
                                     </p>
                                     <p className='mb-2'>
-                                        <strong>Age:</strong> 28
+                                        <strong>{t('age')}:</strong> 28
                                     </p>
                                     <p className='mb-2'>
-                                        <strong>Country:</strong> Viet Nam{' '}
+                                        <strong>{t('country')}:</strong> Viet Nam{' '}
                                     </p>
                                     <p className='mb-2'>
-                                        <strong>Phone:</strong> 0589987566
+                                        <strong>{t('phone')}</strong> 0589987566
                                     </p>
                                 </div>
                             </div>
                             <div className='mt-4 px-4 text-base dark:text-white'>
                                 <p className='mb-2 '>
-                                    <strong>Experience:</strong> Skilled short hair stylist ensures confidence and style
+                                    <strong>{t('exp')}:</strong> Skilled short hair stylist ensures confidence and style
                                     for clients.
                                 </p>
                                 <p className=''>
-                                    <strong>Describe:</strong> Expert short hair stylist delivers confidence and style
-                                    with precise cuts and personalized service, crafting trendy looks tailored to each
-                                    clients features and preferences
+                                    <strong>{t('desc')}:</strong> Expert short hair stylist delivers confidence and
+                                    style with precise cuts and personalized service, crafting trendy looks tailored to
+                                    each clients features and preferences
                                 </p>
                             </div>
                         </DialogDescription>

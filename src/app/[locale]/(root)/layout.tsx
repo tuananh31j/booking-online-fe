@@ -3,6 +3,8 @@ import { Itim } from 'next/font/google';
 import Header from '~/components/Header/Header';
 import Footer from '~/components/Footer/Footer';
 import Providers from '~/app/providers';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 const itim = Itim({ subsets: ['vietnamese'], weight: '400' });
 
@@ -18,19 +20,22 @@ interface RootLayoutProps {
     };
 }
 
-export default function RootLayout({ children, params: { locale } }: Readonly<RootLayoutProps>) {
+export default async function RootLayout({ children, params: { locale } }: Readonly<RootLayoutProps>) {
+    const messages = await getMessages();
     return (
-        <html lang={locale} suppressHydrationWarning>
-            <link href='/favicon.ico' rel='icon' />
-            <body className={itim.className}>
-                <Providers>
-                    <Header />
-                    <main className='mx-4 mt-[1.5rem] min-h-[100vh] max-w-[1638px] md:mx-6 2xl:mx-auto'>
-                        {children}
-                    </main>
-                    <Footer />
-                </Providers>
-            </body>
-        </html>
+        <NextIntlClientProvider messages={messages}>
+            <html lang={locale} suppressHydrationWarning>
+                <link href='/favicon.ico' rel='icon' />
+                <body className={itim.className}>
+                    <Providers>
+                        <Header />
+                        <main className='mx-4 mt-[1.5rem] min-h-[100vh] max-w-[1638px] md:mx-6 2xl:mx-auto'>
+                            {children}
+                        </main>
+                        <Footer />
+                    </Providers>
+                </body>
+            </html>
+        </NextIntlClientProvider>
     );
 }

@@ -1,8 +1,46 @@
 {
-    "Index": {
-        "title": "Hello world nhưng tiếng việt!"
-    },
     "Header": {
-        "contact": "contact Việt Nam"
+        "contact": "Liên hệ hỗ trợ"
+    },
+    "ConfirmBookingForm": {
+        "Fullname": {
+            "label": "Họ và tên",
+            "placeholder": "Nhập họ và tên"
+        },
+        "Email": {
+            "label": "Email",
+            "placeholder": "Nhập email"
+        },
+        "phonenumber": {
+            "label": "Số điện thoại",
+            "placeholder": "Nhập số điện thoại"
+        },
+        "confirm": "Xác nhận"
+    },
+    "Calendar": {
+        "confirm": "Xác nhận",
+        "validate": "Bạn chưa chọn ngày đặt lịch!"
+    },
+    "StepBooking": {
+        "step1": "Chọn địa chỉ"
+    },
+    "Location": {
+        "title": "Bạn có thể tìm thấy chúng tôi ở đây."
+    },
+    "Setting": {
+        "ThemeMode": {
+            "light": "Sáng",
+            "dark": "Tối",
+            "system": "Hệ thống"
+        }
+    },
+    "StaffInformation": {
+        "title": "Thông tin nhân viên: {staffname}",
+        "name": "Tên",
+        "age": "Tuổi",
+        "country": "Quốc tịch",
+        "phone": "Số điện thoại",
+        "exp": "Kinh nghiệm",
+        "desc": "Mô tả"
     }
 }

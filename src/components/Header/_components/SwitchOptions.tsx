@@ -1,8 +1,10 @@
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { LangToggle } from '~/components/elements/LangToggle';
 import { ModeToggle } from '~/components/elements/ModeToggle';
 
 export default function SwitchOptions() {
+    const t = useTranslations();
     return (
         <>
             <div>
@@ -11,7 +13,7 @@ export default function SwitchOptions() {
                     <LangToggle className='text-textlang border-textlang flex w-[128px]  gap-2  rounded-[5px] border-[1px] bg-langtoggle shadow-lg hover:bg-langtoggle  hover:opacity-80' />
                 </div>
                 <span className='flex items-center text-[14px] dark:text-white md:hidden  md:text-base'>
-                    Liên hệ hỗ trợ: 0898737406
+                    {t('Header.contact')}: 0898737406
                 </span>
             </div>
         </>
