@@ -12,11 +12,35 @@ import {
 import VietNam from '~/components/_icons/vietnam/VietNam';
 import FlagUS from '~/components/_icons/flagus';
 
+import { useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import LoadingButton from '~/components/elements/LoadingButton';
+
 export function LangToggle({ className }: { className?: string }) {
-    const [langMode, setLanmode] = React.useState({
-        name: 'Việt Nam',
-        img: <VietNam className='h-[20px] w-[30px]' />,
+    const [langMode, setLangMode] = React.useState<{ name: string; img: JSX.Element }>({
+        name: '',
+        img: <LoadingButton />,
     });
+
+    const activeLocale = useLocale();
+    React.useEffect(() => {
+        if (activeLocale === 'vn') {
+            setLangMode({ name: 'Tiếng Việt', img: <VietNam className='h-[20px] w-[30px]' /> });
+        } else {
+            setLangMode({ name: 'English', img: <FlagUS className='h-[20px] w-[30px]' /> });
+        }
+    }, [activeLocale]);
+
+    const router = useRouter();
+    const handleLangVN = () => {
+        router.replace('/vn');
+        setLangMode({ name: 'Tiếng Việt', img: <VietNam className='h-[20px] w-[30px]' /> });
+    };
+    const handleLangEN = () => {
+        router.replace('/en');
+        setLangMode({ name: 'English', img: <FlagUS className='h-[20px] w-[30px]' /> });
+    };
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -25,17 +49,10 @@ export function LangToggle({ className }: { className?: string }) {
                     {langMode.img}
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align='end' className='bg-langtoogle '>
-                <DropdownMenuItem
-                    onClick={() => setLanmode({ name: 'English', img: <FlagUS className='h-[20px] w-[30px]' /> })}
-                >
-                    EngLish
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                    onClick={() => setLanmode({ name: 'Tiếng Việt', img: <VietNam className='h-[20px] w-[30px]' /> })}
-                >
-                    Tiếng Việt
-                </DropdownMenuItem>
+
+            <DropdownMenuContent align='end' className=' bg-[#D5DFEB] dark:text-black'>
+                <DropdownMenuItem onClick={handleLangEN}>EngLish</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLangVN}>Tiếng Việt</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     );
