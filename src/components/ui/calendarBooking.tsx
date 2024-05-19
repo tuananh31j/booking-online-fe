@@ -30,7 +30,7 @@ function CalendarBooking({ className, classNames, showOutsideDays = true, ...pas
                 nav_button_next: 'absolute  right-3',
                 table: 'w-full border-collapse space-y-1',
                 head_row: 'flex',
-                head_cell: 'text-muted-foreground rounded-md w-8 md:w-[80px] font-normal text-[1rem]',
+                head_cell: 'text-muted-foreground rounded-md w-8 md:w-[50px] font-normal text-[1rem]',
                 row: 'flex w-full mt-2',
                 cell: cn(
                     'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md',
@@ -40,7 +40,7 @@ function CalendarBooking({ className, classNames, showOutsideDays = true, ...pas
                 ),
                 day: cn(
                     buttonVariants({ variant: 'ghost' }),
-                    'h-8 w-8 md:h-[80px] md:w-[80px] p-0 font-normal lg:text-xl aria-selected:opacity-100 text-default'
+                    'h-8 w-8 md:h-[50px] md:w-[60px] p-0 font-normal lg:text-xl aria-selected:opacity-100 text-default'
                 ),
                 day_range_start: 'day-range-start',
                 day_range_end: 'day-range-end',

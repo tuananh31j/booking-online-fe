@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 import Dribbble from '~/components/_icons/dribbble';
@@ -6,6 +7,7 @@ import Instagram from '~/components/_icons/instagram';
 import Mail from '~/components/_icons/mailicon/Mail';
 
 export default function Socials() {
+    const t = useTranslations('Header');
     return (
         <>
             <div className='hidden gap-5 md:flex'>
@@ -21,7 +23,7 @@ export default function Socials() {
                     />
                 </div>
                 <div className='grid content-between'>
-                    <span className='flex h-[57px] items-center text-default'>Liên hệ hỗ trợ: 0898737406</span>
+                    <span className='flex h-[57px] items-center text-default'>{t('contact')}: 0898737406</span>
                     <div className='flex items-center gap-2'>
                         <a href='/'>
                             <Facebook className='h-[40px] w-[40px] xl:h-[60px] xl:w-[60px]' />

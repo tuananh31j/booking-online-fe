@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import mapImage from '~/assets/images/map.png';
+import { useTranslations } from 'next-intl';
 
 function PopupLocationDetails({ children }: { children: React.ReactNode }) {
+    const t = useTranslations('Location');
+
     return (
         <Dialog>
             <div className='hidden md:flex md:items-center'>
@@ -11,7 +14,7 @@ function PopupLocationDetails({ children }: { children: React.ReactNode }) {
 
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>You can find us here</DialogTitle>
+                    <DialogTitle>{t('title')}</DialogTitle>
 
                     <DialogDescription>
                         <Image

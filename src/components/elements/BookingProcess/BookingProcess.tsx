@@ -5,9 +5,11 @@ import RenderStep from './_renderStep';
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-react';
 import PopupLocationDetails from '../PopupLocationDetails';
 import MapIcon from '~/components/_icons/map/Map';
+import { useTranslations } from 'next-intl';
 
 const BookingProcess = () => {
     const { step, prevStep, nextStep } = useArrowControlBooking();
+    const t = useTranslations('StepBooking');
     return (
         <>
             <div>
@@ -29,7 +31,12 @@ const BookingProcess = () => {
                         </PopupLocationDetails>
                     </div>
                 )}
-                <div className='bg-gray px-4 py-3'>
+                {step <= 1 && (
+                    <div className='details mb-[15px] flex items-center justify-between text-2xl text-default'>
+                        <span className='font-medium'>{t('step1')}</span>
+                    </div>
+                )}
+                <div className='min-h-[50vh] bg-content px-4 py-3'>
                     <RenderStep step={step} />
                 </div>
             </div>
