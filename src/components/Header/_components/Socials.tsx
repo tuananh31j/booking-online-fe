@@ -11,6 +11,7 @@ export default function Socials() {
             <div className='hidden gap-5 md:flex'>
                 <div>
                     <Image
+                        priority
                         src='https://i.redd.it/030mmgcrecta1.png'
                         className=' rounded-lg duration-300 dark:border-2   lg:h-[198px] lg:w-[208px]'
                         alt='logostaff'

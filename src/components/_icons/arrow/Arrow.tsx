@@ -14,9 +14,9 @@ const ArrowIcon = ({ className }: { className: string }) => {
                 <path
                     d='M32.5 38.9583L48.75 27.5L32.5 16.0417'
                     stroke='#333333'
-                    stroke-width='8'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeWidth='8'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                 />
             </g>
             <defs>
@@ -27,9 +27,9 @@ const ArrowIcon = ({ className }: { className: string }) => {
                     width='86'
                     height='63'
                     filterUnits='userSpaceOnUse'
-                    color-interpolation-filters='sRGB'
+                    colorInterpolationFilters='sRGB'
                 >
-                    <feFlood flood-opacity='0' result='BackgroundImageFix' />
+                    <feFlood floodOpacity='0' result='BackgroundImageFix' />
                     <feColorMatrix
                         in='SourceAlpha'
                         type='matrix'

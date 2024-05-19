@@ -17,6 +17,7 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: ['react', 'import', 'prettier'],
     rules: {
+        'react/no-unknown-property': 'error',
         'import/extensions': 'off',
         'no-nested-ternary': 'off',
         'no-console': 'off',
