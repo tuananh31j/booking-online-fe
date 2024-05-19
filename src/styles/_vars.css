@@ -2,6 +2,9 @@
     --background: #fff;
     --foreground: #020817;
 
+    --bg-content: #f3f3f3;
+    --bg-content-forground: #1d2839;
+
     --btn-lang: #d5dfeb;
     --btn-lang-foreground: #222222;
 
@@ -42,6 +45,9 @@
 .dark {
     --background: #020817;
     --foreground: #f8fafc;
+
+    --bg-content: #1d2839;
+    --bg-content-forground: #f3f3f3;
 
     --btn-lang: #222222;
     --btn-lang-foreground: #d5dfeb;
