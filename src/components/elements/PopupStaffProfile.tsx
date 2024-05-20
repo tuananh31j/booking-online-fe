@@ -12,7 +12,7 @@ import {
 const PopupStaffProfile = ({ children }: { children: React.ReactNode }) => {
     const t = useTranslations('StaffInformation');
     return (
-        <div>
+        <>
             <Dialog>
                 <DialogTrigger>{children}</DialogTrigger>
                 <DialogContent>
@@ -60,7 +60,7 @@ const PopupStaffProfile = ({ children }: { children: React.ReactNode }) => {
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
-        </div>
+        </>
     );
 };
 export default PopupStaffProfile;
