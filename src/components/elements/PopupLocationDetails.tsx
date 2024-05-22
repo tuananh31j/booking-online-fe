@@ -1,5 +1,12 @@
 import Image from 'next/image';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '~/components/ui/dialog';
 import mapImage from '~/assets/images/map.png';
 import { useTranslations } from 'next-intl';
 

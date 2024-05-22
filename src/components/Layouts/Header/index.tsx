@@ -1,6 +1,6 @@
-import Logo from '~/components/Header/_components/Logo';
-import Socials from '~/components/Header/_components/Socials';
-import SwitchOptions from '~/components/Header/_components/SwitchOptions';
+import Logo from '~/components/Layouts/Header/_components/Logo';
+import Socials from '~/components/Layouts/Header/_components/Socials';
+import SwitchOptions from '~/components/Layouts/Header/_components/SwitchOptions';
 
 const Header = () => {
     return (

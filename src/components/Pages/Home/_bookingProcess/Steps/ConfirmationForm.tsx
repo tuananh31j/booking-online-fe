@@ -1,15 +1,15 @@
 'use client';
 
-import { Input } from '../../../ui/input';
-import { Calendar } from '../../../ui/calendar';
-import { useId, useState } from 'react';
-import { Button } from '../../../ui/button';
-import { Label } from '../../../ui/label';
-import { Popover, PopoverContent, PopoverTrigger } from '../../../ui/popover';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
 import { cn } from '~/lib/utils';
 import { useTranslations } from 'next-intl';
+import { useId, useState } from 'react';
+import { Label } from '@radix-ui/react-label';
+import { Input } from '~/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
+import { Button } from '~/components/ui/button';
+import { Calendar } from '~/components/ui/calendar';
 
 const ConfirmationForm = () => {
     const [date, setDate] = useState<Date>();

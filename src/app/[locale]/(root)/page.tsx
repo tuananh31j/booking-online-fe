@@ -1,10 +1,9 @@
-import BookingProcess from '~/components/elements/BookingProcess';
-import { useTranslations } from 'next-intl';
+import HomePage from '~/components/Pages/Home';
 
 export default function Home() {
     return (
         <>
-            <BookingProcess />
+            <HomePage />
         </>
     );
 }

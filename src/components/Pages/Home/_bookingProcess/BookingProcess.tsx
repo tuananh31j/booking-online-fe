@@ -3,9 +3,9 @@
 import useArrowControlBooking from '~/hooks/useArrowControlBooking';
 import RenderStep from './_renderStep';
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-react';
-import PopupLocationDetails from '../PopupLocationDetails';
 import MapIcon from '~/components/_icons/map/Map';
 import { useTranslations } from 'next-intl';
+import PopupLocationDetails from '~/components/elements/PopupLocationDetails';
 
 const BookingProcess = () => {
     const { step, prevStep, nextStep } = useArrowControlBooking();

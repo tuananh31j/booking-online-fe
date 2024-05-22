@@ -1,6 +1,4 @@
-'use client';
-
-import AdminSidebar from '~/components/PrivateComponent/AdminSideBar';
+import AdminSidebar from '~/components/Layouts/AdminSidebar';
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     return (
