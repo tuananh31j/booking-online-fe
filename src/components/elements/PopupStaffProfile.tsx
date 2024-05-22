@@ -14,7 +14,7 @@ const PopupStaffProfile = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
             <Dialog>
-                <DialogTrigger>{children}</DialogTrigger>
+                <DialogTrigger className='w-full'>{children}</DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>
