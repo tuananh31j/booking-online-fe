@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import {
     Dialog,
     DialogContent,
@@ -7,8 +6,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '~/components/ui/dialog';
-import mapImage from '~/assets/images/map.png';
 import { useTranslations } from 'next-intl';
+import MapDisplay from '~/components/ui/Map';
 
 function PopupLocationDetails({ children }: { children: React.ReactNode }) {
     const t = useTranslations('Location');
@@ -24,15 +23,7 @@ function PopupLocationDetails({ children }: { children: React.ReactNode }) {
                     <DialogTitle>{t('title')}</DialogTitle>
 
                     <DialogDescription>
-                        <Image
-                            src={mapImage.src}
-                            alt='map-img'
-                            width={mapImage.width}
-                            height={mapImage.height}
-                            quality={100}
-                            className='w-full'
-                        />
-
+                        <MapDisplay />
                         <div className='details px-16 py-6 text-center text-2xl dark:text-white'>
                             <div className='address font-semibold'>
                                 Nailkitchen 1 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)
