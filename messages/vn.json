@@ -35,7 +35,7 @@
         }
     },
     "StaffInformation": {
-        "title": "Thông tin nhân viên: {staffname}",
+        "title": "Thông tin nhân viên",
         "name": "Tên",
         "age": "Tuổi",
         "country": "Quốc tịch",
