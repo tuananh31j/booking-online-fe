@@ -12,7 +12,7 @@ export default function MapDisplay() {
                 version: 'weekly',
             });
             // init marker
-            const { Marker } = (await loader.importLibrary('marker')) as google.maps.MarkerLibrary;
+            const { AdvancedMarkerElement } = (await loader.importLibrary('marker')) as google.maps.MarkerLibrary;
             const { Map } = await loader.importLibrary('maps');
             const position = {
                 lat: 21.05876,
@@ -27,7 +27,8 @@ export default function MapDisplay() {
             // setup the map
             const map = new Map(mapRef.current as HTMLDivElement, mapOption);
             // put up a marker
-            const marker = new Marker({
+            // eslint-disable-next-line no-unused-vars
+            const marker = new AdvancedMarkerElement({
                 map,
                 position,
             });
