@@ -15,10 +15,10 @@ export default function Socials() {
                     <Image
                         priority
                         src='https://i.redd.it/030mmgcrecta1.png'
-                        className=' rounded-lg duration-300 dark:border-2   lg:h-[198px] lg:w-[208px]'
+                        className=' rounded-lg duration-300 dark:border-2   lg:h-[138px] lg:w-[150px]'
                         alt='logostaff'
-                        width={208}
-                        height={198}
+                        width={158}
+                        height={158}
                         quality={100}
                     />
                 </div>
@@ -26,16 +26,16 @@ export default function Socials() {
                     <span className='flex h-[57px] items-center text-default'>{t('contact')}: 0898737406</span>
                     <div className='flex items-center gap-2'>
                         <a href='/'>
-                            <Facebook className='h-[40px] w-[40px] xl:h-[60px] xl:w-[60px]' />
+                            <Facebook className='h-[30px] w-[30px] xl:h-[50px] xl:w-[50px]' />
                         </a>
                         <a href='/'>
-                            <Instagram className='h-[40px] w-[40px] xl:h-[60px] xl:w-[60px]' />
+                            <Instagram className='h-[30px] w-[30px] xl:h-[50px] xl:w-[50px]' />
                         </a>
                         <a href='/'>
-                            <Dribbble className='h-[40px] w-[40px]  xl:h-[60px] xl:w-[60px]' />
+                            <Dribbble className='h-[30px] w-[30px] xl:h-[50px] xl:w-[50px]' />
                         </a>
                         <a href='/'>
-                            <Mail className='h-[30px] w-[30px]  fill-yellow-400 xl:h-[50px] xl:w-[50px]' />
+                            <Mail className='h-[20px] w-[20px]  fill-yellow-400 xl:h-[40px] xl:w-[40px]' />
                         </a>
                     </div>
                 </div>

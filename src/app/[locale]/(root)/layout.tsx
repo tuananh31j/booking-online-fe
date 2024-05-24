@@ -7,10 +7,12 @@ interface MainLayoutProps {
 
 export default async function MainLayout({ children }: Readonly<MainLayoutProps>) {
     return (
-        <div className=''>
+        <>
             <Header />
-            <main className='mx-4 mt-[1.5rem] min-h-[69vh] max-w-[1440px] custom:mx-auto'>{children}</main>
+            <main className='mx-4 max-w-[1440px] md:flex md:min-h-[100vh]  md:items-center custom:mx-auto'>
+                <div className='pt-4 md:w-[100%] md:pt-[55px] 2xl:pt-0'>{children}</div>
+            </main>
             <Footer />
-        </div>
+        </>
     );
 }
