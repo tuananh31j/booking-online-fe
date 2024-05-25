@@ -1,12 +1,12 @@
 import LocationCard from '~/components/elements/LocationCard';
 
-const ChooseLocation = () => {
+const ChooseLocation = ({ nextStep }: { nextStep: () => void }) => {
     return (
         <div>
-            <LocationCard />
-            <LocationCard />
-            <LocationCard />
-            <LocationCard />
+            <LocationCard nextStep={nextStep} />
+            <LocationCard nextStep={nextStep} />
+            <LocationCard nextStep={nextStep} />
+            <LocationCard nextStep={nextStep} />
         </div>
     );
 };

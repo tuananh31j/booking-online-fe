@@ -14,23 +14,25 @@ const BookingProcess = () => {
     return (
         <>
             <div>
-                <div className='flex items-center justify-between'>
-                    <PopupBackForm action={prevStep}>
-                        <ArrowBigLeft />
-                    </PopupBackForm>
-                    <button onClick={nextStep}>
-                        <ArrowBigRight />
-                    </button>
-                </div>
                 {step >= 2 && (
-                    <div className='mb-[25px] flex items-center justify-between text-sm text-default md:text-2xl'>
-                        <span className='font-medium'>
-                            Nailkitchen 1 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)
-                        </span>
-                        <PopupLocationDetails>
-                            <MapIcon className='h-5 w-5 dark:invert' />
-                        </PopupLocationDetails>
-                    </div>
+                    <>
+                        <div className='flex items-center justify-between'>
+                            <PopupBackForm action={prevStep}>
+                                <ArrowBigLeft />
+                            </PopupBackForm>
+                            <button onClick={nextStep}>
+                                <ArrowBigRight />
+                            </button>
+                        </div>
+                        <div className='mb-[25px] flex items-center justify-between text-sm text-default md:text-2xl'>
+                            <span className='font-medium'>
+                                Nailkitchen 1 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)
+                            </span>
+                            <PopupLocationDetails>
+                                <MapIcon className='h-5 w-5 dark:invert' />
+                            </PopupLocationDetails>
+                        </div>
+                    </>
                 )}
                 {step <= 1 && (
                     <div className='mb-[25px] flex items-center  justify-between text-sm text-default md:text-2xl'>
@@ -38,7 +40,7 @@ const BookingProcess = () => {
                     </div>
                 )}
                 <div className='no-scrollbar relative max-h-[50vh] min-h-[50vh] overflow-y-scroll bg-content px-4 py-3'>
-                    <RenderStep step={step} />
+                    <RenderStep step={step} action={nextStep} />
                 </div>
             </div>
         </>

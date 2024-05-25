@@ -2,11 +2,15 @@ import React from 'react';
 import ArrowIcon from '~/components/_icons/arrow/Arrow';
 import MapIcon from '~/components/_icons/map/Map';
 import PopupLocationDetails from './PopupLocationDetails';
+import useArrowControlBooking from '~/hooks/useArrowControlBooking';
 
-const LocationCard = () => {
+const LocationCard = ({ nextStep }: { nextStep?: () => void }) => {
     return (
         <>
-            <div className='border-gray mx-auto mt-5 flex rounded-lg border-b-[3px] border-l-2 border-r-2 px-1 py-[8px] hover:border-t-[1px] hover:border-pink-300 dark:border-white md:gap-5 md:px-[16p] lg:px-[32px]'>
+            <div
+                onClick={nextStep}
+                className='border-gray mx-auto mt-5 flex cursor-pointer rounded-lg border-b-[3px] border-l-2 border-r-2 border-t-[1px] px-1 py-[8px] duration-300  hover:border-default dark:border-white md:gap-5 md:px-[16p] lg:px-[32px]'
+            >
                 <PopupLocationDetails>
                     <MapIcon className='dark:invert' />
                 </PopupLocationDetails>
@@ -22,9 +26,9 @@ const LocationCard = () => {
                         </div>
                     </div>
 
-                    <div className='flex items-center'>
+                    <button className='flex items-center'>
                         <ArrowIcon className='dark:invert' />
-                    </div>
+                    </button>
                 </div>
             </div>
         </>
