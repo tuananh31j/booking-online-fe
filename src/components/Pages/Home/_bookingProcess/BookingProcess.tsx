@@ -11,6 +11,9 @@ import PopupBackForm from '~/components/elements/PopupBackForm';
 const BookingProcess = () => {
     const { step, prevStep, nextStep } = useArrowControlBooking();
     const t = useTranslations('StepBooking');
+    const handleGetLocationId = (id: string) => {
+        console.log(id);
+    };
     return (
         <>
             <div>
@@ -40,7 +43,7 @@ const BookingProcess = () => {
                     </div>
                 )}
                 <div className='no-scrollbar relative max-h-[50vh] min-h-[50vh] overflow-y-scroll bg-content px-4 py-3'>
-                    <RenderStep step={step} action={nextStep} />
+                    <RenderStep handle={handleGetLocationId} step={step} action={nextStep} />
                 </div>
             </div>
         </>
