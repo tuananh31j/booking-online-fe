@@ -6,6 +6,7 @@ import { ArrowBigLeft, ArrowBigRight } from 'lucide-react';
 import MapIcon from '~/components/_icons/map/Map';
 import { useTranslations } from 'next-intl';
 import PopupLocationDetails from '~/components/elements/PopupLocationDetails';
+import PopupBackForm from '~/components/elements/PopupBackForm';
 
 const BookingProcess = () => {
     const { step, prevStep, nextStep } = useArrowControlBooking();
@@ -14,9 +15,9 @@ const BookingProcess = () => {
         <>
             <div>
                 <div className='flex items-center justify-between'>
-                    <button onClick={prevStep}>
+                    <PopupBackForm action={prevStep}>
                         <ArrowBigLeft />
-                    </button>
+                    </PopupBackForm>
                     <button onClick={nextStep}>
                         <ArrowBigRight />
                     </button>
