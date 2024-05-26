@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import LocationCard from '~/components/elements/LocationCard';
 // example data id location
 const data = [
