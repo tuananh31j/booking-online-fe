@@ -29,7 +29,7 @@ export function ModeToggle({ className }: { className?: string }) {
                 <DropdownMenuItem onClick={() => setTheme('light')}>{t('light')}</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme('dark')}>{t('dark')}</DropdownMenuItem>
                 <DropdownMenuItem>
-                    <Link href={'/dashboard'}>{t('system')}</Link>
+                    <Link href={'/admin'}>{t('system')}</Link>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

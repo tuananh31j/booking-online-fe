@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { SETTING_DEFAULT } from '~/constants/QueryKey';
+import { SETTING_DEFAULT } from '~/constants/queryKey';
 
 export const useSettingQuery = () => {
     return useQuery({

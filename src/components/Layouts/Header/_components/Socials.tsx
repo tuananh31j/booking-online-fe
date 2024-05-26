@@ -1,10 +1,10 @@
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
-import Dribbble from '~/components/_icons/dribbble';
-import Facebook from '~/components/_icons/facebook';
-import Instagram from '~/components/_icons/instagram';
-import Mail from '~/components/_icons/mailicon/Mail';
+import Dribbble from '~/components/_common/Icons/dribbble';
+import Facebook from '~/components/_common/Icons/facebook';
+import Instagram from '~/components/_common/Icons/instagram';
+import Mail from '~/components/_common/Icons/mailicon/Mail';
 
 export default function Socials() {
     const t = useTranslations('Header');

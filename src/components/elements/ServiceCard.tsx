@@ -1,6 +1,6 @@
 import { Checkbox } from '~/components/ui/checkbox';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '~/components/ui/accordion';
-import ChatIcon from '~/components/_icons/chatting/ChatIcon';
+import ChatIcon from '~/components/_common/Icons/chatting/ChatIcon';
 
 const ServiceCard = () => {
     return (

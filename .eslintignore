@@ -6,3 +6,4 @@ public/*
 src/assets/*
 *.d.ts
 src/__generated__/*
+src/components/ui

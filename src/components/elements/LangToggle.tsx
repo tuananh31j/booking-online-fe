@@ -9,8 +9,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
-import VietNam from '~/components/_icons/vietnam/VietNam';
-import FlagUS from '~/components/_icons/flagus';
+import VietNam from '~/components/_common/Icons/vietnam/VietNam';
+import FlagUS from '~/components/_common/Icons/flagus';
 
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';

@@ -3,7 +3,7 @@
 import useArrowControlBooking from '~/hooks/useArrowControlBooking';
 import RenderStep from './_renderStep';
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-react';
-import MapIcon from '~/components/_icons/map/Map';
+import MapIcon from '~/components/_common/Icons/map/Map';
 import { useTranslations } from 'next-intl';
 import PopupLocationDetails from '~/components/elements/PopupLocationDetails';
 

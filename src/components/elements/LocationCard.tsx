@@ -1,6 +1,6 @@
 import React from 'react';
-import ArrowIcon from '~/components/_icons/arrow/Arrow';
-import MapIcon from '~/components/_icons/map/Map';
+import ArrowIcon from '~/components/_common/Icons/arrow/Arrow';
+import MapIcon from '~/components/_common/Icons/map/Map';
 import PopupLocationDetails from './PopupLocationDetails';
 
 const LocationCard = () => {

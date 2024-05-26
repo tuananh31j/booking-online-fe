@@ -55,7 +55,8 @@ type Option = {
         };
     };
 };
-const DashboardPage = () => {
+
+const Dashboard = () => {
     const [areaChart, setAreaCart] = useState<Option>({
         series: [
             {
@@ -149,7 +150,6 @@ const DashboardPage = () => {
                     <ReactApexChart options={areaChart.options} series={areaChart.series} height={350} type='area' />
                 </div>
                 <div className='rounded-3xl bg-white p-2'>
-                    {' '}
                     <div className='mt-10'>
                         <ReactApexChart options={pieChart.options} series={pieChart.series} height={350} type='donut' />
                     </div>
@@ -159,4 +159,4 @@ const DashboardPage = () => {
     );
 };
 
-export default DashboardPage;
+export default Dashboard;
