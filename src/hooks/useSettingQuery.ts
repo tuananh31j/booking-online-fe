@@ -7,7 +7,7 @@ export const useSettingQuery = () => {
     return useQuery({
         queryKey: [SETTING_DEFAULT],
         queryFn: async () => {
-            const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/setting`).then((res) => res.json());
+            const result = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/setting`).then((res) => res.json());
             return result;
         },
     });

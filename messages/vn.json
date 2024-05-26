@@ -1,4 +1,12 @@
 {
+    "AlertDiaLog": {
+        "title": "Bạn có chắc chắn không?",
+        "desc": "Bạn sẽ quay trở lại bước nhập thông tin trước đó",
+        "button": {
+            "cancel": "Không",
+            "yes": "Chắc chắn"
+        }
+    },
     "Header": {
         "contact": "Liên hệ hỗ trợ"
     },
