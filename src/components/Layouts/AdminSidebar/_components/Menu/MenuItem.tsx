@@ -6,8 +6,8 @@ const MenuItem = ({ children, name, path }: { children: ReactNode; name: string;
         <li className='mt-[0.125rem] w-full'>
             <ActionLink
                 className={[
-                    'ease-nav-brand mx-2 my-0 flex items-center whitespace-nowrap rounded-lg px-4 py-[0.625rem] text-sm font-semibold text-slate-700 transition-colors hover:bg-[#EAEDFC] dark:text-white dark:hover:text-green-950',
-                    'bg-green-800',
+                    'ease-nav-brand mx-2 my-0 flex items-center whitespace-nowrap rounded-lg bg-card px-4 py-[0.625rem] text-sm  font-semibold text-foreground transition-colors hover:bg-opacity-10',
+                    'bg-background text-foreground hover:bg-none',
                 ]}
                 to={path}
             >

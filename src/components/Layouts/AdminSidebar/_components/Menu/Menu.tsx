@@ -11,15 +11,17 @@ const MENU_LIST = [
 
 const Menu = () => {
     return (
-        <div className='block h-[300px] max-h-screen w-auto grow basis-full items-center overflow-auto pb-[200px]'>
-            <ul className='mb-0 flex flex-col pl-0'>
-                {MENU_LIST.map((item, i) => (
-                    <MenuItem key={i} path={item.path} name={item.name}>
-                        {item.icon}
-                    </MenuItem>
-                ))}
+        <>
+            <div className='fixed bottom-0 left-0 right-0 top-0 -z-10 bg-[#5e72e4] bg-card transition-colors duration-300'></div>
+            <div className='block h-[300px] max-h-screen w-auto grow basis-full items-center overflow-auto bg-card pb-[200px]'>
+                <ul className='mb-0 flex flex-col pl-0'>
+                    {MENU_LIST.map((item, i) => (
+                        <MenuItem key={i} path={item.path} name={item.name}>
+                            {item.icon}
+                        </MenuItem>
+                    ))}
 
-                {/* <li className='mb-2 mt-4 w-full'>
+                    {/* <li className='mb-2 mt-4 w-full'>
                     <h6 className='ml-2 pl-6 text-xs font-bold uppercase leading-tight opacity-60 dark:text-white'>
                         Account pages
                     </h6>
@@ -35,8 +37,9 @@ const Menu = () => {
                         <span className='ease pointer-events-none ml-1 opacity-100 duration-300'>Profile</span>
                     </a>
                 </li> */}
-            </ul>
-        </div>
+                </ul>
+            </div>
+        </>
     );
 };
 
