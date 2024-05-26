@@ -1,9 +1,9 @@
 import { BookingCalendar, ConfirmationForm, ChooseLocation, ChooseService, ChooseStaff } from './Steps';
 
-const RenderStep = ({ step }: { step: number }) => {
+const RenderStep = ({ step, action, handle }: { step: number; action: () => void; handle: () => void }) => {
     switch (step) {
         case 1:
-            return <ChooseLocation />;
+            return <ChooseLocation nextStep={action} handleGetLocation={handle} />;
         case 2:
             return <ChooseStaff />;
         case 3:
