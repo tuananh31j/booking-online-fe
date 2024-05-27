@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import StatsCard from '~/components/Pages/Admins/StatsCard';
+import { DollarSign, Users, UserPlus, ShoppingCart } from 'lucide-react';
 
 type Series = {
     name?: string;
@@ -185,6 +187,44 @@ const Dashboard = () => {
     }, []);
     return (
         <div className='mx-6'>
+            <div className='-mx-3 flex flex-wrap'>
+                <StatsCard
+                    title="Today's Money"
+                    amount='$53,000'
+                    percentage={55}
+                    since='since yesterday'
+                    icon={DollarSign}
+                    bgColor='bg-gradient-to-tl from-blue-500 to-violet-500'
+                    iconColor='text-white'
+                />
+                <StatsCard
+                    title="Today's Users"
+                    amount='2,300'
+                    percentage={3}
+                    since='since last week'
+                    icon={Users}
+                    bgColor='bg-gradient-to-tl from-red-600 to-orange-600'
+                    iconColor='text-white'
+                />
+                <StatsCard
+                    title='New Clients'
+                    amount='+3,462'
+                    percentage={-2}
+                    since='since last quarter'
+                    icon={UserPlus}
+                    bgColor='bg-gradient-to-tl from-emerald-500 to-teal-400'
+                    iconColor='text-white'
+                />
+                <StatsCard
+                    title='Sales'
+                    amount='$103,430'
+                    percentage={5}
+                    since='than last month'
+                    icon={ShoppingCart}
+                    bgColor='bg-gradient-to-tl from-orange-500 to-yellow-500'
+                    iconColor='text-white'
+                />
+            </div>
             <div className='gap my-6 grid grid-cols-1 gap-6 lg:grid-cols-[60%,40%] '>
                 <div className='rounded-3xl bg-card p-2'>
                     <ReactApexChart options={areaChart.options} series={areaChart.series} height={350} type='area' />
