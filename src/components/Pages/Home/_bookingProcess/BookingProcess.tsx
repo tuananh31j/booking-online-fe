@@ -27,7 +27,7 @@ const BookingProcess = () => {
                                 <ArrowBigRight />
                             </button>
                         </div>
-                        <div className='mb-[25px] flex items-center justify-between text-sm text-default md:text-2xl'>
+                        <div className='mb-[15px] flex items-center justify-between text-sm text-default md:text-2xl'>
                             <span className='font-medium'>
                                 Nailkitchen 1 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)
                             </span>
@@ -38,11 +38,11 @@ const BookingProcess = () => {
                     </>
                 )}
                 {step <= 1 && (
-                    <div className='mb-[25px] flex items-center  justify-between text-sm text-default md:text-2xl'>
+                    <div className='mb-[35px] flex items-center  justify-between  text-2xl text-default'>
                         <span className='font-medium'>{t('step1')}</span>
                     </div>
                 )}
-                <div className='no-scrollbar relative max-h-[50vh] min-h-[50vh] overflow-y-scroll bg-content px-4 py-3'>
+                <div className='no-scrollbar relative  max-h-[78vh] min-h-[78vh] overflow-y-scroll bg-content px-4 py-3 pb-[25vh]'>
                     <RenderStep handle={handleGetLocationId} step={step} action={nextStep} />
                 </div>
             </div>

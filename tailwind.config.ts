@@ -54,28 +54,29 @@ const config = {
                     DEFAULT: 'var(--popover)',
                     foreground: 'var(--popover-foreground)',
                 },
-                card: {
-                    DEFAULT: 'var(--card)',
-                    foreground: 'var(--card-foreground)',
-                },
+
                 // class for language toggle
                 langtoggle: {
                     DEFAULT: 'var(--btn-lang)',
                     foreground: 'var(--btn-lang-foreground)',
                 },
-                // use this class if you need light mode element color black and night mode element color white "example: text-default bg-default"
+
                 default: {
-                    DEFAULT: 'var(--text)',
-                    foreground: 'var(--text-foreground)',
+                    DEFAULT: 'var(--text)', // root: #222222 dark: #ffffff
+                    foreground: 'var(--text-foreground)', // root:  #ffffff dark:#222222
                 },
-                // use this class if you need light mode element color white and night mode element color black "example: text-reverse bg-reverse"
                 reverse: {
-                    DEFAULT: 'var(--text-reverse)',
-                    foreground: 'var(--text-reverse-forground)',
+                    DEFAULT: 'var(--text-reverse)', // root:  #ffffff dark:#222222
+                    foreground: 'var(--text-reverse-forground)', // root: #222222 dark: #ffffff
                 },
+                //
                 content: {
-                    DEFAULT: 'var(--bg-content)',
-                    foreground: 'var(--bg-content-forground)',
+                    DEFAULT: 'var(--bg-content)', // root: #f3f3f3 dark: #1d2839
+                    foreground: 'var(--bg-content-forground)', // root:#1d2839 dark: #f3f3f3
+                },
+                card: {
+                    DEFAULT: 'var(--card)', // root: #d9d9d9 dark: #222222
+                    foreground: 'var(--card-foreground)', // root: #222222  dark:#d9d9d9
                 },
             },
             borderRadius: {

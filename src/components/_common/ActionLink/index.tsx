@@ -20,8 +20,6 @@ const ActionLink = forwardRef<LinkProps & HTMLAnchorElement, IActionProps>(({ cl
     // const defaultClass = isClassNameArray ? className[1] : '';
     const activeClass = isClassNameArray ? className[1] : '';
 
-    console.log(pathname, endPointPath);
-
     return (
         <Link ref={ref} href={to} className={cn(normalClass, { [activeClass]: isActive })}>
             {children}

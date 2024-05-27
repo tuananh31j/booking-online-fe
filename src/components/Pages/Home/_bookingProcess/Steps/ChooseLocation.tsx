@@ -22,6 +22,26 @@ const data = [
         name: 'Nailkitchen 4 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)',
         desc: '62 Từ Hoa, Hanoi, Hanoi, 10000.',
     },
+    {
+        id: '5',
+        name: 'Nailkitchen 4 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)',
+        desc: '62 Từ Hoa, Hanoi, Hanoi, 10000.',
+    },
+    {
+        id: '6',
+        name: 'Nailkitchen 4 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)',
+        desc: '62 Từ Hoa, Hanoi, Hanoi, 10000.',
+    },
+    {
+        id: '7',
+        name: 'Nailkitchen 4 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)',
+        desc: '62 Từ Hoa, Hanoi, Hanoi, 10000.',
+    },
+    {
+        id: '8',
+        name: 'Nailkitchen 4 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)',
+        desc: '62 Từ Hoa, Hanoi, Hanoi, 10000.',
+    },
 ];
 const ChooseLocation = ({
     nextStep,

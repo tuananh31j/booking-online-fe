@@ -26,8 +26,8 @@ const UserRow: FC<IUserRowProps> = ({ avt, name, email, role, status, createAt }
                         <Image
                             src={avt}
                             alt=''
-                            width={10}
-                            height={10}
+                            width={1150}
+                            height={5150}
                             className='mr-4 inline-flex h-9 w-9 items-center justify-center rounded-xl text-sm text-white transition-all duration-200 ease-in-out'
                         />
                     </div>

@@ -1,10 +1,11 @@
 import Logo from '~/components/Layouts/Header/_components/Logo';
 import Socials from '~/components/Layouts/Header/_components/Socials';
 import SwitchOptions from '~/components/Layouts/Header/_components/SwitchOptions';
+import { cn } from '~/lib/utils';
 
-const Header = () => {
+const Header = ({ className }: { className?: string }) => {
     return (
-        <header className='pt-[5px] md:fixed md:w-full'>
+        <header className={cn('pt-[5px]  md:w-full', className)}>
             <div className='mx-6 flex max-w-[1440px] items-center justify-between lg:items-start custom:mx-auto '>
                 <Logo />
                 <Socials />

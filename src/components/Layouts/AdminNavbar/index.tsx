@@ -21,7 +21,7 @@ import {
 const AdminNavbar = () => {
     return (
         <>
-            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-[#fffc] px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>
+            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>
                 <div className='flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1'>
                     <nav>
                         <Breadcrumb>
@@ -43,8 +43,8 @@ const AdminNavbar = () => {
                     <div className='mt-2 flex  items-center sm:mr-6 sm:mt-0 md:mr-0 lg:flex lg:basis-auto'>
                         <div className='flex items-center md:ml-auto md:pr-4'>
                             <form>
-                                <div className=' flex items-center justify-center rounded-lg bg-white px-2'>
-                                    <Search size={16} strokeWidth={1.75} />
+                                <div className=' flex items-center justify-center rounded-lg bg-content px-2'>
+                                    <Search size={16} strokeWidth={1.75} className='text-default' />
                                     <Input
                                         type='text'
                                         className='w-[8rem] border-none outline-none sm:w-[unset]'
@@ -64,7 +64,7 @@ const AdminNavbar = () => {
                             </li>
                             <li className='flex items-center pl-4'>
                                 <a href='./index.html' className='ease-nav-brand block p-0 text-sm transition-all'>
-                                    <Settings size={16} strokeWidth={1.75} className='text-black' />
+                                    <Bell size={16} strokeWidth={1.75} className='cursor-pointer text-default' />
                                 </a>
                             </li>
 
@@ -72,7 +72,11 @@ const AdminNavbar = () => {
                                 {/* notifications */}
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Bell size={16} strokeWidth={1.75} className='cursor-pointer text-black' />
+                                        <Settings
+                                            size={16}
+                                            strokeWidth={1.75}
+                                            className='cursor-pointer text-default'
+                                        />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className='mr-5 w-56'>
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>

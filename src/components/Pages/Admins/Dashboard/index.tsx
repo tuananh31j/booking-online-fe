@@ -10,6 +10,11 @@ type Series = {
 type Option = {
     series: number[] | Series[];
     options: {
+        legend?: {
+            labels: {
+                colors: string; // Change the color of the series names
+            };
+        };
         chart?:
             | {
                   type:
@@ -35,9 +40,22 @@ type Option = {
         dataLabels?: {
             enabled: boolean;
         };
+        yaxis?: {
+            labels: {
+                style: {
+                    colors: string; // Change the color of y-axis labels
+                };
+            };
+        };
         xaxis?: {
             type: 'datetime' | 'category';
             categories: string[];
+            // Change the color of categories (x-axis labels)
+            labels?: {
+                style: {
+                    colors: string;
+                };
+            };
         };
         stroke?: {
             curve:
@@ -125,10 +143,27 @@ const Dashboard = () => {
                         '2018-09-24',
                         '2018-09-25',
                     ],
+                    labels: {
+                        style: {
+                            colors: 'var(--text)',
+                        },
+                    },
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            colors: 'var(--text)', // Change the color of y-axis labels
+                        },
+                    },
                 },
                 tooltip: {
                     x: {
                         format: 'dd/MM/yy',
+                    },
+                },
+                legend: {
+                    labels: {
+                        colors: 'text-reverse', // Change the color of the series names
                     },
                 },
             },
@@ -140,17 +175,22 @@ const Dashboard = () => {
                     height: 350,
                     type: 'donut',
                 },
+                legend: {
+                    labels: {
+                        colors: 'text-reverse', // Change the color of the series names
+                    },
+                },
             },
         });
     }, []);
     return (
         <div className='mx-6'>
             <div className='gap my-6 grid grid-cols-1 gap-6 lg:grid-cols-[60%,40%] '>
-                <div className='rounded-3xl bg-white p-2'>
+                <div className='rounded-3xl bg-card p-2'>
                     <ReactApexChart options={areaChart.options} series={areaChart.series} height={350} type='area' />
                 </div>
-                <div className='rounded-3xl bg-white p-2'>
-                    <div className='mt-10'>
+                <div className='rounded-3xl bg-card p-2  '>
+                    <div className='mt-10 '>
                         <ReactApexChart options={pieChart.options} series={pieChart.series} height={350} type='donut' />
                     </div>
                 </div>

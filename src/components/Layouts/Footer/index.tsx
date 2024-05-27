@@ -1,8 +1,10 @@
 'use client';
 
-const Footer = () => {
+import { cn } from '~/lib/utils';
+
+const Footer = ({ className }: { className?: string }) => {
     return (
-        <div className='fixed bottom-0 left-0 right-0 bg-gradient-to-r from-[#FC9F9F] to-[#9BCBF8] py-3 text-center text-reverse '>
+        <div className={cn(' bg-gradient-to-r from-[#FC9F9F] to-[#9BCBF8] py-3 text-center text-reverse ', className)}>
             Copyright to ImtaLabs @ {new Date().getFullYear()}
         </div>
     );
