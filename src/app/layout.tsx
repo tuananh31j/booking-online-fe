@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Itim } from 'next/font/google';
+import { Toaster } from '~/components/ui/toaster';
 
 const itim = Itim({ subsets: ['vietnamese'], weight: '400' });
 
@@ -18,7 +19,10 @@ interface RootLayoutProps {
 export default async function RootLayout({ children, params: { locale } }: Readonly<RootLayoutProps>) {
     return (
         <html lang={locale} suppressHydrationWarning>
-            <body className={itim.className}>{children}</body>
+            <body className={itim.className}>
+                {children}
+                <Toaster />
+            </body>
         </html>
     );
 }
