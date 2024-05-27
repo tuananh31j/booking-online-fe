@@ -4,7 +4,7 @@ import ChatIcon from '~/components/_common/Icons/chatting/ChatIcon';
 
 const ServiceCard = () => {
     return (
-        <div className='mt-4 flex rounded-3xl border-2 hover:border-pink-300'>
+        <div className='mt-4 flex rounded-3xl border-2 hover:border-default'>
             <div className='checkbox flex items-center md:px-3 lg:px-10'>
                 <Checkbox />
             </div>
