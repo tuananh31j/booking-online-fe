@@ -1,0 +1,50 @@
+@import 'normalize.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @import url(_vars.css);
+}
+
+@layer base {
+    html,
+    body,
+    :root {
+        height: 100vh;
+    }
+    * {
+        @apply border-border;
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--btn-lang-foreground);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track:hover {
+            background: var(--text);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--btn-lang);
+            border-radius: 4px;
+        }
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+@layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+}
