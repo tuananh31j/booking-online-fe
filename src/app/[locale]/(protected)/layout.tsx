@@ -7,7 +7,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             <AdminSidebar />
             <main className='relative mt-4 h-full max-h-screen rounded-xl transition-all duration-200 ease-in-out xl:ml-[17rem]'>
                 <AdminNavbar />
-                <div className='mx-6'>{children}</div>
+                <div className='m-6'>{children}</div>
             </main>
         </>
     );

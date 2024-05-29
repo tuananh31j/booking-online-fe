@@ -27,7 +27,9 @@
     },
     "Calendar": {
         "confirm": "Confirm",
-        "validate": "Please pick a date!"
+        "validate": "Please pick a date!",
+        "unavailable": "Full",
+        "available": "available"
     },
     "StepBooking": {
         "step1": "Choose a location"

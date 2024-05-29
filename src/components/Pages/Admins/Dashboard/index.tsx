@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import StatsCard from '~/components/Pages/Admins/StatsCard';
 import { DollarSign, Users, UserPlus, ShoppingCart } from 'lucide-react';
+import StatsCard from '~/components/elements/StatsCard';
 
 type Series = {
     name?: string;
@@ -110,7 +110,7 @@ const Dashboard = () => {
         series: [44, 55, 41, 17],
         options: {
             chart: {
-                height: 350,
+                height: 400,
                 type: 'donut',
             },
         },
@@ -186,8 +186,8 @@ const Dashboard = () => {
         });
     }, []);
     return (
-        <div className='mx-6'>
-            <div className='-mx-3 flex flex-wrap'>
+        <div className=''>
+            <div className='flex justify-between'>
                 <StatsCard
                     title="Today's Money"
                     amount='$53,000'
@@ -225,7 +225,7 @@ const Dashboard = () => {
                     iconColor='text-white'
                 />
             </div>
-            <div className='gap my-6 grid grid-cols-1 gap-6 lg:grid-cols-[60%,40%] '>
+            <div className='gap my-6 grid grid-cols-1 justify-between lg:grid-cols-[58%,40%] '>
                 <div className='rounded-3xl bg-card p-2'>
                     <ReactApexChart options={areaChart.options} series={areaChart.series} height={350} type='area' />
                 </div>
