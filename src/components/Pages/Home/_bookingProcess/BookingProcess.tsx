@@ -43,7 +43,7 @@ const BookingProcess = () => {
                     </div>
                 )}
                 <div className='no-scrollbar relative max-h-[50vh] min-h-[50vh] overflow-y-scroll bg-content px-4 py-3'>
-                    <RenderStep handle={handleGetLocationId} step={step} action={nextStep} />
+                    <RenderStep handle={handleGetLocationId} step={4} action={nextStep} />
                 </div>
             </div>
         </>

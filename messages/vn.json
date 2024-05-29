@@ -27,7 +27,9 @@
     },
     "Calendar": {
         "confirm": "Xác nhận",
-        "validate": "Bạn chưa chọn ngày đặt lịch!"
+        "validate": "Bạn chưa chọn ngày đặt lịch!",
+        "unavailable": "Đã kín lịch",
+        "available": "Còn trống"
     },
     "StepBooking": {
         "step1": "Chọn địa chỉ"

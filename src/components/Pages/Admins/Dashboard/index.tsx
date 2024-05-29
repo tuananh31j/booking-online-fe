@@ -90,7 +90,7 @@ const Dashboard = () => {
         series: [44, 55, 41, 17],
         options: {
             chart: {
-                height: 350,
+                height: 400,
                 type: 'donut',
             },
         },
@@ -146,11 +146,11 @@ const Dashboard = () => {
     return (
         <div className='mx-6'>
             <div className='gap my-6 grid grid-cols-1 gap-6 lg:grid-cols-[60%,40%] '>
-                <div className='rounded-3xl bg-white p-2'>
+                <div className='rounded-3xl bg-gray-100 p-2'>
                     <ReactApexChart options={areaChart.options} series={areaChart.series} height={350} type='area' />
                 </div>
-                <div className='rounded-3xl bg-white p-2'>
-                    <div className='mt-10'>
+                <div className=' rounded-3xl bg-gray-100 p-2'>
+                    <div className='block'>
                         <ReactApexChart options={pieChart.options} series={pieChart.series} height={350} type='donut' />
                     </div>
                 </div>

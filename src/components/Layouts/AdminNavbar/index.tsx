@@ -21,7 +21,7 @@ import {
 const AdminNavbar = () => {
     return (
         <>
-            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-[#fffc] px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>
+            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-gray-100 px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>
                 <div className='flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1'>
                     <nav>
                         <Breadcrumb>
