@@ -1,13 +1,34 @@
 import { FC } from 'react';
-import ActionLink from '~/components/_common/ActionLink';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '~/components/ui/dialog';
+import { useForm } from 'react-hook-form';
+import PopupModal from '~/components/_common/PopupModal';
+
+function UserForm({ onCloseModal }: { onCloseModal: () => void }) {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = () => {
+        onCloseModal();
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+                <label htmlFor='name'>Name:</label>
+                <input id='name' {...register('name', { required: true })} />
+                {errors.name && <span>This field is required</span>}
+            </div>
+            <div>
+                <label htmlFor='email'>Email:</label>
+                <input id='email' type='email' {...register('email', { required: true })} />
+                {errors.email && <span>This field is required</span>}
+            </div>
+            <button type='submit'>Submit</button>
+        </form>
+    );
+}
 
 type IOrderRowProps = {
     facility: string;
@@ -24,78 +45,61 @@ const OrderRow: FC<IOrderRowProps> = ({ facility, service, date, time, employee,
     return (
         <tr>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <p className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
                     {facility}
-                </p>
+                </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <p className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
                     {service}
-                </p>
+                </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <p className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
                     {date}
-                </p>
+                </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <p className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
                     {time}
-                </p>
+                </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <p className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
                     {employee}
-                </p>
+                </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <Dialog>
-                    <DialogTrigger>
-                        <p className='mb-0 text-xs font-semibold capitalize leading-tight underline dark:text-white dark:opacity-80'>
-                            {booker}
-                        </p>
-                    </DialogTrigger>
-
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Booker&apos;s details</DialogTitle>
-
-                            <DialogDescription>
-                                <p className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                                    Name: {booker}
-                                </p>
-                                <p className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                                    Phone: 0123456789
-                                </p>
-
-                                <p className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                                    Address: 123 Example St, Example City
-                                </p>
-
-                                <p className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                                    Email: {booker.toLowerCase().replace(' ', '.')}@example.com
-                                </p>
-                            </DialogDescription>
-                        </DialogHeader>
-                    </DialogContent>
-                </Dialog>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <ActionLink
-                    to='/'
-                    className={[
-                        'text-xs font-semibold capitalize leading-tight text-slate-400 dark:text-white dark:opacity-80',
-                        'm-1 bg-black',
-                    ]}
+                <PopupModal
+                    btnName={booker}
+                    title="Booker's details"
+                    className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'
                 >
-                    Edit
-                </ActionLink>
+                    <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                        Name: {booker} br
+                    </div>
+
+                    <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                        Phone: 0123456789
+                    </div>
+
+                    <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                        Address: 123 Example St, Example City
+                    </div>
+
+                    <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                        Email: {booker.toLowerCase().replace(' ', '.')}@example.com
+                    </div>
+                </PopupModal>
+            </td>
+
+            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
+                <PopupModal btnName='Edit' title="Change the order's information here" Form={UserForm}></PopupModal>
             </td>
         </tr>
     );

@@ -1,3 +1,5 @@
+'use client';
+
 import { ORDER_COLUMN_NAMES, OrderRow } from '~/components/_common/TableDisplay/Rows/OrderRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 
