@@ -1,4 +1,31 @@
 {
+
+    "Login":{
+       "title":"Đăng Nhập",
+       "validations":{
+            "email":{
+              "required":"Vui lòng nhập email",
+              "type":"Email không đúng định dạng"
+            },
+            "password":{
+              "required":"Vui lòng nhập mật khẩu",
+              "min_length":"Mật khẩu phải có ít nhất 6 ký tự"
+            }
+       },
+       "Email":{
+           "label":"Email",
+           "placeholder":"Nhập email"
+       },
+       "Password":{
+           "label":"Mật khẩu",
+           "placeholder":"Nhập mật khẩu"
+       },
+       "Checkbox":{
+         "label":"Ô đánh dấu Ghi nhớ tôi"
+       },
+       "Button":"Đăng nhập",
+       "forgot_password":"Quên mật khẩu"
+    },
     "AlertDiaLog": {
         "title": "Bạn có chắc chắn không?",
         "desc": "Bạn sẽ quay trở lại bước nhập thông tin trước đó",

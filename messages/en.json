@@ -1,4 +1,30 @@
 {
+    "Login": {
+        "title": "Login",
+        "validations": {
+            "email": {
+                "required": "Please enter your email",
+                "type": "Invalid email format"
+            },
+            "password": {
+                "required": "Please enter your password",
+                "min_length": "Password must be at least 6 characters long"
+            }
+        },
+        "Email": {
+            "label": "Email",
+            "placeholder": "Enter your email"
+        },
+        "Password": {
+            "label": "Password",
+            "placeholder": "Enter your password"
+        },
+        "Checkbox": {
+            "label": "Remember me"
+        },
+        "Button": "Login",
+        "forgot_password": "Forgot password?"
+    },
     "AlertDiaLog": {
         "title": "Are you sure?",
         "desc": "Your information will revert to the previous step.",
