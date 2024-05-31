@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormField } from '~/components/ui/form';
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
 import ButtonSubmit from '~/components/_common/ButtonSubmit';
+import { useRouter } from 'next/router';
 
 const bookingConfirmSchema = z.object({
     email: z.string({ required_error: 'Email không được để trống!' }).email('Email không hợp lệ!'),
@@ -18,6 +19,7 @@ const bookingConfirmSchema = z.object({
 type IBookingConfirmSchema = z.infer<typeof bookingConfirmSchema>;
 
 const ConfirmationForm = () => {
+    const router = useRouter();
     const t = useTranslations('ConfirmBookingForm');
     const form = useForm<IBookingConfirmSchema>({ resolver: zodResolver(bookingConfirmSchema) });
     const onSubmit: SubmitHandler<IBookingConfirmSchema> = async (data) => {
@@ -26,6 +28,7 @@ const ConfirmationForm = () => {
         });
         try {
             console.log(data);
+            router.replace('/ordersuccess');
         } catch (error) {
             console.log(error);
         }

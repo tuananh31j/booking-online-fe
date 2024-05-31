@@ -3,20 +3,15 @@ import {
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '~/components/ui/alert-dialog';
-import React, { useState } from 'react';
-import { Button } from '~/components/ui/button';
-import LoadingButton from '~/components/elements/LoadingButton';
+import React from 'react';
 import { useTranslations } from 'next-intl';
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '~/components/ui/dialog';
-import { DialogClose } from '@radix-ui/react-dialog';
 
-export default function PopupBackForm({ children, action }: { children: React.ReactNode; action: () => void }) {
+export default function PopupBackForm({ children, action }: { children: React.ReactNode; action?: () => void }) {
     const t = useTranslations('AlertDiaLog');
 
     return (

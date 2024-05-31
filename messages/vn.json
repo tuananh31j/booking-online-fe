@@ -79,5 +79,20 @@
         "phone": "Số điện thoại",
         "exp": "Kinh nghiệm",
         "desc": "Mô tả"
+    },
+    "OrderSuccess": {
+        "idBooking": "Mã đặt lịch",
+        "locationStore": "Địa chỉ cửa hàng đặt lịch",
+        "informationCustomer": "Thông tin người đặt lịch",
+        "email": "Email",
+        "birthday": "Ngày sinh",
+        "informationService": "Thông tin dịch vụ",
+        "descService": "Mô tả dịch vụ",
+        "timedoneservice": "Thời gian dịch vụ hoàn tất (Dự kiến)",
+        "dateBooking": "Dịch vụ được đặt vào ngày",
+        "timeBooking": "Thời gian",
+        "phonenumber": "Số điện thoại",
+        "AssignedStaff": "Nhân viên thực hiện",
+        "showStaff": "Xem chi tiết nhân viên"
     }
 }
