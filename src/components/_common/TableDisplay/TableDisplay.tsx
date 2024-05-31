@@ -7,11 +7,11 @@ type ITableDisplayProps = {
     title: string;
     columnNames: string[];
     children: ReactNode;
+    action?: { element: React.ElementType; modalTitle: string };
 };
-
-const TableDisplay: FC<ITableDisplayProps> = ({ title, columnNames, children }) => {
+const TableDisplay: FC<ITableDisplayProps> = ({ title, columnNames, action, children }) => {
     return (
-        <Wrapper title={title}>
+        <Wrapper title={title} action={action}>
             <div className='flex-auto px-0 pb-2 pt-0'>
                 <div className='overflow-x-auto p-0'>
                     <table className='mb-0 w-full border-collapse items-center align-top text-gray-500 dark:border-white/40'>

@@ -16,7 +16,7 @@ interface StatsCardProps {
 const StatsCard: React.FC<StatsCardProps> = ({ title, amount, percentage, since, icon: Icon, bgColor, iconColor }) => {
     return (
         <div className='mb-6 flex flex-col justify-between sm:w-1/2 xl:mb-0 xl:w-1/4'>
-            <div className='dark:bg-slate-850 dark:shadow-dark-xl w-[95%] rounded-2xl bg-[#d9d9d9] shadow-xl'>
+            <div className='dark:bg-slate-850 dark:shadow-dark-xl w-[95%] rounded-2xl bg-card shadow-xl'>
                 <div className='w-full p-4'>
                     <div>
                         <div className='-mx-3 flex'>

@@ -4,14 +4,15 @@ import TitleDisplay from '~/components/_common/TitleDisplay';
 type IWrapperProps = {
     children: ReactNode;
     title: string;
+    action?: { element: React.ElementType; modalTitle: string };
 };
 
-const Wrapper: FC<IWrapperProps> = ({ children, title }) => {
+const Wrapper: FC<IWrapperProps> = ({ children, title, action }) => {
     return (
         <div className='m-3 flex flex-wrap'>
             <div className='w-full max-w-full flex-none px-3'>
                 <div className='relative flex min-w-0 flex-col break-words rounded-lg border-0 border-solid border-transparent bg-white bg-clip-border p-3 shadow-xl dark:bg-gray-900 dark:shadow-lg'>
-                    <TitleDisplay title={title} />
+                    <TitleDisplay title={title} action={action} />
                     {children}
                 </div>
             </div>

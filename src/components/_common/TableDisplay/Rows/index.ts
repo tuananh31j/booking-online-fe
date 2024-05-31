@@ -1,1 +1,1 @@
-export * from './UserRow';
+export * from './Staff/UserRow';

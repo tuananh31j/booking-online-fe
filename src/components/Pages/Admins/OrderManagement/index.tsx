@@ -1,6 +1,6 @@
 'use client';
 
-import { ORDER_COLUMN_NAMES, OrderRow } from '~/components/_common/TableDisplay/Rows/OrderRow';
+import { ORDER_COLUMN_NAMES, OrderRow } from '~/components/_common/TableDisplay/Rows/Order/OrderRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 
 const dataFake = [

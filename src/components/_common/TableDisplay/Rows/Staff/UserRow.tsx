@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import { FC } from 'react';
-import ActionLink from '~/components/_common/ActionLink';
+import PopupModal from '~/components/_common/PopupModal';
 import StatusTag from '~/components/_common/StatusTag';
 import { UserRole } from '~/constants/enums';
 import { disPlayRoleName } from '~/lib/utils';
+import FormStaff from './FormStaff';
 
 type IUserRowProps = {
     avt: string;
@@ -53,15 +54,7 @@ const UserRow: FC<IUserRowProps> = ({ avt, name, email, role, status, createAt }
                 </span>
             </td>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <ActionLink
-                    to='/'
-                    className={[
-                        'text-xs font-semibold capitalize leading-tight text-slate-400 dark:text-white dark:opacity-80',
-                        'm-1 bg-black',
-                    ]}
-                >
-                    Edit
-                </ActionLink>
+                <PopupModal Form={FormStaff} btnName='Edit' title='Chỉnh sửa thông tin nhân viên' />
             </td>
         </tr>
     );

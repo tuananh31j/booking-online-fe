@@ -1,34 +1,6 @@
 import { FC } from 'react';
-import { useForm } from 'react-hook-form';
 import PopupModal from '~/components/_common/PopupModal';
-
-function UserForm({ onCloseModal }: { onCloseModal: () => void }) {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-
-    const onSubmit = () => {
-        onCloseModal();
-    };
-
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <label htmlFor='name'>Name:</label>
-                <input id='name' {...register('name', { required: true })} />
-                {errors.name && <span>This field is required</span>}
-            </div>
-            <div>
-                <label htmlFor='email'>Email:</label>
-                <input id='email' type='email' {...register('email', { required: true })} />
-                {errors.email && <span>This field is required</span>}
-            </div>
-            <button type='submit'>Submit</button>
-        </form>
-    );
-}
+import FormOrder from './FormOrder';
 
 type IOrderRowProps = {
     facility: string;
@@ -99,7 +71,7 @@ const OrderRow: FC<IOrderRowProps> = ({ facility, service, date, time, employee,
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <PopupModal btnName='Edit' title="Change the order's information here" Form={UserForm}></PopupModal>
+                <PopupModal btnName='Edit' title="Change the order's information here" Form={FormOrder}></PopupModal>
             </td>
         </tr>
     );

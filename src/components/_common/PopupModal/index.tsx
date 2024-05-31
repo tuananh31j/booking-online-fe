@@ -1,9 +1,11 @@
+'use client';
+
 import React, { FC, ReactNode, useState } from 'react';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 
 type IPopupModalProps = {
-    btnName: string;
+    btnName: string | React.ReactNode;
     title: string;
     Form?: React.ElementType;
     className?: string;

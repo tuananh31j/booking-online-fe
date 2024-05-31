@@ -17,7 +17,6 @@ const ActionLink = forwardRef<LinkProps & HTMLAnchorElement, IActionProps>(({ cl
     const isClassNameArray = Array.isArray(className);
     const isActive = (pathname === to || endPointPath === to) && isClassNameArray;
     const normalClass = isClassNameArray ? className[0] : className;
-    // const defaultClass = isClassNameArray ? className[1] : '';
     const activeClass = isClassNameArray ? className[1] : '';
 
     return (

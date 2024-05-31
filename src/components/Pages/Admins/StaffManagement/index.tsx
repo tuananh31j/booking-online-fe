@@ -1,5 +1,6 @@
 import React from 'react';
 import { USER_COLUMN_NAMES, UserRow } from '~/components/_common/TableDisplay/Rows';
+import FormStaff from '~/components/_common/TableDisplay/Rows/Staff/FormStaff';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import { UserRole } from '~/constants/enums';
 
@@ -88,7 +89,11 @@ const dataFake = [
 
 const StaffListManager = () => {
     return (
-        <TableDisplay title='Danh sách nhân viên' columnNames={USER_COLUMN_NAMES}>
+        <TableDisplay
+            title='Danh sách nhân viên'
+            columnNames={USER_COLUMN_NAMES}
+            action={{ element: FormStaff, modalTitle: 'Thêm mới nhân viên' }}
+        >
             {dataFake.map((item, i) => (
                 <UserRow
                     key={i}

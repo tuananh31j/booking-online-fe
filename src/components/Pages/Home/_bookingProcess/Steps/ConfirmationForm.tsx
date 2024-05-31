@@ -1,75 +1,86 @@
 'use client';
 
-import { CalendarIcon } from '@radix-ui/react-icons';
-import { format } from 'date-fns';
-import { cn } from '~/lib/utils';
 import { useTranslations } from 'next-intl';
-import { useId, useState } from 'react';
-import { Label } from '@radix-ui/react-label';
-import { Input } from '~/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
-import { Button } from '~/components/ui/button';
-import { Calendar } from '~/components/ui/calendar';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormField } from '~/components/ui/form';
+import FormItemDisplay from '~/components/_common/FormItemDisplay';
+import ButtonSubmit from '~/components/_common/ButtonSubmit';
+
+const bookingConfirmSchema = z.object({
+    email: z.string({ required_error: 'Email không được để trống!' }).email('Email không hợp lệ!'),
+    fullName: z.string().nonempty('Họ và tên không được để trống!'),
+    phone: z.string().nonempty('Số điện thoại không được để trống!'),
+    dateBooking: z.string().nonempty('Ngày đặt không được để trống!'),
+});
+
+type IBookingConfirmSchema = z.infer<typeof bookingConfirmSchema>;
 
 const ConfirmationForm = () => {
-    const [date, setDate] = useState<Date>();
     const t = useTranslations('ConfirmBookingForm');
-
-    const inputId = {
-        fullnameId: useId(),
-        emailId: useId(),
-        phoneNumberId: useId(),
+    const form = useForm<IBookingConfirmSchema>({ resolver: zodResolver(bookingConfirmSchema) });
+    const onSubmit: SubmitHandler<IBookingConfirmSchema> = async (data) => {
+        await new Promise((resolve) => {
+            setTimeout(resolve, 1000);
+        });
+        try {
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
     };
     return (
-        <div className=' flex items-center justify-center'>
-            <form className='mb-4 w-[500px]'>
-                <div className='mb-3'>
-                    <Label className='text-base' htmlFor={inputId.fullnameId}>
-                        {t('Fullname.label')}
-                    </Label>
-                    <Input placeholder={t('Fullname.placeholder')} id={inputId.fullnameId}></Input>
-                </div>
-                <div className='mb-3'>
-                    <Label className='text-base' htmlFor={inputId.emailId}>
-                        {t('Email.label')}
-                    </Label>
-                    <Input placeholder={t('Email.placeholder')} id={inputId.emailId}></Input>
-                </div>
-
-                <div className='mb-3'>
-                    <Label className='text-base' htmlFor={inputId.phoneNumberId}>
-                        {t('phonenumber.label')}
-                    </Label>
-                    <div className='flex items-center justify-between gap-3'>
-                        <Input
-                            placeholder={t('phonenumber.placeholder')}
-                            className='md:w-[50%]'
-                            id={inputId.phoneNumberId}
-                        ></Input>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    variant={'outline'}
-                                    type='button'
-                                    className={cn(
-                                        'w-[240px] justify-start text-left font-normal',
-                                        !date && 'text-muted-foreground'
-                                    )}
-                                >
-                                    <CalendarIcon className='mr-2 h-4 w-4' />
-                                    {date ? format(date, 'PPP') : <span>Pick a date</span>}
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className='w-auto p-0' align='start'>
-                                <Calendar mode='single' selected={date} onSelect={setDate} initialFocus />
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                </div>
-                <Button type='submit' className='mt-2 w-full rounded-lg'>
-                    {t('confirm')}
-                </Button>
-            </form>
+        <div className='mx-auto flex w-[30vw] flex-col justify-center'>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                    <FormField
+                        control={form.control}
+                        name='email'
+                        render={({ field }) => (
+                            <FormItemDisplay
+                                title={t('Email.label')}
+                                placeholder={t('Email.placeholder')}
+                                {...field}
+                                require
+                                type='text'
+                            />
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='fullName'
+                        render={({ field }) => (
+                            <FormItemDisplay
+                                title={t('Fullname.label')}
+                                placeholder={t('Fullname.placeholder')}
+                                {...field}
+                                require
+                                type='text'
+                            />
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='phone'
+                        render={({ field }) => (
+                            <FormItemDisplay
+                                title={t('phonenumber.label')}
+                                placeholder={t('phonenumber.placeholder')}
+                                {...field}
+                                require
+                                type='text'
+                            />
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='dateBooking'
+                        render={({ field }) => <FormItemDisplay title='Pick a date' {...field} require type='date' />}
+                    />
+                    <ButtonSubmit isSubmitting={form.formState.isSubmitting} name={t('confirm')} />
+                </form>
+            </Form>
         </div>
     );
 };
