@@ -46,7 +46,7 @@ const BookingCalendar = () => {
 
     return (
         <>
-            <div className='bg-content py-10'>
+            <div className='bg-content'>
                 <Form {...form}>
                     <form className='w-full' onSubmit={form.handleSubmit(onSubmit)}>
                         <FormField
