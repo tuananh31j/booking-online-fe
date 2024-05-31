@@ -78,10 +78,10 @@ const OrderRow: FC<IOrderRowProps> = ({ facility, service, date, time, employee,
                 <PopupModal
                     btnName={booker}
                     title="Booker's details"
-                    className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'
+                    className='mb-0 text-xs font-semibold capitalize leading-tight underline dark:text-white dark:opacity-80'
                 >
                     <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                        Name: {booker} br
+                        Name: {booker}
                     </div>
 
                     <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
@@ -99,7 +99,12 @@ const OrderRow: FC<IOrderRowProps> = ({ facility, service, date, time, employee,
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <PopupModal btnName='Edit' title="Change the order's information here" Form={UserForm}></PopupModal>
+                <PopupModal
+                    btnName='Edit'
+                    title="Change the order's information here"
+                    className='rounded-md bg-blue-500 px-4 py-2 text-sm text-white'
+                    Form={UserForm}
+                ></PopupModal>
             </td>
         </tr>
     );
