@@ -52,5 +52,20 @@
         "phone": "Phone",
         "exp": "Experience",
         "desc": "Describe"
+    },
+    "OrderSuccess": {
+        "idBooking": "Booking code",
+        "locationStore": "Store Address",
+        "informationCustomer": "Booking customer information",
+        "email": "Email",
+        "birthday": "Date of Birth",
+        "informationService": "Service Information",
+        "descService": "Service Description",
+        "timedoneservice": "Expected Service Completion Time",
+        "dateBooking": "Date of Service Booking",
+        "timeBooking": "Hour",
+        "phonenumber": "Number Phone",
+        "AssignedStaff": "Assigned Staff",
+        "showStaff": "View Staff Details"
     }
 }

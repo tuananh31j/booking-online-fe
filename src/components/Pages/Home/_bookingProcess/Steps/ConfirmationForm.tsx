@@ -32,7 +32,7 @@ const ConfirmationForm = () => {
         });
         try {
             console.log(data);
-            router.push('/ordersuccess');
+            router.replace('/ordersuccess');
         } catch (error) {
             console.log(error);
         }
