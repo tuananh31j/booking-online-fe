@@ -1,5 +1,5 @@
 import ActionLink from '~/components/_common/ActionLink';
-import Menu from '~/components/Layouts/AdminSidebar/_components/Menu/Menu';
+import Menu from '~/Layouts/AdminSidebar/_components/Menu/Menu';
 
 const AdminSidebar = () => {
     return (

@@ -1,6 +1,6 @@
-import Logo from '~/components/Layouts/Header/_components/Logo';
-import Socials from '~/components/Layouts/Header/_components/Socials';
-import SwitchOptions from '~/components/Layouts/Header/_components/SwitchOptions';
+import Logo from '~/Layouts/Header/_components/Logo';
+import Socials from '~/Layouts/Header/_components/Socials';
+import SwitchOptions from '~/Layouts/Header/_components/SwitchOptions';
 import { cn } from '~/lib/utils';
 
 const Header = ({ className }: { className?: string }) => {

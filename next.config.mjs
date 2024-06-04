@@ -19,6 +19,14 @@ const nextConfig = {
         ignoreDuringBuilds: true,
     },
     reactStrictMode: true,
+    async rewrites() {
+        return [
+            {
+                source: '/api/:path*',
+                destination: 'https://booking.imtaedu.com/api/:path*',
+            },
+        ];
+    },
 };
 
 export default withNextIntl(nextConfig);
