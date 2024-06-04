@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "server": "npx json-server db.json -p 4000",
-        "dev": "next dev",
+        "dev": "next dev -p 4001",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",

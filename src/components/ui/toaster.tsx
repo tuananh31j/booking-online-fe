@@ -10,7 +10,6 @@ export function Toaster() {
     return (
         <ToastProvider>
             {toasts.map(function ({ icon, id, title, description, action, ...props }) {
-                console.log(icon);
                 return (
                     <Toast key={id} {...props}>
                         <div className='flex items-center gap-5'>

@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '~/components/ui/button';
@@ -30,7 +31,7 @@ export default function LoginPage() {
             .min(6, { message: `${t('validations.password.min_length')}` }),
         rememberMe: z.boolean(),
     });
-    const [login, { isLoading, isError, data: loginResponse, isSuccess }] = useLoginMutation();
+    const [login, loginState] = useLoginMutation();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -45,17 +46,19 @@ export default function LoginPage() {
 
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         login({ email: data.email, password: data.password });
-        if (isSuccess) {
-            dispatch(loginAction(loginResponse));
-            handleMessage({ title: 'Đăng nhập thành công!', status: 'success' });
-            router.push('/admin/dasboard');
-        }
-        if (isError) {
-            console.log(isError, isSuccess, data, loginResponse, process.env.NEXT_PUBLIC_API_URL);
-            handleMessage({ title: 'Thông tin đăng nhập sai!', status: 'destructive' });
-        }
     };
 
+    useEffect(() => {
+        if (loginState.isSuccess) {
+            dispatch(loginAction(loginState.data.data));
+            handleMessage({ title: 'Đăng nhập thành công!', status: 'success' });
+            router.push('/admin/dashboard');
+        }
+        if (loginState.isError) {
+            handleMessage({ title: 'Thông tin đăng nhập sai!', status: 'destructive' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loginState]);
     return (
         <div className='background mx-auto flex min-h-screen items-center justify-center'>
             <div className='flex h-screen items-center justify-center'>

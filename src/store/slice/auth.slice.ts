@@ -1,22 +1,19 @@
 'use client';
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Cookies from 'universal-cookie';
+import { ILoginResponse } from '~/types/Auth';
 // import { RootState } from '@reduxjs/toolkit/query';
+const cookies = new Cookies();
 
-type IAuth = {
-    token: string;
-};
-
-const initialState = localStorage.getItem('accessToken')
-    ? { token: localStorage.getItem('accessToken') }
-    : { token: null };
+const initialState: { user: ILoginResponse } = { user: cookies.get('user') ? cookies.get('user') : '' };
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<IAuth>) => {
-            localStorage.setItem('accessToken', action.payload.token);
-            state.token = action.payload.token;
+        login: (state, action: PayloadAction<ILoginResponse>) => {
+            cookies.set('user', action.payload);
+            state.user = action.payload;
         },
     },
 });
