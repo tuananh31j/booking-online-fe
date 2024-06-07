@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { DollarSign, Users, UserPlus, ShoppingCart } from 'lucide-react';
 import StatsCard from '~/components/elements/StatsCard';
+import ProfileCard from '~/components/elements/ProfileCard';
 
 type Series = {
     name?: string;
