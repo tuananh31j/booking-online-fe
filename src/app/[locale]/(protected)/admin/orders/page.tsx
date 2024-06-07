@@ -1,5 +1,5 @@
 import React from 'react';
-import OrderManagement from '~/Pages/Admins/OrderManagement';
+import OrderManagement from '~/pages/Admins/OrderManagement';
 
 const OrdersPage = () => {
     return <OrderManagement />;

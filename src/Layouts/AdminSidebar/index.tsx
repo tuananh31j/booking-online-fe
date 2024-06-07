@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import ActionLink from '~/components/_common/ActionLink';
 import { Button } from '~/components/ui/button';
 import useToastDisplay from '~/hooks/useToastDisplay';
-import Menu from '~/Layouts/AdminSidebar/_components/Menu/Menu';
+import Menu from '~/layouts/AdminSidebar/_components/Menu/Menu';
 
 const cookies = new Cookies();
 

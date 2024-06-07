@@ -1,4 +1,4 @@
-import StoreListManagement from '~/Pages/Admins/StoreManagement';
+import StoreListManagement from '~/pages/Admins/StoreManagement';
 
 const StoreList = () => {
     return <StoreListManagement />;
