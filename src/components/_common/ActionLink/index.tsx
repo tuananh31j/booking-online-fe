@@ -13,7 +13,7 @@ type IActionProps = {
 
 const ActionLink = forwardRef<LinkProps & HTMLAnchorElement, IActionProps>(({ className, to, children }, ref) => {
     const pathname = usePathname();
-    const endPointPath = pathname.split('/').pop();
+    const endPointPath = pathname ? pathname.split('/').pop() : '';
     const isClassNameArray = Array.isArray(className);
     const isActive = (pathname === to || endPointPath === to) && isClassNameArray;
     const normalClass = isClassNameArray ? className[0] : className;

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import ActionLink from '~/components/_common/ActionLink';
 
-const MenuItem = ({ children, name, path }: { children: ReactNode; name: string; path: string }) => {
+const MenuItem = ({ children, name, path }: { children?: ReactNode; name: string; path: string }) => {
     return (
         <li className='mt-[0.125rem] w-full'>
             <ActionLink

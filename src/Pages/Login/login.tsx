@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import Cookies from 'universal-cookie';
 import { z } from 'zod';
 import { Button } from '~/components/ui/button';
 import { Card } from '~/components/ui/card';
@@ -17,10 +18,13 @@ import { useLoginMutation } from '~/store/services/auth.service';
 import { loginAction } from '~/store/slice/auth.slice';
 import { useAppDispatch } from '~/store/store';
 
+const cookies = new Cookies();
+
 export default function LoginPage() {
     const t = useTranslations('Login');
     const handleMessage = useToastDisplay();
     const dispatch = useAppDispatch();
+    const router = useRouter();
 
     const formSchema = z.object({
         email: z
@@ -42,8 +46,6 @@ export default function LoginPage() {
         },
     });
 
-    const router = useRouter();
-
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         login({ email: data.email, password: data.password });
     };
@@ -52,6 +54,8 @@ export default function LoginPage() {
         if (loginState.isSuccess) {
             dispatch(loginAction(loginState.data.data));
             handleMessage({ title: 'Đăng nhập thành công!', status: 'success' });
+            cookies.set('user', loginState.data.data.data);
+            cookies.set('accessToken', loginState.data.data.token);
             router.push('/admin/dashboard');
         }
         if (loginState.isError) {

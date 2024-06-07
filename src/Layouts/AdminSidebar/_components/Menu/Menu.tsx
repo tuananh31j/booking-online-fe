@@ -13,7 +13,7 @@ const Menu = () => {
     return (
         <>
             <div className='fixed bottom-0 left-0 right-0 top-0 -z-10 bg-[#5e72e4] bg-card transition-colors duration-300'></div>
-            <div className='block max-h-screen w-auto grow basis-full items-center overflow-auto bg-card pb-[200px]'>
+            <div className='block max-h-screen w-auto grow basis-full items-center overflow-auto bg-card'>
                 <ul className='mb-0 flex flex-col pl-0'>
                     {MENU_LIST.map((item, i) => (
                         <MenuItem key={i} path={item.path} name={item.name}>
