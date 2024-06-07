@@ -1,5 +1,5 @@
 export const QUERY_KEY = {
-    SATFF: 'staff',
+    STAFF: 'staff',
     SERVICE: 'service',
     ORDER: 'order',
     STORE: 'store',
