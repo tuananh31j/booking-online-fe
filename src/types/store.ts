@@ -1,0 +1,28 @@
+export type IStoreBody = {
+    name: string;
+    address: string;
+    phone: string;
+    image?: File | string | FileList;
+};
+
+export type IStoreResponse = {
+    data: {
+        id: number;
+        name: string;
+        address: string;
+        phone: string;
+        image: string;
+        updated_at: string;
+        created_at: string;
+    };
+};
+
+export interface IStoreItem {
+    id: number;
+    name: string;
+    address: string;
+    phone: string;
+    image: string;
+    created_at: string;
+    updated_at: string;
+}

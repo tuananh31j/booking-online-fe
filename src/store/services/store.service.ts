@@ -1,10 +1,10 @@
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
-import { IStoreItem } from '~/types/Store';
+import { IStoreBody, IStoreItem, IStoreResponse } from '~/types/Store';
 
 export const storeApi = baseApi.injectEndpoints({
-    endpoints: (build) => ({
-        getListStore: build.query<IApiResponse<{ data: IStoreItem[] }>, void>({
+    endpoints: (builder) => ({
+        getListStore: builder.query<IApiResponse<{ data: IStoreItem[] }>, void>({
             query: () => '/list_store',
             providesTags(result) {
                 if (result) {
@@ -15,14 +15,22 @@ export const storeApi = baseApi.injectEndpoints({
                 return final;
             },
         }),
-        removeStore: build.mutation<object, number>({
+        removeStore: builder.mutation<object, number>({
             query: (id) => ({
                 url: `/store_delete/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: (result, error, id) => (error ? [] : [{ type: 'store', id: 'LIST' }]),
         }),
+
+        createStore: builder.mutation<IApiResponse<IStoreResponse>, IStoreBody>({
+            query: (formData) => ({
+                url: '/store_post',
+                method: 'POST',
+                body: formData,
+            }),
+        }),
     }),
 });
 
-export const { useGetListStoreQuery, useRemoveStoreMutation } = storeApi;
+export const { useGetListStoreQuery, useCreateStoreMutation, useRemoveStoreMutation } = storeApi;
