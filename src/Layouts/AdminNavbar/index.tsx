@@ -1,3 +1,8 @@
+'use client';
+
+import { Bell, Search, Settings, Slash, UserCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import ProfileCard from '~/components/elements/ProfileCard';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -5,8 +10,7 @@ import {
     BreadcrumbList,
     BreadcrumbSeparator,
 } from '~/components/ui/breadcrumb';
-import { Bell, Search, Settings, Slash, UserRound } from 'lucide-react';
-import { Input } from '~/components/ui/input';
+import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,8 +21,10 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
+import { Input } from '~/components/ui/input';
 
 const AdminNavbar = () => {
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <>
             <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>
@@ -55,12 +61,14 @@ const AdminNavbar = () => {
                         </div>
                         <ul className='md-max:w-full mb-0 ml-2 flex list-none flex-row justify-end pl-0 md:ml-0'>
                             <li className='flex items-center'>
-                                <a
-                                    href='../pages/sign-in.html'
-                                    className='ease-nav-brand block px-0 py-2 text-sm font-semibold transition-all'
-                                >
-                                    <UserRound size={16} strokeWidth={1.75} />
-                                </a>
+                                <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                                    <DialogTrigger asChild>
+                                        <UserCircle2 size={16} strokeWidth={1.75} />
+                                    </DialogTrigger>
+                                    <DialogContent className=''>
+                                        <ProfileCard />
+                                    </DialogContent>
+                                </Dialog>
                             </li>
                             <li className='flex items-center pl-4'>
                                 <a href='./index.html' className='ease-nav-brand block p-0 text-sm transition-all'>
