@@ -1,9 +1,10 @@
-import { HandPlatter, LayoutDashboard, ListOrdered, UserRound } from 'lucide-react';
+import { HandPlatter, LayoutDashboard, ListOrdered, StoreIcon, UserRound } from 'lucide-react';
 import React from 'react';
 import MenuItem from '~/Layouts/AdminSidebar/_components/Menu/MenuItem';
 
 const MENU_LIST = [
     { path: 'dashboard', name: 'Dashboard', icon: <LayoutDashboard size={16} strokeWidth={1.75} /> },
+    { path: 'store', name: 'Store', icon: <StoreIcon size={16} strokeWidth={1.75} /> },
     { path: 'orders', name: 'Orders', icon: <ListOrdered size={16} strokeWidth={1.75} /> },
     { path: 'staff-list', name: 'Manage staffs', icon: <UserRound size={16} strokeWidth={1.75} /> },
     { path: 'services', name: 'Services', icon: <HandPlatter size={16} strokeWidth={1.75} /> },
