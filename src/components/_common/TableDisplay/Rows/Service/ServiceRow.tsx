@@ -1,62 +1,58 @@
-import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormService from './FormService';
 import PopupBackForm from '~/components/elements/PopupBackForm';
+import { IService } from '~/types/Service';
 
-type IServiceRowProps = {
-    id: string;
-    name: string;
-    category: string;
-    description: string;
-    price: string;
-    createdAt: string;
-    updatedAt: string;
-};
+interface ServiceItemProps {
+    service: IService;
+}
 
 const ORDER_COLUMN_NAMES = ['ID', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
 
-const ServiceRow: FC<IServiceRowProps> = ({ id, name, category, description, price, createdAt, updatedAt }) => {
+const ServiceRow = (serviceProps: ServiceItemProps) => {
+    const { service } = serviceProps;
+
     return (
         <tr className='h-10'>
             <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {id}
+                    {service.id}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {name}
+                    {service.name}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {category}
+                    {service.category}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {description}
+                    {service.describe}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {price}
+                    {service.price}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {createdAt}
+                    {service.created_at}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {updatedAt}
+                    {service.updated_at}
                 </div>
             </td>
 
@@ -66,10 +62,10 @@ const ServiceRow: FC<IServiceRowProps> = ({ id, name, category, description, pri
                     title="Change the service's information here"
                     className='underline hover:text-blue-800'
                     Form={FormService}
-                ></PopupModal>{' '}
+                ></PopupModal>
                 |
                 <PopupBackForm>
-                    <button className='underline hover:text-red-800'> Delete</button>
+                    <button className='underline hover:text-red-800'>Delete</button>
                 </PopupBackForm>
             </td>
         </tr>
