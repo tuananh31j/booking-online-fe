@@ -1,5 +1,6 @@
 'use client';
 
+import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import FormService from '~/components/_common/TableDisplay/Rows/Service/FormService';
 import { ORDER_COLUMN_NAMES, ServiceRow } from '~/components/_common/TableDisplay/Rows/Service/ServiceRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
@@ -17,6 +18,8 @@ const ServiceManagement = () => {
                 columnNames={ORDER_COLUMN_NAMES}
                 action={{ element: FormService, modalTitle: 'Thêm mới dịch vụ' }}
             >
+                {isLoading && <RowSkeleton rows={3} cols={ORDER_COLUMN_NAMES.length} />}
+
                 {!isLoading &&
                     !isFetching &&
                     serviceList?.map((service: IService) => <ServiceRow key={service.id} service={service} />)}
