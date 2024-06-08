@@ -4,9 +4,9 @@ import FormService from './FormService';
 import PopupBackForm from '~/components/elements/PopupBackForm';
 
 type IServiceRowProps = {
-    id: string;
+    id: number;
     name: string;
-    category: string;
+    category: number;
     description: string;
     price: string;
     createdAt: string;

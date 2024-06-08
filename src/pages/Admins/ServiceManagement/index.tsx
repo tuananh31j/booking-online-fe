@@ -3,6 +3,8 @@
 import FormService from '~/components/_common/TableDisplay/Rows/Service/FormService';
 import { ORDER_COLUMN_NAMES, ServiceRow } from '~/components/_common/TableDisplay/Rows/Service/ServiceRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
+import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
+import { useGetListServiceQuery, useRemoveServiceMutation } from '~/store/services/service.service';
 
 const dataFake = [
     {
@@ -35,6 +37,12 @@ const dataFake = [
 ];
 
 const ServiceManagement = () => {
+    const { data, isLoading } = useGetListServiceQuery();
+    const [mutate, { isLoading: PendingRemove }] = useRemoveServiceMutation();
+    const handleDeleteService = (id: number) => {
+        mutate(id);
+    };
+    const service = data?.data?.data;
     return (
         <div>
             <TableDisplay
@@ -42,18 +50,22 @@ const ServiceManagement = () => {
                 columnNames={ORDER_COLUMN_NAMES}
                 action={{ element: FormService, modalTitle: 'Thêm mới dịch vụ' }}
             >
-                {dataFake.map((item, i) => (
-                    <ServiceRow
-                        key={i}
-                        id={item.id}
-                        name={item.name}
-                        category={item.category}
-                        description={item.description}
-                        price={item.price}
-                        createdAt={item.createdAt}
-                        updatedAt={item.updatedAt}
-                    />
-                ))}
+                {!isLoading &&
+                    !PendingRemove &&
+                    service?.map((item, i) => (
+                        <ServiceRow
+                            key={i}
+                            id={item.id}
+                            name={item.name}
+                            category={item.categorie_id}
+                            description={item.describe}
+                            price={item.price}
+                            createdAt={item.created_at}
+                            updatedAt={item.updated_at}
+                        />
+                    ))}
+                {isLoading && <RowSkeleton rows={3} cols={ORDER_COLUMN_NAMES.length} />}
+                {PendingRemove && <RowSkeleton rows={3} cols={ORDER_COLUMN_NAMES.length} />}
             </TableDisplay>
         </div>
     );
