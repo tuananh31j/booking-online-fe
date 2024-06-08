@@ -56,7 +56,7 @@ export default function LoginPage() {
             handleMessage({ title: 'Đăng nhập thành công!', status: 'success' });
             cookies.set('user', loginState.data.data.data);
             cookies.set('accessToken', loginState.data.data.token);
-            router.push('/admin/dashboard');
+            router.replace('/admin/dashboard');
         }
         if (loginState.isError) {
             handleMessage({ title: 'Thông tin đăng nhập sai!', status: 'destructive' });

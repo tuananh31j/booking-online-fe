@@ -1,25 +1,42 @@
+import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
-export default createMiddleware({
-    // A list of all locales that are supported
+// Tạo middleware quốc tế hóa
+const intlMiddleware = createMiddleware({
     locales: ['en', 'vn'],
-
-    // Used when no locale matches
     defaultLocale: 'en',
-
     localePrefix: 'never',
 });
 
-export const config = {
-    // Match only internationalized pathnames
-    // matcher: ['/', '/(vn|en)/:path*'],
+export default async function middleware(req: NextRequest) {
+    const res = intlMiddleware(req);
 
+    const { pathname } = req.nextUrl;
+    const token = req.cookies.get('accessToken')?.value;
+    const url = req.nextUrl.clone();
+    console.log(token, '0k');
+
+    if (pathname === '/login') {
+        if (token) {
+            url.pathname = '/404';
+            return NextResponse.redirect(url);
+        }
+    }
+    if (pathname.startsWith('/admin')) {
+        if (!token) {
+            url.pathname = '/login';
+            return NextResponse.redirect(url);
+        }
+    }
+
+    return res;
+}
+
+export const config = {
     matcher: [
-        // Match all pathnames except for
-        // - … if they start with `/api`, `/_next` or `/_vercel`
-        // - … the ones containing a dot (e.g. `favicon.ico`)
-        '/((?!api|_next|_vercel|.*\\..*).*)',
-        // However, match all pathnames within `/users`, optionally with a locale prefix
-        '/([\\w-]+)?/users/(.+)',
+        '/((?!api|_next|_vercel|.*\\..*).*)', // Áp dụng cho tất cả các route trừ api, _next, _vercel, và các tệp tĩnh
+        '/([\\w-]+)?/users/(.+)', // Áp dụng cho các route dưới /users
+        '/login', // Áp dụng cho /login
+        '/admin/:path*', // Áp dụng cho /admin và tất cả các route con
     ],
 };
