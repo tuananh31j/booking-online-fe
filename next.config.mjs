@@ -6,14 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: '**',
-                port: '',
-                pathname: '/**',
-            },
-        ],
+        domains: ['booking.imtaedu.com', 'i.redd.it'],
     },
     eslint: {
         ignoreDuringBuilds: true,

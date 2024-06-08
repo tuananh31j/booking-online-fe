@@ -1,7 +1,9 @@
 'use client';
 
 import { Bell, Search, Settings, Slash, UserCircle2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Cookies from 'universal-cookie';
 import ProfileCard from '~/components/elements/ProfileCard';
 import {
     Breadcrumb,
@@ -22,9 +24,20 @@ import {
     DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import { Input } from '~/components/ui/input';
+import useToastDisplay from '~/hooks/useToastDisplay';
 
 const AdminNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const hangleMessage = useToastDisplay();
+    const router = useRouter();
+    const cookies = new Cookies();
+
+    const handleLogout = () => {
+        cookies.remove('user');
+        cookies.remove('accessToken');
+        hangleMessage({ title: 'Logged out!', status: 'default' });
+        router.push('/login');
+    };
     return (
         <>
             <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>
@@ -105,7 +118,7 @@ const AdminNavbar = () => {
                                         </DropdownMenuGroup>
                                         <DropdownMenuSeparator />
 
-                                        <DropdownMenuItem>
+                                        <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
                                             Log out
                                             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                                         </DropdownMenuItem>

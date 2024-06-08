@@ -54,7 +54,7 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, act
             </td>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='flex items-center gap-2'>
-                    <PopupModal Form={FormStore} btnName='Edit' title='Chỉnh sửa thông tin cửa hàng' />
+                    <PopupModal id={id} Form={FormStore} btnName='Edit' title='Chỉnh sửa thông tin cửa hàng' />
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{

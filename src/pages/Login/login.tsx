@@ -51,6 +51,7 @@ export default function LoginPage() {
     };
 
     useEffect(() => {
+        console.log(loginState.isError);
         if (loginState.isSuccess) {
             dispatch(loginAction(loginState.data.data));
             handleMessage({ title: 'Đăng nhập thành công!', status: 'success' });
