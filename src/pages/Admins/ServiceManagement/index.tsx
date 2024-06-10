@@ -62,6 +62,7 @@ const ServiceManagement = () => {
                             price={item.price}
                             createdAt={item.created_at}
                             updatedAt={item.updated_at}
+                            handleDeleteService={handleDeleteService}
                         />
                     ))}
                 {isLoading && <RowSkeleton rows={3} cols={ORDER_COLUMN_NAMES.length} />}

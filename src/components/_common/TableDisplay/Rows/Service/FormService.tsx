@@ -12,10 +12,9 @@ const FormServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
     category: z.string({ required_error: 'Số điện thoại không được để trống!' }),
     description: z.string({ required_error: 'Số điện thoại không được để trống!' }),
-    price: z
-        .number({ required_error: 'Vui lòng nhập giá cả!', invalid_type_error: 'Giá trị không đúng!' })
-        .positive({ message: 'Giá phải là số dương!' })
-        .min(1000, { message: 'Giá không được nhỏ hơn 1000!' }),
+    price: z.string({ required_error: 'Vui lòng nhập giá cả!', invalid_type_error: 'Giá trị không đúng!' }),
+    // .positive({ message: 'Giá phải là số dương!' })
+    // .min(1000, { message: 'Giá không được nhỏ hơn 1000!' }),
 });
 
 type IFormService = z.infer<typeof FormServiceSchema>;

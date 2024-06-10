@@ -11,11 +11,21 @@ type IServiceRowProps = {
     price: string;
     createdAt: string;
     updatedAt: string;
+    handleDeleteService: (id: number) => void;
 };
 
 const ORDER_COLUMN_NAMES = ['ID', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
 
-const ServiceRow: FC<IServiceRowProps> = ({ id, name, category, description, price, createdAt, updatedAt }) => {
+const ServiceRow: FC<IServiceRowProps> = ({
+    id,
+    name,
+    category,
+    description,
+    price,
+    createdAt,
+    updatedAt,
+    handleDeleteService,
+}) => {
     return (
         <tr className='h-10'>
             <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
@@ -69,7 +79,9 @@ const ServiceRow: FC<IServiceRowProps> = ({ id, name, category, description, pri
                 ></PopupModal>{' '}
                 |
                 <PopupBackForm>
-                    <button className='underline hover:text-red-800'> Delete</button>
+                    <button className='underline hover:text-red-800' onClick={() => handleDeleteService(id)}>
+                        Delete
+                    </button>
                 </PopupBackForm>
             </td>
         </tr>
