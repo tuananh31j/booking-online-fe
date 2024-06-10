@@ -2,14 +2,19 @@
 
 import Image from 'next/image';
 import PopupStaffProfile from '~/components/elements/PopupStaffProfile';
+import { IStaff } from '~/types/Staff';
 
-export default function StaffCard() {
+export interface IStaffData {
+    staff: IStaff;
+}
+
+export default function StaffCard(staff: IStaffData) {
     return (
         <div className='px-[2.625rem] py-7'>
-            <PopupStaffProfile>
+            <PopupStaffProfile staff={staff.staff}>
                 <div>
                     <Image
-                        src='https://i.pinimg.com/564x/4e/79/d3/4e79d37bd5fe58e4f9630ee21a61f4a8.jpg'
+                        src={staff.staff.image || 'https://fastsave.live/images/dev.png'}
                         alt={'Staff image'}
                         width={100}
                         height={100}
@@ -17,7 +22,7 @@ export default function StaffCard() {
                     />
                 </div>
             </PopupStaffProfile>
-            <h4 className='bg-card py-4 text-center text-lg'>Staffs name</h4>
+            <h4 className='bg-card py-4 text-center text-lg'>{staff.staff.name}</h4>
         </div>
     );
 }

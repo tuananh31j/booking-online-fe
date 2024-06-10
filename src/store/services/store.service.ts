@@ -1,6 +1,6 @@
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
-import { IStoreBody, IStoreItem, IStoreResponse } from '~/types/Store';
+import { IStoreBody, IStoreItem, IStoreResponse } from '~/styles/Store';
 
 export const storeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
