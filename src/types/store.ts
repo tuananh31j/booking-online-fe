@@ -26,3 +26,5 @@ export interface IStoreItem {
     created_at: string;
     updated_at: string;
 }
+
+// commit failed state
