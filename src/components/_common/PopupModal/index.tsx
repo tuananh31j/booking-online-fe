@@ -1,8 +1,10 @@
 'use client';
 
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
+import { RootState, useAppDispatch } from '~/store/store';
 
 type IPopupModalProps = {
     btnName: string | React.ReactNode;
@@ -10,16 +12,16 @@ type IPopupModalProps = {
     Form?: React.ElementType;
     className?: string;
     children?: ReactNode;
+    id?: number;
 };
 
 // className is CSS for only dialogtrigger on line 26
-const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, children }) => {
+const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, children, id }) => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const dispatch = useAppDispatch();
     const handleOpen = () => {
         setIsOpen(!isOpen);
     };
-
     return (
         <>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -30,7 +32,7 @@ const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, chi
                         <DialogTitle className='mb-4 text-2xl'>{title}</DialogTitle>
 
                         <div>
-                            {Form && !children && <Form onCloseModal={handleOpen} />} {!Form && children}{' '}
+                            {Form && !children && <Form id={id} onCloseModal={handleOpen} />} {!Form && children}
                         </div>
                     </DialogHeader>
                 </DialogContent>
