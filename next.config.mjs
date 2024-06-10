@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['booking.imtaedu.com', 'i.redd.it'],
+        domains: ['booking.imtaedu.com', 'i.redd.it', 'i.pinimg.com'],
     },
     eslint: {
         ignoreDuringBuilds: true,

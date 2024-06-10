@@ -1,12 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { log } from 'console';
 import { Plus } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { z } from 'zod';
 import LoadingButton from '~/components/elements/LoadingButton';
 import { Button } from '~/components/ui/button';
@@ -14,7 +12,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '~/components/ui/input';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useCreateStoreMutation, useGetDetailStoreQuery, useUpdateStoreMutation } from '~/store/services/store.service';
-import { RootState } from '~/store/store';
 import { isStoreError } from '~/types/Error/Helper';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -64,6 +61,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
             image: undefined,
         },
     });
+
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         if (!id) {
             try {
@@ -96,7 +94,6 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
     };
     useEffect(() => {
         if (id && detailStore) {
-            console.log(detailStore.data.image);
             form.reset({
                 name: detailStore.data.name,
                 address: detailStore.data.address,
