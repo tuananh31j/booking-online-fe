@@ -4,7 +4,11 @@ import FormService from '~/components/_common/TableDisplay/Rows/Service/FormServ
 import { ORDER_COLUMN_NAMES, ServiceRow } from '~/components/_common/TableDisplay/Rows/Service/ServiceRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
-import { useGetListServiceQuery, useRemoveServiceMutation } from '~/store/services/service.service';
+import {
+    useCreateServiceMutation,
+    useGetListServiceQuery,
+    useRemoveServiceMutation,
+} from '~/store/services/service.service';
 
 const dataFake = [
     {
@@ -42,6 +46,7 @@ const ServiceManagement = () => {
     const handleDeleteService = (id: number) => {
         mutate(id);
     };
+    const [createService, { isLoading: pendingCreate }] = useCreateServiceMutation();
     const service = data?.data?.data;
     return (
         <div>
@@ -65,8 +70,7 @@ const ServiceManagement = () => {
                             handleDeleteService={handleDeleteService}
                         />
                     ))}
-                {isLoading && <RowSkeleton rows={3} cols={ORDER_COLUMN_NAMES.length} />}
-                {PendingRemove && <RowSkeleton rows={3} cols={ORDER_COLUMN_NAMES.length} />}
+                {(isLoading || PendingRemove) && <RowSkeleton rows={3} cols={ORDER_COLUMN_NAMES.length} />}
             </TableDisplay>
         </div>
     );
