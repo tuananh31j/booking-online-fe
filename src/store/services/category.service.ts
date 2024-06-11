@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
-import { ICategoryItem } from '~/types/category';
+import { ICategoryItem } from '~/types/Category';
 
 export const categoryApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({

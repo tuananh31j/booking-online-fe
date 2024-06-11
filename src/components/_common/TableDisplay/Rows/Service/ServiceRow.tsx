@@ -7,7 +7,7 @@ import AlertDialogConfirm from '~/components/elements/AlertDialog';
 type IServiceRowProps = {
     id: number;
     name: string;
-    category: number;
+    category: number | string | boolean;
     description: string;
     price: string;
     createdAt: string;

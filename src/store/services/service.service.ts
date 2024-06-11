@@ -1,7 +1,7 @@
 import { remove } from 'lodash';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
-import { IServiceBody, IServiceItem, IServiceResponse } from '~/types/service';
+import { IServiceBody, IServiceItem, IServiceResponse } from '~/types/Service';
 
 export const serviceApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
