@@ -12,6 +12,12 @@ const nextConfig = {
             'i.pinimg.com',
             'https://res.cloudinary.com/df54xhhcq/image/upload/v1717154206/products/qlpl83jom1dqlfb2ppvo.jpg',
         ],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**',
+            },
+        ],
     },
     eslint: {
         ignoreDuringBuilds: true,

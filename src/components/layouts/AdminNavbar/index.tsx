@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, Search, Settings, Slash, UserCircle2 } from 'lucide-react';
+import { Search, Settings, Slash, UserCircle2 } from 'lucide-react';
 import { useState } from 'react';
 import ProfileCard from '~/components/elements/ProfileCard';
 import {
@@ -24,6 +24,7 @@ import { Input } from '~/components/ui/input';
 import { useRouter } from 'next/navigation';
 import Cookies from 'universal-cookie';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import AdminNotificationCard from '~/components/elements/AdminNotificationCard';
 
 const cookies = new Cookies();
 
@@ -84,9 +85,9 @@ const AdminNavbar = () => {
                                 </Dialog>
                             </li>
                             <li className='flex items-center pl-4'>
-                                <a href='./index.html' className='ease-nav-brand block p-0 text-sm transition-all'>
-                                    <Bell size={16} strokeWidth={1.75} className='cursor-pointer text-default' />
-                                </a>
+                                <span className='ease-nav-brand block p-0 text-sm transition-all'>
+                                    <AdminNotificationCard />
+                                </span>
                             </li>
 
                             <li className='relative flex items-center px-4'>

@@ -1,3 +1,5 @@
+'use client';
+
 import { Bell } from 'lucide-react';
 import {
     DropdownMenu,
@@ -12,10 +14,9 @@ import {
 const AdminNotificationCard = () => {
     return (
         <>
-            {' '}
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Bell size={16} strokeWidth={1.75} className='cursor-pointer text-black' />
+                    <Bell size={16} strokeWidth={1.75} className='cursor-pointer text-default' />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='mr-7 w-auto'>
                     <DropdownMenuLabel>Notification</DropdownMenuLabel>
