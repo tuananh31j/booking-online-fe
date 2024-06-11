@@ -12,8 +12,8 @@ import { useGetListCategoryQuery } from '~/store/services/category.service';
 
 const FormServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
-    category: z.string({ required_error: 'Số điện thoại không được để trống!' }),
-    description: z.string({ required_error: 'Số điện thoại không được để trống!' }),
+    category: z.string({ required_error: 'Danh mục không được để trống!' }),
+    description: z.string({ required_error: 'Mô tả không được để trống!' }),
     price: z.string({ required_error: 'Vui lòng nhập giá cả!', invalid_type_error: 'Giá trị không đúng!' }),
     // .positive({ message: 'Giá phải là số dương!' })
     // .min(1000, { message: 'Giá không được nhỏ hơn 1000!' }),
@@ -24,13 +24,13 @@ type IFormService = z.infer<typeof FormServiceSchema>;
 const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
     const form = useForm<IFormService>({ resolver: zodResolver(FormServiceSchema) });
-    const [createService, { isLoading }] = useCreateServiceMutation();
+    const [createService] = useCreateServiceMutation();
     const onSubmit: SubmitHandler<IFormService> = async (data) => {
         await new Promise((resolve) => {
             setTimeout(resolve, 1000);
         });
         try {
-            const result = await createService({
+            await createService({
                 name: data.name,
                 categorie_id: Number(data.category), // Chuyển đổi category thành số
                 price: data.price,

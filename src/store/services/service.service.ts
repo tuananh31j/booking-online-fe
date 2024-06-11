@@ -15,6 +15,7 @@ export const serviceApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body: formData,
             }),
+            invalidatesTags: [QUERY_KEY.SERVICE],
         }),
         updateService: builder.mutation<IApiResponse<IServiceResponse>, { id: number; formData: IServiceBody }>({
             query: ({ id, formData }) => ({
