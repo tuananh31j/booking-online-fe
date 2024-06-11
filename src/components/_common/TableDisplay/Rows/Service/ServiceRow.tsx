@@ -1,58 +1,73 @@
+import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormService from './FormService';
 import PopupBackForm from '~/components/elements/PopupBackForm';
-import { IService } from '~/types/Service';
+import AlertDialogConfirm from '~/components/elements/AlertDialog';
 
-interface ServiceItemProps {
-    service: IService;
-}
+type IServiceRowProps = {
+    id: number;
+    name: string;
+    category: number | string | boolean;
+    description: string;
+    price: string;
+    createdAt: string;
+    updatedAt: string;
+    handleDeleteService: (id: number) => void;
+};
 
 const ORDER_COLUMN_NAMES = ['ID', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
 
-const ServiceRow = (serviceProps: ServiceItemProps) => {
-    const { service } = serviceProps;
-
+const ServiceRow: FC<IServiceRowProps> = ({
+    id,
+    name,
+    category,
+    description,
+    price,
+    createdAt,
+    updatedAt,
+    handleDeleteService,
+}) => {
     return (
         <tr className='h-10'>
             <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {service.id}
+                    {id}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {service.name}
+                    {name}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {service.category}
+                    {category}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {service.describe}
+                    {description}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {service.price}
+                    {price}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {service.created_at}
+                    {createdAt}
                 </div>
             </td>
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {service.updated_at}
+                    {updatedAt}
                 </div>
             </td>
 
@@ -62,11 +77,18 @@ const ServiceRow = (serviceProps: ServiceItemProps) => {
                     title="Change the service's information here"
                     className='underline hover:text-blue-800'
                     Form={FormService}
-                ></PopupModal>
+                ></PopupModal>{' '}
                 |
-                <PopupBackForm>
-                    <button className='underline hover:text-red-800'>Delete</button>
-                </PopupBackForm>
+                <AlertDialogConfirm
+                    handleConfirm={handleDeleteService}
+                    content={{
+                        title: 'Bạn có chắc chắn không?',
+                        description: 'Bạn có muốn xóa sản phẩm này không khi xóa sẽ không thể khổi phục',
+                        idContent: id,
+                    }}
+                >
+                    <p className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500'>Delete</p>
+                </AlertDialogConfirm>
             </td>
         </tr>
     );

@@ -3,4 +3,5 @@ export const QUERY_KEY = {
     SERVICE: 'service',
     ORDER: 'order',
     STORE: 'store',
+    CATEGORIES: 'categories',
 };

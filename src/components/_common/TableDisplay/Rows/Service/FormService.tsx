@@ -7,26 +7,35 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
 import ButtonSubmit from '~/components/_common/ButtonSubmit';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
+import { useCreateServiceMutation } from '~/store/services/service.service';
+import { useGetListCategoryQuery } from '~/store/services/category.service';
 
 const FormServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
     category: z.string({ required_error: 'Số điện thoại không được để trống!' }),
     description: z.string({ required_error: 'Số điện thoại không được để trống!' }),
-    price: z
-        .number({ required_error: 'Vui lòng nhập giá cả!', invalid_type_error: 'Giá trị không đúng!' })
-        .positive({ message: 'Giá phải là số dương!' })
-        .min(1000, { message: 'Giá không được nhỏ hơn 1000!' }),
+    price: z.string({ required_error: 'Vui lòng nhập giá cả!', invalid_type_error: 'Giá trị không đúng!' }),
+    // .positive({ message: 'Giá phải là số dương!' })
+    // .min(1000, { message: 'Giá không được nhỏ hơn 1000!' }),
 });
 
 type IFormService = z.infer<typeof FormServiceSchema>;
 
 const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
+    const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
     const form = useForm<IFormService>({ resolver: zodResolver(FormServiceSchema) });
+    const [createService, { isLoading }] = useCreateServiceMutation();
     const onSubmit: SubmitHandler<IFormService> = async (data) => {
         await new Promise((resolve) => {
             setTimeout(resolve, 1000);
         });
         try {
+            const result = await createService({
+                name: data.name,
+                categorie_id: Number(data.category), // Chuyển đổi category thành số
+                price: data.price,
+                describe: data.description,
+            }).unwrap();
             console.log(data);
             onCloseModal();
         } catch (error) {
@@ -54,9 +63,12 @@ const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectItem value='m@example.com'>Cắt tóc</SelectItem>
-                                                <SelectItem value='m@google.com'>Làm móng</SelectItem>
-                                                <SelectItem value='m@support.com'>Tắm</SelectItem>
+                                                {!isCategoryLoading &&
+                                                    categoryData?.data.data.map((category) => (
+                                                        <SelectItem key={category.id} value={category.id.toString()}>
+                                                            {category.name}
+                                                        </SelectItem>
+                                                    ))}
                                             </SelectContent>
                                         </Select>
                                         <FormDescription>{''}</FormDescription>
