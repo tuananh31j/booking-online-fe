@@ -1,3 +1,4 @@
+import { QUERY_KEY } from '~/constants/queryKey';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
 import { IStoreItem, IStoreResponse } from '~/types/Store';
@@ -6,14 +7,7 @@ export const storeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getListStore: builder.query<IApiResponse<{ data: IStoreItem[] }>, void>({
             query: () => '/list_store',
-            providesTags(result) {
-                if (result) {
-                    const final = [...result.data.data.map(({ id }) => ({ type: 'store' as const, id: 'LIST' }))];
-                    return final;
-                }
-                const final = [{ type: 'store' as const, id: 'LIST' }];
-                return final;
-            },
+            providesTags: [QUERY_KEY.STORE],
         }),
         removeStore: builder.mutation<object, number>({
             query: (id) => ({

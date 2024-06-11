@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 import MapIcon from '~/components/_common/Icons/map/Map';
 import PopupLocationDetails from '~/components/elements/PopupLocationDetails';
-import PopupStaffProfile from '~/components/elements/PopupStaffProfile';
+// import PopupStaffProfile from '~/components/elements/PopupStaffProfile';
 import useToastDisplay from '~/hooks/useToastDisplay';
 
 export default function OrderSuccess() {
@@ -101,9 +101,7 @@ export default function OrderSuccess() {
                                 <span className='text-[#777777]'>{t('AssignedStaff')}:</span>
                                 <span className='h-[35px] text-xl'>Lương Chính Quốc</span>
                             </div>
-                            <div>
-                                <PopupStaffProfile>{t('showStaff')}</PopupStaffProfile>
-                            </div>
+                            <div>{/* <PopupStaffProfile /> */}</div>
                         </div>
                         <div className='mt-2 h-[1px] w-full bg-card' />
                     </div>

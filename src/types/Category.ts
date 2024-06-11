@@ -1,5 +1,3 @@
-import { Eclipse } from 'lucide-react';
-
 export type ICategoryBody = {
     name: string;
 };
