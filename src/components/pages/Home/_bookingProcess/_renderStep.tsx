@@ -1,5 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { BookingCalendar, ConfirmationForm, ChooseLocation, ChooseService, ChooseStaff } from './Steps';
+import ConfirmationForm from './Steps/ConfirmationForm';
+import BookingCalendar from './Steps/BookingCalendar';
+import ChooseLocation from './Steps/ChooseLocation';
+import ChooseService from './Steps/ChooseService';
+import ChooseStaff from './Steps/ChooseStaff';
 
 const RenderStep = ({ step, action, handle }: { step: number; action: () => void; handle: (id: string) => void }) => {
     switch (step) {

@@ -1,6 +1,6 @@
 import { HandPlatter, LayoutDashboard, ListOrdered, StoreIcon, UserRound } from 'lucide-react';
 import React from 'react';
-import MenuItem from '~/layouts/AdminSidebar/_components/Menu/MenuItem';
+import MenuItem from '~/components/layouts/AdminSidebar/_components/Menu/MenuItem';
 
 const MENU_LIST = [
     { path: 'dashboard', name: 'Dashboard', icon: <LayoutDashboard size={16} strokeWidth={1.75} /> },

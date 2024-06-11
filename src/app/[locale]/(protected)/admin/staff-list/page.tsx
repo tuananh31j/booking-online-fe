@@ -1,5 +1,5 @@
 import React from 'react';
-import StaffListManager from '~/pages/Admins/StaffManagement';
+import StaffListManager from '~/components/pages/Admins/StaffManagement';
 
 const StaffList = () => {
     return <StaffListManager />;

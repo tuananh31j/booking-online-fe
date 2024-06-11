@@ -1,6 +1,6 @@
-import Logo from '~/layouts/Header/_components/Logo';
-import Socials from '~/layouts/Header/_components/Socials';
-import SwitchOptions from '~/layouts/Header/_components/SwitchOptions';
+import Logo from '~/components/layouts/Header/_components/Logo';
+import Socials from '~/components/layouts/Header/_components/Socials';
+import SwitchOptions from '~/components/layouts/Header/_components/SwitchOptions';
 import { cn } from '~/lib/utils';
 
 const Header = ({ className }: { className?: string }) => {

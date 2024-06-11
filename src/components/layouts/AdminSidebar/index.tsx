@@ -1,7 +1,7 @@
 'use client';
 
 import ActionLink from '~/components/_common/ActionLink';
-import Menu from '~/layouts/AdminSidebar/_components/Menu/Menu';
+import Menu from '~/components/layouts/AdminSidebar/_components/Menu/Menu';
 
 const AdminSidebar = () => {
     return (
