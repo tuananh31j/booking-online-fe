@@ -11,36 +11,6 @@ import {
     useRemoveServiceMutation,
 } from '~/store/services/service.service';
 
-const dataFake = [
-    {
-        id: '001',
-        name: 'Full Body Massage',
-        category: 'Wellness',
-        description: 'A relaxing full body massage to relieve stress and muscle tension.',
-        price: '$80',
-        createdAt: '10-01-2023',
-        updatedAt: '15-01-2023',
-    },
-    {
-        id: '002',
-        name: 'Deep Tissue Massage',
-        category: 'Therapy',
-        description: 'Deep tissue massage therapy for deeper muscle problems.',
-        price: '$90',
-        createdAt: '01-02-2023',
-        updatedAt: '05-02-2023',
-    },
-    {
-        id: '003',
-        name: 'Facial Treatment',
-        category: 'Beauty',
-        description: 'Gentle facial treatment to cleanse and rejuvenate your skin.',
-        price: '$50',
-        createdAt: '20-02-2023',
-        updatedAt: '25-02-2023',
-    },
-];
-
 const ServiceManagement = () => {
     const { data, isLoading } = useGetListServiceQuery();
     const [mutate, { isLoading: PendingRemove }] = useRemoveServiceMutation();
@@ -65,8 +35,7 @@ const ServiceManagement = () => {
                             id={item.id}
                             name={item.name}
                             category={
-                                (!isCategoryLoading &&
-                                    categoryData?.data.data.find((cat) => cat.id === item.categorie_id)?.name) ??
+                                categoryData?.data.data.find((cat) => cat.id === item.categorie_id)?.name ||
                                 'Chưa xác định'
                             }
                             description={item.describe}
