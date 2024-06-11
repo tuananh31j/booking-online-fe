@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useSettingQuery } from '~/hooks/useSettingQuery';
 
 export default function Logo() {
     const data = null;

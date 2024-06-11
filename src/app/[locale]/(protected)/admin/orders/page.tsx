@@ -1,4 +1,3 @@
-import React from 'react';
 import OrderManagement from '~/pages/Admins/OrderManagement';
 
 const OrdersPage = () => {

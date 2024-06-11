@@ -1,5 +1,3 @@
-'use client';
-
 import Dashboard from '~/pages/Admins/Dashboard';
 
 const DashboardPage = () => {

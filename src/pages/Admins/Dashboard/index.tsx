@@ -4,56 +4,53 @@ import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { DollarSign, Users, UserPlus, ShoppingCart } from 'lucide-react';
 import StatsCard from '~/components/elements/StatsCard';
-import ProfileCard from '~/components/elements/ProfileCard';
 
 type Series = {
     name?: string;
     data: number[];
 };
+
 type Option = {
     series: number[] | Series[];
     options: {
         legend?: {
             labels: {
-                colors: string; // Change the color of the series names
+                colors: string;
             };
         };
-        chart?:
-            | {
-                  type:
-                      | 'line'
-                      | 'area'
-                      | 'bar'
-                      | 'pie'
-                      | 'donut'
-                      | 'radialBar'
-                      | 'scatter'
-                      | 'bubble'
-                      | 'heatmap'
-                      | 'candlestick'
-                      | 'boxPlot'
-                      | 'radar'
-                      | 'polarArea'
-                      | 'rangeBar'
-                      | 'rangeArea'
-                      | 'treemap';
-                  height: number;
-              }
-            | ApexChart;
+        chart?: {
+            type:
+                | 'line'
+                | 'area'
+                | 'bar'
+                | 'pie'
+                | 'donut'
+                | 'radialBar'
+                | 'scatter'
+                | 'bubble'
+                | 'heatmap'
+                | 'candlestick'
+                | 'boxPlot'
+                | 'radar'
+                | 'polarArea'
+                | 'rangeBar'
+                | 'rangeArea'
+                | 'treemap';
+            height: number;
+        };
         dataLabels?: {
             enabled: boolean;
         };
         yaxis?: {
             labels: {
                 style: {
-                    colors: string; // Change the color of y-axis labels
+                    colors: string;
                 };
             };
         };
         xaxis?: {
             type: 'datetime' | 'category';
             categories: string[];
-            // Change the color of categories (x-axis labels)
             labels?: {
                 style: {
                     colors: string;
@@ -77,7 +74,7 @@ type Option = {
     };
 };
 
-const Dashboard = () => {
+const DashboardPage = () => {
     const [areaChart, setAreaCart] = useState<Option>({
         series: [
             {
@@ -98,24 +95,56 @@ const Dashboard = () => {
             },
             xaxis: {
                 type: 'datetime',
-                categories: ['2018-09-19', '2018-09-20', '2018-09-21', '2018-09-22', '2018-09-23', '2018-09-24'],
+                categories: [
+                    '2018-09-19',
+                    '2018-09-20',
+                    '2018-09-21',
+                    '2018-09-22',
+                    '2018-09-23',
+                    '2018-09-24',
+                    '2018-09-25',
+                ],
+                labels: {
+                    style: {
+                        colors: 'var(--text)',
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: 'var(--text)',
+                    },
+                },
             },
             tooltip: {
                 x: {
                     format: 'dd/MM/yy',
                 },
             },
-        },
-    });
-    const [pieChart, setPieCart] = useState<Option>({
-        series: [44, 55, 41, 17],
-        options: {
-            chart: {
-                height: 400,
-                type: 'donut',
+            legend: {
+                labels: {
+                    colors: 'text-reverse',
+                },
             },
         },
     });
+
+    const [pieChart, setPieCart] = useState<Option>({
+        series: [44, 55, 41, 17, 15],
+        options: {
+            chart: {
+                height: 350,
+                type: 'donut',
+            },
+            legend: {
+                labels: {
+                    colors: 'text-reverse',
+                },
+            },
+        },
+    });
+
     useEffect(() => {
         setAreaCart({
             series: [
@@ -155,7 +184,7 @@ const Dashboard = () => {
                 yaxis: {
                     labels: {
                         style: {
-                            colors: 'var(--text)', // Change the color of y-axis labels
+                            colors: 'var(--text)',
                         },
                     },
                 },
@@ -166,11 +195,12 @@ const Dashboard = () => {
                 },
                 legend: {
                     labels: {
-                        colors: 'text-reverse', // Change the color of the series names
+                        colors: 'text-reverse',
                     },
                 },
             },
         });
+
         setPieCart({
             series: [44, 55, 41, 17, 15],
             options: {
@@ -180,14 +210,15 @@ const Dashboard = () => {
                 },
                 legend: {
                     labels: {
-                        colors: 'text-reverse', // Change the color of the series names
+                        colors: 'text-reverse',
                     },
                 },
             },
         });
     }, []);
+
     return (
-        <div className=''>
+        <div>
             <div className='flex justify-between'>
                 <StatsCard
                     title="Today's Money"
@@ -226,12 +257,12 @@ const Dashboard = () => {
                     iconColor='text-white'
                 />
             </div>
-            <div className='gap my-6 grid grid-cols-1 justify-between lg:grid-cols-[58%,40%] '>
+            <div className='gap my-6 grid grid-cols-1 justify-between lg:grid-cols-[58%,40%]'>
                 <div className='rounded-3xl bg-card p-2'>
                     <ReactApexChart options={areaChart.options} series={areaChart.series} height={350} type='area' />
                 </div>
-                <div className='rounded-3xl bg-card p-2  '>
-                    <div className='mt-10 '>
+                <div className='rounded-3xl bg-card p-2'>
+                    <div className='mt-10'>
                         <ReactApexChart options={pieChart.options} series={pieChart.series} height={350} type='donut' />
                     </div>
                 </div>
@@ -240,4 +271,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default DashboardPage;
