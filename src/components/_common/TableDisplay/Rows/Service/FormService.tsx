@@ -8,6 +8,7 @@ import FormItemDisplay from '~/components/_common/FormItemDisplay';
 import ButtonSubmit from '~/components/_common/ButtonSubmit';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { useCreateServiceMutation } from '~/store/services/service.service';
+import { useGetListCategoryQuery } from '~/store/services/category.service';
 
 const FormServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
@@ -21,6 +22,7 @@ const FormServiceSchema = z.object({
 type IFormService = z.infer<typeof FormServiceSchema>;
 
 const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
+    const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
     const form = useForm<IFormService>({ resolver: zodResolver(FormServiceSchema) });
     const [createService, { isLoading }] = useCreateServiceMutation();
     const onSubmit: SubmitHandler<IFormService> = async (data) => {
@@ -61,9 +63,12 @@ const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectItem value='1'>Cắt tóc</SelectItem>
-                                                <SelectItem value='1'>Làm móng</SelectItem>
-                                                <SelectItem value='1'>Tắm</SelectItem>
+                                                {!isCategoryLoading &&
+                                                    categoryData?.data.data.map((category) => (
+                                                        <SelectItem key={category.id} value={category.id.toString()}>
+                                                            {category.name}
+                                                        </SelectItem>
+                                                    ))}
                                             </SelectContent>
                                         </Select>
                                         <FormDescription>{''}</FormDescription>

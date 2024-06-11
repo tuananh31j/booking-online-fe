@@ -2,6 +2,7 @@ import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormService from './FormService';
 import PopupBackForm from '~/components/elements/PopupBackForm';
+import AlertDialogConfirm from '~/components/elements/AlertDialog';
 
 type IServiceRowProps = {
     id: number;
@@ -78,11 +79,16 @@ const ServiceRow: FC<IServiceRowProps> = ({
                     Form={FormService}
                 ></PopupModal>{' '}
                 |
-                <PopupBackForm>
-                    <button className='underline hover:text-red-800' onClick={() => handleDeleteService(id)}>
-                        Delete
-                    </button>
-                </PopupBackForm>
+                <AlertDialogConfirm
+                    handleConfirm={handleDeleteService}
+                    content={{
+                        title: 'Bạn có chắc chắn không?',
+                        description: 'Bạn có muốn xóa sản phẩm này không khi xóa sẽ không thể khổi phục',
+                        idContent: id,
+                    }}
+                >
+                    <p className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500'>Delete</p>
+                </AlertDialogConfirm>
             </td>
         </tr>
     );

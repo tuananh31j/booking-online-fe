@@ -1,11 +1,12 @@
 import { get } from 'lodash';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
+import { ICategoryItem } from '~/types/category';
 
 export const categoryApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getListCategory: builder.query<IApiResponse<{ data: { id: number; name: string }[] }>, void>({
-            query: () => '/list_category',
+        getListCategory: builder.query<IApiResponse<{ data: ICategoryItem[] }>, void>({
+            query: () => '/list_categorie',
             providesTags(result) {
                 if (result) {
                     const final = [...result.data.data.map(({ id }) => ({ type: 'category' as const, id: 'LIST' }))];
@@ -17,3 +18,5 @@ export const categoryApi = baseApi.injectEndpoints({
         }),
     }),
 });
+
+export const { useGetListCategoryQuery } = categoryApi;
