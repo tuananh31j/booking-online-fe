@@ -19,7 +19,7 @@ const API_ENDPOINT = {
         REMOVE: '/admin_users/delete', // @id
         EDIT_PROFILE: '/user/profile/update',
         ADD_SCHEDULES: '/user/schedules',
-        BOOKING_SCHEDULE: 'user/listbooking',
+        BOOKING_SCHEDULES: 'user/listbooking',
     },
     STORE: {
         ADD: '/stores/post',
