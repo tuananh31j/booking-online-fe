@@ -16,7 +16,7 @@ type IServiceRowProps = {
     handleDeleteService: (id: number) => void;
 };
 
-const ORDER_COLUMN_NAMES = ['ID', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
+const ORDER_COLUMN_NAMES = ['#', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
 
 const ServiceRow: FC<IServiceRowProps> = ({
     index,
