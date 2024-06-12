@@ -6,7 +6,7 @@ import { IServiceBody, IServiceItem, IServiceResponse } from '~/types/service';
 export const serviceApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getListService: builder.query<IApiResponse<{ data: IServiceItem[] }>, void>({
-            query: () => '/list_service',
+            query: () => '/services/list',
             providesTags(result) {
                 if (result) {
                     const final = [...result.data.data.map(({ id }) => ({ type: 'service' as const, id: 'LIST' }))];
@@ -18,14 +18,14 @@ export const serviceApi = baseApi.injectEndpoints({
         }),
         createService: builder.mutation<IApiResponse<IServiceResponse>, IServiceBody>({
             query: (formData) => ({
-                url: '/service_post',
+                url: '/services/post',
                 method: 'POST',
                 body: formData,
             }),
         }),
         updateService: builder.mutation<IApiResponse<IServiceResponse>, { id: number; formData: IServiceBody }>({
             query: ({ id, formData }) => ({
-                url: `/service_update/${id}`,
+                url: `/services/update/${id}`,
                 method: 'PUT',
                 body: formData,
             }),
@@ -33,7 +33,7 @@ export const serviceApi = baseApi.injectEndpoints({
         }),
         removeService: builder.mutation<object, number>({
             query: (id) => ({
-                url: `/delete_service/${id}`,
+                url: `/services/delete/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: (result, error, id) => (error ? [] : [{ type: 'service', id: 'LIST' }]),
@@ -41,4 +41,5 @@ export const serviceApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetListServiceQuery, useRemoveServiceMutation, useCreateServiceMutation } = serviceApi;
+export const { useGetListServiceQuery, useRemoveServiceMutation, useCreateServiceMutation, useUpdateServiceMutation } =
+    serviceApi;

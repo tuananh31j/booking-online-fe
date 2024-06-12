@@ -38,7 +38,7 @@ const ServiceManagement = () => {
                                 categoryData?.data.data.find((cat) => cat.id === item.categorie_id)?.name ||
                                 'Chưa xác định'
                             }
-                            description={item.describe}
+                            describe={item.describe}
                             price={item.price}
                             createdAt={item.created_at}
                             updatedAt={item.updated_at}

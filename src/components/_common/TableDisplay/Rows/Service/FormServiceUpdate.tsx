@@ -7,10 +7,11 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
 import ButtonSubmit from '~/components/_common/ButtonSubmit';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
-import { useCreateServiceMutation } from '~/store/services/service.service';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
+import { IServiceItem } from '~/types/service';
+import { useUpdateServiceMutation } from '~/store/services/service.service';
 
-const FormServiceSchema = z.object({
+const FormUpdateServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
     category: z.string({ required_error: 'Số điện thoại không được để trống!' }),
     description: z.string({ required_error: 'Số điện thoại không được để trống!' }),
@@ -19,24 +20,32 @@ const FormServiceSchema = z.object({
     // .min(1000, { message: 'Giá không được nhỏ hơn 1000!' }),
 });
 
-type IFormService = z.infer<typeof FormServiceSchema>;
+type IFormUpdateService = z.infer<typeof FormUpdateServiceSchema>;
 
-const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
+const FormUpdateService = ({ service, onCloseModal }: { service: IServiceItem; onCloseModal: () => void }) => {
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
-    const form = useForm<IFormService>({ resolver: zodResolver(FormServiceSchema) });
-    const [createService, { isLoading }] = useCreateServiceMutation();
-    const onSubmit: SubmitHandler<IFormService> = async (data) => {
-        await new Promise((resolve) => {
-            setTimeout(resolve, 1000);
-        });
+    const form = useForm<IFormUpdateService>({
+        resolver: zodResolver(FormUpdateServiceSchema),
+        defaultValues: {
+            // Giá trị mặc định từ dữ liệu dịch vụ hiện tại
+            name: service.name,
+            category: service.categorie_id.toString(),
+            description: service.describe,
+            price: service.price,
+        },
+    });
+    const [updateService, { isLoading }] = useUpdateServiceMutation();
+    const onSubmit: SubmitHandler<IFormUpdateService> = async (data) => {
         try {
-            await createService({
-                name: data.name,
-                categorie_id: Number(data.category), // Chuyển đổi category thành số
-                price: data.price,
-                describe: data.description,
+            const result = await updateService({
+                id: service.id,
+                formData: {
+                    name: data.name,
+                    categorie_id: Number(data.category),
+                    price: data.price,
+                    describe: data.description,
+                },
             }).unwrap();
-            console.log(data);
             onCloseModal();
         } catch (error) {
             console.log(error);
@@ -126,4 +135,4 @@ const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
     );
 };
 
-export default FormService;
+export default FormUpdateService;

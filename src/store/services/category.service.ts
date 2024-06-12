@@ -6,7 +6,7 @@ import { ICategoryItem } from '~/types/category';
 export const categoryApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getListCategory: builder.query<IApiResponse<{ data: ICategoryItem[] }>, void>({
-            query: () => '/list_categorie',
+            query: () => '/categories/list',
             providesTags(result) {
                 if (result) {
                     const final = [...result.data.data.map(({ id }) => ({ type: 'category' as const, id: 'LIST' }))];

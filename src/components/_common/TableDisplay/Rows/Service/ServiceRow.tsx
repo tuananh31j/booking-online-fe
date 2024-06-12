@@ -1,14 +1,16 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormService from './FormService';
 import PopupBackForm from '~/components/elements/PopupBackForm';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
+import FormUpdateService from '~/components/_common/TableDisplay/Rows/Service/FormServiceUpdate';
+import { useGetListCategoryQuery } from '~/store/services/category.service';
 
 type IServiceRowProps = {
     id: number;
     name: string;
     category: string;
-    description: string;
+    describe: string;
     price: string;
     createdAt: string;
     updatedAt: string;
@@ -21,12 +23,20 @@ const ServiceRow: FC<IServiceRowProps> = ({
     id,
     name,
     category,
-    description,
+    describe,
     price,
     createdAt,
     updatedAt,
     handleDeleteService,
 }) => {
+    const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
+    const [catID, setCatID] = useState(0);
+    useEffect(() => {
+        if (!isCategoryLoading) {
+            const categoryId = categoryData?.data.data.find((cat) => cat.name === category)?.id || 0;
+            setCatID(categoryId);
+        }
+    }, [isCategoryLoading]);
     return (
         <tr className='h-10'>
             <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
@@ -49,7 +59,7 @@ const ServiceRow: FC<IServiceRowProps> = ({
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {description}
+                    {describe}
                 </div>
             </td>
 
@@ -76,7 +86,20 @@ const ServiceRow: FC<IServiceRowProps> = ({
                     btnName='Edit'
                     title="Change the service's information here"
                     className='underline hover:text-blue-800'
-                    Form={FormService}
+                    Form={() => (
+                        <FormUpdateService
+                            service={{
+                                id,
+                                name,
+                                categorie_id: catID,
+                                describe,
+                                price,
+                                created_at: '',
+                                updated_at: '',
+                            }}
+                            onCloseModal={}
+                        />
+                    )}
                 ></PopupModal>{' '}
                 |
                 <AlertDialogConfirm
