@@ -1,5 +1,6 @@
 'use client';
 
+import { formatDate } from 'date-fns';
 import FormService from '~/components/_common/TableDisplay/Rows/Service/FormService';
 import { ORDER_COLUMN_NAMES, ServiceRow } from '~/components/_common/TableDisplay/Rows/Service/ServiceRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
@@ -36,8 +37,8 @@ const ServiceManagement = () => {
                             }
                             description={item.describe}
                             price={item.price}
-                            createdAt={item.created_at}
-                            updatedAt={item.updated_at}
+                            createdAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}
+                            updatedAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}
                             handleDeleteService={handleDeleteService}
                         />
                     ))}

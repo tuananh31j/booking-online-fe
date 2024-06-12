@@ -3,21 +3,37 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingButton from '~/components/elements/LoadingButton';
 import { Button } from '~/components/ui/button';
+import { Checkbox } from '~/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useCreateStoreMutation, useGetDetailStoreQuery, useUpdateStoreMutation } from '~/store/services/store.service';
-import { isStoreError } from '~/types/Error/Helper';
+import { ErrorFields } from '~/types/Error/Helper';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number }) => {
+    const [isSaveImage, setIsSaveImage] = useState<boolean>(false);
+    const formImageSchema = !isSaveImage
+        ? z.undefined()
+        : z
+              .custom<FileList>((val) => val instanceof FileList, 'Required')
+              .refine((files) => files?.length > 0, `Required`)
+              .refine(
+                  (files) => Array.from(files).every((file) => file?.size <= MAX_FILE_SIZE),
+                  `Each file size should be less than 5 MB.`
+              )
+              .refine(
+                  (files) => Array.from(files).every((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type)),
+                  'Only these types are allowed .jpg, .jpeg, .png and .webp'
+              );
+
     const formSchema = z.object({
         name: z.string().min(2, {
             message: 'Name must be at least 2 characters.',
@@ -33,22 +49,26 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
             .max(15, {
                 message: 'Phone number must be less than 15 characters',
             }),
-        image: z
-            .custom<FileList>((val) => val instanceof FileList, 'Required')
-            .refine((files) => files?.length > 0, `Required`)
-            .refine(
-                (files) => Array.from(files).every((file) => file?.size <= MAX_FILE_SIZE),
-                `Each file size should be less than 5 MB.`
-            )
-            .refine(
-                (files) => Array.from(files).every((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type)),
-                'Only these types are allowed .jpg, .jpeg, .png and .webp'
-            ),
+
+        image: id
+            ? formImageSchema
+            : z
+                  .custom<FileList>((val) => val instanceof FileList, 'Required')
+                  .refine((files) => files?.length > 0, `Required`)
+                  .refine(
+                      (files) => Array.from(files).every((file) => file?.size <= MAX_FILE_SIZE),
+                      `Each file size should be less than 5 MB.`
+                  )
+                  .refine(
+                      (files) => Array.from(files).every((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type)),
+                      'Only these types are allowed .jpg, .jpeg, .png and .webp'
+                  ),
     });
 
     const [preview, setPreview] = useState('');
     const [createStore, createStoreState] = useCreateStoreMutation();
     const [updateStore, updateStoreState] = useUpdateStoreMutation();
+    const saveImageId = useId();
     const { data: detail, refetch } = useGetDetailStoreQuery(id, { skip: !id });
     const toast = useToastDisplay();
     const detailStore = detail?.data;
@@ -63,33 +83,34 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
     });
 
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
-        if (!id) {
-            try {
-                const formData = new FormData();
-                const image = data.image?.[0];
-                formData.append('name', data.name);
-                formData.append('address', data.address);
-                formData.append('phone', data.phone);
-                formData.append('image', image);
+        try {
+            const formData = new FormData();
+            const { name, address, phone } = data;
+            if (!id) {
+                formData.append('name', name);
+                formData.append('address', address);
+                formData.append('phone', phone);
+                if (data?.image) {
+                    const image = data.image?.[0];
+                    formData.append('image', image);
+                }
                 createStore(formData);
-            } catch (error) {
-                console.error('Error message:', error);
-            }
-        } else {
-            try {
-                const formData = new FormData();
-                const image = data.image?.[0];
-                formData.append('name', data.name);
-                formData.append('address', data.address);
-                formData.append('phone', data.phone);
-                formData.append('image', image);
+            } else {
+                formData.append('name', name);
+                formData.append('address', address);
+                formData.append('phone', phone);
+                if (isSaveImage && data?.image) {
+                    const image = data.image?.[0];
+                    formData.append('image', image);
+                }
+                formData.append('_method', 'PUT');
                 updateStore({
                     formdata: formData,
                     id,
                 });
-            } catch (error) {
-                console.error('Error message:', error);
             }
+        } catch (error) {
+            console.error('Error message:', error);
         }
     };
     useEffect(() => {
@@ -101,28 +122,42 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
             });
             setPreview(detailStore.data.image);
         }
-        if (createStoreState.isSuccess || updateStoreState.isSuccess) {
-            toast({
-                title: `${id ? 'Thêm mới cửa hàng thành công!' : 'Chỉnh sửa cửa hàng thành công!'}`,
-                status: 'success',
-            });
-            if (id) {
-                refetch();
+        if (createStoreState.isSuccess) {
+            if (createStoreState.data.error) {
+                const objectKey = Object.keys(createStoreState.data.error) as ErrorFields[];
+                objectKey.forEach((key: ErrorFields) => {
+                    const errorMessage = createStoreState?.data?.error[key].join(', ');
+                    return form.setError(key, { message: `${errorMessage}` });
+                });
+            } else {
+                onCloseModal();
+                toast({ title: 'Add New Store Successfully!', status: 'success' });
             }
-            onCloseModal();
         }
-        if (isStoreError(createStoreState.error)) {
-            toast({ title: `${createStoreState.error.data.error.name}`, status: 'destructive' });
+        if (updateStoreState.isSuccess) {
+            if (updateStoreState.data.error) {
+                const objectKey = Object.keys(updateStoreState.data.error) as ErrorFields[];
+                objectKey.forEach((key: ErrorFields) => {
+                    const errorMessage = updateStoreState?.data?.error[key].join(', ');
+                    return form.setError(key, { message: `${errorMessage}` });
+                });
+            } else {
+                refetch();
+                onCloseModal();
+                toast({ title: 'Update Store Successfully!', status: 'success' });
+            }
         }
-        if (isStoreError(updateStoreState.error)) {
-            toast({ title: `${updateStoreState.error.data.error.name}`, status: 'destructive' });
-        }
-    }, [createStoreState, id, detailStore, updateStoreState]);
+    }, [createStoreState, id, detailStore, updateStoreState, detailStore]);
+
     return (
         <div className='m-auto  pb-10'>
-            <div className='rounded-xl bg-card px-6 py-8'>
+            <div className=' rounded-xl bg-card px-6 py-8'>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8' encType='multipart/form-data'>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className='no-scrollbar max-h-[70vh] space-y-6 overflow-y-scroll'
+                        encType='multipart/form-data'
+                    >
                         <FormField
                             disabled={createStoreState.isLoading || updateStoreState.isLoading}
                             control={form.control}
@@ -169,6 +204,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                                 </FormItem>
                             )}
                         />
+
                         <FormField
                             control={form.control}
                             disabled={createStoreState.isLoading || updateStoreState.isLoading}
@@ -179,6 +215,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                                         <FormLabel>Image: </FormLabel>
                                         <FormControl>
                                             <Input
+                                                disabled={id ? !isSaveImage : false}
                                                 className='cursor-pointer bg-white'
                                                 type='file'
                                                 accept='image/*'
@@ -200,6 +237,21 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                                 );
                             }}
                         />
+                        {id && (
+                            <div className='flex items-center gap-2'>
+                                <Checkbox
+                                    id={saveImageId}
+                                    defaultChecked
+                                    onCheckedChange={() => setIsSaveImage(!isSaveImage)}
+                                />
+                                <label
+                                    htmlFor={saveImageId}
+                                    className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                >
+                                    Giữ lại ảnh cũ
+                                </label>
+                            </div>
+                        )}
                         {preview && <Image src={preview} className='rounded-xl' alt='image' width={100} height={100} />}
                         <Button type='submit' className='w-[200px] hover:opacity-90'>
                             {!createStoreState.isLoading && !updateStoreState.isLoading && (

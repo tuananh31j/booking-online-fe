@@ -1,5 +1,6 @@
 'use client';
 
+import { formatDate } from 'date-fns';
 import { USER_COLUMN_NAMES, UserRow } from '~/components/_common/TableDisplay/Rows';
 import FormStaff from '~/components/_common/TableDisplay/Rows/Staff/FormStaff';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
@@ -22,7 +23,7 @@ const StaffListManager = () => {
                     role={item.role}
                     phone={item.phone}
                     address={item.address}
-                    createAt={item.created_at}
+                    createAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}
                 />
             ))}
         </TableDisplay>

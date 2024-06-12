@@ -43,7 +43,7 @@ const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
         }
     };
     return (
-        <div className='mx-auto flex w-[30vw] flex-col justify-center'>
+        <div className='mx-auto flex w-[100%] flex-col justify-center'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                     <div className='flex justify-between'>

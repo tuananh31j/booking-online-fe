@@ -1,26 +1,17 @@
-interface CustomError {
-    status: number;
-    data: {
-        error: {
-            name: string[];
-        };
-    };
+export interface CustomError {
+    error: Record<string, string[]>;
     status_code: number;
 }
+export type ErrorFields = 'name' | 'address' | 'phone' | 'image';
+
+// Hàm kiểm tra xem một giá trị có phải là một ErrorField hay không
 
 export const isStoreError = (obj: any): obj is CustomError => {
     return (
         typeof obj === 'object' &&
         obj !== null &&
-        'status' in obj &&
-        'data' in obj &&
-        typeof obj.status === 'number' &&
-        typeof obj.data === 'object' &&
-        obj.data !== null &&
-        'error' in obj.data &&
-        'name' in obj.data.error &&
-        Array.isArray(obj.data.error.name) &&
-        'status_code' in obj.data &&
-        typeof obj.data.status_code === 'number'
+        'error' in obj &&
+        'status_code' in obj &&
+        Array.isArray(obj.error.name)
     );
 };

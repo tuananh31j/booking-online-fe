@@ -13,12 +13,13 @@ type IStoreRowProps = {
     name: string;
     address: string;
     phone: string;
+    createAt: string;
     action: (id: number) => void;
 };
 
-const STORE_COLUMN_NAMES = ['STT', 'Tên cửa hàng', 'Địa chỉ', 'Số điện thoại', 'Tùy chọn'];
+const STORE_COLUMN_NAMES = ['STT', 'Tên cửa hàng', 'Địa chỉ', 'Số điện thoại', 'Ngày tạo cửa hàng', 'Tùy chọn'];
 
-const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, action }) => {
+const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, createAt, action }) => {
     return (
         <tr>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
@@ -50,6 +51,11 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, act
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
                 <p className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
                     {phone}
+                </p>
+            </td>
+            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
+                <p className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
+                    {createAt}
                 </p>
             </td>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>

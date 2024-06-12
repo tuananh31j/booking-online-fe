@@ -1,5 +1,6 @@
 'use client';
 
+import { formatDate } from 'date-fns';
 import { useEffect } from 'react';
 import FormStore from '~/components/_common/TableDisplay/Rows/Store/FormStore';
 import { STORE_COLUMN_NAMES, StoreRow } from '~/components/_common/TableDisplay/Rows/Store/StoreRow';
@@ -7,6 +8,7 @@ import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useGetListStoreQuery, useRemoveStoreMutation } from '~/store/services/store.service';
+import { IStoreItem } from '~/types/Store';
 
 const StoreListManagement = () => {
     const { data, isLoading } = useGetListStoreQuery();
@@ -33,7 +35,7 @@ const StoreListManagement = () => {
             >
                 {!isLoading &&
                     !PendingRemove &&
-                    store?.map((item, i) => (
+                    store?.map((item: IStoreItem, i: number) => (
                         <StoreRow
                             key={i}
                             id={item.id}
@@ -42,6 +44,7 @@ const StoreListManagement = () => {
                             image={item.image}
                             address={item.address}
                             phone={item.phone}
+                            createAt={formatDate(item.created_at, 'yyyy/MM/dd | hh:mm:ss')}
                             action={handleRemoveStore}
                         />
                     ))}
