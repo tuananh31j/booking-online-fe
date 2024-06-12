@@ -10,13 +10,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~
 import {
     useCreateServiceMutation,
     useGetDetailServiceQuery,
+    useGetListServiceQuery,
     useUpdateServiceMutation,
 } from '~/store/services/service.service';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
 import { useEffect, useState } from 'react';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { title } from 'process';
-import { replace } from 'lodash';
+import { replace, set } from 'lodash';
 
 const FormServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
@@ -34,16 +35,29 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
     const { data: service, refetch, isLoading } = useGetDetailServiceQuery(id, { skip: !id });
     const [createService, createServiceState] = useCreateServiceMutation();
     const [updateService, updateServiceSate] = useUpdateServiceMutation();
+    const { data: serviceList } = useGetListServiceQuery();
     const form = useForm<IFormService>({ resolver: zodResolver(FormServiceSchema) });
     const [categoryId, setCategoryId] = useState('');
     const toast = useToastDisplay();
+
+    const [errorMessageName, seterrorMessageName] = useState('');
+
     const onSubmit: SubmitHandler<IFormService> = async (data) => {
+        seterrorMessageName('');
+
+        if (!id) {
+            if (serviceList?.data.data.find((item) => item.name === data.name)) {
+                seterrorMessageName('Tên dịch vụ đã tồn tại');
+                return;
+            }
+        }
+
         await new Promise((resolve) => {
-            setTimeout(resolve, 1000);
+            resolve(data);
         });
+
         if (!id) {
             try {
-                console.log('create');
                 createService({
                     name: data.name,
                     categorie_id: Number(data.categorie_id), // Chuyển đổi category thành số
@@ -54,6 +68,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                 onCloseModal();
             } catch (error) {
                 console.log(error);
+                console.log('anh minh ');
             }
         } else {
             try {
@@ -136,13 +151,16 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                     name='name'
                                     render={({ field }) => {
                                         return (
-                                            <FormItemDisplay
-                                                title='Tên dịch vụ'
-                                                placeholder='Nhập tên dịch vụ!'
-                                                {...field}
-                                                require
-                                                type='text'
-                                            />
+                                            <>
+                                                <FormItemDisplay
+                                                    title='Tên dịch vụ'
+                                                    placeholder='Nhập tên dịch vụ!'
+                                                    {...field}
+                                                    require
+                                                    type='text'
+                                                />
+                                                <FormMessage>{errorMessageName}</FormMessage>
+                                            </>
                                         );
                                     }}
                                 />

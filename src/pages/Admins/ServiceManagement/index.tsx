@@ -32,6 +32,7 @@ const ServiceManagement = () => {
                     service?.map((item, i) => (
                         <ServiceRow
                             key={i}
+                            index={i + 1}
                             id={item.id}
                             name={item.name}
                             category={

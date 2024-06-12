@@ -5,6 +5,7 @@ import { useGetListCategoryQuery } from '~/store/services/category.service';
 import FormService from './FormService';
 
 type IServiceRowProps = {
+    index: number;
     id: number;
     name: string;
     category: string;
@@ -18,6 +19,7 @@ type IServiceRowProps = {
 const ORDER_COLUMN_NAMES = ['ID', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
 
 const ServiceRow: FC<IServiceRowProps> = ({
+    index,
     id,
     name,
     category,
@@ -39,7 +41,7 @@ const ServiceRow: FC<IServiceRowProps> = ({
         <tr className='h-10'>
             <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {id}
+                    {index}
                 </div>
             </td>
 
