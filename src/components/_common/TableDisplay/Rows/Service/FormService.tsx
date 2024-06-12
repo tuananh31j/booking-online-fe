@@ -68,7 +68,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                 onCloseModal();
             } catch (error) {
                 console.log(error);
-                console.log('anh minh ');
+                toast({ title: 'Thêm dịch vụ thất bại!', status: 'destructive' });
             }
         } else {
             try {
@@ -85,6 +85,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                 toast({ title: 'Sửa dịch vụ thành công!', status: 'success' });
             } catch (error) {
                 console.log(error);
+                toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
             }
         }
     };
