@@ -1,4 +1,5 @@
 import { remove } from 'lodash';
+import { QUERY_KEY } from '~/constants/queryKey';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
 import { IServiceBody, IServiceItem, IServiceResponse } from '~/types/service';
@@ -7,14 +8,7 @@ export const serviceApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getListService: builder.query<IApiResponse<{ data: IServiceItem[] }>, void>({
             query: () => '/services/list',
-            providesTags(result) {
-                if (result) {
-                    const final = [...result.data.data.map(({ id }) => ({ type: 'service' as const, id: 'LIST' }))];
-                    return final;
-                }
-                const final = [{ type: 'service' as const, id: 'LIST' }];
-                return final;
-            },
+            providesTags: [QUERY_KEY.SERVICE],
         }),
         createService: builder.mutation<IApiResponse<IServiceResponse>, IServiceBody>({
             query: (formData) => ({
@@ -22,6 +16,7 @@ export const serviceApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body: formData,
             }),
+            invalidatesTags: [QUERY_KEY.SERVICE],
         }),
         updateService: builder.mutation<IApiResponse<IServiceResponse>, { id: number; formData: IServiceBody }>({
             query: ({ id, formData }) => ({
@@ -29,17 +24,25 @@ export const serviceApi = baseApi.injectEndpoints({
                 method: 'PUT',
                 body: formData,
             }),
-            invalidatesTags: (result, error, { id }) => (error ? [] : [{ type: 'service', id: id.toString() }]),
+            invalidatesTags: [QUERY_KEY.SERVICE],
+        }),
+        getDetailService: builder.query<IApiResponse<{ data: IServiceItem }>, number>({
+            query: (id) => `/services/${id}`,
         }),
         removeService: builder.mutation<object, number>({
             query: (id) => ({
                 url: `/services/delete/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: (result, error, id) => (error ? [] : [{ type: 'service', id: 'LIST' }]),
+            invalidatesTags: [QUERY_KEY.SERVICE],
         }),
     }),
 });
 
-export const { useGetListServiceQuery, useRemoveServiceMutation, useCreateServiceMutation, useUpdateServiceMutation } =
-    serviceApi;
+export const {
+    useGetListServiceQuery,
+    useGetDetailServiceQuery,
+    useRemoveServiceMutation,
+    useCreateServiceMutation,
+    useUpdateServiceMutation,
+} = serviceApi;

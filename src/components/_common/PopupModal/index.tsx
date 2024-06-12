@@ -10,10 +10,11 @@ type IPopupModalProps = {
     Form?: React.ElementType;
     className?: string;
     children?: ReactNode;
+    id?: number;
 };
 
 // className is CSS for only dialogtrigger on line 26
-const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, children }) => {
+const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, children, id }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpen = () => {
@@ -30,7 +31,7 @@ const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, chi
                         <DialogTitle className='mb-4 text-2xl'>{title}</DialogTitle>
 
                         <div>
-                            {Form && !children && <Form onCloseModal={handleOpen} />} {!Form && children}{' '}
+                            {Form && !children && <Form id={id} onCloseModal={handleOpen} />} {!Form && children}{' '}
                         </div>
                     </DialogHeader>
                 </DialogContent>

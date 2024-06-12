@@ -1,10 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
-import FormService from './FormService';
-import PopupBackForm from '~/components/elements/PopupBackForm';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
-import FormUpdateService from '~/components/_common/TableDisplay/Rows/Service/FormServiceUpdate';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
+import FormService from './FormService';
 
 type IServiceRowProps = {
     id: number;
@@ -86,21 +84,9 @@ const ServiceRow: FC<IServiceRowProps> = ({
                     btnName='Edit'
                     title="Change the service's information here"
                     className='underline hover:text-blue-800'
-                    Form={() => (
-                        <FormUpdateService
-                            service={{
-                                id,
-                                name,
-                                categorie_id: catID,
-                                describe,
-                                price,
-                                created_at: '',
-                                updated_at: '',
-                            }}
-                            onCloseModal={}
-                        />
-                    )}
-                ></PopupModal>{' '}
+                    id={id}
+                    Form={FormService}
+                />
                 |
                 <AlertDialogConfirm
                     handleConfirm={handleDeleteService}
@@ -117,4 +103,4 @@ const ServiceRow: FC<IServiceRowProps> = ({
     );
 };
 
-export { ServiceRow, ORDER_COLUMN_NAMES };
+export { ORDER_COLUMN_NAMES, ServiceRow };
