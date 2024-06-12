@@ -1,3 +1,4 @@
+import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
@@ -6,37 +7,37 @@ import { IStoreItem, IStoreResponse } from '~/types/Store';
 export const storeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getListStore: builder.query<IApiResponse<{ data: IStoreItem[] }>, void>({
-            query: () => '/list_store',
+            query: () => API_ENDPOINT.STORE.LIST,
             providesTags: [QUERY_KEY.STORE],
         }),
         removeStore: builder.mutation<object, number>({
             query: (id) => ({
-                url: `/store_delete/${id}`,
+                url: `${API_ENDPOINT.STORE.REMOVE}/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: (error) => (error ? [] : [{ type: 'store', id: 'LIST' }]),
+            invalidatesTags: (error) => (error ? [] : [{ type: QUERY_KEY.STORE, id: 'LIST' }]),
         }),
 
         createStore: builder.mutation<IApiResponse<IStoreResponse>, FormData>({
             query(formData) {
                 return {
-                    url: '/store_post',
+                    url: API_ENDPOINT.STORE.ADD,
                     method: 'POST',
                     body: formData,
                 };
             },
-            invalidatesTags: [{ type: 'store', id: 'LIST' }],
+            invalidatesTags: [{ type: QUERY_KEY.STORE, id: 'LIST' }],
         }),
         getDetailStore: builder.query<IApiResponse<{ data: IStoreItem }>, number | undefined>({
-            query: (id) => `/shows_store/${id}`,
+            query: (id) => `${API_ENDPOINT.STORE.DETAILS}/${id}`,
         }),
         updateStore: builder.mutation<object, { formdata: FormData; id: number }>({
             query: ({ formdata, id }) => ({
-                url: `/store/${id}`,
+                url: `${API_ENDPOINT.STORE.EDIT}/${id}`,
                 method: 'POST',
                 body: formdata,
             }),
-            invalidatesTags: [{ type: 'store', id: 'LIST' }],
+            invalidatesTags: [{ type: QUERY_KEY.STORE, id: 'LIST' }],
         }),
     }),
 });
