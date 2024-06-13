@@ -13,7 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '~/components/ui/input';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useCreateStoreMutation, useGetDetailStoreQuery, useUpdateStoreMutation } from '~/store/services/store.service';
-import { ErrorFields } from '~/types/Error/Helper';
+import { ErrorFields, isStoreError } from '~/types/Error/Helper';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -122,32 +122,41 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
             });
             setPreview(detailStore.data.image);
         }
-        if (createStoreState.isSuccess) {
-            if (createStoreState.data.error) {
-                const objectKey = Object.keys(createStoreState.data.error) as ErrorFields[];
+        if (createStoreState?.isError) {
+            const { error } = createStoreState;
+            if (isStoreError(error)) {
+                const objectKey = Object.keys(error.data.error) as ErrorFields[];
                 objectKey.forEach((key: ErrorFields) => {
-                    const errorMessage = createStoreState?.data?.error[key].join(', ');
-                    return form.setError(key, { message: `${errorMessage}` });
+                    const errorMessage = error.data.error[key].join(', ');
+                    form.setError(key, { message: errorMessage });
                 });
             } else {
-                onCloseModal();
-                toast({ title: 'Add New Store Successfully!', status: 'success' });
+                toast({ title: 'Có lỗi xảy ra', status: 'destructive' });
             }
         }
-        if (updateStoreState.isSuccess) {
-            if (updateStoreState.data.error) {
-                const objectKey = Object.keys(updateStoreState.data.error) as ErrorFields[];
+        if (updateStoreState?.isError) {
+            const { error } = updateStoreState;
+            if (isStoreError(error)) {
+                const objectKey = Object.keys(error.data.error) as ErrorFields[];
                 objectKey.forEach((key: ErrorFields) => {
-                    const errorMessage = updateStoreState?.data?.error[key].join(', ');
-                    return form.setError(key, { message: `${errorMessage}` });
+                    const errorMessage = error.data.error[key].join(', ');
+                    form.setError(key, { message: errorMessage });
                 });
             } else {
+                toast({ title: 'Có lỗi xảy ra', status: 'destructive' });
+            }
+        }
+        if (updateStoreState.isSuccess || createStoreState.isSuccess) {
+            if (id) {
                 refetch();
-                onCloseModal();
-                toast({ title: 'Update Store Successfully!', status: 'success' });
             }
+            onCloseModal();
+            toast({
+                title: `${id ? 'Chỉnh sửa cửa hàng thành công!' : 'Thêm cửa hàng thành công!'} `,
+                status: 'success',
+            });
         }
-    }, [createStoreState, id, detailStore, updateStoreState, detailStore]);
+    }, [createStoreState, id, detailStore, updateStoreState]);
 
     return (
         <div className='m-auto  pb-10'>
