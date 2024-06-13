@@ -2,7 +2,6 @@ import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
-import { CustomError } from '~/types/Error/Helper';
 import { IStoreItem, IStoreResponse } from '~/types/Store';
 
 export const storeApi = baseApi.injectEndpoints({
@@ -18,7 +17,7 @@ export const storeApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.STORE],
         }),
-        createStore: builder.mutation<IApiResponse<IStoreResponse | CustomError>, FormData>({
+        createStore: builder.mutation<IApiResponse<IStoreResponse>, FormData>({
             query(formData) {
                 return {
                     url: API_ENDPOINT.STORE.ADD,
@@ -31,7 +30,7 @@ export const storeApi = baseApi.injectEndpoints({
         getDetailStore: builder.query<IApiResponse<{ data: IStoreItem }>, number | undefined>({
             query: (id) => `${API_ENDPOINT.STORE.DETAILS}/${id}`,
         }),
-        updateStore: builder.mutation<IApiResponse<IStoreResponse | CustomError>, { formdata: FormData; id: number }>({
+        updateStore: builder.mutation<IApiResponse<IStoreResponse>, { formdata: FormData; id: number }>({
             query: ({ formdata, id }) => ({
                 url: `${API_ENDPOINT.STORE.EDIT}/${id}`,
                 method: 'POST',
