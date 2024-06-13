@@ -3,7 +3,7 @@ import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from '
 import { Input } from '~/components/ui/input';
 
 interface IInputProps extends React.HTMLProps<HTMLInputElement> {
-    type: 'text' | 'password' | 'email' | 'date' | 'number';
+    type: 'text' | 'password' | 'email' | 'date' | 'number' | 'file';
     title: string;
     description?: string;
     placeholder?: string;
@@ -14,18 +14,18 @@ const FormItemDisplay = forwardRef<HTMLInputElement, IInputProps>(
     ({ type, title, placeholder, require, description, ...passProps }, ref) => {
         const inputId = useId();
         return (
-            <FormItem className='mt-3 flex w-full flex-col gap-2'>
+            <FormItem className='mb-3 flex w-full flex-col'>
                 <FormLabel>
                     {title}
                     {require && <span className='text-[#e41a0f]'>*</span>}
                 </FormLabel>
                 <FormControl>
                     <Input
-                        {...passProps}
                         ref={ref}
                         placeholder={placeholder}
                         type={type}
                         id={inputId}
+                        {...passProps}
                         className='w-full rounded-[3px] border border-gray-500 p-2 focus:border-card'
                     ></Input>
                 </FormControl>

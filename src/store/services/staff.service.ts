@@ -1,14 +1,38 @@
 import { IApiResponse } from '~/types/Api';
 import baseApi from '../apis/baseApi';
-import { IStaff } from '~/types/Staff';
+import { IStaff, IStaffResponse } from '~/types/Staff';
 import API_ENDPOINT from '~/constants/apiEndpoint';
+import { QUERY_KEY } from '~/constants/queryKey';
 
 export const staffAPI = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         ListStaffClient: builder.query<IApiResponse<{ data: IStaff[] }>, void>({
             query: () => ({ url: API_ENDPOINT.USER.LIST }),
+            providesTags: [QUERY_KEY.STAFF],
+        }),
+        getStaffDetail: builder.query<IApiResponse<{ data: IStaff }>, number | undefined>({
+            query: (id) => ({ url: `/admin_users/show/${id}` }),
+        }),
+        createStaff: builder.mutation<IApiResponse<IStaffResponse>, FormData>({
+            query(formData) {
+                return {
+                    url: API_ENDPOINT.USER.ADD,
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: [QUERY_KEY.STAFF],
+        }),
+        editStaff: builder.mutation<object, { formdata: FormData; id: number }>({
+            query: ({ formdata, id }) => ({
+                url: `${API_ENDPOINT.USER.EDIT}/${id}`,
+                method: 'POST',
+                body: formdata,
+            }),
+            invalidatesTags: [QUERY_KEY.STAFF],
         }),
     }),
 });
 
-export const { useListStaffClientQuery } = staffAPI;
+export const { useListStaffClientQuery, useEditStaffMutation, useGetStaffDetailQuery, useCreateStaffMutation } =
+    staffAPI;

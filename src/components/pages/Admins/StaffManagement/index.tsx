@@ -16,6 +16,7 @@ const StaffListManager = () => {
         >
             {data?.data.data.map((item, i) => (
                 <UserRow
+                    id={item.id}
                     key={i}
                     image={item.image}
                     name={item.name}

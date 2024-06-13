@@ -5,6 +5,7 @@ import { disPlayRoleName } from '~/lib/utils';
 import FormStaff from './FormStaff';
 
 type IUserRowProps = {
+    id?: number;
     image: string | null;
     name: string;
     email: string;
@@ -16,7 +17,7 @@ type IUserRowProps = {
 
 const USER_COLUMN_NAMES = ['Người dùng', 'Chức vụ', 'Điện thoại', 'Ngày tạo', 'Tùy chọn'];
 
-const UserRow: FC<IUserRowProps> = ({ image, name, email, role, phone, createAt }) => {
+const UserRow: FC<IUserRowProps> = ({ id, image, name, email, role, phone, createAt }) => {
     const roleName = disPlayRoleName(role);
     return (
         <tr>
@@ -55,7 +56,7 @@ const UserRow: FC<IUserRowProps> = ({ image, name, email, role, phone, createAt 
                 </span>
             </td>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <PopupModal Form={FormStaff} btnName='Edit' title='Chỉnh sửa thông tin nhân viên' />
+                <PopupModal Form={FormStaff} id={id} btnName='Edit' title='Chỉnh sửa thông tin nhân viên' />
             </td>
         </tr>
     );
