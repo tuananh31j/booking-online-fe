@@ -1,36 +1,47 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
-import FormService from './FormService';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
+import { useGetListCategoryQuery } from '~/store/services/category.service';
+import FormService from './FormService';
 
 type IServiceRowProps = {
+    index: number;
     id: number;
     name: string;
     category: number | string | boolean;
-    description: string;
+    describe: string;
     price: string;
     createdAt: string;
     updatedAt: string;
     handleDeleteService: (id: number) => void;
 };
 
-const ORDER_COLUMN_NAMES = ['ID', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
+const ORDER_COLUMN_NAMES = ['#', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
 
 const ServiceRow: FC<IServiceRowProps> = ({
+    index,
     id,
     name,
     category,
-    description,
+    describe,
     price,
     createdAt,
     updatedAt,
     handleDeleteService,
 }) => {
+    const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
+    const [catID, setCatID] = useState(0);
+    useEffect(() => {
+        if (!isCategoryLoading) {
+            const categoryId = categoryData?.data.data.find((cat) => cat.name === category)?.id || 0;
+            setCatID(categoryId);
+        }
+    }, [isCategoryLoading]);
     return (
         <tr className='h-10'>
             <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {id}
+                    {index}
                 </div>
             </td>
 
@@ -48,7 +59,7 @@ const ServiceRow: FC<IServiceRowProps> = ({
 
             <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
                 <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {description}
+                    {describe}
                 </div>
             </td>
 
@@ -75,8 +86,9 @@ const ServiceRow: FC<IServiceRowProps> = ({
                     btnName='Edit'
                     title="Change the service's information here"
                     className='underline hover:text-blue-800'
+                    id={id}
                     Form={FormService}
-                ></PopupModal>{' '}
+                />
                 |
                 <AlertDialogConfirm
                     handleConfirm={handleDeleteService}
@@ -93,4 +105,4 @@ const ServiceRow: FC<IServiceRowProps> = ({
     );
 };
 
-export { ServiceRow, ORDER_COLUMN_NAMES };
+export { ORDER_COLUMN_NAMES, ServiceRow };

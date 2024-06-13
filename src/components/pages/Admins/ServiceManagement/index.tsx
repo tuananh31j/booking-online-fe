@@ -6,7 +6,11 @@ import { ORDER_COLUMN_NAMES, ServiceRow } from '~/components/_common/TableDispla
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
-import { useGetListServiceQuery, useRemoveServiceMutation } from '~/store/services/service.service';
+import {
+    useCreateServiceMutation,
+    useGetListServiceQuery,
+    useRemoveServiceMutation,
+} from '~/store/services/service.service';
 
 const ServiceManagement = () => {
     const { data, isLoading } = useGetListServiceQuery();
@@ -28,14 +32,14 @@ const ServiceManagement = () => {
                     service?.map((item, i) => (
                         <ServiceRow
                             key={i}
+                            index={i + 1}
                             id={item.id}
                             name={item.name}
                             category={
-                                (!isCategoryLoading &&
-                                    categoryData?.data.data.find((cat) => cat.id === item.categorie_id)?.name) ??
+                                categoryData?.data.data.find((cat) => cat.id === item.categorie_id)?.name ||
                                 'Chưa xác định'
                             }
-                            description={item.describe}
+                            describe={item.describe}
                             price={item.price}
                             createdAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}
                             updatedAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}

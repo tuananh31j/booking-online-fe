@@ -7,13 +7,22 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
 import ButtonSubmit from '~/components/_common/ButtonSubmit';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
-import { useCreateServiceMutation } from '~/store/services/service.service';
+import {
+    useCreateServiceMutation,
+    useGetDetailServiceQuery,
+    useGetListServiceQuery,
+    useUpdateServiceMutation,
+} from '~/store/services/service.service';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
+import { useEffect, useState } from 'react';
+import useToastDisplay from '~/hooks/useToastDisplay';
+import { title } from 'process';
+import { replace, set } from 'lodash';
 
 const FormServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
-    category: z.string({ required_error: 'Danh mục không được để trống!' }),
-    description: z.string({ required_error: 'Mô tả không được để trống!' }),
+    categorie_id: z.string({ required_error: 'Danh mục không được để tr' }),
+    describe: z.string({ required_error: 'Số điện thoại không được để trống!' }),
     price: z.string({ required_error: 'Vui lòng nhập giá cả!', invalid_type_error: 'Giá trị không đúng!' }),
     // .positive({ message: 'Giá phải là số dương!' })
     // .min(1000, { message: 'Giá không được nhỏ hơn 1000!' }),
@@ -21,107 +30,177 @@ const FormServiceSchema = z.object({
 
 type IFormService = z.infer<typeof FormServiceSchema>;
 
-const FormService = ({ onCloseModal }: { onCloseModal: () => void }) => {
+const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
+    const { data: service, refetch, isLoading } = useGetDetailServiceQuery(id, { skip: !id });
+    const [createService, createServiceState] = useCreateServiceMutation();
+    const [updateService, updateServiceSate] = useUpdateServiceMutation();
+    const { data: serviceList } = useGetListServiceQuery();
     const form = useForm<IFormService>({ resolver: zodResolver(FormServiceSchema) });
-    const [createService] = useCreateServiceMutation();
+    const [categoryId, setCategoryId] = useState('');
+    const toast = useToastDisplay();
+
+    const [errorMessageName, seterrorMessageName] = useState('');
+
     const onSubmit: SubmitHandler<IFormService> = async (data) => {
+        seterrorMessageName('');
+
+        if (!id) {
+            if (serviceList?.data.data.find((item) => item.name === data.name)) {
+                seterrorMessageName('Tên dịch vụ đã tồn tại');
+                return;
+            }
+        }
+
         await new Promise((resolve) => {
-            setTimeout(resolve, 1000);
+            resolve(data);
         });
-        try {
-            await createService({
-                name: data.name,
-                categorie_id: Number(data.category), // Chuyển đổi category thành số
-                price: data.price,
-                describe: data.description,
-            }).unwrap();
-            console.log(data);
-            onCloseModal();
-        } catch (error) {
-            console.log(error);
+
+        if (!id) {
+            try {
+                createService({
+                    name: data.name,
+                    categorie_id: Number(data.categorie_id), // Chuyển đổi category thành số
+                    price: data.price,
+                    describe: data.describe,
+                }).unwrap();
+                toast({ title: 'Thêm dịch vụ thành công!', status: 'success' });
+                onCloseModal();
+            } catch (error) {
+                console.log(error);
+                toast({ title: 'Thêm dịch vụ thất bại!', status: 'destructive' });
+            }
+        } else {
+            try {
+                console.log(data);
+                updateService({
+                    id,
+                    formData: {
+                        name: data.name,
+                        categorie_id: Number(data.categorie_id), // Chuyển đổi category thành số
+                        price: data.price,
+                        describe: data.describe,
+                    },
+                });
+                toast({ title: 'Sửa dịch vụ thành công!', status: 'success' });
+            } catch (error) {
+                console.log(error);
+                toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
+            }
         }
     };
+
+    useEffect(() => {
+        if (id) {
+            form.reset({
+                name: service?.data.data.name,
+                price: replace(service?.data.data.price ?? '', /\.00$/, ''), // Sử dụng toán tử ?? để cung cấp giá trị mặc định '' khi service?.data.data.price là undefined
+                categorie_id: service?.data.data.categorie_id.toString(),
+                describe: service?.data.data.describe,
+            });
+        }
+        if (updateServiceSate.isSuccess || createServiceState.isSuccess) {
+            onCloseModal();
+            console.log('success');
+        }
+    }, [createServiceState, form, id, service, updateServiceSate]);
     return (
-        <div className='mx-auto flex w-[100%] flex-col justify-center'>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                    <div className='flex justify-between'>
-                        <div>
-                            <FormField
-                                control={form.control}
-                                name='category'
-                                render={({ field }) => (
-                                    <FormItem className='my-3 flex flex-col gap-2'>
-                                        <FormLabel>
-                                            Danh mục <span className='text-[#e41a0f]'>*</span>
-                                        </FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder='Chọn danh mục' />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {!isCategoryLoading &&
-                                                    categoryData?.data.data.map((category) => (
-                                                        <SelectItem key={category.id} value={category.id.toString()}>
-                                                            {category.name}
-                                                        </SelectItem>
-                                                    ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <FormDescription>{''}</FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name='name'
-                                render={({ field }) => (
-                                    <FormItemDisplay
-                                        title='Tên dịch vụ'
-                                        placeholder='Nhập tên dịch vụ!'
-                                        {...field}
-                                        require
-                                        type='text'
-                                    />
-                                )}
-                            />
+        <div className='mx-auto flex w-[30vw] flex-col justify-center'>
+            {!isLoading && (
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                        <div className='flex justify-between'>
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name='categorie_id'
+                                    render={({ field }) => {
+                                        return (
+                                            <FormItem className='my-3 flex flex-col gap-2'>
+                                                <FormLabel>
+                                                    Danh mục <span className='text-[#e41a0f]'>*</span>
+                                                </FormLabel>
+                                                <Select
+                                                    onValueChange={field.onChange}
+                                                    defaultValue={service?.data.data.categorie_id.toString()}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder='Chọn danh mục' />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {!isCategoryLoading &&
+                                                            categoryData?.data.data.map((category) => (
+                                                                <SelectItem
+                                                                    key={category.id}
+                                                                    value={category.id.toString()}
+                                                                >
+                                                                    {category.name}
+                                                                </SelectItem>
+                                                            ))}
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormDescription>{''}</FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        );
+                                    }}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name='name'
+                                    render={({ field }) => {
+                                        return (
+                                            <>
+                                                <FormItemDisplay
+                                                    title='Tên dịch vụ'
+                                                    placeholder='Nhập tên dịch vụ!'
+                                                    {...field}
+                                                    require
+                                                    type='text'
+                                                />
+                                                <FormMessage>{errorMessageName}</FormMessage>
+                                            </>
+                                        );
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name='describe'
+                                    render={({ field }) => (
+                                        <FormItemDisplay
+                                            title='Mô tả'
+                                            placeholder='Nhập mô tả dịch vụ!'
+                                            {...field}
+                                            require
+                                            type='text'
+                                        />
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name='price'
+                                    render={({ field }) => (
+                                        <FormItemDisplay
+                                            title='Giá'
+                                            placeholder='Nhập giá dịch vụ!'
+                                            {...field}
+                                            require
+                                            type='number'
+                                        />
+                                    )}
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <FormField
-                                control={form.control}
-                                name='description'
-                                render={({ field }) => (
-                                    <FormItemDisplay
-                                        title='Mô tả'
-                                        placeholder='Nhập mô tả dịch vụ!'
-                                        {...field}
-                                        require
-                                        type='text'
-                                    />
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name='price'
-                                render={({ field }) => (
-                                    <FormItemDisplay
-                                        title='Giá'
-                                        placeholder='Nhập giá dịch vụ!'
-                                        {...field}
-                                        require
-                                        type='number'
-                                    />
-                                )}
-                            />
-                        </div>
-                    </div>
-                    <ButtonSubmit isSubmitting={form.formState.isSubmitting} name='Submit' />
-                </form>
-            </Form>
+                        <button className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'>
+                            Submit
+                        </button>
+                    </form>
+                </Form>
+            )}
         </div>
     );
 };

@@ -26,9 +26,12 @@ export const serviceApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.SERVICE],
         }),
+        getDetailService: builder.query<IApiResponse<{ data: IServiceItem }>, number>({
+            query: (id) => `/services/${id}`,
+        }),
         removeService: builder.mutation<object, number>({
             query: (id) => ({
-                url: `${API_ENDPOINT.SERVICE.REMOVE}/${id}`,
+                url: `/services/delete/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: [QUERY_KEY.SERVICE],
@@ -36,4 +39,10 @@ export const serviceApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetListServiceQuery, useRemoveServiceMutation, useCreateServiceMutation } = serviceApi;
+export const {
+    useGetListServiceQuery,
+    useGetDetailServiceQuery,
+    useRemoveServiceMutation,
+    useCreateServiceMutation,
+    useUpdateServiceMutation,
+} = serviceApi;
