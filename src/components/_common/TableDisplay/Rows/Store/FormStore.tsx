@@ -13,7 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '~/components/ui/input';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useCreateStoreMutation, useGetDetailStoreQuery, useUpdateStoreMutation } from '~/store/services/store.service';
-import { ErrorFields, isStoreError } from '~/types/Error/Helper';
+import { ErrorFields, isStoreError } from '~/types/Error/Helper/Store';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -175,7 +175,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                                 <FormItem>
                                     <FormLabel>Name: </FormLabel>
                                     <FormControl>
-                                        <Input placeholder='Enter your salon name' {...field} className='bg-white' />
+                                        <Input placeholder='Enter your salon name' {...field} className='bg-card' />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -189,7 +189,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                                 <FormItem>
                                     <FormLabel>Address: </FormLabel>
                                     <FormControl>
-                                        <Input placeholder='Enter your salon address' {...field} className='bg-white' />
+                                        <Input placeholder='Enter your salon address' {...field} className='bg-card' />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -206,7 +206,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                                         <Input
                                             placeholder='Enter your salon phone number'
                                             {...field}
-                                            className='bg-white'
+                                            className='bg-card'
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -225,7 +225,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                                         <FormControl>
                                             <Input
                                                 disabled={id ? !isSaveImage : false}
-                                                className='cursor-pointer bg-white'
+                                                className='cursor-pointer bg-card'
                                                 type='file'
                                                 accept='image/*'
                                                 placeholder='Enter your salon logo'
