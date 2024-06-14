@@ -11,7 +11,7 @@ export const staffAPI = baseApi.injectEndpoints({
         }),
 
         getListBooking: builder.query<IApiResponse<{ data: IScheduleResponse[] }>, void>({
-            query: () => API_ENDPOINT.USER.BOOKING_SCHEDULES,
+            query: () => API_ENDPOINT.USER.SEE_SCHEDULES,
         }),
     }),
 });

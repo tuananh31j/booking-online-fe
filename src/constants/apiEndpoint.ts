@@ -20,6 +20,7 @@ const API_ENDPOINT = {
         EDIT_PROFILE: '/user/profile/update',
         ADD_SCHEDULES: '/user/schedules',
         BOOKING_SCHEDULES: 'user/listbooking',
+        SEE_SCHEDULES: '/user/see-schedule',
     },
     STORE: {
         ADD: '/stores/post',

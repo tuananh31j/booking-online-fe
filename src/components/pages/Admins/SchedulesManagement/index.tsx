@@ -11,7 +11,7 @@ import { useGetListBookingQuery } from '~/store/services/staff.service';
 export default function ScheduleManagement() {
     const { data, isLoading, error } = useGetListBookingQuery();
     const listSchedule = data?.data.data || [];
-
+    console.log(listSchedule);
     return (
         <div>
             {(error || lightFormat.length === 0) && 'Hiện bạn không có booking nào'}
@@ -23,11 +23,15 @@ export default function ScheduleManagement() {
                 {!isLoading && data
                     ? listSchedule.map((item, i) => (
                           <ScheduleRow
+                              id={item.id}
+                              //   user_id={item.user_id}
+                              storeInformationId={item.store_information_id}
+                              isValid={item.is_valid}
                               day={item.day}
-                              time={item.time}
-                              status={item.status}
+                              startTime={item.start_time}
+                              endTime={item.end_time}
                               createdAt={item.created_at}
-                              updatedAt={item.update_at}
+                              error={item.error}
                               key={i}
                               index={i + 1}
                           />

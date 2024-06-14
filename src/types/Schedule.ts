@@ -1,9 +1,11 @@
 export type IScheduleResponse = {
     id: number;
     user_id: number;
+    store_information_id: number;
+    is_valid: number;
     day: string;
-    time: string;
-    status: string;
+    start_time: string;
+    end_time: string;
     created_at: string;
-    update_at: string;
+    error: string;
 };
