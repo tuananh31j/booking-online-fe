@@ -7,6 +7,11 @@ interface CustomErrors {
         error: Record<ErrorFields, string[]>;
     };
 }
+interface StaffErrorWithData extends CustomErrors {
+    data: {
+        error: Record<ErrorStaffFields, string[]>;
+    };
+}
 interface StoreErrorWithData extends CustomErrors {
     data: {
         error: Record<ErrorFields, string[]>;
@@ -23,6 +28,7 @@ interface StaffErrorWithData extends CustomErrors {
 export const isStoreError = (error: any): error is StoreErrorWithData => {
     return error && error.data && 'error' in error.data;
 };
+
 export const isStaffError = (error: any): error is StaffErrorWithData => {
     return error && error.data && 'error' in error.data;
 };
