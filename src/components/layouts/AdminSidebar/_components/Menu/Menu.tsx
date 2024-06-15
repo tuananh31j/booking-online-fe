@@ -1,4 +1,4 @@
-import { HandPlatter, LayoutDashboard, ListOrdered, Sofa, StoreIcon, UserRound } from 'lucide-react';
+import { CalendarDays, HandPlatter, LayoutDashboard, ListOrdered, Sofa, StoreIcon, UserRound } from 'lucide-react';
 import React from 'react';
 import MenuItem from '~/components/layouts/AdminSidebar/_components/Menu/MenuItem';
 
@@ -9,6 +9,7 @@ const MENU_LIST = [
     { path: 'staff-list', name: 'Manage staffs', icon: <UserRound size={16} strokeWidth={1.75} /> },
     { path: 'category', name: 'Manage category', icon: <Sofa size={16} strokeWidth={1.75} /> },
     { path: 'services', name: 'Services', icon: <HandPlatter size={16} strokeWidth={1.75} /> },
+    { path: 'schedules', name: 'Manage schedules', icon: <CalendarDays size={16} strokeWidth={1.75} /> },
 ];
 
 const Menu = () => {
@@ -22,23 +23,6 @@ const Menu = () => {
                             {item.icon}
                         </MenuItem>
                     ))}
-
-                    {/* <li className='mb-2 mt-4 w-full'>
-                    <h6 className='ml-2 pl-6 text-xs font-bold uppercase leading-tight opacity-60 dark:text-white'>
-                        Account pages
-                    </h6>
-                </li>
-                <li className='mt-[0.125rem] w-full'>
-                    <a
-                        className='ease-nav-brand mx-2 my-0 flex items-center whitespace-nowrap rounded-lg px-4 py-[0.625rem] text-sm transition-colors hover:bg-[#EAEDFC]  dark:text-white dark:opacity-80 dark:hover:bg-[#192555]'
-                        href='./pages/profile.html'
-                    >
-                        <div className='mr-1 flex items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-[0.625rem]'>
-                            <UserRound size={16} strokeWidth={1.75} />
-                        </div>
-                        <span className='ease pointer-events-none ml-1 opacity-100 duration-300'>Profile</span>
-                    </a>
-                </li> */}
                 </ul>
             </div>
         </>

@@ -3,6 +3,7 @@ import baseApi from '../apis/baseApi';
 import { IStaff, IStaffResponse } from '~/types/Staff';
 import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
+import { IScheduleResponse } from '~/types/Schedule';
 
 export const staffAPI = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -31,8 +32,17 @@ export const staffAPI = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.STAFF],
         }),
+
+        getListBooking: builder.query<IApiResponse<{ data: IScheduleResponse[] }>, void>({
+            query: () => API_ENDPOINT.USER.SEE_SCHEDULES,
+        }),
     }),
 });
 
-export const { useListStaffClientQuery, useEditStaffMutation, useGetStaffDetailQuery, useCreateStaffMutation } =
-    staffAPI;
+export const {
+    useEditStaffMutation,
+    useListStaffClientQuery,
+    useGetListBookingQuery,
+    useGetStaffDetailQuery,
+    useCreateStaffMutation,
+} = staffAPI;
