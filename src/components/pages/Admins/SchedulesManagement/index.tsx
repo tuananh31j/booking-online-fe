@@ -1,7 +1,8 @@
 'use client';
 
 import { lightFormat } from 'date-fns';
-import React, { useEffect } from 'react';
+import React from 'react';
+import FormSchedule from '~/components/_common/TableDisplay/Rows/Schedule/FormSchedule';
 import { ORDER_COLUMN_NAMES, ScheduleRow } from '~/components/_common/TableDisplay/Rows/Schedule/ScheduleRow';
 import FormService from '~/components/_common/TableDisplay/Rows/Service/FormService';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
@@ -11,13 +12,13 @@ import { useGetListBookingQuery } from '~/store/services/staff.service';
 export default function ScheduleManagement() {
     const { data, isLoading, error } = useGetListBookingQuery();
     const listSchedule = data?.data.data || [];
-
+    console.log(listSchedule);
     return (
         <div>
             <TableDisplay
                 title='Schedules Management'
                 columnNames={ORDER_COLUMN_NAMES}
-                action={{ element: FormService, modalTitle: 'Thêm mới dịch vụ' }}
+                action={{ element: FormSchedule, modalTitle: 'Đăng ký giờ làm' }}
             >
                 {(error || lightFormat.length === 0) && (
                     <td colSpan={7} className='text-center'>
