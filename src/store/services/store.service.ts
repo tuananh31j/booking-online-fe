@@ -2,7 +2,7 @@ import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
-import { IStoreItem, IStoreResponse } from '~/types/Store';
+import { IStoreItem, IStoreResponse, IStoreWorkingTimeResponse } from '~/types/Store';
 
 export const storeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -37,6 +37,9 @@ export const storeApi = baseApi.injectEndpoints({
                 body: formdata,
             }),
             invalidatesTags: [QUERY_KEY.STORE],
+        }),
+        getListWorkingTime: builder.query<IApiResponse<{ data: IStoreWorkingTimeResponse }>, string | undefined>({
+            query: (id) => `${API_ENDPOINT.STORE.DETAILS}/${id}`,
         }),
     }),
 });

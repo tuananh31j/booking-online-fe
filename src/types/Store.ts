@@ -5,6 +5,14 @@ export type IStoreBody = {
     image?: File | string | FileList;
 };
 
+export type IStoreWorkingTimeResponse = {
+    data: {
+        day: string;
+        start_time: string;
+        end_time: string;
+    };
+};
+
 export type IStoreResponse = {
     data: {
         id: number;

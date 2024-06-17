@@ -3,7 +3,7 @@ import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from '
 import { Input } from '~/components/ui/input';
 
 interface IInputProps extends React.HTMLProps<HTMLInputElement> {
-    type: 'text' | 'password' | 'email' | 'date' | 'number';
+    type: 'text' | 'password' | 'email' | 'date' | 'number' | 'time';
     title: string;
     description?: string;
     placeholder?: string;

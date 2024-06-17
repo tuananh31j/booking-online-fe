@@ -1,6 +1,4 @@
-import clsx from 'clsx';
-import { FC, useEffect, useState } from 'react';
-import { useGetDetailStoreQuery } from '~/store/services/store.service';
+import { FC } from 'react';
 
 type IScheduleRowProps = {
     index: number;
