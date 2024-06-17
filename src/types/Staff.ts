@@ -10,3 +10,13 @@ export type IStaff = {
     created_at: string;
     updated_at: string;
 };
+
+export type IScheduleBody = {
+    day: string;
+    start_time: string;
+    end_time: string;
+};
+
+export type ISchedulesRequestBody = {
+    schedules: IScheduleBody[];
+};
