@@ -12,6 +12,11 @@ import { useRegisterScheduleMutation } from '~/store/services/staff.service';
 import { IScheduleBody, ISchedulesRequestBody } from '~/types/Staff';
 // import { toast } from '~/components/ui/use-toast';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+
+function isFetchBaseQueryError(error: any): error is FetchBaseQueryError {
+    return typeof error === 'object' && error !== null && 'status' in error;
+}
 
 const FormScheduleSchema = z.object({
     day: z.string({ required_error: 'Vui lòng chọn ngày!' }),
@@ -21,7 +26,7 @@ const FormScheduleSchema = z.object({
 
 type IFormSchedule = z.infer<typeof FormScheduleSchema>;
 
-const FormSchedule = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
+const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
     const toast = useToastDisplay();
 
     const [descriptionWokingTime, setDescriptionWokingTime] = useState('');
@@ -29,7 +34,25 @@ const FormSchedule = ({ onCloseModal, id }: { onCloseModal: () => void; id: numb
     const [createSchedule, createScheduleState] = useRegisterScheduleMutation();
 
     useEffect(() => {
-        console.log(createScheduleState);
+        if (createScheduleState.isError) {
+            const { error } = createScheduleState;
+            let errorMessage = 'Đăng ký / cập nhật thất bại';
+            if (isFetchBaseQueryError(error) && error.data && typeof error.data === 'object') {
+                const errorData = error.data as { message: string[] };
+                errorMessage = errorData.message.map((e) => typeof e === 'string' && e).join(' ');
+            }
+            toast({
+                title: errorMessage,
+                status: 'destructive',
+            });
+        }
+
+        if (createScheduleState.isSuccess) {
+            toast({
+                title: 'Đăng ký / cập nhật thành công!',
+                status: 'success',
+            });
+        }
     }, [createScheduleState]);
 
     const dataWorkingTime = {
