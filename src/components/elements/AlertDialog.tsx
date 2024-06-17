@@ -12,7 +12,7 @@ import React from 'react';
 
 type IAlerdialogProps = {
     children: React.ReactNode;
-    handleConfirm: (id: number) => void;
+    handleConfirm?: (id: number) => void;
     content: {
         idContent: number;
         title: string;
@@ -42,10 +42,18 @@ export default function AlertDialogConfirm({ children, handleConfirm, content }:
                         <p className='text-center text-sm text-[#7777] md:text-sm'>{content.description}</p>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel className='bg-card'>Không</AlertDialogCancel>
-                        <AlertDialogAction className='bg-red-500' onClick={() => handleConfirm(content.idContent)}>
-                            Chắc Chắn
-                        </AlertDialogAction>
+                        {handleConfirm && (
+                            <>
+                                <AlertDialogCancel className='bg-card'>Không</AlertDialogCancel>
+                                <AlertDialogAction
+                                    className='bg-red-500'
+                                    onClick={() => handleConfirm(content.idContent)}
+                                >
+                                    Chắc Chắn
+                                </AlertDialogAction>
+                            </>
+                        )}
+                        {!handleConfirm && <AlertDialogCancel className='bg-red-500'>Được thôi</AlertDialogCancel>}
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

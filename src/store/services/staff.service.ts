@@ -36,11 +36,19 @@ export const staffAPI = baseApi.injectEndpoints({
         getListBooking: builder.query<IApiResponse<{ data: IScheduleResponse[] }>, void>({
             query: () => API_ENDPOINT.USER.SEE_SCHEDULES,
         }),
+        deleteStaff: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `${API_ENDPOINT.USER.REMOVE}/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: [QUERY_KEY.STAFF],
+        }),
     }),
 });
 
 export const {
     useEditStaffMutation,
+    useDeleteStaffMutation,
     useListStaffClientQuery,
     useGetListBookingQuery,
     useGetStaffDetailQuery,

@@ -3,22 +3,28 @@ import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import { disPlayRoleName } from '~/lib/utils';
 import FormStaff from './FormStaff';
+import Cookies from 'universal-cookie';
+import AlertDialogConfirm from '~/components/elements/AlertDialog';
+import { Trash2Icon } from 'lucide-react';
 
 type IUserRowProps = {
-    id?: number;
+    id: number;
     image: string | null;
     name: string;
     email: string;
     role: number;
     phone: string | null;
     address: string | null;
+    action: (id: number) => void;
     createAt: string;
 };
 
 const USER_COLUMN_NAMES = ['Người dùng', 'Chức vụ', 'Điện thoại', 'Ngày tạo', 'Tùy chọn'];
 
-const UserRow: FC<IUserRowProps> = ({ id, image, name, email, role, phone, createAt }) => {
+const cookies = new Cookies();
+const UserRow: FC<IUserRowProps> = ({ id, image, name, email, role, phone, createAt, action }) => {
     const roleName = disPlayRoleName(role);
+    const user = cookies.get('user');
     return (
         <tr>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
@@ -56,7 +62,34 @@ const UserRow: FC<IUserRowProps> = ({ id, image, name, email, role, phone, creat
                 </span>
             </td>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <PopupModal Form={FormStaff} id={id} btnName='Edit' title='Chỉnh sửa thông tin nhân viên' />
+                <div className='flex items-center justify-center gap-2'>
+                    <PopupModal Form={FormStaff} id={id} btnName='Edit' title='Chỉnh sửa thông tin nhân viên' />
+                    {id !== user.id && (
+                        <AlertDialogConfirm
+                            handleConfirm={action}
+                            content={{
+                                title: 'Bạn có chắc chắn không?',
+                                description: 'Bạn có muốn xóa sản phẩm này không khi xóa sẽ không thể khổi phục',
+                                idContent: id,
+                            }}
+                        >
+                            <Trash2Icon className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500' />
+                        </AlertDialogConfirm>
+                    )}
+                    {id === user.id && (
+                        <div>
+                            <AlertDialogConfirm
+                                content={{
+                                    title: 'Bạn không được phép!',
+                                    description: 'Bạn đang đăng nhập ở tài khoản này không thể xóa tài khoản này',
+                                    idContent: id,
+                                }}
+                            >
+                                <Trash2Icon className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500' />
+                            </AlertDialogConfirm>
+                        </div>
+                    )}
+                </div>
             </td>
         </tr>
     );
