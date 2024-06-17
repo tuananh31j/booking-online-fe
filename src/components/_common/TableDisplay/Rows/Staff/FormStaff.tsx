@@ -1,7 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus, SaveIcon } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
+import { Plus } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useId, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -10,9 +11,10 @@ import FormItemDisplay from '~/components/_common/FormItemDisplay';
 import LoadingButton from '~/components/elements/LoadingButton';
 import { Button } from '~/components/ui/button';
 import { Checkbox } from '~/components/ui/checkbox';
-import { Form, FormField } from '~/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useCreateStaffMutation, useEditStaffMutation, useGetStaffDetailQuery } from '~/store/services/staff.service';
+import { useGetListStoreQuery } from '~/store/services/store.service';
 import { ErrorStaffFields, isStaffError } from '~/types/Error/Helper/Store';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -22,6 +24,9 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const [isSaveImage, setIsSaveImage] = useState<boolean>(true);
 
     const toast = useToastDisplay();
+    const { data, isLoading } = useGetListStoreQuery();
+    const stores = data?.data?.data;
+
     const [createStaff, createStaffState] = useCreateStaffMutation();
     const [updateStaff, updateStaffState] = useEditStaffMutation();
     const { data: detail, refetch } = useGetStaffDetailQuery(id, { skip: !id });
@@ -43,8 +48,11 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                   (files) => Array.from(files).every((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type)),
                   'Only these types are allowed .jpg, .jpeg, .png and .webp'
               );
+
     const FormStaffSchema = z.object({
-        // shop: z.string({ required_error: 'Cửa hàng không được để trống!' }),
+        store_information_id: z
+            .string({ required_error: 'Cửa hàng không được để trống!' })
+            .min(1, { message: 'Cửa hàng không được để trống!' }),
         email: z.string().email('Email không hợp lệ!'),
         name: z
             .string({ required_error: 'Họ và tên không được để trống!' })
@@ -52,14 +60,14 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         phone: z
             .string({ required_error: 'Số điện thoại không được để trống!' })
             .min(3, { message: 'Số điện thoại ít nhất phải có 9 ký tự !' }),
-        password: z.any(),
+        password: z.string().min(6, { message: 'Password phải có ít nhất 6 ký tự!' }),
         address: z
             .string({ required_error: 'Địa chỉ không được để trống!' })
-            .min(3, { message: 'Số điện thoại ít nhất phải có 10 ký tự !' }),
+            .min(3, { message: 'Địa chỉ ít nhất phải có 10 ký tự !' }),
         image: !id
             ? z
-                  .custom<FileList>((val) => val instanceof FileList, 'Required')
-                  .refine((files) => files?.length > 0, `Required`)
+                  .custom<FileList>((val) => val instanceof FileList, 'Xin hãy upload ảnh!')
+                  .refine((files) => files?.length > 0, `Xin hãy upload ảnh!`)
                   .refine(
                       (files) => Array.from(files).every((file) => file?.size <= MAX_FILE_SIZE),
                       `Each file size should be less than 5 MB.`
@@ -76,6 +84,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const form = useForm<IFormStaff>({
         resolver: zodResolver(FormStaffSchema),
         defaultValues: {
+            store_information_id: undefined,
             name: '',
             email: '',
             phone: '',
@@ -83,28 +92,31 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             image: undefined,
         },
     });
-    const onSubmit: SubmitHandler<IFormStaff> = async (data) => {
-        // await new Promise((resolve) => {
-        //     setTimeout(resolve, 1000);
-        // }).then(() => {});
+
+    const onSubmit: SubmitHandler<IFormStaff> = async (fData) => {
         try {
-            console.log(data);
+            console.log(fData);
             const formData = new FormData();
-            const { name, address, phone, password, email } = data;
-            const image = data.image?.[0];
+            // eslint-disable-next-line camelcase
+            const { store_information_id, name, address, phone, password, email } = fData;
+            const image = fData.image?.[0];
             if (!id) {
+                formData.append('store_information_id', store_information_id);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
                 formData.append('phone', phone);
+                formData.append('address', address);
                 formData.append('image', image);
                 formData.append('password', password);
                 createStaff(formData);
             } else {
+                formData.append('store_information_id', store_information_id);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
                 formData.append('phone', phone);
+                formData.append('address', address);
                 formData.append('password', password);
                 formData.append('_method', 'PUT');
 
@@ -116,7 +128,6 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                     id,
                 });
             }
-            // onCloseModal();
         } catch (error) {
             console.log('Message: ', error);
         }
@@ -152,37 +163,48 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 }
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createStaffState, id, detailStaff, updateStaffState]);
     return (
         <div className='mx-auto flex flex-col justify-center overflow-y-auto px-4 py-6 sm:h-[80vh] xl:pt-0 2xl:h-[unset] '>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='pt-[70%] 2xl:pt-0'>
-                    {/* {!id && (
+                <form onSubmit={form.handleSubmit(onSubmit)} className='pt-8 2xl:pt-0'>
+                    {!id && (
                         <FormField
                             control={form.control}
-                            name='shop'
+                            name='store_information_id'
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className='mb-4'>
                                     <FormLabel>
-                                        Cửa hàng <span className='text-[#e41a0f]'>*</span>
+                                        Cửa hàng <span className='text-[#e41a0f]'>*</span> <br />
                                     </FormLabel>
+
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder='Chọn địa chỉ cửa hàng' />
+                                                <SelectValue placeholder='Chọn cửa hàng' />
                                             </SelectTrigger>
                                         </FormControl>
+
                                         <SelectContent>
-                                            <SelectItem value='m@example.com'>Hà Đông</SelectItem>
-                                            <SelectItem value='m@google.com'>Chương Mỹ</SelectItem>
-                                            <SelectItem value='m@support.com'>Quốc Oai</SelectItem>
+                                            {stores?.map((store) => (
+                                                <SelectItem
+                                                    key={store.id}
+                                                    value={store.id.toString()}
+                                                    className='text-black'
+                                                >
+                                                    {store.name}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
+
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                    )} */}
+                    )}
+
                     <FormField
                         control={form.control}
                         name='name'
@@ -196,6 +218,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                             />
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name='email'
@@ -209,6 +232,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                             />
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name='password'
@@ -218,10 +242,11 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                                 placeholder='Nhập password nhân viên!'
                                 {...field}
                                 require
-                                type='text'
+                                type='password'
                             />
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name='phone'
@@ -235,6 +260,21 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                             />
                         )}
                     />
+
+                    <FormField
+                        control={form.control}
+                        name='address'
+                        render={({ field }) => (
+                            <FormItemDisplay
+                                title='Địa chỉ'
+                                placeholder='Nhập địa chỉ!'
+                                {...field}
+                                require
+                                type='text'
+                            />
+                        )}
+                    />
+
                     <FormField
                         control={form.control}
                         name='image'
@@ -257,6 +297,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                             />
                         )}
                     />
+
                     {id && (
                         <div className='flex items-center gap-2 '>
                             <Checkbox
