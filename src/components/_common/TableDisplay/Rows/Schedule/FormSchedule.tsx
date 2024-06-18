@@ -5,14 +5,13 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
-import ButtonSubmit from '~/components/_common/ButtonSubmit';
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { useEffect, useState } from 'react';
-import { useRegisterScheduleMutation } from '~/store/services/staff.service';
-import { IScheduleBody, ISchedulesRequestBody } from '~/types/Staff';
-// import { toast } from '~/components/ui/use-toast';
+import { useRegisterScheduleMutation, useSeeOpeningHoursQuery } from '~/store/services/staff.service';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { IOpeningHoursResponse } from '~/types/Staff';
 
 function isFetchBaseQueryError(error: any): error is FetchBaseQueryError {
     return typeof error === 'object' && error !== null && 'status' in error;
@@ -29,12 +28,22 @@ type IFormSchedule = z.infer<typeof FormScheduleSchema>;
 const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
     const toast = useToastDisplay();
 
+    const { error, isLoading, isSuccess, data } = useSeeOpeningHoursQuery();
+    const [dataWorkingTime, setDataWorkingTime] = useState<IOpeningHoursResponse[]>([]);
+
     const [descriptionWokingTime, setDescriptionWokingTime] = useState('');
 
     const [createSchedule, createScheduleState] = useRegisterScheduleMutation();
 
     useEffect(() => {
+        if (isSuccess) {
+            setDataWorkingTime(data.data.data);
+        }
+    }, [isLoading]);
+
+    useEffect(() => {
         if (createScheduleState.isError) {
+            // eslint-disable-next-line no-shadow
             const { error } = createScheduleState;
             let errorMessage = 'Đăng ký / cập nhật thất bại';
             if (isFetchBaseQueryError(error) && error.data && typeof error.data === 'object') {
@@ -55,57 +64,23 @@ const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
         }
     }, [createScheduleState]);
 
-    const dataWorkingTime = {
-        data: [
-            {
-                day: '2024-08-01',
-                start_time: '15:50:00',
-                end_time: '17:00:00',
-            },
-            {
-                day: '2024-08-02',
-                start_time: '15:50:00',
-                end_time: '17:00:00',
-            },
-            {
-                day: '2024-08-03',
-                start_time: '15:50:00',
-                end_time: '17:00:00',
-            },
-            {
-                day: '2024-08-04',
-                start_time: '15:50:00',
-                end_time: '17:00:00',
-            },
-            {
-                day: '2024-08-05',
-                start_time: '15:50:00',
-                end_time: '17:00:00',
-            },
-            {
-                day: '2024-08-06',
-                start_time: '15:50:00',
-                end_time: '17:00:00',
-            },
-        ],
-    };
     const form = useForm<IFormSchedule>({ resolver: zodResolver(FormScheduleSchema) });
 
-    const onSubmit: SubmitHandler<IFormSchedule> = async (data) => {
+    const onSubmit: SubmitHandler<IFormSchedule> = async (dataResponse) => {
         try {
             const formData = {
                 schedules: [
                     {
-                        day: data.day,
-                        start_time: `${data.start_time}:00`,
-                        end_time: `${data.end_time}:00`,
+                        day: dataResponse.day,
+                        start_time: `${dataResponse.start_time}:00`,
+                        end_time: `${dataResponse.end_time}:00`,
                     },
                 ],
             };
 
             await createSchedule(formData);
             onCloseModal();
-        } catch (error) {
+        } catch (err) {
             // console.error('Error submitting schedule:', error);
             toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
         }
@@ -121,8 +96,8 @@ const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
                             name='day'
                             render={({ field }) => {
                                 const displayTimeWorking = (e: string) => {
-                                    const day = dataWorkingTime.data.find((item) => item.day === e);
-                                    setDescriptionWokingTime(`mở cửa từ ${day?.start_time} đến ${day?.end_time}`);
+                                    const day = dataWorkingTime.find((item) => item.day === e);
+                                    setDescriptionWokingTime(`mở cửa từ ${day?.opening_time} đến ${day?.closing_time}`);
                                     field.onChange(e);
                                 };
                                 return (
@@ -137,7 +112,7 @@ const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                {dataWorkingTime.data.map((e, i) => (
+                                                {dataWorkingTime.map((e, i) => (
                                                     <SelectItem key={i} value={e.day}>
                                                         {e.day}
                                                     </SelectItem>

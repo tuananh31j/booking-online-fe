@@ -21,6 +21,7 @@ const API_ENDPOINT = {
         ADD_SCHEDULES: '/user/schedules',
         BOOKING_SCHEDULES: 'user/listbooking',
         SEE_SCHEDULES: '/user/see-schedule',
+        SEE_OPENING_HOURS: '/user/see-opeening-hours',
     },
     STORE: {
         ADD: '/stores/post',

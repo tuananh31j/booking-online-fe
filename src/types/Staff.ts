@@ -20,3 +20,9 @@ export type IScheduleBody = {
 export type ISchedulesRequestBody = {
     schedules: IScheduleBody[];
 };
+
+export type IOpeningHoursResponse = {
+    day: string;
+    opening_time: string;
+    closing_time: string;
+};
