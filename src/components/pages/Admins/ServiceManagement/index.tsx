@@ -41,8 +41,8 @@ const ServiceManagement = () => {
                             }
                             describe={item.describe}
                             price={item.price}
-                            createdAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}
-                            updatedAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}
+                            createdAt={item.updated_at ? formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
+                            updatedAt={item.updated_at ? formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
                             handleDeleteService={handleDeleteService}
                         />
                     ))}

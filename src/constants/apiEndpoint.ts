@@ -21,12 +21,15 @@ const API_ENDPOINT = {
         ADD_SCHEDULES: '/user/schedules',
         BOOKING_SCHEDULES: 'user/listbooking',
         SEE_SCHEDULES: '/user/see-schedule',
+        LIST_STAFF_OF_STORE: '/client/list-user',
+        LIST_WORK_SCHEDULE: '/client/list_time?user_id=16&day=2024-08-02',
     },
     STORE: {
         ADD: '/stores/post',
         EDIT: '/stores/update', // @id
         DETAILS: '/stores/show', // @id
         LIST: '/stores/list',
+        CLIENT_LIST: '/client/list-store',
         REMOVE: '/stores/delete', // @id
     },
     SERVICE: {
@@ -34,6 +37,7 @@ const API_ENDPOINT = {
         EDIT: '/services/update', // @id
         DETAILS: '/services', // @id
         LIST: '/services/list',
+        LIST_SERVICE_CLIENT: '/client/list-service',
         REMOVE: '/services/delete', // @id
     },
     BOOKING: {

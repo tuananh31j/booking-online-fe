@@ -8,8 +8,16 @@ import {
 } from '~/components/ui/dialog';
 import { useTranslations } from 'next-intl';
 import MapDisplay from '~/components/ui/Map';
+import { FC } from 'react';
 
-function PopupLocationDetails({ children }: { children: React.ReactNode }) {
+type IPopupStoreDetailsProps = {
+    children: React.ReactNode;
+    name: string;
+    address: string;
+    phone: string;
+};
+
+const PopupStoreDetails: FC<IPopupStoreDetailsProps> = ({ children, name, address, phone }) => {
     const t = useTranslations('Location');
 
     return (
@@ -25,17 +33,15 @@ function PopupLocationDetails({ children }: { children: React.ReactNode }) {
                     <DialogDescription>
                         <MapDisplay />
                         <div className='details px-16 py-6 text-center text-2xl dark:text-white'>
-                            <div className='address font-semibold'>
-                                Nailkitchen 1 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)
-                            </div>
-
-                            <div className='small-address text-lg font-medium'>62 Từ Hoa, Hanoi, Hanoi, 10000.</div>
+                            <p className='address font-semibold'>{name}</p>
+                            <p className='small-address text-lg font-medium'>{address}</p>
+                            <p className='small-address text-lg font-medium'>{phone}</p>
                         </div>
                     </DialogDescription>
                 </DialogHeader>
             </DialogContent>
         </Dialog>
     );
-}
+};
 
-export default PopupLocationDetails;
+export default PopupStoreDetails;

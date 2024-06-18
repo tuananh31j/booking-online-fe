@@ -2,12 +2,16 @@ import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
-import { IServiceBody, IServiceItem, IServiceResponse } from '~/types/Service';
+import { IServiceBody, IService, IServiceResponse } from '~/types/Service';
 
 export const serviceApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getListService: builder.query<IApiResponse<{ data: IServiceItem[] }>, void>({
+        getListService: builder.query<IApiResponse<{ data: Omit<IService, 'category'>[] }>, void>({
             query: () => API_ENDPOINT.SERVICE.LIST,
+            providesTags: [QUERY_KEY.SERVICE],
+        }),
+        getListServiceClient: builder.query<IApiResponse<{ data: Omit<IService, 'updated_at'>[] }>, void>({
+            query: () => API_ENDPOINT.SERVICE.LIST_SERVICE_CLIENT,
             providesTags: [QUERY_KEY.SERVICE],
         }),
         createService: builder.mutation<IApiResponse<IServiceResponse>, IServiceBody>({
@@ -26,7 +30,7 @@ export const serviceApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.SERVICE],
         }),
-        getDetailService: builder.query<IApiResponse<{ data: IServiceItem }>, number>({
+        getDetailService: builder.query<IApiResponse<{ data: Omit<IService, 'category'> }>, number>({
             query: (id) => `/services/${id}`,
         }),
         removeService: builder.mutation<object, number>({
@@ -45,4 +49,5 @@ export const {
     useRemoveServiceMutation,
     useCreateServiceMutation,
     useUpdateServiceMutation,
+    useGetListServiceClientQuery,
 } = serviceApi;

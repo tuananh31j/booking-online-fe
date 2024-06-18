@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import ConfirmationForm from './Steps/ConfirmationForm';
 import BookingCalendar from './Steps/BookingCalendar';
-import ChooseLocation from './Steps/ChooseLocation';
+import ChooseStore from './Steps/ChooseStore';
 import ChooseService from './Steps/ChooseService';
 import ChooseStaff from './Steps/ChooseStaff';
 
-const RenderStep = ({ step, action, handle }: { step: number; action: () => void; handle: (id: string) => void }) => {
+const RenderStep = ({ step }: { step: number }) => {
     switch (step) {
         case 1:
-            return <ChooseLocation nextStep={action} handleGetLocation={handle} />;
+            return <ChooseStore />;
         case 2:
             return <ChooseStaff />;
         case 3:

@@ -31,20 +31,20 @@ const PopupStaffProfile = (props: IProps) => {
                             />
                             <div className='space-y-2 text-lg dark:text-white'>
                                 <p className='mb-2'>
-                                    <strong>{t('name')}:</strong> {props.staff.name}{' '}
+                                    <strong>{t('name')}:</strong> {props.staff.name}
                                 </p>
                                 <p className='mb-2'>
                                     <strong>{t('age')}:</strong> 28
                                 </p>
                                 <p className='mb-2'>
-                                    <strong>{t('country')}:</strong> {props.staff.address || 'Viet Nam'}{' '}
+                                    <strong>{t('country')}:</strong> {props.staff.address || '--'}{' '}
                                 </p>
                                 <p className='mb-2'>
-                                    <strong>{t('phone')}:</strong> {props.staff.phone || 'unknown'}
+                                    <strong>{t('phone')}:</strong> {props.staff.phone || '--'}
                                 </p>
                             </div>
                         </div>
-                        <div className='mt-4 px-4 text-base dark:text-white'>
+                        {/* <div className='mt-4 px-4 text-base dark:text-white'>
                             <p className='mb-2 '>
                                 <strong>{t('exp')}:</strong> Skilled short hair stylist ensures confidence and style for
                                 clients.
@@ -54,7 +54,7 @@ const PopupStaffProfile = (props: IProps) => {
                                 with precise cuts and personalized service, crafting trendy looks tailored to each
                                 clients features and preferences
                             </p>
-                        </div>
+                        </div> */}
                     </DialogHeader>
                 </DialogContent>
             </Dialog>

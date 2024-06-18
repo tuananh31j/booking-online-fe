@@ -12,7 +12,7 @@ type TimePicker = {
 const TimePicker = ({ hours }: { hours: number[] }) => {
     const t = useTranslations('Calendar');
     const [selectHour, setSelectHour] = useState<TimePicker>({ hour: 0, minute: 0 });
-    const durations = [0, 15, 30, 45];
+    const durations = [30, 45];
     const scheduled = { hour: 9, minute: 15 };
 
     const handleSelectHour = (time: number, minute: number) => {
@@ -25,14 +25,14 @@ const TimePicker = ({ hours }: { hours: number[] }) => {
             const isScheduled = scheduled.hour === hour && scheduled.minute === minute;
             return (
                 <div
-                    onClick={() => hour && handleSelectHour(hour, minute)}
+                    onClick={() => handleSelectHour(hour, minute)}
                     key={index}
-                    className={`${selectHour.hour === hour && selectHour.minute === minute ? 'bg-slate-100' : 'hover:bg-gray-50'} ${isScheduled ? 'pointer-events-none bg-slate-100' : ''} cursor-pointer border border-solid bg-white p-2 pb-5 text-center transition-colors duration-300 hover:border-gray-300 `}
+                    className={`${selectHour.hour === hour && selectHour.minute === minute ? 'bg-pink-600 text-background' : 'hover:bg-gray-400'} ${isScheduled ? 'pointer-events-none bg-background text-foreground' : ''} cursor-pointer border border-solid bg-foreground p-2 pb-5 text-center text-background transition-colors duration-300 hover:border-gray-300 `}
                 >
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger>
-                                <div className={`${isScheduled ? 'select-none text-slate-500' : ''}`}>
+                                <div className={`${isScheduled ? 'select-none text-card opacity-25' : ''}`}>
                                     <span>
                                         {hour.toString().padStart(2, '0')}:{minute.toString().padStart(2, '0')}
                                     </span>

@@ -1,10 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import baseApi from './apis/baseApi';
-import auth from './slice/auth.slice';
+import bookingSlice from './slice/booking.slice';
+import authSlice from './slice/auth.slice';
 
 const rootReducers = combineReducers({
     [baseApi.reducerPath]: baseApi.reducer,
-    auth,
+    booking: bookingSlice.reducer,
+    auth: authSlice.reducer,
 });
 
 export default rootReducers;

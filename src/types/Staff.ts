@@ -1,5 +1,5 @@
 export type IStaff = {
-    id: 1;
+    id: number;
     email: string;
     email_verified_at: null | string;
     role: number;
@@ -22,4 +22,11 @@ export type IStaffResponse = {
     role: number;
     updated_at: string;
     created_at: string;
+};
+
+export type IWorkDate = {
+    day: string;
+    start_time: string;
+    end_time: string;
+    created_at: Date;
 };

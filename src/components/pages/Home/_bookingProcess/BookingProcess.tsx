@@ -1,49 +1,41 @@
 'use client';
 
-import useArrowControlBooking from '~/hooks/useArrowControlBooking';
 import RenderStep from './_renderStep';
-import { ArrowBigLeft, ArrowBigRight } from 'lucide-react';
+import { ArrowBigLeft } from 'lucide-react';
 import MapIcon from '~/components/_common/Icons/map/Map';
 import { useTranslations } from 'next-intl';
-import PopupLocationDetails from '~/components/elements/PopupLocationDetails';
+import PopupStoreDetails from '~/components/elements/PopupStoreDetails';
 import PopupBackForm from '~/components/elements/PopupBackForm';
+import useBooking from '~/hooks/useBooking';
 
 const BookingProcess = () => {
-    const { step, prevStep, nextStep } = useArrowControlBooking();
+    const { currentStoreInfo, currentStep, backToPrevStep } = useBooking();
     const t = useTranslations('StepBooking');
-    const handleGetLocationId = (id: string) => {
-        console.log(id);
-    };
+
     return (
         <>
             <div>
-                {step >= 2 && (
+                {currentStep >= 2 && currentStoreInfo && (
                     <>
-                        <div className='flex items-center justify-between'>
-                            <PopupBackForm action={prevStep}>
-                                <ArrowBigLeft />
-                            </PopupBackForm>
-                            <button onClick={nextStep}>
-                                <ArrowBigRight />
-                            </button>
-                        </div>
-                        <div className='mb-[15px] flex items-center justify-between text-sm text-default md:text-2xl'>
-                            <span className='font-medium'>
-                                Nailkitchen 1 - 62 Tu Hoa, Tay Ho (Westlake Area - near Sheraton Hotel)
-                            </span>
-                            <PopupLocationDetails>
+                        <div className='mb-[15px] flex items-center justify-between text-sm font-medium text-default md:text-2xl'>
+                            <div className='flex gap-2'>
+                                <PopupBackForm action={backToPrevStep}>
+                                    <ArrowBigLeft />
+                                </PopupBackForm>
+                                <p>{currentStoreInfo.name}</p>
+                            </div>
+                            <PopupStoreDetails
+                                name={currentStoreInfo.name}
+                                phone={currentStoreInfo.phone}
+                                address={currentStoreInfo.address}
+                            >
                                 <MapIcon className='h-5 w-5 dark:invert' />
-                            </PopupLocationDetails>
+                            </PopupStoreDetails>
                         </div>
                     </>
                 )}
-                {step <= 1 && (
-                    <div className='mb-[35px] flex items-center  justify-between  text-2xl text-default'>
-                        <span className='font-medium'>{t('step1')}</span>
-                    </div>
-                )}
                 <div className='no-scrollbar relative  max-h-[78vh] min-h-[78vh] overflow-y-scroll bg-content px-4 py-3 pb-[25vh]'>
-                    <RenderStep handle={handleGetLocationId} step={step} action={nextStep} />
+                    <RenderStep step={currentStep} />
                 </div>
             </div>
         </>

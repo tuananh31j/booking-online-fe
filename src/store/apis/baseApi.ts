@@ -5,7 +5,7 @@ import baseQuery from './baseQuery';
 const tags = Object.values(QUERY_KEY);
 
 const baseApi = createApi({
-    reducerPath: 'root',
+    reducerPath: 'rootAPI',
     tagTypes: [...tags],
     baseQuery,
     endpoints: () => ({}),
