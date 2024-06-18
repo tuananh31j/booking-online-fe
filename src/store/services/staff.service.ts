@@ -1,6 +1,6 @@
 import { IApiResponse } from '~/types/Api';
 import baseApi from '../apis/baseApi';
-import { IStaff, IStaffResponse, IScheduleBody, ISchedulesRequestBody, IWorkDate } from '~/types/Staff';
+import { IStaff, IStaffResponse, ISchedulesRequestBody, IWorkDate } from '~/types/Staff';
 import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import { IScheduleResponse } from '~/types/Schedule';

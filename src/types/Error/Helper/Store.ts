@@ -32,3 +32,18 @@ export const isStoreError = (error: any): error is StoreErrorWithData => {
 export const isStaffError = (error: any): error is StaffErrorWithData => {
     return error && error.data && 'error' in error.data;
 };
+export type CategoryErrorField = 'name';
+export interface CategoryError {
+    status?: number; // Status không bắt buộc nữa
+    data?: {
+        error: Record<CategoryErrorField, string[]>;
+    };
+}
+export interface CategoryErrorWithData extends CategoryError {
+    data: {
+        error: Record<CategoryErrorField, string[]>;
+    };
+}
+export const isCategoryError = (error: any): error is CategoryErrorWithData => {
+    return error && error.data && 'error' in error.data;
+};

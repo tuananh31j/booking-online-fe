@@ -19,6 +19,7 @@ interface RootLayoutProps {
 export default async function RootLayout({ children, params: { locale } }: Readonly<RootLayoutProps>) {
     return (
         <html lang={locale} suppressHydrationWarning>
+            <title>IMTA-Booking</title>
             <body className={itim.className}>
                 {children}
                 <Toaster />
