@@ -1,9 +1,10 @@
 import { IApiResponse } from '~/types/Api';
 import baseApi from '../apis/baseApi';
-import { IStaff, IStaffResponse } from '~/types/Staff';
+import { IStaff, IStaffResponse, IScheduleBody, ISchedulesRequestBody } from '~/types/Staff';
 import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import { IScheduleResponse } from '~/types/Schedule';
+import { IStoreWorkingTimeResponse } from '~/types/Store';
 
 export const staffAPI = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -43,14 +44,23 @@ export const staffAPI = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.STAFF],
         }),
+        registerSchedule: builder.mutation<IApiResponse<{ data: IStoreWorkingTimeResponse[] }>, ISchedulesRequestBody>({
+            query: (formData) => ({
+                url: API_ENDPOINT.USER.ADD_SCHEDULES,
+                method: 'POST',
+                body: formData,
+            }),
+            // invalidatesTags: [QUERY_KEY.SERVICE],
+        }),
     }),
 });
 
 export const {
     useEditStaffMutation,
     useDeleteStaffMutation,
-    useListStaffClientQuery,
-    useGetListBookingQuery,
     useGetStaffDetailQuery,
     useCreateStaffMutation,
+    useListStaffClientQuery,
+    useGetListBookingQuery,
+    useRegisterScheduleMutation,
 } = staffAPI;
