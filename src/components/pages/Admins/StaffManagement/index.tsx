@@ -15,6 +15,7 @@ const StaffListManager = () => {
     const handleRemoveStore = (id: number) => {
         mutate(id);
     };
+
     useEffect(() => {
         if (isSuccess) {
             toast({ title: 'Xóa cửa hàng thành công', status: 'success' });
@@ -23,23 +24,25 @@ const StaffListManager = () => {
             toast({ title: 'Xóa cửa hàng thất bại', status: 'destructive' });
         }
     }, [isSuccess, isError]);
+
     return (
         <TableDisplay
             title='Danh sách nhân viên'
             columnNames={USER_COLUMN_NAMES}
             action={{ element: FormStaff, modalTitle: 'Thêm mới nhân viên' }}
         >
-            {data?.data.data.map((item, i) => (
+            {data?.data.data.map((item) => (
                 <UserRow
+                    key={item.id}
                     id={item.id}
                     action={handleRemoveStore}
-                    key={i}
                     image={item.image}
                     name={item.name}
                     email={item.email}
                     role={item.role}
                     phone={item.phone}
                     address={item.address}
+                    store_information_id={item.store_information_id}
                     createAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}
                 />
             ))}
