@@ -40,3 +40,9 @@ export type IWorkDate = {
     end_time: string;
     created_at: Date;
 };
+
+export type IOpeningHoursResponse = {
+    day: string;
+    opening_time: string;
+    closing_time: string;
+};
