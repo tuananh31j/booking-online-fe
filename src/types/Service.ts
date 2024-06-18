@@ -30,13 +30,3 @@ export type IServiceResponse = {
         updated_at: string;
     };
 };
-
-export interface IServiceItem {
-    id: number;
-    name: string;
-    categorie_id: number;
-    describe: string;
-    price: string;
-    created_at: string;
-    updated_at: string;
-}

@@ -1,18 +1,37 @@
-// import ServiceCard from '~/components/elements/ServiceCard';
-// import { useGetListServiceQuery } from '~/store/services/service.service';
-// import { IService } from '~/types/Service';
+import ServiceCard from '~/components/elements/ServiceCard';
+import { useGetListServiceClientQuery } from '~/store/services/service.service';
+import WrapperBooking from '../WrapperBooking';
+import useBooking from '~/hooks/useBooking';
+import { useState } from 'react';
 
 const ChooseService = () => {
-    // const { data, isLoading, isFetching } = useGetListServiceQuery();
-    // const serviceList = data?.data?.data;
+    const { chooseServiceinfo } = useBooking();
+    const [selectService, setSelectService] = useState<number[]>([]);
+    const { data, isLoading } = useGetListServiceClientQuery();
+    const handleSelectService = (id: number) => {
+        setSelectService([...selectService, id]);
+    };
+    const handleRemoveService = (id: number) => {
+        const list = selectService.filter((item) => item !== id);
+        setSelectService(list);
+    };
+    const handleGetListService = () => {
+        const list = selectService.map((item) => ({ id: item }));
+        chooseServiceinfo(list);
+    };
 
     return (
-        <div>
-            Choose service
-            {/* {!isLoading &&
-                !isFetching &&
-                serviceList?.map((service: IService) => <ServiceCard key={service.id} service={service} />)} */}
-        </div>
+        <WrapperBooking stepKeyTranslation='step_service' isLoading={isLoading} handleNextStep={handleGetListService}>
+            {data &&
+                data.data.data.map((item) => (
+                    <ServiceCard
+                        key={item.id}
+                        service={item}
+                        handleSelect={() => handleSelectService(item.id)}
+                        handleRemove={() => handleRemoveService(item.id)}
+                    />
+                ))}
+        </WrapperBooking>
     );
 };
 

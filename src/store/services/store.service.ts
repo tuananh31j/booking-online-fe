@@ -10,6 +10,10 @@ export const storeApi = baseApi.injectEndpoints({
             query: () => API_ENDPOINT.STORE.LIST,
             providesTags: [QUERY_KEY.STORE],
         }),
+        getListStoreClient: builder.query<IApiResponse<{ data: IStoreItem[] }>, void>({
+            query: () => API_ENDPOINT.STORE.CLIENT_LIST,
+            providesTags: [QUERY_KEY.STORE],
+        }),
         removeStore: builder.mutation<object, number>({
             query: (id) => ({
                 url: `${API_ENDPOINT.STORE.REMOVE}/${id}`,
@@ -50,4 +54,5 @@ export const {
     useCreateStoreMutation,
     useRemoveStoreMutation,
     useGetDetailStoreQuery,
+    useGetListStoreClientQuery,
 } = storeApi;

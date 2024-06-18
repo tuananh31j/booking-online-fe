@@ -1,5 +1,5 @@
 export type IStaff = {
-    id: 1;
+    id: number;
     email: string;
     email_verified_at: null | string;
     role: number;
@@ -33,4 +33,10 @@ export type IScheduleBody = {
 
 export type ISchedulesRequestBody = {
     schedules: IScheduleBody[];
+};
+export type IWorkDate = {
+    day: string;
+    start_time: string;
+    end_time: string;
+    created_at: Date;
 };

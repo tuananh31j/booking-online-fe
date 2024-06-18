@@ -9,9 +9,10 @@ import { DayPicker } from 'react-day-picker';
 import { cn } from '~/lib/utils';
 import { buttonVariants } from '~/components/ui/button';
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
-
-function CalendarBooking({ className, classNames, showOutsideDays = true, ...passProps }: CalendarProps) {
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+    specialDays?: Date[];
+};
+function CalendarBooking({ className, classNames, specialDays, showOutsideDays = true, ...passProps }: CalendarProps) {
     return (
         <DayPicker
             showOutsideDays={showOutsideDays}
@@ -53,6 +54,12 @@ function CalendarBooking({ className, classNames, showOutsideDays = true, ...pas
                 day_range_middle: 'aria-selected:bg-accent aria-selected:text-accent-foreground',
                 day_hidden: 'invisible',
                 ...classNames,
+            }}
+            modifiers={{
+                specialDay: specialDays || new Date(2003, 0, 31),
+            }}
+            modifiersClassNames={{
+                specialDay: 'bg-green-800',
             }}
             // change props to iconProps
             components={{

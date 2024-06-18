@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 import MapIcon from '~/components/_common/Icons/map/Map';
-import PopupLocationDetails from '~/components/elements/PopupLocationDetails';
+import PopupLocationDetails from '~/components/elements/PopupStoreDetails';
 // import PopupStaffProfile from '~/components/elements/PopupStaffProfile';
 import useToastDisplay from '~/hooks/useToastDisplay';
 
@@ -34,7 +34,7 @@ export default function OrderSuccess() {
                         <div className='mt-4 flex flex-col gap-2'>
                             <span className='flex items-center gap-5 text-[#777777]'>
                                 {t('locationStore')}:
-                                <PopupLocationDetails>
+                                <PopupLocationDetails address='Hà Nội' name='Tuấn Anh' phone='23434'>
                                     <MapIcon className='h-6 w-6 dark:invert' />
                                 </PopupLocationDetails>
                             </span>

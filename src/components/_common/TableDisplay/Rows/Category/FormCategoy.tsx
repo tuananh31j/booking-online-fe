@@ -15,7 +15,7 @@ import {
     useEditCategoryMutation,
     useGetDetailCategoryQuery,
 } from '~/store/services/category.service';
-import { CategoryErrorField, isCategoryError } from '~/types/Error/Helper/Store';
+// import { CategoryErrorField, isCategoryError } from '~/types/Error/Helper/Store';
 
 const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number }) => {
     const [createCategory, createCategoryState] = useCreateCategoryMutation();
@@ -56,47 +56,47 @@ const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: num
             });
         }
     }, [detailCategory, form, id]);
-    useEffect(() => {
-        // if (!isFirstRender.current) {
-        console.log('isFirstRender', isFirstRender.current);
-        if (createCategoryState?.isError) {
-            const { error } = createCategoryState;
-            if (isCategoryError(error)) {
-                const objectKey = Object.keys(error.data.error) as CategoryErrorField[];
-                objectKey.forEach((key: CategoryErrorField) => {
-                    const errorMessage = error.data.error[key].join(', ');
-                    form.setError(key, { message: errorMessage });
-                });
-            } else {
-                toast({ title: 'Có lỗi xảy ra', status: 'destructive' });
-            }
-        }
-        if (updateCategoryState?.isError) {
-            const { error } = updateCategoryState;
-            if (isCategoryError(error)) {
-                const objectKey = Object.keys(error.data.error) as CategoryErrorField[];
-                objectKey.forEach((key: CategoryErrorField) => {
-                    const errorMessage = error.data.error[key].join(', ');
-                    form.setError(key, { message: errorMessage });
-                });
-            } else {
-                toast({ title: 'Có lỗi xảy ra', status: 'destructive' });
-            }
-        }
-        if (updateCategoryState.isSuccess || createCategoryState.isSuccess) {
-            // if (id) {
-            //     refetch();
-            // }
-            onCloseModal();
-            toast({
-                title: `${id ? 'Chỉnh sửa danh mục thành công!' : 'Thêm danh mục thành công!'} `,
-                status: 'success',
-            });
-        }
-        // } else {
-        //     isFirstRender.current = false;
-        // }
-    }, [createCategoryState, id, updateCategoryState]);
+    // useEffect(() => {
+    //     // if (!isFirstRender.current) {
+    //     console.log('isFirstRender', isFirstRender.current);
+    //     if (createCategoryState?.isError) {
+    //         const { error } = createCategoryState;
+    //         if (isCategoryError(error)) {
+    //             const objectKey = Object.keys(error.data.error) as CategoryErrorField[];
+    //             objectKey.forEach((key: CategoryErrorField) => {
+    //                 const errorMessage = error.data.error[key].join(', ');
+    //                 form.setError(key, { message: errorMessage });
+    //             });
+    //         } else {
+    //             toast({ title: 'Có lỗi xảy ra', status: 'destructive' });
+    //         }
+    //     }
+    //     if (updateCategoryState?.isError) {
+    //         const { error } = updateCategoryState;
+    //         if (isCategoryError(error)) {
+    //             const objectKey = Object.keys(error.data.error) as CategoryErrorField[];
+    //             objectKey.forEach((key: CategoryErrorField) => {
+    //                 const errorMessage = error.data.error[key].join(', ');
+    //                 form.setError(key, { message: errorMessage });
+    //             });
+    //         } else {
+    //             toast({ title: 'Có lỗi xảy ra', status: 'destructive' });
+    //         }
+    //     }
+    //     if (updateCategoryState.isSuccess || createCategoryState.isSuccess) {
+    //         // if (id) {
+    //         //     refetch();
+    //         // }
+    //         onCloseModal();
+    //         toast({
+    //             title: `${id ? 'Chỉnh sửa danh mục thành công!' : 'Thêm danh mục thành công!'} `,
+    //             status: 'success',
+    //         });
+    //     }
+    //     // } else {
+    //     //     isFirstRender.current = false;
+    //     // }
+    // }, [createCategoryState, id, updateCategoryState]);
 
     return (
         <div className='m-auto pb-10'>

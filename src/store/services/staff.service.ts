@@ -1,6 +1,6 @@
 import { IApiResponse } from '~/types/Api';
 import baseApi from '../apis/baseApi';
-import { IStaff, IStaffResponse, IScheduleBody, ISchedulesRequestBody } from '~/types/Staff';
+import { IStaff, IStaffResponse, IScheduleBody, ISchedulesRequestBody, IWorkDate } from '~/types/Staff';
 import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import { IScheduleResponse } from '~/types/Schedule';
@@ -8,7 +8,7 @@ import { IStoreWorkingTimeResponse } from '~/types/Store';
 
 export const staffAPI = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        ListStaffClient: builder.query<IApiResponse<{ data: IStaff[] }>, void>({
+        getListStaff: builder.query<IApiResponse<{ data: IStaff[] }>, void>({
             query: () => ({ url: API_ENDPOINT.USER.LIST }),
             providesTags: [QUERY_KEY.STAFF],
         }),
@@ -52,15 +52,23 @@ export const staffAPI = baseApi.injectEndpoints({
             }),
             // invalidatesTags: [QUERY_KEY.SERVICE],
         }),
+        getListStaffClient: builder.query<IApiResponse<{ data: IStaff[] }>, number>({
+            query: (id) => ({ url: `${API_ENDPOINT.USER.LIST_STAFF_OF_STORE}?storeId=${3}` }),
+        }),
+        getListWorkScheduleStaffClient: builder.query<IApiResponse<{ data: IWorkDate[] }>, void>({
+            query: () => ({ url: `${API_ENDPOINT.USER.LIST_WORK_SCHEDULE}` }),
+        }),
     }),
 });
 
 export const {
     useEditStaffMutation,
     useDeleteStaffMutation,
+    useRegisterScheduleMutation,
+    useGetListBookingQuery,
     useGetStaffDetailQuery,
     useCreateStaffMutation,
-    useListStaffClientQuery,
-    useGetListBookingQuery,
-    useRegisterScheduleMutation,
+    useGetListStaffClientQuery,
+    useGetListStaffQuery,
+    useGetListWorkScheduleStaffClientQuery,
 } = staffAPI;

@@ -1,12 +1,24 @@
+'use client';
+
 import StaffCard from '~/components/elements/StaffCard';
-import { useListStaffClientQuery } from '~/store/services/staff.service';
+import useBooking from '~/hooks/useBooking';
+import { useGetListStaffClientQuery } from '~/store/services/staff.service';
+import WrapperBooking from '../WrapperBooking';
 
 const ChooseStaff = () => {
-    const { data } = useListStaffClientQuery();
+    const { bookingInfo, chooseStaffinfo } = useBooking();
+    const { data, isLoading } = useGetListStaffClientQuery(bookingInfo.store_id);
+
+    console.log(data);
     return (
-        <div className='grid grid-cols-1 justify-between sm:grid-cols-2 md:grid-cols-4'>
-            {data && data.data && data?.data.data.map((item, index: number) => <StaffCard key={index} staff={item} />)}
-        </div>
+        <WrapperBooking stepKeyTranslation='step_staff' isLoading={isLoading}>
+            <div className='grid grid-cols-1 justify-between sm:grid-cols-2 md:grid-cols-4'>
+                {data &&
+                    data.data.data.map((item, index: number) => (
+                        <StaffCard key={index} staff={item} handleGetStaff={() => chooseStaffinfo(item.id)} />
+                    ))}
+            </div>
+        </WrapperBooking>
     );
 };
 

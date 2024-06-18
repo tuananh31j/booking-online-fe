@@ -11,8 +11,8 @@ type IServiceRowProps = {
     category: number | string | boolean;
     describe: string;
     price: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
     handleDeleteService: (id: number) => void;
 };
 

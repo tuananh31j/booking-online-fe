@@ -2,19 +2,28 @@ import { Checkbox } from '~/components/ui/checkbox';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '~/components/ui/accordion';
 import ChatIcon from '~/components/_common/Icons/chatting/ChatIcon';
 import { IService } from '~/types/Service';
+import { FC } from 'react';
 
 interface ServiceItemProps {
-    service: IService;
+    service: Omit<IService, 'updated_at'>;
+    handleRemove: () => void;
+    handleSelect: () => void;
 }
 
-const ServiceCard = (serviceProps: ServiceItemProps) => {
-    const { service } = serviceProps;
-
+const ServiceCard: FC<ServiceItemProps> = ({ service, handleRemove, handleSelect }) => {
     return (
         <div className='mt-4 flex justify-between rounded-3xl border-2 hover:border-default'>
             <div className='service-content flex min-w-[500px]'>
                 <div className='checkbox flex items-center md:px-3 lg:px-10'>
-                    <Checkbox />
+                    <Checkbox
+                        onCheckedChange={(value) => {
+                            if (value) {
+                                handleSelect();
+                            } else {
+                                handleRemove();
+                            }
+                        }}
+                    />
                 </div>
 
                 <Accordion type='single' collapsible className='w-full'>
@@ -24,7 +33,7 @@ const ServiceCard = (serviceProps: ServiceItemProps) => {
                                 <ChatIcon className='' />
                             </span>
 
-                            <span className='mx-2 md:text-xl lg:text-2xl'>{service.name} (Nail Care)</span>
+                            <span className='mx-2 md:text-xl lg:text-2xl'>{service.name}</span>
                         </AccordionTrigger>
 
                         <AccordionContent className='md:text-lg lg:text-xl'>{service.describe}</AccordionContent>
@@ -33,7 +42,7 @@ const ServiceCard = (serviceProps: ServiceItemProps) => {
             </div>
 
             <div className='service-time flex items-center md:px-5 md:text-lg lg:px-20 lg:text-xl'>
-                <div>1 hour 30 minutes</div>
+                <div>30 minutes</div>
             </div>
 
             <div className='service-price flex items-center md:px-5 md:text-lg lg:px-20 lg:text-xl'>

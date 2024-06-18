@@ -6,10 +6,10 @@ import { USER_COLUMN_NAMES, UserRow } from '~/components/_common/TableDisplay/Ro
 import FormStaff from '~/components/_common/TableDisplay/Rows/Staff/FormStaff';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import useToastDisplay from '~/hooks/useToastDisplay';
-import { useDeleteStaffMutation, useListStaffClientQuery } from '~/store/services/staff.service';
+import { useDeleteStaffMutation, useGetListStaffQuery } from '~/store/services/staff.service';
 
 const StaffListManager = () => {
-    const { data } = useListStaffClientQuery();
+    const { data } = useGetListStaffQuery();
     const toast = useToastDisplay();
     const [mutate, { isLoading: PendingRemove, isSuccess, isError }] = useDeleteStaffMutation();
     const handleRemoveStore = (id: number) => {
