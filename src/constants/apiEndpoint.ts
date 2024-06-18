@@ -47,6 +47,17 @@ const API_ENDPOINT = {
         LIST: '/bookings/list',
         REMOVE: '/bookings/delete', // @id
     },
+    OPENING: {
+        // thêm ngày h mở cửa theo id cửa hàng
+        ADD: '/opening-hours/post', // @id
+        // cập nhật ngày h mở cửa theo id cửa hàng
+        EDIT: '/oopening-hours/update', // @id
+        // xem chi tiết ngày h mở cửa theo id cửa hàng
+        DETAILS: '/opening-hours', // @id
+        LIST: '/opening-hours/list',
+        // xóa nngày đã qua theo id cửa hàng
+        REMOVE: 'opening-hours/delete/', // @id
+    },
 };
 
 export default API_ENDPOINT;

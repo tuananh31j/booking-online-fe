@@ -4,4 +4,5 @@ export const QUERY_KEY = {
     ORDER: 'order',
     STORE: 'store',
     CATEGORIES: 'categories',
+    OPENING: 'opening',
 };
