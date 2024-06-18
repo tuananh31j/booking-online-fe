@@ -29,9 +29,10 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
 
     const [createStaff, createStaffState] = useCreateStaffMutation();
     const [updateStaff, updateStaffState] = useEditStaffMutation();
-    const { data: detail, refetch } = useGetStaffDetailQuery(id, { skip: !id });
 
+    const { data: detail, refetch } = useGetStaffDetailQuery(id, { skip: !id });
     const detailStaff = detail?.data?.data;
+
     const saveImageId = useId();
     const [preview, setPreview] = useState('');
 

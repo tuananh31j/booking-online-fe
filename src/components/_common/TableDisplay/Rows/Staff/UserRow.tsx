@@ -6,15 +6,18 @@ import FormStaff from './FormStaff';
 import Cookies from 'universal-cookie';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import { Trash2Icon } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
+import { useGetDetailStoreQuery } from '~/store/services/store.service';
 
 type IUserRowProps = {
     id: number;
-    image: string | null;
+    image: string;
     name: string;
     email: string;
     role: number;
     phone: string | null;
     address: string | null;
+    store_information_id: number;
     action: (id: number) => void;
     createAt: string;
 };
@@ -22,7 +25,24 @@ type IUserRowProps = {
 const USER_COLUMN_NAMES = ['Người dùng', 'Chức vụ', 'Điện thoại', 'Ngày tạo', 'Tùy chọn'];
 
 const cookies = new Cookies();
-const UserRow: FC<IUserRowProps> = ({ id, image, name, email, role, phone, createAt, action }) => {
+const UserRow: FC<IUserRowProps> = ({
+    id,
+    image,
+    name,
+    email,
+    role,
+    phone,
+    // eslint-disable-next-line camelcase
+    store_information_id,
+    createAt,
+    action,
+}) => {
+    // eslint-disable-next-line camelcase
+    const storeId = store_information_id;
+
+    const { data } = useGetDetailStoreQuery(storeId, { skip: !storeId });
+    const store = data?.data?.data;
+
     const roleName = disPlayRoleName(role);
     const user = cookies.get('user');
     return (
@@ -40,11 +60,49 @@ const UserRow: FC<IUserRowProps> = ({ id, image, name, email, role, phone, creat
                             />
                         )}
                     </div>
+
                     <div className='flex flex-col justify-center'>
-                        <h6 className='mb-0 text-sm capitalize leading-normal dark:text-white'>{name}</h6>
-                        <p className='mb-0 text-xs capitalize leading-tight text-slate-400 dark:text-white dark:opacity-80'>
-                            {email}
-                        </p>
+                        <h6 className='mb-0 text-sm capitalize leading-normal dark:text-white'>
+                            <Dialog>
+                                <DialogTrigger className='w-full hover:underline'>{name}</DialogTrigger>
+
+                                <DialogContent>
+                                    <DialogHeader>
+                                        <DialogTitle>
+                                            <div className='pl-2 text-2xl font-normal dark:text-white'>Staffs info</div>
+                                        </DialogTitle>
+
+                                        <div className='flex space-x-5 p-5'>
+                                            <Image
+                                                src={image}
+                                                alt="staff's image"
+                                                className='h-40 w-40 object-cover shadow-lg '
+                                                width={180}
+                                                height={180}
+                                                quality={100}
+                                            />
+                                            <div className='space-y-2 text-lg dark:text-white'>
+                                                <p className='mb-2'>
+                                                    <strong>Name:</strong> {name}
+                                                </p>
+
+                                                <p className='mb-2'>
+                                                    <strong>Email:</strong> {email}
+                                                </p>
+
+                                                <p className='mb-2'>
+                                                    <strong>Contact number:</strong> {phone}
+                                                </p>
+
+                                                <p className='mb-2'>
+                                                    <strong>Working at:</strong> {store?.name}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </DialogHeader>
+                                </DialogContent>
+                            </Dialog>
+                        </h6>
                     </div>
                 </div>
             </td>
