@@ -100,7 +100,24 @@ const config = {
             },
         },
     },
-    plugins: [require('tailwindcss-animate')],
+    plugins: [
+        require('tailwindcss-animate'),
+        function ({ addUtilities }: { addUtilities: (utilities: object) => void }) {
+            const newUtilities = {
+                '.hide-scrollbar': {
+                    /* Hide scrollbar for IE, Edge and Firefox */
+                    '-ms-overflow-style': 'none' /* IE and Edge */,
+                    'scrollbar-width': 'none' /* Firefox */,
+
+                    /* Hide scrollbar for Chrome, Safari and Opera */
+                    '&::-webkit-scrollbar': {
+                        display: 'none',
+                    },
+                },
+            };
+            addUtilities(newUtilities);
+        },
+    ],
 } satisfies Config;
 
 export default config;
