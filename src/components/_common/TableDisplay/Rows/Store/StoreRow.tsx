@@ -1,13 +1,14 @@
-import { Item } from '@radix-ui/react-select';
+import { Item, Separator } from '@radix-ui/react-select';
 import { log } from 'console';
-import { Trash2Icon } from 'lucide-react';
+import { CopyIcon, PenBoxIcon, Trash2Icon } from 'lucide-react';
 import Image from 'next/image';
 import { FC, useEffect, useState } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormStore from '~/components/_common/TableDisplay/Rows/Store/FormStore';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
+import { Button } from '~/components/ui/button';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 import { ScrollArea } from '~/components/ui/scroll-area';
 // eslint-disable-next-line import/no-cycle
 import { useGetOpeningDetailQuery } from '~/store/services/opening.service';
@@ -107,12 +108,17 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, cre
                                     ) : error ? (
                                         <p>Error loading data</p>
                                     ) : (
-                                        <div className='flex space-x-5 p-5'>
-                                            <div className='space-y-2 text-lg dark:text-white'>
+                                        <div className='flex w-full space-x-5 p-5'>
+                                            <div className='w-full space-y-2 text-lg dark:text-white'>
                                                 {opening?.map((item: any, index: number) => (
-                                                    <div key={index} className='mb-2'>
-                                                        <p>
-                                                            <strong>Day:</strong> {item.day}
+                                                    <div key={index} className='mb-2 w-full'>
+                                                        <p className='flex items-center'>
+                                                            <strong>Day: </strong>
+                                                            {item.day}
+                                                            <Button type='submit' size='sm' className='ml-auto px-3'>
+                                                                <span className='sr-only'>Copy</span>
+                                                                <PenBoxIcon className='h-4 w-4' />
+                                                            </Button>
                                                         </p>
                                                         <p>
                                                             <strong>Opening Time:</strong> {item.opening_time}
@@ -120,6 +126,7 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, cre
                                                         <p>
                                                             <strong>Closing Time:</strong> {item.closing_time}
                                                         </p>
+                                                        <hr className='w-full' />
                                                     </div>
                                                 ))}
                                             </div>
@@ -127,9 +134,13 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, cre
                                     )}
                                 </ScrollArea>
                             </DialogHeader>
+                            <DialogFooter>
+                                <Button type='submit'>Create Date</Button>
+                            </DialogFooter>
                         </DialogContent>
                     </Dialog>
-                    <PopupModal id={id} Form={FormStore} btnName='Edit' title='Chỉnh sửa thông tin cửa hàng' />
+                    |
+                    <PopupModal id={id} Form={FormStore} btnName='Edit' title='Chỉnh sửa thông tin cửa hàng' />|
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
