@@ -13,8 +13,9 @@ export default async function middleware(req: NextRequest) {
 
     const { pathname } = req.nextUrl;
     const token = req.cookies.get('accessToken')?.value;
+    const user = req.cookies.get('user')?.value;
     const url = req.nextUrl.clone();
-    console.log(token, '0k');
+    console.log(user, '0k');
 
     if (pathname === '/login') {
         if (token) {
@@ -22,9 +23,21 @@ export default async function middleware(req: NextRequest) {
             return NextResponse.redirect(url);
         }
     }
-    if (pathname.startsWith('/admin')) {
+    if ((pathname.startsWith('/admin') || pathname.startsWith('/staff')) && user) {
+        const userObj = JSON.parse(user);
+
         if (!token) {
             url.pathname = '/login';
+            return NextResponse.redirect(url);
+        }
+        if (pathname.startsWith('/admin')) {
+            if (userObj.role !== 0) {
+                url.pathname = '/404';
+                return NextResponse.redirect(url);
+            }
+        }
+        if (pathname.startsWith('/staff') && userObj.role === 0) {
+            url.pathname = '/admin/dashboard';
             return NextResponse.redirect(url);
         }
     }
@@ -38,5 +51,6 @@ export const config = {
         '/([\\w-]+)?/users/(.+)', // Áp dụng cho các route dưới /users
         '/login', // Áp dụng cho /login
         '/admin/:path*', // Áp dụng cho /admin và tất cả các route con
+        '/staff/:path*', // Áp dụng cho /admin và tất cả các route con
     ],
 };

@@ -11,7 +11,7 @@ import { useDeleteStaffMutation, useGetListStaffQuery } from '~/store/services/s
 const StaffListManager = () => {
     const { data } = useGetListStaffQuery();
     const toast = useToastDisplay();
-    const [mutate, { isLoading: PendingRemove, isSuccess, isError }] = useDeleteStaffMutation();
+    const [mutate, { isSuccess, isError }] = useDeleteStaffMutation();
     const handleRemoveStore = (id: number) => {
         mutate(id);
     };
@@ -43,7 +43,7 @@ const StaffListManager = () => {
                     phone={item.phone}
                     address={item.address}
                     store_information_id={item.store_information_id}
-                    createAt={formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss')}
+                    createAt={item.updated_at ? formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
                 />
             ))}
         </TableDisplay>

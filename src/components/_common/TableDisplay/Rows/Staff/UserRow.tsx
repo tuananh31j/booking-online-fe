@@ -8,6 +8,7 @@ import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import { Trash2Icon } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 import { useGetDetailStoreQuery } from '~/store/services/store.service';
+import { useRouter } from 'next/navigation';
 
 type IUserRowProps = {
     id: number;
@@ -19,7 +20,7 @@ type IUserRowProps = {
     address: string | null;
     store_information_id: number;
     action: (id: number) => void;
-    createAt: string;
+    createAt?: string;
 };
 
 const USER_COLUMN_NAMES = ['Người dùng', 'Chức vụ', 'Điện thoại', 'Ngày tạo', 'Tùy chọn'];
@@ -39,12 +40,16 @@ const UserRow: FC<IUserRowProps> = ({
 }) => {
     // eslint-disable-next-line camelcase
     const storeId = store_information_id;
+    const router = useRouter();
 
     const { data } = useGetDetailStoreQuery(storeId, { skip: !storeId });
     const store = data?.data?.data;
 
     const roleName = disPlayRoleName(role);
     const user = cookies.get('user');
+    if (!user) {
+        router.replace('/login');
+    }
     return (
         <tr>
             <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
@@ -73,29 +78,31 @@ const UserRow: FC<IUserRowProps> = ({
                                         </DialogTitle>
 
                                         <div className='flex space-x-5 p-5'>
-                                            <Image
-                                                src={image}
-                                                alt="staff's image"
-                                                className='h-40 w-40 object-cover shadow-lg '
-                                                width={180}
-                                                height={180}
-                                                quality={100}
-                                            />
+                                            {image && (
+                                                <Image
+                                                    src={image}
+                                                    alt="staff's image"
+                                                    className='h-40 w-40 object-cover shadow-lg '
+                                                    width={180}
+                                                    height={180}
+                                                    quality={100}
+                                                />
+                                            )}
                                             <div className='space-y-2 text-lg dark:text-white'>
                                                 <p className='mb-2'>
-                                                    <strong>Name:</strong> {name}
+                                                    <strong>Name:</strong> {name && name}
                                                 </p>
 
                                                 <p className='mb-2'>
-                                                    <strong>Email:</strong> {email}
+                                                    <strong>Email:</strong> {email && email}
                                                 </p>
 
                                                 <p className='mb-2'>
-                                                    <strong>Contact number:</strong> {phone}
+                                                    <strong>Contact number:</strong> {phone && phone}
                                                 </p>
 
                                                 <p className='mb-2'>
-                                                    <strong>Working at:</strong> {store?.name}
+                                                    <strong>Working at:</strong> {store && store?.name}
                                                 </p>
                                             </div>
                                         </div>
