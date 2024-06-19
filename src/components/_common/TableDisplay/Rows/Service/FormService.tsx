@@ -105,7 +105,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
         }
     }, [createServiceState, form, id, service, updateServiceSate]);
     return (
-        <div className='mx-auto flex w-[30vw] flex-col justify-center'>
+        <div className='mx-auto flex flex-col justify-center'>
             {!isLoading && (
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>

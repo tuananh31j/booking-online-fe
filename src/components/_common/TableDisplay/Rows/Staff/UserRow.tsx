@@ -65,7 +65,6 @@ const UserRow: FC<IUserRowProps> = ({
                             />
                         )}
                     </div>
-
                     <div className='flex flex-col justify-center'>
                         <h6 className='mb-0 text-sm capitalize leading-normal dark:text-white'>
                             <Dialog>

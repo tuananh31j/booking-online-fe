@@ -1,16 +1,27 @@
 'use client';
 
-import { formatDate } from 'date-fns';
+import { formatDate, lightFormat } from 'date-fns';
+import FormOpening from '~/components/_common/TableDisplay/Rows/Opening/FormOpening';
 import { ORDER_COLUMN_NAMES_OPENING, OpeningRow } from '~/components/_common/TableDisplay/Rows/Opening/OpeningRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
-import { useGetListOpeningQuery } from '~/store/services/opening.service';
+import { useGetListOpeningQuery, useGetOpeningDetailQuery } from '~/store/services/opening.service';
 
 const OpeningDayManagement = () => {
-    const { data, isLoading } = useGetListOpeningQuery();
+    const { data, isLoading, error } = useGetListOpeningQuery();
+
     const opening = data?.data?.data;
     return (
         <div>
-            <TableDisplay title='Opening Matagemet' columnNames={ORDER_COLUMN_NAMES_OPENING}>
+            <TableDisplay
+                title='Opening Matagemet'
+                columnNames={ORDER_COLUMN_NAMES_OPENING}
+                action={{ element: FormOpening, modalTitle: 'Đăng ký giờ mở của' }}
+            >
+                {(error || lightFormat.length === 0) && (
+                    <td colSpan={7} className='text-center'>
+                        Bạn chưa đăng ký giờ mở cửa nào!
+                    </td>
+                )}
                 {!isLoading &&
                     opening?.map((item, i) => (
                         <OpeningRow
