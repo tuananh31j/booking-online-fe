@@ -18,7 +18,7 @@ const ADMIN_MENU = [
     { path: 'staff-list', name: 'Manage staffs', icon: <UserRound size={16} strokeWidth={1.75} /> },
     { path: 'category', name: 'Manage category', icon: <Sofa size={16} strokeWidth={1.75} /> },
     { path: 'services', name: 'Services', icon: <HandPlatter size={16} strokeWidth={1.75} /> },
-    { path: 'opening', name: 'Manage opening', icon: <Clock size={16} strokeWidth={1.75} /> },
+    // { path: 'opening', name: 'Manage opening', icon: <Clock size={16} strokeWidth={1.75} /> },
 ];
 const STAFF_MENNU = [
     { path: 'orders', name: 'Orders', icon: <ListOrdered size={16} strokeWidth={1.75} /> },
