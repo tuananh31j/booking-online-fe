@@ -37,6 +37,8 @@ const ServiceRow: FC<IServiceRowProps> = ({
             setCatID(categoryId);
         }
     }, [isCategoryLoading]);
+    console.log('catID', catID);
+
     return (
         <tr className='h-10'>
             <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>

@@ -1,9 +1,10 @@
 import { Item, Separator } from '@radix-ui/react-select';
 import { log } from 'console';
-import { CopyIcon, PenBoxIcon, Trash2Icon } from 'lucide-react';
+import { CopyIcon, DeleteIcon, PenBoxIcon, Trash2Icon } from 'lucide-react';
 import Image from 'next/image';
 import { FC, useEffect, useState } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
+import FormOpening from '~/components/_common/TableDisplay/Rows/Opening/FormOpening';
 import FormStore from '~/components/_common/TableDisplay/Rows/Store/FormStore';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
@@ -115,13 +116,28 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, cre
                                                         <p className='flex items-center'>
                                                             <strong>Day: </strong>
                                                             {item.day}
-                                                            <Button type='submit' size='sm' className='ml-auto px-3'>
-                                                                <span className='sr-only'>Copy</span>
-                                                                <PenBoxIcon className='h-4 w-4' />
+                                                            <Button
+                                                                type='submit'
+                                                                size='sm'
+                                                                className=' ml-auto mt-1 px-3  hover:bg-sky-700'
+                                                            >
+                                                                <PopupModal
+                                                                    id={id}
+                                                                    Form={FormOpening}
+                                                                    btnName='Edit'
+                                                                    title='Chỉnh sửa thông tin cửa hàng'
+                                                                />
                                                             </Button>
                                                         </p>
-                                                        <p>
+                                                        <p className=' flex items-center'>
                                                             <strong>Opening Time:</strong> {item.opening_time}
+                                                            <Button
+                                                                type='submit'
+                                                                size='sm'
+                                                                className=' ml-auto mt-1 px-3  hover:bg-red-700'
+                                                            >
+                                                                <Trash2Icon className='h-4 w-4' />
+                                                            </Button>
                                                         </p>
                                                         <p>
                                                             <strong>Closing Time:</strong> {item.closing_time}
@@ -135,7 +151,14 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, image, name, address, phone, cre
                                 </ScrollArea>
                             </DialogHeader>
                             <DialogFooter>
-                                <Button type='submit'>Create Date</Button>
+                                <Button className='hover:bg-yellow-700' type='submit'>
+                                    <PopupModal
+                                        id={id}
+                                        Form={FormOpening}
+                                        btnName=' Create Date'
+                                        title='Chỉnh sửa thông tin cửa hàng'
+                                    />
+                                </Button>
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>

@@ -8,11 +8,12 @@ import FormItemDisplay from '~/components/_common/FormItemDisplay';
 import ButtonSubmit from '~/components/_common/ButtonSubmit';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { useEffect, useState } from 'react';
-import { usePostOpeningMutation } from '~/store/services/opening.service';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import { useCreateOpeningMutation, useGetOpeningDetailQuery } from '~/store/services/opening.service';
+import { useGetListStoreQuery } from '~/store/services/store.service';
 
 const FormOpeningSchema = z.object({
-    store_information_id: z.string({ required_error: 'Vui lòng cho cửa hàng!' }),
+    store_id: z.number(),
     day: z.string({ required_error: 'Vui lòng chọn ngày!' }),
     opening_time: z.string({ required_error: 'Vui lòng chọn giờ bắt đầu!' }),
     closing_time: z.string({ required_error: 'Vui lòng chọn giờ kết thúc!' }),
@@ -22,34 +23,72 @@ type IFormOpening = z.infer<typeof FormOpeningSchema>;
 
 const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
     const toast = useToastDisplay();
-    const [createOpening, createOpeningState] = usePostOpeningMutation();
+    const [createOpening, createOpeningState] = useCreateOpeningMutation();
+    const { data: storeList, isLoading: isStoreLoading } = useGetListStoreQuery();
+
     const form = useForm<IFormOpening>({ resolver: zodResolver(FormOpeningSchema) });
+    const idStore = storeList?.data.data.find((store) => store.id === id)?.id;
+
     const onSubmit: SubmitHandler<IFormOpening> = async (data) => {
         await new Promise((resolve) => {
             resolve(data);
         });
+        try {
+            const appendSeconds = (time: string) => (time.includes(':') ? `${time}:00` : `${time}:00:00`);
+
+            const openingHours = [
+                {
+                    day: data.day,
+                    opening_time: appendSeconds(data.opening_time),
+                    closing_time: appendSeconds(data.closing_time),
+                },
+            ];
+
+            const res = await createOpening({
+                id: data.store_id,
+                formData: {
+                    opening_hours: openingHours,
+                },
+            }).unwrap();
+            if (res.data) {
+                toast({ title: 'Thêm mới thành công', status: 'success' });
+                onCloseModal();
+            }
+        } catch (error) {
+            toast({ title: 'Thêm mới thất bại', status: 'destructive' });
+        }
     };
     return (
-        <div className='mx-auto flex w-[30vw] flex-col justify-center'>
+        <div className='mx-auto flex flex-col justify-center'>
             {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                         <FormField
                             control={form.control}
-                            name='store_information_id'
+                            name='store_id'
                             render={({ field }) => {
                                 return (
                                     <FormItem className='my-3 flex flex-col gap-2'>
                                         <FormLabel>
-                                            Chọn cửa hàng mở cửa <span className='text-[#e41a0f]'>*</span>
+                                            Chọn cửa hàng<span className='text-[#e41a0f]'>*</span>
                                         </FormLabel>
-                                        <Select onValueChange={field.onChange}>
+                                        <Select
+                                            onValueChange={(value) => field.onChange(Number(value))}
+                                            value={field.value?.toString()}
+                                        >
                                             <FormControl>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder='Chọn ngày làm' />
+                                                    <SelectValue placeholder='Chon danh mục' />
                                                 </SelectTrigger>
                                             </FormControl>
-                                            <SelectContent></SelectContent>
+                                            <SelectContent>
+                                                {!isStoreLoading &&
+                                                    storeList?.data.data.map((store) => (
+                                                        <SelectItem key={store.id} value={store.id.toString()}>
+                                                            {store.name}
+                                                        </SelectItem>
+                                                    ))}
+                                            </SelectContent>
                                         </Select>
                                         <FormMessage />
                                     </FormItem>
@@ -62,7 +101,7 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                 control={form.control}
                                 name='day'
                                 render={({ field }) => {
-                                    console.log(field);
+                                    // console.log(field);
                                     return (
                                         <FormItemDisplay
                                             title='Ngày mở cửa '
@@ -79,7 +118,7 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                 control={form.control}
                                 name='opening_time'
                                 render={({ field }) => {
-                                    console.log(field);
+                                    // console.log(field);
                                     return (
                                         <FormItemDisplay
                                             title='Giờ mở cửa '

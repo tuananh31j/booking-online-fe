@@ -1,17 +1,15 @@
 export type IOpeningBody = {
-    data: {
-        opening_hours: {
-            day: string;
-            opening_time: string;
-            closing_time: string;
-        };
-    };
+    opening_hours: Array<{
+        day: string;
+        opening_time: string;
+        closing_time: string;
+    }>;
 };
 
 export type IOpeningResponse = {
     data: {
         id: number;
-        store_information_id: number;
+        store_id: number;
         day: string;
         opening_time: string;
         closing_time: string;
@@ -35,7 +33,7 @@ export type IOpeningByIdStoreResponse = {
 
 export interface IOpeningItem {
     id: number;
-    store_information_id: number;
+    store_id: number;
     day: string;
     opening_time: string;
     closing_time: string;
