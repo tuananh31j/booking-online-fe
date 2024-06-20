@@ -12,6 +12,7 @@ import { useRegisterScheduleMutation, useSeeOpeningHoursQuery } from '~/store/se
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { IOpeningHoursResponse } from '~/types/Staff';
+import ScheduleCalendar from '~/components/_common/TableDisplay/Rows/Schedule/ScheduleCalendar';
 
 function isFetchBaseQueryError(error: any): error is FetchBaseQueryError {
     return typeof error === 'object' && error !== null && 'status' in error;
@@ -66,106 +67,105 @@ const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
 
     const form = useForm<IFormSchedule>({ resolver: zodResolver(FormScheduleSchema) });
 
-    const onSubmit: SubmitHandler<IFormSchedule> = async (dataResponse) => {
-        try {
-            const formData = {
-                schedules: [
-                    {
-                        day: dataResponse.day,
-                        start_time: `${dataResponse.start_time}:00`,
-                        end_time: `${dataResponse.end_time}:00`,
-                    },
-                ],
-            };
+    // const onSubmit: SubmitHandler<IFormSchedule> = async (dataResponse) => {
+    //     try {
+    //         const formData = {
+    //             schedules: [
+    //                 {
+    //                     day: dataResponse.day,
+    //                     start_time: `${dataResponse.start_time}:00`,
+    //                     end_time: `${dataResponse.end_time}:00`,
+    //                 },
+    //             ],
+    //         };
 
-            await createSchedule(formData);
-            onCloseModal();
-        } catch (err) {
-            // console.error('Error submitting schedule:', error);
-            toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
-        }
-    };
+    //         await createSchedule(formData);
+    //         onCloseModal();
+    //     } catch (err) {
+    //         // console.error('Error submitting schedule:', error);
+    //         toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
+    //     }
+    // };
 
     return (
         <div className='mx-auto flex w-[30vw] flex-col justify-center'>
             {
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                        <FormField
-                            control={form.control}
-                            name='day'
-                            render={({ field }) => {
-                                const displayTimeWorking = (e: string) => {
-                                    const day = dataWorkingTime.find((item) => item.day === e);
-                                    setDescriptionWokingTime(`mở cửa từ ${day?.opening_time} đến ${day?.closing_time}`);
-                                    field.onChange(e);
-                                };
-                                return (
-                                    <FormItem className='my-3 flex flex-col gap-2'>
-                                        <FormLabel>
-                                            Ngày cửa hàng mở cửa <span className='text-[#e41a0f]'>*</span>
-                                        </FormLabel>
-                                        <Select onValueChange={(e) => displayTimeWorking(e)}>
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder='Chọn ngày làm' />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {dataWorkingTime.map((e, i) => (
-                                                    <SelectItem key={i} value={e.day}>
-                                                        {e.day}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <FormDescription>{descriptionWokingTime}</FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                );
-                            }}
-                        />
-
-                        <div className='flex justify-center gap-2'>
-                            <FormField
-                                control={form.control}
-                                name='start_time'
-                                render={({ field }) => {
-                                    return (
-                                        <FormItemDisplay
-                                            title='Giờ bắt đầu làm '
-                                            placeholder='Nhập giờ bắt đầu làm !'
-                                            {...field}
-                                            require
-                                            type='time'
-                                        />
-                                    );
-                                }}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name='end_time'
-                                render={({ field }) => {
-                                    return (
-                                        <FormItemDisplay
-                                            title='Giờ nghỉ làm '
-                                            placeholder='Nhập giờ nghỉ làm !'
-                                            {...field}
-                                            require
-                                            type='time'
-                                        />
-                                    );
-                                }}
-                            />
-                            <FormMessage />
-                        </div>
-                        <button className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'>
-                            Submit
-                        </button>
-                    </form>
-                </Form>
+                // <Form {...form}>
+                //     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                //         <FormField
+                //             control={form.control}
+                //             name='day'
+                //             render={({ field }) => {
+                //                 const displayTimeWorking = (e: string) => {
+                //                     const day = dataWorkingTime.find((item) => item.day === e);
+                //                     setDescriptionWokingTime(`mở cửa từ ${day?.opening_time} đến ${day?.closing_time}`);
+                //                     field.onChange(e);
+                //                 };
+                //                 return (
+                //                     <FormItem className='my-3 flex flex-col gap-2'>
+                //                         <FormLabel>
+                //                             Ngày cửa hàng mở cửa <span className='text-[#e41a0f]'>*</span>
+                //                         </FormLabel>
+                //                         <Select onValueChange={(e) => displayTimeWorking(e)}>
+                //                             <FormControl>
+                //                                 <SelectTrigger>
+                //                                     <SelectValue placeholder='Chọn ngày làm' />
+                //                                 </SelectTrigger>
+                //                             </FormControl>
+                //                             <SelectContent>
+                //                                 {dataWorkingTime.map((e, i) => (
+                //                                     <SelectItem key={i} value={e.day}>
+                //                                         {e.day}
+                //                                     </SelectItem>
+                //                                 ))}
+                //                             </SelectContent>
+                //                         </Select>
+                //                         <FormDescription>{descriptionWokingTime}</FormDescription>
+                //                         <FormMessage />
+                //                     </FormItem>
+                //                 );
+                //             }}
+                //         />
+                //         <div className='flex justify-center gap-2'>
+                //             <FormField
+                //                 control={form.control}
+                //                 name='start_time'
+                //                 render={({ field }) => {
+                //                     return (
+                //                         <FormItemDisplay
+                //                             title='Giờ bắt đầu làm '
+                //                             placeholder='Nhập giờ bắt đầu làm !'
+                //                             {...field}
+                //                             require
+                //                             type='time'
+                //                         />
+                //                     );
+                //                 }}
+                //             />
+                //             <FormField
+                //                 control={form.control}
+                //                 name='end_time'
+                //                 render={({ field }) => {
+                //                     return (
+                //                         <FormItemDisplay
+                //                             title='Giờ nghỉ làm '
+                //                             placeholder='Nhập giờ nghỉ làm !'
+                //                             {...field}
+                //                             require
+                //                             type='time'
+                //                         />
+                //                     );
+                //                 }}
+                //             />
+                //             <FormMessage />
+                //         </div>
+                //         <button className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'>
+                //             Submit
+                //         </button>
+                //     </form>
+                // </Form>
             }
+            <ScheduleCalendar dataWorkingTime={dataWorkingTime} />
         </div>
     );
 };
