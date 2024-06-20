@@ -2,23 +2,29 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
-import { ArrowBigLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import ScheduleTimePicker from '~/components/_common/TableDisplay/Rows/Schedule/ScheduleTimePicker';
-import TimePicker from '~/components/elements/TimePicker';
 import { CalendarBooking } from '~/components/ui/calendarBooking';
 import { Form, FormField, FormItem, FormMessage } from '~/components/ui/form';
 import { IOpeningHoursResponse } from '~/types/Staff';
 
-const ScheduleCalendar = ({ dataWorkingTime }: { dataWorkingTime: IOpeningHoursResponse[] }) => {
-    const [choosedDate, setChoosedDate] = useState('');
+const ScheduleCalendar = ({
+    dataWorkingTime,
+    fakeData,
+    handleAddDate,
+    formMessage,
+    setChoosingDate,
+}: {
+    dataWorkingTime?: IOpeningHoursResponse[];
+    fakeData: { day: string; opening_time: string; closing_time: string }[];
+    handleAddDate: (data?: IOpeningHoursResponse) => void;
+    formMessage: string;
+    setChoosingDate: (state: boolean) => void;
+}) => {
+    console.log(dataWorkingTime);
     const t = useTranslations('Calendar');
-    const [chooseTime, setChoosTime] = useState<boolean>(false);
-    const dayOff = 'Sun';
-    // || date.toDateString().startsWith(dayOff)
 
     const openTime = 9;
     const closeTime = 18;
@@ -40,18 +46,26 @@ const ScheduleCalendar = ({ dataWorkingTime }: { dataWorkingTime: IOpeningHoursR
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     });
+    const [matchDate, setMatchDate] = useState<IOpeningHoursResponse>();
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
         const { dob } = data;
         const formated = format(new Date(dob), 'yyyy-MM-dd');
-        setChoosedDate(formated);
-        setChoosTime(true);
+
+        setMatchDate(fakeData.find((e) => e.day === formated));
     }
 
     return (
         <>
             <div className='overflow-y-scroll bg-content hide-scrollbar' style={{ maxHeight: 653 }}>
-                {!chooseTime && (
+                {(matchDate && (
+                    <span>
+                        {' '}
+                        Giờ mở cửa: {matchDate.opening_time} - {matchDate.closing_time}{' '}
+                    </span>
+                )) ||
+                    'Ngày này cửa hàng chưa mở cửa!'}
+                {
                     <Form {...form}>
                         <form className='w-full' onSubmit={form.handleSubmit(onSubmit)}>
                             <FormField
@@ -65,20 +79,40 @@ const ScheduleCalendar = ({ dataWorkingTime }: { dataWorkingTime: IOpeningHoursR
                                             toMonth={endMonth}
                                             mode='single'
                                             selected={field.value}
-                                            onSelect={field.onChange}
+                                            // onSelect={field.onChange}
+                                            onSelect={(date) => {
+                                                field.onChange(date);
+                                                form.handleSubmit((data) => {
+                                                    onSubmit(data);
+                                                })();
+                                            }}
                                             disabled={(date) => {
-                                                return date.toDateString().startsWith(dayOff) || date < dateNow;
+                                                return fakeData.find(
+                                                    (e) => e.day === format(new Date(date), 'yyyy-MM-dd')
+                                                )
+                                                    ? false
+                                                    : true;
                                             }}
                                             initialFocus
                                             footer={
                                                 <>
-                                                    <FormMessage className='text-center text-2xl' />
-                                                    <div className='mt-[15px] flex justify-center'>
+                                                    <FormMessage className='text-center text-sm'>
+                                                        {formMessage}
+                                                    </FormMessage>
+                                                    <div className='mt-[15px] flex justify-between'>
                                                         <button
+                                                            onClick={() => setChoosingDate(false)}
+                                                            type='button'
+                                                            className='h-[45px] w-[128px] rounded-xl bg-default text-reverse'
+                                                        >
+                                                            Back
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleAddDate(matchDate)}
                                                             type='submit'
                                                             className='h-[45px] w-[128px] rounded-xl bg-default text-reverse'
                                                         >
-                                                            {t('confirm')}
+                                                            Choose
                                                         </button>
                                                     </div>
                                                 </>
@@ -89,23 +123,7 @@ const ScheduleCalendar = ({ dataWorkingTime }: { dataWorkingTime: IOpeningHoursR
                             />
                         </form>
                     </Form>
-                )}
-                {chooseTime && (
-                    <div className='bg-white'>
-                        <div className='flex cursor-pointer' onClick={() => setChoosTime(false)}>
-                            {' '}
-                            <ArrowBigLeft />
-                            Back to Choose Date
-                        </div>
-
-                        <div className=' mt-4 overflow-y-scroll hide-scrollbar ' style={{ maxHeight: 525 }}>
-                            <ScheduleTimePicker
-                                hours={dataWorkingTime.filter((e) => e.day === choosedDate)}
-                                choosedDate={choosedDate}
-                            />
-                        </div>
-                    </div>
-                )}
+                }
             </div>
         </>
     );
