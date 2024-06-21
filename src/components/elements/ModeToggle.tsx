@@ -13,8 +13,10 @@ import {
 } from '~/components/ui/dropdown-menu';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import useAuth from '~/hooks/useAuth';
 
 export function ModeToggle({ className }: { className?: string }) {
+    const { isAuth, isAdmin } = useAuth();
     const { setTheme } = useTheme();
     const t = useTranslations('Setting.ThemeMode');
     return (
@@ -28,12 +30,21 @@ export function ModeToggle({ className }: { className?: string }) {
             <DropdownMenuContent align='end'>
                 <DropdownMenuItem onClick={() => setTheme('light')}>{t('light')}</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme('dark')}>{t('dark')}</DropdownMenuItem>
-                <DropdownMenuItem>
-                    <Link href={'/admin'}>{t('system')}</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <Link href={'/login'}>Login</Link>
-                </DropdownMenuItem>
+                {isAdmin && (
+                    <DropdownMenuItem>
+                        <Link href={'/admin'}>{t('system')}</Link>
+                    </DropdownMenuItem>
+                )}
+                {isAuth && !isAdmin && (
+                    <DropdownMenuItem>
+                        <Link href={'/staff/schedules'}>{t('system')}</Link>
+                    </DropdownMenuItem>
+                )}
+                {!isAuth && (
+                    <DropdownMenuItem>
+                        <Link href={'/login'}>Login</Link>
+                    </DropdownMenuItem>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     );

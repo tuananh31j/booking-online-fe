@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Image from 'next/image';
 import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
@@ -9,6 +10,7 @@ import { Trash2Icon } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 import { useGetDetailStoreQuery } from '~/store/services/store.service';
 import { useRouter } from 'next/navigation';
+import TableCell from '../../_components/TableCell';
 
 type IUserRowProps = {
     id: number;
@@ -52,7 +54,7 @@ const UserRow: FC<IUserRowProps> = ({
     }
     return (
         <tr>
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
+            <TableCell>
                 <div className='flex px-2 py-1'>
                     <div>
                         {image && (
@@ -111,21 +113,11 @@ const UserRow: FC<IUserRowProps> = ({
                         </h6>
                     </div>
                 </div>
-            </td>
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <p className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {roleName}
-                </p>
-            </td>
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle text-sm capitalize leading-normal shadow-transparent dark:border-white/40'>
-                {phone}
-            </td>
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <span className='text-xs font-semibold capitalize leading-tight text-slate-400 dark:text-white dark:opacity-80'>
-                    {createAt}
-                </span>
-            </td>
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
+            </TableCell>
+            <TableCell>{roleName}</TableCell>
+            <TableCell>{phone}</TableCell>
+            <TableCell>{createAt}</TableCell>
+            <TableCell>
                 <div className='flex items-center justify-center gap-2'>
                     <PopupModal Form={FormStaff} id={id} btnName='Edit' title='Chỉnh sửa thông tin nhân viên' />
                     {id !== user.id && (
@@ -154,7 +146,7 @@ const UserRow: FC<IUserRowProps> = ({
                         </div>
                     )}
                 </div>
-            </td>
+            </TableCell>
         </tr>
     );
 };

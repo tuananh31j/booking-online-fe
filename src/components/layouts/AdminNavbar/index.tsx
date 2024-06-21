@@ -21,24 +21,12 @@ import {
     DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import { Input } from '~/components/ui/input';
-import { useRouter } from 'next/navigation';
-import Cookies from 'universal-cookie';
-import useToastDisplay from '~/hooks/useToastDisplay';
 import AdminNotificationCard from '~/components/elements/AdminNotificationCard';
-
-const cookies = new Cookies();
+import useLogout from '~/hooks/useLogout';
 
 const AdminNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const hangleMessage = useToastDisplay();
-    const router = useRouter();
-    const handleLogout = () => {
-        cookies.remove('user', { path: '/' });
-        cookies.remove('accessToken', { path: '/' });
-        console.log(cookies.get('accessToken'));
-        hangleMessage({ title: 'Logged out!', status: 'default' });
-        router.replace('/login');
-    };
+    const handleLogout = useLogout();
     return (
         <>
             <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>

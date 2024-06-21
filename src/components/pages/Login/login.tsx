@@ -3,42 +3,23 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import Cookies from 'universal-cookie';
 import { z } from 'zod';
 import { Button } from '~/components/ui/button';
 import { Card } from '~/components/ui/card';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
-import useToastDisplay from '~/hooks/useToastDisplay';
-import { useLoginMutation } from '~/store/services/auth.service';
-import { loginAction } from '~/store/slice/auth.slice';
-import { useAppDispatch } from '~/store/store';
-
-const cookies = new Cookies();
+import useLogin from '~/hooks/useLogin';
+import { createFormSchemaLogin } from '~/schemas/Login';
 
 export default function LoginPage() {
     const t = useTranslations('Login');
-    const handleMessage = useToastDisplay();
-    const dispatch = useAppDispatch();
-    const router = useRouter();
+    const formLogin = createFormSchemaLogin(t);
+    const { login } = useLogin();
 
-    const formSchema = z.object({
-        email: z
-            .string({ required_error: `${t('validations.email.required')}` })
-            .email({ message: `${t('validations.email.type')}` }),
-        password: z
-            .string({ required_error: `${t('validations.password.required')}` })
-            .min(6, { message: `${t('validations.password.min_length')}` }),
-        rememberMe: z.boolean(),
-    });
-    const [login, loginState] = useLoginMutation();
-
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof formLogin>>({
+        resolver: zodResolver(formLogin),
         defaultValues: {
             email: '',
             password: '',
@@ -46,28 +27,9 @@ export default function LoginPage() {
         },
     });
 
-    const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    const onSubmit = async (data: z.infer<typeof formLogin>) => {
         login({ email: data.email, password: data.password });
     };
-
-    useEffect(() => {
-        console.log(loginState.isError);
-        if (loginState.isSuccess) {
-            dispatch(loginAction(loginState.data.data));
-            handleMessage({ title: 'Đăng nhập thành công!', status: 'success' });
-            cookies.set('user', loginState.data.data.data);
-            cookies.set('accessToken', loginState.data.data.token);
-            if (loginState.data.data.data.role === 0) {
-                router.replace('/admin/dashboard');
-            } else {
-                router.replace('/staff/schedules');
-            }
-        }
-        if (loginState.isError) {
-            handleMessage({ title: 'Thông tin đăng nhập sai!', status: 'destructive' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loginState]);
     return (
         <div className='background mx-auto flex min-h-screen items-center justify-center'>
             <div className='flex h-screen items-center justify-center'>

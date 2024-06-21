@@ -160,7 +160,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
 
     return (
         <div className='m-auto  pb-10'>
-            <div className=' rounded-xl bg-card px-6 py-8'>
+            <div className=' rounded-xl bg-background px-6 py-8'>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}

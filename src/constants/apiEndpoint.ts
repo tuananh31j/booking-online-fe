@@ -15,21 +15,21 @@ const API_ENDPOINT = {
         ADD: '/admin_users/post',
         EDIT: '/admin_users/update', // @id
         DETAILS: '/admin_users/show', // @id
-        LIST: '/admin_users/list',
+        LIST: '/admin_users',
         REMOVE: '/admin_users/delete', // @id
         EDIT_PROFILE: '/user/profile/update',
         ADD_SCHEDULES: '/user/schedules',
         BOOKING_SCHEDULES: 'user/listbooking',
         SEE_SCHEDULES: '/user/see-schedule',
         LIST_STAFF_OF_STORE: '/client/list-user',
-        LIST_WORK_SCHEDULE: '/client/list_time?user_id=16&day=2024-08-02',
+        LIST_WORK_SCHEDULE: '/client/list_time?user_id=16&day=2024-08-02', // test
         SEE_OPENING_HOURS: '/user/see-opeening-hours',
     },
     STORE: {
         ADD: '/stores/post',
         EDIT: '/stores/update', // @id
         DETAILS: '/stores/show', // @id
-        LIST: '/stores/list',
+        LIST: '/stores',
         CLIENT_LIST: '/client/list-store',
         REMOVE: '/stores/delete', // @id
     },

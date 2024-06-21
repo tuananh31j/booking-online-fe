@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormOrder from './FormOrder';
+import TableCell from '../../_components/TableCell';
 
 type IOrderRowProps = {
     facility: string;
@@ -16,37 +17,12 @@ const ORDER_COLUMN_NAMES = ['Facility', 'Service', 'Date', 'Time', 'Employee', '
 const OrderRow: FC<IOrderRowProps> = ({ facility, service, date, time, employee, booker }) => {
     return (
         <tr>
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {facility}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {service}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {date}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {time}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {employee}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
+            <TableCell>{facility}</TableCell>
+            <TableCell>{service}</TableCell>
+            <TableCell>{date}</TableCell>
+            <TableCell>{time}</TableCell>
+            <TableCell>{employee}</TableCell>
+            <TableCell>
                 <PopupModal
                     btnName={booker}
                     title="Booker's details"
@@ -68,16 +44,15 @@ const OrderRow: FC<IOrderRowProps> = ({ facility, service, date, time, employee,
                         Email: {booker.toLowerCase().replace(' ', '.')}@example.com
                     </div>
                 </PopupModal>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent p-2 align-middle capitalize shadow-transparent dark:border-white/40'>
+            </TableCell>
+            <TableCell>
                 <PopupModal
                     btnName='Edit'
                     className='underline hover:text-blue-800'
                     title="Change the order's information here"
                     Form={FormOrder}
                 ></PopupModal>
-            </td>
+            </TableCell>
         </tr>
     );
 };

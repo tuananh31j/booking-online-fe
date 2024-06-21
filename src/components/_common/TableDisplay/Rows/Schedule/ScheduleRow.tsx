@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import TableCell from '../../_components/TableCell';
 
 type IScheduleRowProps = {
     index: number;
@@ -33,47 +34,13 @@ const ScheduleRow: FC<IScheduleRowProps> = ({
 }) => {
     return (
         <tr className='h-10'>
-            <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {index}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {day}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {storeAddress}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {storeName}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {startTime}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {endTime}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {createdAt}
-                </div>
-            </td>
+            <TableCell>{index}</TableCell>
+            <TableCell>{day}</TableCell>
+            <TableCell>{storeAddress}</TableCell>
+            <TableCell>{storeName}</TableCell>
+            <TableCell>{startTime}</TableCell>
+            <TableCell>{endTime}</TableCell>
+            <TableCell>{createdAt}</TableCell>
         </tr>
     );
 };

@@ -11,10 +11,10 @@ const MenuItem = ({ children, name, path }: { children?: ReactNode; name: string
                 ]}
                 to={path}
             >
-                <div className='mr-1 flex  items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-[0.625rem]'>
+                <p className='mr-1 flex  items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-[0.625rem]'>
                     {children}
-                </div>
-                <span className='ease pointer-events-none ml-1 opacity-100 duration-300'>{name}</span>
+                </p>
+                <p className='ease pointer-events-none ml-1 opacity-100 duration-300'>{name}</p>
             </ActionLink>
         </li>
     );

@@ -2,11 +2,11 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
-import { ILoginResponse } from '~/types/Auth';
+import { ILoginData, ILoginResponse } from '~/types/Auth';
 
 const cookies = new Cookies();
 
-const initialState: { user: ILoginResponse | '' } = {
+const initialState: { user: ILoginData | '' } = {
     user: cookies.get('user') ? cookies.get('user') : '',
 };
 const authSlice = createSlice({
@@ -14,7 +14,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action: PayloadAction<ILoginResponse>) => {
-            state.user = action.payload;
+            state.user = action.payload.data;
         },
         logout: (state) => {
             state.user = '';

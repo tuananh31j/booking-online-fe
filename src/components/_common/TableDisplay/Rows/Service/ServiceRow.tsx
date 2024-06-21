@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import { FC, useEffect, useState } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
 import FormService from './FormService';
+import TableCell from '../../_components/TableCell';
 
 type IServiceRowProps = {
     index: number;
@@ -16,19 +18,9 @@ type IServiceRowProps = {
     handleDeleteService: (id: number) => void;
 };
 
-const ORDER_COLUMN_NAMES = ['#', 'Name', 'Category', 'Description', 'Price', 'Created At', 'Updated At', 'Actions'];
+const ORDER_COLUMN_NAMES = ['#', 'Name', 'Category', 'Description', 'Price', 'Actions'];
 
-const ServiceRow: FC<IServiceRowProps> = ({
-    index,
-    id,
-    name,
-    category,
-    describe,
-    price,
-    createdAt,
-    updatedAt,
-    handleDeleteService,
-}) => {
+const ServiceRow: FC<IServiceRowProps> = ({ index, id, name, category, describe, price, handleDeleteService }) => {
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
     const [catID, setCatID] = useState(0);
     useEffect(() => {
@@ -39,49 +31,12 @@ const ServiceRow: FC<IServiceRowProps> = ({
     }, [isCategoryLoading]);
     return (
         <tr className='h-10'>
-            <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {index}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {name}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {category}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {describe}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {price}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {createdAt}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent align-middle capitalize shadow-transparent dark:border-white/40'>
-                <div className='mb-0 text-xs font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                    {updatedAt}
-                </div>
-            </td>
-
-            <td className='whitespace-nowrap border-b bg-transparent  align-middle capitalize shadow-transparent dark:border-white/40'>
+            <TableCell>{index}</TableCell>
+            <TableCell>{name}</TableCell>
+            <TableCell>{category}</TableCell>
+            <TableCell>{describe}</TableCell>
+            <TableCell>{price}</TableCell>
+            <TableCell>
                 <PopupModal
                     btnName='Edit'
                     title="Change the service's information here"
@@ -100,7 +55,7 @@ const ServiceRow: FC<IServiceRowProps> = ({
                 >
                     <p className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500'>Delete</p>
                 </AlertDialogConfirm>
-            </td>
+            </TableCell>
         </tr>
     );
 };

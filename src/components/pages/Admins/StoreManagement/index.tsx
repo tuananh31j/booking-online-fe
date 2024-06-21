@@ -25,6 +25,7 @@ const StoreListManagement = () => {
         if (isError) {
             toast({ title: 'Xóa cửa hàng thất bại', status: 'destructive' });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess, isError]);
     return (
         <>
@@ -41,7 +42,6 @@ const StoreListManagement = () => {
                             id={item.id}
                             no={i + 1}
                             name={item.name}
-                            image={item.image}
                             address={item.address}
                             phone={item.phone}
                             createAt={formatDate(item.created_at, 'yyyy/MM/dd | hh:mm:ss')}
