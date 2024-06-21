@@ -18,7 +18,7 @@ const ScheduleCalendar = ({
     setChoosingDate,
 }: {
     dataWorkingTime?: IOpeningHoursResponse[];
-    fakeData: { day: string; opening_time: string; closing_time: string }[];
+    fakeData?: { day: string; opening_time: string; closing_time: string }[];
     handleAddDate: (data?: IOpeningHoursResponse) => void;
     formMessage: string;
     setChoosingDate: (state: boolean) => void;
@@ -52,7 +52,9 @@ const ScheduleCalendar = ({
         const { dob } = data;
         const formated = format(new Date(dob), 'yyyy-MM-dd');
 
-        setMatchDate(fakeData.find((e) => e.day === formated));
+        if (dataWorkingTime) {
+            setMatchDate(dataWorkingTime.find((e) => e.day === formated));
+        }
     }
 
     return (
@@ -87,9 +89,10 @@ const ScheduleCalendar = ({
                                                 })();
                                             }}
                                             disabled={(date) => {
-                                                return fakeData.find(
-                                                    (e) => e.day === format(new Date(date), 'yyyy-MM-dd')
-                                                )
+                                                return dataWorkingTime &&
+                                                    dataWorkingTime.find(
+                                                        (e) => e.day === format(new Date(date), 'yyyy-MM-dd')
+                                                    )
                                                     ? false
                                                     : true;
                                             }}
