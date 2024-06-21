@@ -12,6 +12,7 @@ import { IStoreItem } from '~/types/Store';
 
 const StoreListManagement = () => {
     const { data, isLoading } = useGetListStoreQuery();
+    console.log(data);
     const [mutate, { isLoading: PendingRemove, isSuccess, isError }] = useRemoveStoreMutation();
     const store = data?.data?.data;
     const toast = useToastDisplay();

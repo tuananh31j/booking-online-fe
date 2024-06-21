@@ -12,6 +12,7 @@ import { ScrollArea } from '~/components/ui/scroll-area';
 // eslint-disable-next-line import/no-cycle
 import { useGetOpeningDetailQuery } from '~/store/services/opening.service';
 import TableCell from '../../_components/TableCell';
+import Link from 'next/link';
 
 type IStoreRowProps = {
     id: number;
@@ -58,79 +59,10 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
             <TableCell>{phone}</TableCell>
             <TableCell>{createAt}</TableCell>
             <TableCell>
-                <div className='flex items-center gap-2'>
-                    <Dialog>
-                        <DialogTrigger className='hover:underline' onClick={() => handleDialogOpen(id)}>
-                            Chi tiết lịch
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>
-                                    <div className='pl-2 text-2xl font-normal dark:text-white'>
-                                        Lịch mở cửa hàng {name}
-                                    </div>
-                                </DialogTitle>
-                                <ScrollArea className='h-[500px] w-[460px] rounded-md border p-4'>
-                                    {isLoading ? (
-                                        <p>Loading...</p>
-                                    ) : error ? (
-                                        <p>Error loading data</p>
-                                    ) : (
-                                        <div className='flex w-full space-x-5 p-5'>
-                                            <div className='w-full space-y-2 text-lg dark:text-white'>
-                                                {opening?.map((item: any, index: number) => (
-                                                    <div key={index} className='mb-2 w-full'>
-                                                        <p className='flex items-center'>
-                                                            <strong>Day: </strong>
-                                                            {item.day}
-                                                            <Button
-                                                                type='submit'
-                                                                size='sm'
-                                                                className=' ml-auto mt-1 px-3  hover:bg-sky-700'
-                                                            >
-                                                                <PopupModal
-                                                                    id={id}
-                                                                    Form={FormOpening}
-                                                                    btnName='Edit'
-                                                                    title='Chỉnh sửa thông tin cửa hàng'
-                                                                />
-                                                            </Button>
-                                                        </p>
-                                                        <p className=' flex items-center'>
-                                                            <strong>Opening Time:</strong> {item.opening_time}
-                                                            <Button
-                                                                type='submit'
-                                                                size='sm'
-                                                                className=' ml-auto mt-1 px-3  hover:bg-red-700'
-                                                            >
-                                                                <Trash2Icon className='h-4 w-4' />
-                                                            </Button>
-                                                        </p>
-                                                        <p>
-                                                            <strong>Closing Time:</strong> {item.closing_time}
-                                                        </p>
-                                                        <hr className='w-full' />
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-                                </ScrollArea>
-                            </DialogHeader>
-                            <DialogFooter>
-                                <Button className='hover:bg-yellow-700' type='submit'>
-                                    <PopupModal
-                                        id={id}
-                                        Form={FormOpening}
-                                        btnName=' Create Date'
-                                        title='Chỉnh sửa thông tin cửa hàng'
-                                    />
-                                </Button>
-                            </DialogFooter>
-                        </DialogContent>
-                    </Dialog>
-                    |
-                    <PopupModal id={id} Form={FormStore} btnName='Edit' title='Chỉnh sửa thông tin cửa hàng' />|
+                <div className='flex items-center gap-3'>
+                    <Link href={`store/edit/[id]`} as={`store/edit/${id}`}>
+                        Settings
+                    </Link>
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
