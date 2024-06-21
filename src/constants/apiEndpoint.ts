@@ -26,12 +26,12 @@ const API_ENDPOINT = {
         SEE_OPENING_HOURS: '/user/see-opeening-hours',
     },
     STORE: {
-        ADD: '/stores/post',
-        EDIT: '/stores/update', // @id
-        DETAILS: '/stores/show', // @id
+        ADD: '/stores',
+        EDIT: '/stores/', // @id
+        DETAILS: '/stores/', // @id
         LIST: '/stores',
         CLIENT_LIST: '/client/list-store',
-        REMOVE: '/stores/delete', // @id
+        REMOVE: '/stores/', // @id
     },
     SERVICE: {
         ADD: '/services/post',

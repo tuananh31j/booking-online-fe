@@ -15,7 +15,7 @@ export const openingApi = baseApi.injectEndpoints({
             providesTags: [QUERY_KEY.OPENING],
         }),
 
-        postOpening: builder.mutation<IApiResponse<IOpeningResponse>, { id: number; formData: IOpeningBody }>({
+        createOpening: builder.mutation<IApiResponse<IOpeningResponse>, { id: number; formData: IOpeningBody }>({
             query: ({ id, formData }) => ({
                 url: `${API_ENDPOINT.OPENING.ADD}/${id}`,
                 method: 'POST',
@@ -23,7 +23,16 @@ export const openingApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.OPENING],
         }),
+        updateOpening: builder.mutation<IApiResponse<IOpeningResponse>, { id: number; formData: IOpeningBody }>({
+            query: ({ id, formData }) => ({
+                url: `${API_ENDPOINT.OPENING.EDIT}/${id}`,
+                method: 'PUT',
+                body: formData,
+            }),
+            invalidatesTags: [QUERY_KEY.OPENING],
+        }),
     }),
 });
 
-export const { useGetListOpeningQuery, usePostOpeningMutation, useGetOpeningDetailQuery } = openingApi;
+export const { useGetListOpeningQuery, useCreateOpeningMutation, useGetOpeningDetailQuery, useUpdateOpeningMutation } =
+    openingApi;

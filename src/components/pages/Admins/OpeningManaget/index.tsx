@@ -28,7 +28,7 @@ const OpeningDayManagement = () => {
                             key={i}
                             index={i + 1}
                             id={item.id}
-                            storeInformationId={item.store_information_id}
+                            storeInformationId={item.store_id}
                             storeInformation={{
                                 id: 1,
                                 name: item.store_information.name,

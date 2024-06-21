@@ -17,7 +17,7 @@ import { ErrorFields, isStoreError } from '~/types/Error/Helper/Store';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
-
+const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number }) => {};
 const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number }) => {
     const [isSaveImage, setIsSaveImage] = useState<boolean>(false);
     const formImageSchema = !isSaveImage

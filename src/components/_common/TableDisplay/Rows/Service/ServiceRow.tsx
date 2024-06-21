@@ -29,6 +29,8 @@ const ServiceRow: FC<IServiceRowProps> = ({ index, id, name, category, describe,
             setCatID(categoryId);
         }
     }, [isCategoryLoading]);
+    console.log('catID', catID);
+
     return (
         <tr className='h-10'>
             <TableCell>{index}</TableCell>
