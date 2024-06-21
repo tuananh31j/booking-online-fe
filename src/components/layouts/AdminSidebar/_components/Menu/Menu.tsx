@@ -21,12 +21,12 @@ interface MenuItemProps {
 }
 
 const ADMIN_MENU: MenuItemProps[] = [
-    { path: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
-    { path: 'store', name: 'Store', icon: StoreIcon },
-    { path: 'orders', name: 'Orders', icon: ListOrdered },
-    { path: 'staff-list', name: 'Manage staffs', icon: UserRound },
-    { path: 'category', name: 'Manage category', icon: Sofa },
-    { path: 'services', name: 'Services', icon: HandPlatter },
+    { path: '/admin/dashboard', name: 'Dashboard', icon: LayoutDashboard },
+    { path: '/admin/store', name: 'Store', icon: StoreIcon },
+    { path: '/admin/orders', name: 'Orders', icon: ListOrdered },
+    { path: '/admin/staff-list', name: 'Manage staffs', icon: UserRound },
+    { path: '/admin/category', name: 'Manage category', icon: Sofa },
+    { path: '/admin/services', name: 'Services', icon: HandPlatter },
     // { path: 'opening', name: 'Manage opening', icon: Clock },
 ];
 

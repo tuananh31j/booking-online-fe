@@ -27,11 +27,11 @@ const API_ENDPOINT = {
     },
     STORE: {
         ADD: '/stores',
-        EDIT: '/stores/', // @id
-        DETAILS: '/stores/', // @id
+        EDIT: '/stores', // @id
+        DETAILS: '/stores', // @id
         LIST: '/stores',
         CLIENT_LIST: '/client/list-store',
-        REMOVE: '/stores/', // @id
+        REMOVE: '/stores', // @id
     },
     SERVICE: {
         ADD: '/services/post',
@@ -52,7 +52,7 @@ const API_ENDPOINT = {
         // thêm ngày h mở cửa theo id cửa hàng
         ADD: '/opening-hours/post', // @id
         // cập nhật ngày h mở cửa theo id cửa hàng
-        EDIT: '/oopening-hours/update', // @id
+        EDIT: '/opening-hours/update', // @id
         // xem chi tiết ngày h mở cửa theo id cửa hàng
         DETAILS: '/opening-hours', // @id
         LIST: '/opening-hours/list',

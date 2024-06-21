@@ -24,11 +24,9 @@ export type IOpeningResponse = {
 };
 
 export type IOpeningByIdStoreResponse = {
-    data: {
-        day: string;
-        opening_time: string;
-        closing_time: string;
-    };
+    day: string;
+    opening_time: string;
+    closing_time: string;
 };
 
 export interface IOpeningItem {
