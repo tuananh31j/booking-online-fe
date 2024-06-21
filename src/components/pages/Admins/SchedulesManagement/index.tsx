@@ -1,31 +1,40 @@
 'use client';
 
 import { lightFormat } from 'date-fns';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FormSchedule from '~/components/_common/TableDisplay/Rows/Schedule/FormSchedule';
 import { ORDER_COLUMN_NAMES, ScheduleRow } from '~/components/_common/TableDisplay/Rows/Schedule/ScheduleRow';
 import FormService from '~/components/_common/TableDisplay/Rows/Service/FormService';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import { useGetListBookingQuery } from '~/store/services/staff.service';
+import { IScheduleResponse } from '~/types/Schedule';
 
 export default function ScheduleManagement() {
     const { data, isLoading, error } = useGetListBookingQuery();
-    const listSchedule = data?.data.data || [];
-    console.log(listSchedule);
+    const [listSchedule, setListSchedule] = useState<IScheduleResponse[]>();
+    // const [refreshList, setRefreshList] = useState(false);
+    useEffect(() => {
+        if (!isLoading) {
+            setListSchedule(data?.data.data || []);
+        }
+    }, [isLoading]);
     return (
         <div>
             <TableDisplay
                 title='Schedules Management'
                 columnNames={ORDER_COLUMN_NAMES}
-                action={{ element: FormSchedule, modalTitle: 'Đăng ký giờ làm' }}
+                action={{
+                    element: (e) => <FormSchedule onCloseModal={e.onCloseModal} />,
+                    modalTitle: 'Đăng ký giờ làm',
+                }}
             >
                 {(error || lightFormat.length === 0) && (
                     <td colSpan={7} className='text-center'>
                         Bạn chưa đăng ký giờ làm nào!
                     </td>
                 )}
-                {!isLoading && data
+                {!isLoading && listSchedule
                     ? listSchedule.map((item, i) => (
                           <ScheduleRow
                               id={item.id}
