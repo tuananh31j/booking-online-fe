@@ -62,7 +62,7 @@ const AdminNavbar = () => {
                             </form>
                         </div>
                         <ul className='md-max:w-full mb-0 ml-2 flex list-none flex-row justify-end pl-0 md:ml-0'>
-                            <li className='flex items-center'>
+                            <li className='flex cursor-pointer items-center p-1'>
                                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                     <DialogTrigger asChild>
                                         <UserCircle2 size={16} strokeWidth={1.75} />

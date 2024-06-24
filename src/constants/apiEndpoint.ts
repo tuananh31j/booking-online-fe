@@ -2,8 +2,9 @@ const API_ENDPOINT = {
     AUTH: {
         LOGIN: '/auth/login',
         LOGOUT: '/auth/logout',
-        ME: '/user/showprofile',
+        ME: '/showprofile',
     },
+    // backend chửa lại route '/user/showprofile',
     CATEGORY: {
         ADD: '/categories/post',
         EDIT: '/categories/update', // @id
@@ -12,7 +13,7 @@ const API_ENDPOINT = {
         REMOVE: '/categories/delete', // @id
     },
     USER: {
-        ADD: '/admin_users/post',
+        ADD: '/admin_users/',
         EDIT: '/admin_users/update', // @id
         DETAILS: '/admin_users/show', // @id
         LIST: '/admin_users',
