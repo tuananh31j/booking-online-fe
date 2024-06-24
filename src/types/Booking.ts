@@ -31,4 +31,5 @@ export type IBooking = {
     customer_note: string;
     customer_email: string;
 };
+
 export type IDatePayload = { day: string; time: string };
