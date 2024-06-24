@@ -5,7 +5,7 @@ export type IStaff = {
     role: number;
     name: string;
     address: null | string;
-    store_information_id: number;
+    store_id: number;
     password?: string;
     image: string;
     phone: null | string;
@@ -18,7 +18,7 @@ export type IStaffResponse = {
     email: string;
     password: string;
     address: string;
-    store_information_id: number;
+    store_id: number;
     phone: string;
     image: string;
     role: number;
