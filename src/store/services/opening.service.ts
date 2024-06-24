@@ -26,7 +26,7 @@ export const openingApi = baseApi.injectEndpoints({
         updateOpening: builder.mutation<IApiResponse<IOpeningResponse>, { id: number; formData: IOpeningBody }>({
             query: ({ id, formData }) => ({
                 url: `${API_ENDPOINT.OPENING.EDIT}/${id}`,
-                method: 'PUT',
+                method: 'POST',
                 body: formData,
             }),
             invalidatesTags: [QUERY_KEY.OPENING],

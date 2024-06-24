@@ -102,7 +102,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             const { store_information_id, name, address, phone, password, email } = fData;
             const image = fData.image?.[0];
             if (!id) {
-                formData.append('store_information_id', store_information_id);
+                formData.append('store_id', store_information_id);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
@@ -112,7 +112,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 formData.append('password', password);
                 createStaff(formData);
             } else {
-                formData.append('store_information_id', store_information_id);
+                formData.append('store_id', store_information_id);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);

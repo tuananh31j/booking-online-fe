@@ -1,19 +1,15 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
-import ButtonSubmit from '~/components/_common/ButtonSubmit';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
-import { useEffect, useState } from 'react';
+import { Form, FormField, FormMessage } from '~/components/ui/form';
 import useToastDisplay from '~/hooks/useToastDisplay';
-import { useCreateOpeningMutation, useGetOpeningDetailQuery } from '~/store/services/opening.service';
+import { useCreateOpeningMutation } from '~/store/services/opening.service';
 import { useGetListStoreQuery } from '~/store/services/store.service';
 
 const FormOpeningSchema = z.object({
-    store_id: z.number(),
     day: z.string({ required_error: 'Vui lòng chọn ngày!' }),
     opening_time: z.string({ required_error: 'Vui lòng chọn giờ bắt đầu!' }),
     closing_time: z.string({ required_error: 'Vui lòng chọn giờ kết thúc!' }),
@@ -45,7 +41,7 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
             ];
 
             const res = await createOpening({
-                id: data.store_id,
+                id,
                 formData: {
                     opening_hours: openingHours,
                 },
@@ -63,39 +59,6 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
             {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                        <FormField
-                            control={form.control}
-                            name='store_id'
-                            render={({ field }) => {
-                                return (
-                                    <FormItem className='my-3 flex flex-col gap-2'>
-                                        <FormLabel>
-                                            Chọn cửa hàng<span className='text-[#e41a0f]'>*</span>
-                                        </FormLabel>
-                                        <Select
-                                            onValueChange={(value) => field.onChange(Number(value))}
-                                            value={field.value?.toString()}
-                                        >
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder='Chon danh mục' />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {!isStoreLoading &&
-                                                    storeList?.data.data.map((store) => (
-                                                        <SelectItem key={store.id} value={store.id.toString()}>
-                                                            {store.name}
-                                                        </SelectItem>
-                                                    ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <FormMessage />
-                                    </FormItem>
-                                );
-                            }}
-                        />
-
                         <div className='flex justify-center gap-2'>
                             <FormField
                                 control={form.control}
