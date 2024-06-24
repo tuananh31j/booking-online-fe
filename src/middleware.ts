@@ -15,7 +15,6 @@ export default async function middleware(req: NextRequest) {
     const token = req.cookies.get('accessToken')?.value;
     const user = req.cookies.get('user')?.value;
     const url = req.nextUrl.clone();
-    console.log(user, '0k');
 
     if (pathname === '/login') {
         if (token) {
@@ -23,21 +22,25 @@ export default async function middleware(req: NextRequest) {
             return NextResponse.redirect(url);
         }
     }
-    if ((pathname.startsWith('/admin') || pathname.startsWith('/staff')) && user) {
-        const userObj = JSON.parse(user);
-
-        if (!token) {
-            url.pathname = '/login';
-            return NextResponse.redirect(url);
-        }
-        if (pathname.startsWith('/admin')) {
-            if (userObj.role !== 0) {
-                url.pathname = '/404';
+    if (pathname.startsWith('/admin') || pathname.startsWith('/staff')) {
+        if (user) {
+            const userObj = JSON.parse(user);
+            if (!token) {
+                url.pathname = '/login';
                 return NextResponse.redirect(url);
             }
-        }
-        if (pathname.startsWith('/staff') && userObj.role === 0) {
-            url.pathname = '/admin/dashboard';
+            if (pathname.startsWith('/admin')) {
+                if (userObj.role !== 0) {
+                    url.pathname = '/404';
+                    return NextResponse.redirect(url);
+                }
+            }
+            if (pathname.startsWith('/staff') && userObj.role === 0) {
+                url.pathname = '/admin/dashboard';
+                return NextResponse.redirect(url);
+            }
+        } else {
+            url.pathname = '/login';
             return NextResponse.redirect(url);
         }
     }
