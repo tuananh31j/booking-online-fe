@@ -11,10 +11,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'; //
 import { Button } from '~/components/ui/button';
 import { Card, CardContent } from '~/components/ui/card';
 import { useGetDetailUserQuery } from '~/store/services/user.service';
+import { IUserResponse } from '~/types/User';
 
 export default function ProfileCard() {
     const { data, refetch } = useGetDetailUserQuery();
-    const userData = data?.data;
+    const [userData, setUserData] = useState<IUserResponse>();
+
+    useEffect(() => {
+        setUserData(data?.data);
+    }, [data]);
 
     const defaultAvatar = 'https://i.pinimg.com/564x/4e/79/d3/4e79d37bd5fe58e4f9630ee21a61f4a8.jpg';
     return (

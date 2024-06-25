@@ -151,7 +151,13 @@ export default function FormProfile({
                                 {/* <Check className='h-6 w-6 rounded-full bg-green-500 p-1 text-white hover:cursor-pointer' /> */}
                             </div>
                         </div>
-                        <AvatarImage className='h-32 w-32 rounded-full' src={previewImage} />
+                        <AvatarImage
+                            className='h-32 w-32 rounded-full'
+                            src={
+                                previewImage ||
+                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YreOWfDX3kK-QLAbAL4ufCPc84ol2MA8Xg&s'
+                            }
+                        />
                     </Avatar>
 
                     <div className='hidden'>
