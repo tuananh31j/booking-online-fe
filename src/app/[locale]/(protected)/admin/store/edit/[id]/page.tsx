@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 import BaseStore from '~/app/[locale]/(protected)/admin/store/edit/[id]/_components/BaseStore';
 import HourOpening from '~/app/[locale]/(protected)/admin/store/edit/[id]/_components/HourOpening';
+import ManagerStaff from '~/app/[locale]/(protected)/admin/store/edit/[id]/_components/staff/manegerStaff';
 import LoadingButton from '~/components/elements/LoadingButton';
 import { TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { useGetDetailStoreQuery } from '~/store/services/store.service';
@@ -38,7 +39,7 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                                 </TabsTrigger>
                                 <TabsTrigger
                                     className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
-                                    value='password'
+                                    value='staff'
                                 >
                                     <CircleUserIcon />
                                     Edit Staff
@@ -53,6 +54,9 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                             </TabsList>
                             <TabsContent value='base' className='w-full'>
                                 {detailStore && <BaseStore store={detailStore} refetch={refetch} />}
+                            </TabsContent>
+                            <TabsContent value='staff' className='w-full'>
+                                {detailStore && <ManagerStaff store={detailStore} />}
                             </TabsContent>
                             <TabsContent value='opening' className='w-full'>
                                 {detailStore && <HourOpening store={detailStore} />}

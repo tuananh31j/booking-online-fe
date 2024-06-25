@@ -60,7 +60,7 @@ export const staffAPI = baseApi.injectEndpoints({
             // invalidatesTags: [QUERY_KEY.SERVICE],
         }),
         getListStaffClient: builder.query<IApiResponse<{ data: IStaff[] }>, number>({
-            query: (id) => ({ url: `${API_ENDPOINT.USER.LIST_STAFF_OF_STORE}?storeId=${3}` }),
+            query: (id) => ({ url: `${API_ENDPOINT.USER.LIST_STAFF_OF_STORE}?storeId=${id}` }),
         }),
         getListWorkScheduleStaffClient: builder.query<IApiResponse<{ data: IWorkDate[] }>, void>({
             query: () => ({ url: `${API_ENDPOINT.USER.LIST_WORK_SCHEDULE}` }),
