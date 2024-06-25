@@ -48,8 +48,6 @@ const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
             };
             await createSchedule(formData);
         } catch (err) {
-            // console.error('Error submitting schedule:', err);
-            // toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
             setFormMessage(`${err}`);
         }
     };
@@ -87,13 +85,14 @@ const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
                     handleAddDate={handleAddDate}
                     dataWorkingTime={dataWorkingTime}
                     formMessage={formMessage}
+                    setFormMessage={setFormMessage}
                     setChoosingDate={setChoosingDate}
                 />
             )}
 
             {!choosingDate && (
                 <button
-                    className='btn flex items-center justify-center rounded-sm bg-slate-100 px-4 py-2 hover:bg-slate-200'
+                    className='btn border-1 flex items-center justify-center rounded-sm border  border px-4 py-2'
                     type='button'
                     onClick={() => setChoosingDate(true)}
                 >

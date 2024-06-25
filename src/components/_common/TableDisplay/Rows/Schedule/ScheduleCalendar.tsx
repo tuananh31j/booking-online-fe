@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { CalendarBooking } from '~/components/ui/calendarBooking';
@@ -16,14 +16,15 @@ const ScheduleCalendar = ({
     handleAddDate,
     formMessage,
     setChoosingDate,
+    setFormMessage,
 }: {
     dataWorkingTime?: IOpeningHoursResponse[];
     fakeData?: { day: string; opening_time: string; closing_time: string }[];
     handleAddDate: (data?: IOpeningHoursResponse) => void;
     formMessage: string;
     setChoosingDate: (state: boolean) => void;
+    setFormMessage: (msg: string) => void;
 }) => {
-    console.log(dataWorkingTime);
     const t = useTranslations('Calendar');
 
     const openTime = 9;
@@ -57,16 +58,17 @@ const ScheduleCalendar = ({
         }
     }
 
+    useEffect(() => {
+        const msg = matchDate
+            ? `Giờ mở cửa: ${matchDate.opening_time} - ${matchDate.closing_time}`
+            : 'Ngày này cửa hàng chưa mở cửa!';
+
+        setFormMessage(msg);
+    }, [matchDate]);
+
     return (
         <>
             <div className='overflow-y-scroll bg-content hide-scrollbar' style={{ maxHeight: 653 }}>
-                {(matchDate && (
-                    <span>
-                        {' '}
-                        Giờ mở cửa: {matchDate.opening_time} - {matchDate.closing_time}{' '}
-                    </span>
-                )) ||
-                    'Ngày này cửa hàng chưa mở cửa!'}
                 {
                     <Form {...form}>
                         <form className='w-full' onSubmit={form.handleSubmit(onSubmit)}>
@@ -104,7 +106,10 @@ const ScheduleCalendar = ({
                                                     </FormMessage>
                                                     <div className='mt-[15px] flex justify-between'>
                                                         <button
-                                                            onClick={() => setChoosingDate(false)}
+                                                            onClick={() => {
+                                                                setChoosingDate(false);
+                                                                setFormMessage('');
+                                                            }}
                                                             type='button'
                                                             className='h-[45px] w-[128px] rounded-xl bg-default text-reverse'
                                                         >
