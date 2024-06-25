@@ -3,18 +3,19 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+import { addTimes, convertMinutesToHours, convertToDate } from '~/lib/utils';
 
 type TimePicker = {
     hour: number;
     minute: number;
 };
 
-const TimePicker = ({ hours }: { hours: number[] }) => {
+const TimePicker = ({ hours, totalTime }: { hours: number[]; totalTime: number }) => {
     const t = useTranslations('Calendar');
-    const [selectHour, setSelectHour] = useState<TimePicker>({ hour: 0, minute: 0 });
-    const durations = [30, 45];
-    const scheduled = { hour: 9, minute: 15 };
-
+    const [selectHour, setSelectHour] = useState<TimePicker | null>(null);
+    const durations = [0, 15, 30, 45];
+    // const scheduled = { hour: 22, minute: 15 };
+    const totalTimeObj = convertMinutesToHours(totalTime);
     const handleSelectHour = (time: number, minute: number) => {
         console.log(time, minute);
         setSelectHour({ hour: time, minute });
@@ -22,12 +23,31 @@ const TimePicker = ({ hours }: { hours: number[] }) => {
     return hours.map((hour: number) => {
         if (hour >= 17) return '';
         return durations.map((minute, index: number) => {
-            const isScheduled = scheduled.hour === hour && scheduled.minute === minute;
+            let isActive = false;
+            const isScheduled = false;
+            if (selectHour) {
+                const timeDone = addTimes(selectHour, totalTimeObj);
+                if (
+                    convertToDate(timeDone) >= convertToDate({ hour, minute }) &&
+                    convertToDate(timeDone) >= convertToDate(selectHour) &&
+                    convertToDate(selectHour) <= convertToDate({ hour, minute })
+                ) {
+                    isActive = true;
+                } else {
+                    isActive = false;
+                }
+                // isActive =
+                //     selectHour &&
+                //      &&
+                //      &&
+                //     convertToDate(timeDone) >= convertToDate({ hour, minute });
+                console.log(timeDone, isActive, totalTimeObj, selectHour);
+            }
             return (
                 <div
                     onClick={() => handleSelectHour(hour, minute)}
                     key={index}
-                    className={`${selectHour.hour === hour && selectHour.minute === minute ? 'bg-pink-600 text-background' : 'hover:bg-gray-400'} ${isScheduled ? 'pointer-events-none bg-background text-foreground' : ''} cursor-pointer border border-solid bg-foreground p-2 pb-5 text-center text-background transition-colors duration-300 hover:border-gray-300 `}
+                    className={`${isActive ? 'bg-pink-600 text-background' : 'hover:bg-gray-400'} ${isScheduled ? 'pointer-events-none bg-background text-foreground' : ''} cursor-pointer border border-solid bg-foreground p-2 text-center text-background transition-colors duration-300 hover:border-gray-300`}
                 >
                     <TooltipProvider>
                         <Tooltip>
@@ -36,7 +56,7 @@ const TimePicker = ({ hours }: { hours: number[] }) => {
                                     <span>
                                         {hour.toString().padStart(2, '0')}:{minute.toString().padStart(2, '0')}
                                     </span>
-                                    <span className={`block ${isScheduled ? '' : 'pb-5'}`}>
+                                    <span className={`block ${isScheduled ? '' : ''}`}>
                                         {isScheduled && t('unavailable')}
                                         {!isScheduled && t('available')}
                                     </span>

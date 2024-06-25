@@ -11,17 +11,19 @@ import { CalendarBooking } from '~/components/ui/calendarBooking';
 import { Form, FormField, FormItem, FormMessage } from '~/components/ui/form';
 import { useGetListWorkScheduleStaffClientQuery } from '~/store/services/staff.service';
 import WrapperBooking from '../WrapperBooking';
+import useBooking from '~/hooks/useBooking';
 
 const BookingCalendar = () => {
     const t = useTranslations('Calendar');
+    const { bookingInfo, totalSeviceCompletionTime } = useBooking();
     const [chooseDate, setChooseDate] = useState<string>('');
     const [workTime, setWorkTime] = useState<{ start: string; end: string } | null>(null);
     const [workDate, setWorkDate] = useState<Date[]>([]);
     const [hours, setHours] = useState<number[]>([]);
     const dayOff = 'Sun';
-    const { data: listWorkSchedule, isLoading } = useGetListWorkScheduleStaffClientQuery();
+    const { data: listWorkSchedule, isLoading } = useGetListWorkScheduleStaffClientQuery(bookingInfo.user_id);
     useEffect(() => {
-        const specialDays = listWorkSchedule?.data.data.map((item) => new Date(item.day));
+        const specialDays = listWorkSchedule?.data.data.schedules.map((item) => new Date(item.day));
         if (specialDays) {
             setWorkDate(specialDays);
         }
@@ -29,7 +31,6 @@ const BookingCalendar = () => {
             const hoursArr: number[] = [];
             const start = parse(workTime.start, 'HH:mm:ss', new Date());
             const end = parse(workTime.end, 'HH:mm:ss', new Date());
-
             const hourStart = getHours(start);
             const hourEnd = getHours(end);
             for (let i = hourStart; i <= hourEnd; i += 1) {
@@ -57,7 +58,7 @@ const BookingCalendar = () => {
         const formated = format(new Date(dob), 'yyyy-MM-dd');
         console.log(formated);
         setChooseDate(formated);
-        listWorkSchedule?.data.data.forEach((item) => {
+        listWorkSchedule?.data.data.schedules.forEach((item) => {
             if (item.day === formated) {
                 setWorkTime({ start: item.start_time, end: item.end_time });
             }
@@ -74,12 +75,12 @@ const BookingCalendar = () => {
                         <span>Recommend</span>
                     </div>
                     <div className='flex items-center gap-2'>
-                        <div className='h-7 w-7 rounded-sm border border-card-foreground bg-transparent'></div>{' '}
+                        <div className='h-7 w-7 rounded-sm border border-card-foreground bg-transparent'></div>
                         <span>Disable</span>
                     </div>
                 </div>
                 {listWorkSchedule && (
-                    <div className='bg-content'>
+                    <>
                         <Form {...form}>
                             <form className='w-full' onSubmit={form.handleSubmit(onSubmit)}>
                                 <FormField
@@ -87,42 +88,43 @@ const BookingCalendar = () => {
                                     name='dob'
                                     render={({ field }) => (
                                         <FormItem className='flex justify-center'>
-                                            <CalendarBooking
-                                                specialDays={workDate}
-                                                className='rounded-2xl border-[1px] border-[#D5D4DF] bg-reverse p-5 shadow-xl dark:border-reverse'
-                                                fromMonth={dateNow}
-                                                mode='single'
-                                                selected={field.value}
-                                                onSelect={field.onChange}
-                                                disabled={(date) => {
-                                                    return date.toDateString().startsWith(dayOff) || date < dateNow;
-                                                }}
-                                                initialFocus
-                                                footer={
-                                                    <>
-                                                        <FormMessage className='text-center text-2xl' />
-                                                        <div className='mt-[15px] flex justify-center'>
-                                                            <button
-                                                                type='submit'
-                                                                className='h-[45px] w-[128px] rounded-xl bg-default text-reverse'
-                                                            >
-                                                                {t('confirm')}
-                                                            </button>
-                                                        </div>
-                                                    </>
-                                                }
-                                            />
+                                            <div className='h-[100px overflow-scroll]'>
+                                                <CalendarBooking
+                                                    specialDays={workDate}
+                                                    className='rounded-2xl border-[1px] border-[#D5D4DF] border-reverse bg-reverse p-5 shadow-xl'
+                                                    fromMonth={dateNow}
+                                                    mode='single'
+                                                    selected={field.value}
+                                                    onSelect={field.onChange}
+                                                    disabled={(date) => {
+                                                        return date.toDateString().startsWith(dayOff) || date < dateNow;
+                                                    }}
+                                                    footer={
+                                                        <>
+                                                            <FormMessage className='text-center text-2xl' />
+                                                            <div className='mt-[15px] flex justify-center'>
+                                                                <button
+                                                                    type='submit'
+                                                                    className='h-[45px] w-[128px] rounded-xl bg-default text-reverse'
+                                                                >
+                                                                    {t('confirm')}
+                                                                </button>
+                                                            </div>
+                                                        </>
+                                                    }
+                                                />
+                                            </div>
                                         </FormItem>
                                     )}
                                 />
                             </form>
                         </Form>
                         {chooseDate && (
-                            <div className='mt-10 grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-6'>
-                                <TimePicker hours={hours} />
+                            <div className='my-10 grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-12'>
+                                <TimePicker totalTime={totalSeviceCompletionTime} hours={hours} />
                             </div>
                         )}
-                    </div>
+                    </>
                 )}
             </div>
         </WrapperBooking>

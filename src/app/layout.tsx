@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { Itim } from 'next/font/google';
+import { Chivo } from 'next/font/google';
 import { Toaster } from '~/components/ui/toaster';
 
-const itim = Itim({ subsets: ['vietnamese'], weight: '400' });
+const itim = Chivo({ subsets: ['vietnamese'], weight: '400' });
 
 export const metadata: Metadata = {
     title: 'Create Next App',

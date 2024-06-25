@@ -24,12 +24,10 @@ export type IBooking = {
     user_id: number;
     day: string;
     time: string;
-    service_ids: { id: number }[];
+    service_ids: number[];
     customer_name: string;
     customer_date: string;
     customer_phone: string;
     customer_note: string;
     customer_email: string;
 };
-
-export type IDatePayload = { day: string; time: string };

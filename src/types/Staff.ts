@@ -40,6 +40,13 @@ export type IWorkDate = {
     end_time: string;
     created_at: Date;
 };
+export type IListSchedulesStaff = {
+    data: {
+        store_id: number;
+        store_name: string;
+        schedules: IWorkDate[];
+    };
+};
 
 export type IOpeningHoursResponse = {
     day: string;

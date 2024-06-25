@@ -4,9 +4,8 @@ import {
     IStaff,
     IStaffResponse,
     ISchedulesRequestBody,
-    IWorkDate,
     IOpeningHoursResponse,
-    IScheduleBody,
+    IListSchedulesStaff,
 } from '~/types/Staff';
 import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
@@ -60,10 +59,10 @@ export const staffAPI = baseApi.injectEndpoints({
             // invalidatesTags: [QUERY_KEY.SERVICE],
         }),
         getListStaffClient: builder.query<IApiResponse<{ data: IStaff[] }>, number>({
-            query: (id) => ({ url: `${API_ENDPOINT.USER.LIST_STAFF_OF_STORE}?storeId=${3}` }),
+            query: (id) => ({ url: `${API_ENDPOINT.USER.LIST_STAFF_OF_STORE}?storeId=${id}` }),
         }),
-        getListWorkScheduleStaffClient: builder.query<IApiResponse<{ data: IWorkDate[] }>, void>({
-            query: () => ({ url: `${API_ENDPOINT.USER.LIST_WORK_SCHEDULE}` }),
+        getListWorkScheduleStaffClient: builder.query<IApiResponse<IListSchedulesStaff>, number>({
+            query: (id) => ({ url: `${API_ENDPOINT.USER.LIST_WORK_SCHEDULE}?userId=${id}` }),
         }),
         seeOpeningHours: builder.query<IApiResponse<{ data: IOpeningHoursResponse[] }>, void>({
             query: () => ({ url: API_ENDPOINT.USER.SEE_OPENING_HOURS }),

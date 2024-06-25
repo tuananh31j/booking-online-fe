@@ -23,7 +23,7 @@ const API_ENDPOINT = {
         BOOKING_SCHEDULES: 'user/listbooking',
         SEE_SCHEDULES: '/user/see-schedule',
         LIST_STAFF_OF_STORE: '/client/list-user',
-        LIST_WORK_SCHEDULE: '/client/list_time?user_id=16&day=2024-08-02', // test
+        LIST_WORK_SCHEDULE: '/client/list-schedule', // test
         SEE_OPENING_HOURS: '/user/see-opeening-hours',
     },
     STORE: {

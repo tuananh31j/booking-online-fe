@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useLoginMutation } from '~/store/services/auth.service';
-import { loginAction } from '~/store/slice/auth.slice';
+import { loginAction } from '~/store/slice/auth/auth.slice';
 import { useAppDispatch } from '~/store/store';
 
 const cookies = new Cookies();

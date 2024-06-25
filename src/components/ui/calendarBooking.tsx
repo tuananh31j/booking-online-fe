@@ -46,7 +46,7 @@ function CalendarBooking({ className, classNames, specialDays, showOutsideDays =
                 day_range_start: 'day-range-start',
                 day_range_end: 'day-range-end',
                 day_selected:
-                    'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
+                    'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground scale-125',
                 day_today: 'bg-accent text-accent-foreground',
                 day_outside:
                     'day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30',
@@ -59,7 +59,7 @@ function CalendarBooking({ className, classNames, specialDays, showOutsideDays =
                 specialDay: specialDays || new Date(2003, 0, 31),
             }}
             modifiersClassNames={{
-                specialDay: 'bg-green-800',
+                specialDay: 'bg-green-800 text-white',
             }}
             // change props to iconProps
             components={{

@@ -42,7 +42,7 @@ const ServiceCard: FC<ServiceItemProps> = ({ service, handleRemove, handleSelect
             </div>
 
             <div className='service-time flex items-center md:px-5 md:text-lg lg:px-20 lg:text-xl'>
-                <div>30 minutes</div>
+                <div>{service.time} minutes</div>
             </div>
 
             <div className='service-price flex items-center md:px-5 md:text-lg lg:px-20 lg:text-xl'>

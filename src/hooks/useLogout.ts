@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import Cookies from 'universal-cookie';
 import useToastDisplay from '~/hooks/useToastDisplay';
-import { logout } from '~/store/slice/auth.slice';
+import { logout } from '~/store/slice/auth/auth.slice';
 import { useAppDispatch } from '~/store/store';
 
 const cookies = new Cookies();

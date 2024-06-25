@@ -4,8 +4,9 @@ export type IService = {
     name: string;
     describe: string;
     price: string;
-    created_at: null;
-    updated_at: null;
+    created_at: string;
+    updated_at: string;
+    time: number;
     category: null;
 };
 
