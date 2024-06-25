@@ -4,6 +4,9 @@ const API_ENDPOINT = {
         LOGOUT: '/auth/logout',
         ME: '/showprofile',
     },
+    PROFILE: {
+        UPDATE: '/profile/update',
+    },
     // backend chửa lại route '/user/showprofile',
     CATEGORY: {
         ADD: '/categories/post',

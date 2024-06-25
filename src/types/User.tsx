@@ -8,3 +8,11 @@ export interface IUserResponse {
     store_id: string;
     created_at: string;
 }
+
+export interface IFormProfileBody {
+    name?: string;
+    phone?: string;
+    address?: string;
+    image?: string | undefined;
+    current_password: string;
+}
