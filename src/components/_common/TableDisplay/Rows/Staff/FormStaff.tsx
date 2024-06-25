@@ -101,6 +101,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             // eslint-disable-next-line camelcase
             const { store_information_id, name, address, phone, password, email } = fData;
             const image = fData.image?.[0];
+            console.log(image);
             if (!id) {
                 formData.append('store_information_id', store_information_id);
                 formData.append('name', name);
