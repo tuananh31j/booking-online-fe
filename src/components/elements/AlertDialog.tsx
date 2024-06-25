@@ -18,13 +18,18 @@ type IAlerdialogProps = {
         title: string;
         description: string;
     };
+    type?: 'button' | 'none';
 };
 
-export default function AlertDialogConfirm({ children, handleConfirm, content }: IAlerdialogProps) {
+export default function AlertDialogConfirm({ children, handleConfirm, content, type }: IAlerdialogProps) {
     return (
         <>
             <AlertDialog>
-                <AlertDialogTrigger>{children}</AlertDialogTrigger>
+                <AlertDialogTrigger
+                    className={`${type === 'button' && 'flex h-[36px] w-[48px] items-center justify-center rounded-sm bg-primary text-reverse'}`}
+                >
+                    {children}
+                </AlertDialogTrigger>
                 <AlertDialogContent className='w-[90%] rounded-lg px-2 duration-500'>
                     <AlertDialogHeader>
                         <AlertDialogTitle className='flex justify-center'>

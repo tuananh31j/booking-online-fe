@@ -31,8 +31,20 @@ export const openingApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.OPENING],
         }),
+        removeOneDay: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `${API_ENDPOINT.OPENING.REMOVE}/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: [QUERY_KEY.OPENING],
+        }),
     }),
 });
 
-export const { useGetListOpeningQuery, useCreateOpeningMutation, useGetOpeningDetailQuery, useUpdateOpeningMutation } =
-    openingApi;
+export const {
+    useGetListOpeningQuery,
+    useRemoveOneDayMutation,
+    useCreateOpeningMutation,
+    useGetOpeningDetailQuery,
+    useUpdateOpeningMutation,
+} = openingApi;

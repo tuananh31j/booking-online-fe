@@ -57,7 +57,7 @@ const API_ENDPOINT = {
         DETAILS: '/opening-hours', // @id
         LIST: '/opening-hours/list',
         // xóa nngày đã qua theo id cửa hàng
-        REMOVE: 'opening-hours/delete/', // @id
+        REMOVE: 'opening-hours/delete', // @id
     },
 };
 
