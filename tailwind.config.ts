@@ -78,6 +78,14 @@ const config = {
                     DEFAULT: 'var(--card)', // root: #d9d9d9 dark: #222222
                     foreground: 'var(--card-foreground)', // root: #222222  dark:#d9d9d9
                 },
+                form: {
+                    DEFAULT: 'var(--form)', // root: #ffffff dark: #020817
+                    foreground: 'var(--form-foreground)', // root: #020817  dark:#ffffff
+                },
+                button: {
+                    DEFAULT: 'var(--button)', // root: #ffffff dark: #020817
+                    foreground: 'var(--button-foreground)', // root: #020817  dark:#ffffff
+                },
             },
             borderRadius: {
                 lg: 'var(--radius)',

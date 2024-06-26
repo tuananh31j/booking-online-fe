@@ -49,6 +49,10 @@
             "label": "Số điện thoại",
             "placeholder": "Nhập số điện thoại"
         },
+        "note": {
+            "label": "Ghi chú",
+            "placeholder": "Nhập ghi chú"
+        },
         "confirm": "Xác nhận"
     },
     "Calendar": {
