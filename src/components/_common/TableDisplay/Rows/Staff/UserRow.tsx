@@ -20,7 +20,7 @@ type IUserRowProps = {
     role: number;
     phone: string | null;
     address: string | null;
-    store_information_id: number;
+    store_id: number;
     action: (id: number) => void;
     createAt?: string;
 };
@@ -36,12 +36,12 @@ const UserRow: FC<IUserRowProps> = ({
     role,
     phone,
     // eslint-disable-next-line camelcase
-    store_information_id,
+    store_id,
     createAt,
     action,
 }) => {
     // eslint-disable-next-line camelcase
-    const storeId = store_information_id;
+    const storeId = store_id;
     const router = useRouter();
 
     const { data } = useGetDetailStoreQuery(storeId, { skip: !storeId });

@@ -51,7 +51,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
               );
 
     const FormStaffSchema = z.object({
-        store_information_id: z
+        store_id: z
             .string({ required_error: 'Cửa hàng không được để trống!' })
             .min(1, { message: 'Cửa hàng không được để trống!' }),
         email: z.string().email('Email không hợp lệ!'),
@@ -85,7 +85,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const form = useForm<IFormStaff>({
         resolver: zodResolver(FormStaffSchema),
         defaultValues: {
-            store_information_id: undefined,
+            store_id: undefined,
             name: '',
             email: '',
             phone: '',
@@ -99,11 +99,11 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             console.log(fData);
             const formData = new FormData();
             // eslint-disable-next-line camelcase
-            const { store_information_id, name, address, phone, password, email } = fData;
+            const { store_id, name, address, phone, password, email } = fData;
             const image = fData.image?.[0];
             console.log(image);
             if (!id) {
-                formData.append('store_information_id', store_information_id);
+                formData.append('store_id', store_id);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
@@ -113,7 +113,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 formData.append('password', password);
                 createStaff(formData);
             } else {
-                formData.append('store_information_id', store_information_id);
+                formData.append('store_id', store_id);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
@@ -174,7 +174,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                     {!id && (
                         <FormField
                             control={form.control}
-                            name='store_information_id'
+                            name='store_id'
                             render={({ field }) => (
                                 <FormItem className='mb-4'>
                                     <FormLabel>
