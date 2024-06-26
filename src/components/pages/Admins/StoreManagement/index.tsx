@@ -1,39 +1,46 @@
 'use client';
 
 import { formatDate } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import FormStore from '~/components/_common/TableDisplay/Rows/Store/FormStore';
-import { STORE_COLUMN_NAMES, StoreRow } from '~/components/_common/TableDisplay/Rows/Store/StoreRow';
+import { StoreRow } from '~/components/_common/TableDisplay/Rows/Store/StoreRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import { StoreTableColumnName } from '~/schemas/StoreTableColumnName';
 import { useGetListStoreQuery, useRemoveStoreMutation } from '~/store/services/store.service';
 import { IStoreItem } from '~/types/Store';
 
 const StoreListManagement = () => {
+    const t = useTranslations('Table.Store');
     const { data, isLoading } = useGetListStoreQuery();
-    console.log(data);
     const [mutate, { isLoading: PendingRemove, isSuccess, isError }] = useRemoveStoreMutation();
     const store = data?.data?.data;
     const toast = useToastDisplay();
     const handleRemoveStore = (id: number) => {
         mutate(id).unwrap();
     };
+
     useEffect(() => {
         if (isSuccess) {
             toast({ title: 'Xóa cửa hàng thành công', status: 'success' });
         }
+
         if (isError) {
             toast({ title: 'Xóa cửa hàng thất bại', status: 'destructive' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess, isError]);
+
+    const STORE_COLUMN_NAMES = StoreTableColumnName(t);
+
     return (
         <>
             <TableDisplay
-                title='Danh sách cửa hàng'
+                title={t('title')}
                 columnNames={STORE_COLUMN_NAMES}
-                action={{ element: FormStore, modalTitle: 'Thêm mới cửa hàng' }}
+                action={{ element: FormStore, modalTitle: t('modalTitle') }}
             >
                 {!isLoading &&
                     !PendingRemove &&

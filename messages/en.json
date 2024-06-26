@@ -1,30 +1,46 @@
 {
+    "Header": {
+        "contact": "Contact"
+    },
+
+    "Footer": {
+        "copyright_to": "Copyright to"
+    },
+
     "Login": {
         "title": "Login",
+        "button": "Login",
+        "forgot_password": "Forgot password?",
+        "login_success": "Login Successfully!",
+        "login_fail": "Login Failed!",
+
         "validations": {
             "email": {
-                "required": "Please enter your email",
-                "type": "Invalid email format"
+                "required": "Please enter your email!",
+                "type": "Invalid email format!"
             },
+
             "password": {
-                "required": "Please enter your password",
-                "min_length": "Password must be at least 6 characters long"
+                "required": "Please enter your password!",
+                "min_length": "Password must contains at least 6 characters!"
             }
         },
+
         "Email": {
             "label": "Email",
             "placeholder": "Enter your email"
         },
+
         "Password": {
             "label": "Password",
             "placeholder": "Enter your password"
         },
+
         "Checkbox": {
             "label": "Remember me"
-        },
-        "Button": "Login",
-        "forgot_password": "Forgot password?"
+        }
     },
+
     "AlertDiaLog": {
         "title": "Are you sure?",
         "desc": "Your information will revert to the previous step.",
@@ -33,9 +49,7 @@
             "yes": "Yes"
         }
     },
-    "Header": {
-        "contact": "Contact"
-    },
+
     "ConfirmBookingForm": {
         "Fullname": {
             "label": "Full Name",
@@ -55,25 +69,48 @@
         },
         "confirm": "Submit"
     },
+
     "Calendar": {
         "confirm": "Confirm",
         "validate": "Please pick a date!",
         "unavailable": "Full",
         "available": "available"
     },
+
     "StepBooking": {
-        "step1": "Choose a location"
+        "step_store": "Select store",
+        "step_staff": "Select staff",
+        "step_service": "Select service",
+        "step_dateTime": "Select date and time",
+        "step_confirm": "Confirm booking",
+
+        "Service": {
+            "continue_btn": "Continue"
+        },
+
+        "Timeline": {
+            "Store": "Store",
+            "Staff": "Staff",
+            "Service": "Service",
+            "Date": "Date",
+            "Confirm": "Confirm",
+            "Done": "Done"
+        }
     },
+
     "Location": {
         "title": "You can find us here"
     },
+
     "Setting": {
         "ThemeMode": {
             "light": "Light",
             "dark": "Dark",
-            "system": "System"
+            "system": "System",
+            "login": "Login"
         }
     },
+
     "StaffInformation": {
         "title": "Information",
         "name": "Name",
@@ -83,6 +120,7 @@
         "exp": "Experience",
         "desc": "Describe"
     },
+
     "OrderSuccess": {
         "idBooking": "Booking code",
         "locationStore": "Store Address",
@@ -97,5 +135,36 @@
         "phonenumber": "Number Phone",
         "AssignedStaff": "Assigned Staff",
         "showStaff": "View Staff Details"
+    },
+
+    "SideBar": {
+        "Admin_SideBar_Menu": {
+            "dashboard": "Dashboard",
+            "stores": "Stores",
+            "orders": "Bookings",
+            "staffs": "Staffs",
+            "categories": "Categories",
+            "services": "Services"
+        },
+
+        "Staff_SideBar_Menu": {
+            "orders": "My Bookings",
+            "schedules": "My Schedules"
+        }
+    },
+
+    "Table": {
+        "Store": {
+            "title": "List of Stores",
+            "modalTitle": "Add A New Store",
+            "columns": {
+                "No": "No",
+                "Name": "Name",
+                "Address": "Address",
+                "Phone_number": "Contact",
+                "Created_at": "Created at",
+                "Actions": "Options"
+            }
+        }
     }
 }

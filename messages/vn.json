@@ -1,30 +1,46 @@
 {
+    "Header": {
+        "contact": "Liên hệ hỗ trợ"
+    },
+
+    "Footer": {
+        "copyright_to": "Bản quyền thuộc"
+    },
+
     "Login": {
         "title": "Đăng Nhập",
+        "button": "Đăng nhập",
+        "forgot_password": "Quên mật khẩu",
+        "login_success": "Đăng nhập thành công!",
+        "login_fail": "Thông tin đăng nhập sai!",
+
         "validations": {
             "email": {
-                "required": "Vui lòng nhập email",
-                "type": "Email không đúng định dạng"
+                "required": "Vui lòng nhập email!",
+                "type": "Email không đúng định dạng!"
             },
+
             "password": {
-                "required": "Vui lòng nhập mật khẩu",
-                "min_length": "Mật khẩu phải có ít nhất 6 ký tự"
+                "required": "Vui lòng nhập mật khẩu!",
+                "min_length": "Mật khẩu phải có ít nhất 6 ký tự!"
             }
         },
+
         "Email": {
             "label": "Email",
             "placeholder": "Nhập email"
         },
+
         "Password": {
             "label": "Mật khẩu",
             "placeholder": "Nhập mật khẩu"
         },
+
         "Checkbox": {
-            "label": "Ô đánh dấu Ghi nhớ tôi"
-        },
-        "Button": "Đăng nhập",
-        "forgot_password": "Quên mật khẩu"
+            "label": "Ghi nhớ tôi"
+        }
     },
+
     "AlertDiaLog": {
         "title": "Bạn có chắc chắn không?",
         "desc": "Bạn sẽ quay trở lại bước nhập thông tin trước đó",
@@ -33,9 +49,7 @@
             "yes": "Chắc chắn"
         }
     },
-    "Header": {
-        "contact": "Liên hệ hỗ trợ"
-    },
+
     "ConfirmBookingForm": {
         "Fullname": {
             "label": "Họ và tên",
@@ -55,29 +69,48 @@
         },
         "confirm": "Xác nhận"
     },
+
     "Calendar": {
         "confirm": "Xác nhận",
         "validate": "Bạn chưa chọn ngày đặt lịch!",
         "unavailable": "Đã kín lịch",
         "available": "Còn trống"
     },
+
     "StepBooking": {
         "step_store": "Chọn địa chỉ",
         "step_staff": "Chọn nhân viên",
         "step_service": "Chọn dịch vụ",
-        "step_dateTime": "Chọn ngày giờ cụ thể",
-        "step_confirm": "Nhập thông tin xác nhận"
+        "step_dateTime": "Chọn ngày giờ",
+        "step_confirm": "Nhập thông tin xác nhận",
+
+        "Service": {
+            "continue_btn": "Tiếp tục"
+        },
+
+        "Timeline": {
+            "Store": "Cửa hàng",
+            "Staff": "Nhân viên",
+            "Service": "Dịch vụ",
+            "Date": "Ngày",
+            "Confirm": "Xác nhận",
+            "Done": "Hoàn tất"
+        }
     },
+
     "Location": {
         "title": "Bạn có thể tìm thấy chúng tôi ở đây."
     },
+
     "Setting": {
         "ThemeMode": {
             "light": "Sáng",
             "dark": "Tối",
-            "system": "Hệ thống"
+            "system": "Hệ thống",
+            "login": "Đăng nhập"
         }
     },
+
     "StaffInformation": {
         "title": "Thông tin nhân viên",
         "name": "Tên",
@@ -87,6 +120,7 @@
         "exp": "Kinh nghiệm",
         "desc": "Mô tả"
     },
+
     "OrderSuccess": {
         "idBooking": "Mã đặt lịch",
         "locationStore": "Địa chỉ cửa hàng đặt lịch",
@@ -101,5 +135,36 @@
         "phonenumber": "Số điện thoại",
         "AssignedStaff": "Nhân viên thực hiện",
         "showStaff": "Xem chi tiết nhân viên"
+    },
+
+    "SideBar": {
+        "Admin_SideBar_Menu": {
+            "dashboard": "Bảng điều khiển",
+            "stores": "Cửa hàng",
+            "orders": "Đơn khách hàng",
+            "staffs": "Nhân viên",
+            "categories": "Danh mục",
+            "services": "Dịch vụ"
+        },
+
+        "Staff_SideBar_Menu": {
+            "orders": "Đơn khách hàng",
+            "schedules": "Lịch làm việc"
+        }
+    },
+
+    "Table": {
+        "Store": {
+            "title": "Danh Sách Cửa Hàng",
+            "modalTitle": "Thêm Mới Cửa Hàng",
+            "columns": {
+                "No": "STT",
+                "Name": "Tên cửa hàng",
+                "Address": "Địa chỉ",
+                "Phone_number": "Số điện thoại",
+                "Created_at": "Ngày tạo cửa hàng",
+                "Actions": "Tùy chọn"
+            }
+        }
     }
 }

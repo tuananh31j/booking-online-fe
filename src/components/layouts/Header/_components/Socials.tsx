@@ -8,6 +8,7 @@ import Mail from '~/components/_common/Icons/mailicon/Mail';
 
 export default function Socials() {
     const t = useTranslations('Header');
+
     return (
         <>
             <div className='hidden gap-5 md:flex'>

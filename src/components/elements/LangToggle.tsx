@@ -51,7 +51,7 @@ export function LangToggle({ className }: { className?: string }) {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align='end' className=' bg-[#D5DFEB] dark:text-black'>
-                <DropdownMenuItem onClick={handleLangEN}>EngLish</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLangEN}>English</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLangVN}>Tiếng Việt</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

@@ -2,17 +2,11 @@
 
 import { Trash2Icon } from 'lucide-react';
 import { FC, useEffect, useState } from 'react';
-import PopupModal from '~/components/_common/PopupModal';
-import FormOpening from '~/components/_common/TableDisplay/Rows/Opening/FormOpening';
-import FormStore from '~/components/_common/TableDisplay/Rows/Store/FormStore';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
-import { Button } from '~/components/ui/button';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
-import { ScrollArea } from '~/components/ui/scroll-area';
 // eslint-disable-next-line import/no-cycle
+import Link from 'next/link';
 import { useGetOpeningDetailQuery } from '~/store/services/opening.service';
 import TableCell from '../../_components/TableCell';
-import Link from 'next/link';
 
 type IStoreRowProps = {
     id: number;
@@ -28,8 +22,6 @@ export type IStoreOpeningItem = {
     opening_time: string;
     closing_time: string;
 };
-
-const STORE_COLUMN_NAMES = ['STT', 'Tên cửa hàng', 'Địa chỉ', 'Số điện thoại', 'Ngày tạo cửa hàng', 'Tùy chọn'];
 
 const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, action }) => {
     const [currentStoreId, setCurrentStoreId] = useState<number>(null!);
@@ -51,6 +43,7 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
             setIsQueryEnabled(false);
         }
     }, [currentStoreId]);
+
     return (
         <tr>
             <TableCell>0{no}</TableCell>
@@ -63,6 +56,7 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
                     <Link href={`store/edit/[id]`} as={`store/edit/${id}`}>
                         Detail
                     </Link>
+
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
@@ -79,4 +73,4 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
     );
 };
 
-export { STORE_COLUMN_NAMES, StoreRow };
+export { StoreRow };
