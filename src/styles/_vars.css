@@ -35,6 +35,12 @@
     --destructive: #ef4343;
     --destructive-foreground: #f8fafc;
 
+    --form: #ffffff;
+    --form-foreground: #232527;
+
+    --button: #000000;
+    --button-foreground: #2b2d2f;
+
     --border: #e1e7ef;
     --input: #e1e7ef;
     --ring: #020817;
@@ -78,6 +84,12 @@
 
     --destructive: #7d1c1c;
     --destructive-foreground: #f8fafc;
+
+    --form: #232527;
+    --form-foreground: #ffffff;
+
+    --button: #071523;
+    --button-foreground: #000000;
 
     --border: #1d2839;
     --input: #1d2839;

@@ -49,6 +49,10 @@
             "label": "Phone number",
             "placeholder": "Enter your phone number"
         },
+        "note": {
+            "label": "Note",
+            "placeholder": "Enter your note"
+        },
         "confirm": "Submit"
     },
     "Calendar": {

@@ -11,7 +11,7 @@ const ButtonSubmit = forwardRef<HTMLButtonElement, IButtonSubmit>(({ isSubmittin
             ref={ref}
             type='submit'
             disabled={isSubmitting}
-            className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'
+            className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-button-foreground p-3 text-white hover:opacity-90'
         >
             {isSubmitting ? (
                 <span className='inline-block h-7 w-7 animate-spin rounded-full  border-4 border-dotted border-white'></span>
