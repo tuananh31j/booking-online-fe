@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { X } from 'lucide-react';
 import ActionLink from '~/components/_common/ActionLink';
 import Menu from '~/components/layouts/AdminSidebar/_components/Menu/Menu';
+import './side-bar.css';
 
 const AdminSidebar = ({
     isOpenSideBar,
@@ -19,7 +20,8 @@ const AdminSidebar = ({
             className={clsx(
                 `ease-nav-brand  fixed inset-y-0  z-50 my-4 block w-full max-w-64 -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-xl transition-transform duration-200 dark:bg-[#111c44] dark:shadow-none  xl:left-0 xl:ml-6 xl:translate-x-0 ${className}`,
                 {
-                    hidden: isOpenSideBar === false,
+                    'display-sidebar': isOpenSideBar === true,
+                    'hidden-sidebar': isOpenSideBar === false,
                 }
             )}
         >

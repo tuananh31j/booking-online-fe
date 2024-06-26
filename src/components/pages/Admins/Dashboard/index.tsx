@@ -84,7 +84,7 @@ const DashboardPage = () => {
 
     return (
         <div>
-            <div className='flex justify-between'>
+            <div className='flex flex-wrap justify-evenly'>
                 <StatsCard
                     title="Today's Money"
                     amount='$53,000'
@@ -123,10 +123,10 @@ const DashboardPage = () => {
                 />
             </div>
             <div className='gap my-6 grid grid-cols-1 justify-between lg:grid-cols-[58%,40%]'>
-                <div className='rounded-3xl bg-card p-2'>
+                <div className='rounded-3xl bg-card p-2 sm:m-2'>
                     <ReactApexChart options={areaChart.options} series={areaChart.series} height={350} type='area' />
                 </div>
-                <div className='rounded-3xl bg-card p-2'>
+                <div className='rounded-3xl bg-card p-2 sm:m-2'>
                     <div className='mt-10'>
                         <ReactApexChart options={pieChart.options} series={pieChart.series} height={350} type='donut' />
                     </div>

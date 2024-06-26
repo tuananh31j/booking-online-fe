@@ -35,7 +35,7 @@ const AdminNavbar = ({
     const handleLogout = useLogout();
     return (
         <>
-            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in  md:flex-nowrap lg:justify-start'>
+            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in sm:flex-nowrap  md:flex-nowrap lg:justify-start'>
                 <Menu
                     onClick={() => setIsOpenSideBar(true)}
                     className='ms-4 block cursor-pointer hover:opacity-45  xl:hidden'

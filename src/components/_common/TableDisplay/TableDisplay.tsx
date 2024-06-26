@@ -13,7 +13,7 @@ const TableDisplay: FC<ITableDisplayProps> = ({ title, columnNames, action, chil
     return (
         <Wrapper title={title} action={action}>
             <div className='flex-auto px-0 pb-2 pt-0'>
-                <div className='overflow-x-auto p-0'>
+                <div className='overflow-x-auto p-0 md:overflow-x-scroll'>
                     <table className='mb-0 w-full border-collapse items-center align-top text-gray-500 dark:border-white/40'>
                         <TableHead data={columnNames} />
                         <tbody>{children}</tbody>
