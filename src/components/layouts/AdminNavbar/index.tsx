@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, Settings, Slash, UserCircle2 } from 'lucide-react';
+import { Menu, Search, Settings, Slash, UserCircle2 } from 'lucide-react';
 import { useState } from 'react';
 import ProfileCard from '~/components/elements/ProfileCard';
 import {
@@ -24,12 +24,22 @@ import { Input } from '~/components/ui/input';
 import AdminNotificationCard from '~/components/elements/AdminNotificationCard';
 import useLogout from '~/hooks/useLogout';
 
-const AdminNavbar = () => {
+const AdminNavbar = ({
+    setIsOpenSideBar,
+    isOpenSideBar,
+}: {
+    setIsOpenSideBar: (state: boolean) => void;
+    isOpenSideBar: boolean;
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const handleLogout = useLogout();
     return (
         <>
-            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>
+            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in  md:flex-nowrap lg:justify-start'>
+                <Menu
+                    onClick={() => setIsOpenSideBar(true)}
+                    className='ms-4 block cursor-pointer hover:opacity-45  xl:hidden'
+                />
                 <div className='flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1'>
                     <nav>
                         <Breadcrumb>
