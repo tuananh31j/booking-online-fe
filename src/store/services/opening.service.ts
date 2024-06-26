@@ -14,12 +14,18 @@ export const openingApi = baseApi.injectEndpoints({
             query: (id) => `${API_ENDPOINT.OPENING.DETAILS}/${id}`,
             providesTags: [QUERY_KEY.OPENING],
         }),
-
         createOpening: builder.mutation<IApiResponse<IOpeningResponse>, { id: number; formData: IOpeningBody }>({
             query: ({ id, formData }) => ({
                 url: `${API_ENDPOINT.OPENING.ADD}/${id}`,
                 method: 'POST',
                 body: formData,
+            }),
+            invalidatesTags: [QUERY_KEY.OPENING],
+        }),
+        removeOpening: builder.mutation<object, number>({
+            query: (id) => ({
+                url: `${API_ENDPOINT.OPENING.REMOVE}/${id}`,
+                method: 'DELETE',
             }),
             invalidatesTags: [QUERY_KEY.OPENING],
         }),
@@ -34,5 +40,10 @@ export const openingApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetListOpeningQuery, useCreateOpeningMutation, useGetOpeningDetailQuery, useUpdateOpeningMutation } =
-    openingApi;
+export const {
+    useGetListOpeningQuery,
+    useCreateOpeningMutation,
+    useRemoveOpeningMutation,
+    useGetOpeningDetailQuery,
+    useUpdateOpeningMutation,
+} = openingApi;

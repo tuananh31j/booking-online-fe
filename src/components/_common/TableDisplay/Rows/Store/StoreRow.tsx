@@ -10,7 +10,7 @@ import { Button } from '~/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 import { ScrollArea } from '~/components/ui/scroll-area';
 // eslint-disable-next-line import/no-cycle
-import { useGetOpeningDetailQuery } from '~/store/services/opening.service';
+import { useGetOpeningDetailQuery, useRemoveOpeningMutation } from '~/store/services/opening.service';
 import TableCell from '../../_components/TableCell';
 import Link from 'next/link';
 
