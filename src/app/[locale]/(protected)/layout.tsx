@@ -7,11 +7,11 @@ import AdminSidebar from '~/components/layouts/AdminSidebar';
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     const [isOpenSideBar, setIsOpenSideBar] = useState(true);
 
-    // useEffect(() => {
-    //     if (window) {
-    //         window.addEventListener('resize', () => setIsOpenSideBar(window.innerWidth >= 1024));
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (window) {
+            window.addEventListener('resize', () => setIsOpenSideBar(window.innerWidth >= 1024));
+        }
+    }, []);
 
     return (
         <div className='relative'>
