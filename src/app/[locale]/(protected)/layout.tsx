@@ -14,7 +14,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     return (
-        <div className='relative'>
+        <div className='relative '>
             <AdminSidebar
                 className='fixed left-64 '
                 isOpenSideBar={isOpenSideBar}
