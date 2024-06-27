@@ -11,11 +11,21 @@ interface StatsCardProps {
     icon: LucideIcon;
     bgColor: string;
     iconColor: string;
+    className?: string;
 }
 
-const StatsCard: React.FC<StatsCardProps> = ({ title, amount, percentage, since, icon: Icon, bgColor, iconColor }) => {
+const StatsCard: React.FC<StatsCardProps> = ({
+    title,
+    amount,
+    percentage,
+    since,
+    icon: Icon,
+    bgColor,
+    iconColor,
+    className,
+}) => {
     return (
-        <div className='mb-6 flex flex-col justify-between sm:w-1/2 xl:mb-0 xl:w-1/4'>
+        <div className={`mb-6 flex flex-col justify-between sm:w-1/2 xl:mb-0 xl:w-1/4 ${className}`}>
             <div className='dark:bg-slate-850 dark:shadow-dark-xl w-[95%] rounded-2xl bg-card shadow-xl'>
                 <div className='w-full p-4'>
                     <div>
