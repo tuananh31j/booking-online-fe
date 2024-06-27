@@ -4,9 +4,9 @@ import { Trash2Icon } from 'lucide-react';
 import { FC, useEffect, useState } from 'react';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
 // eslint-disable-next-line import/no-cycle
-import Link from 'next/link';
-import { useGetOpeningDetailQuery } from '~/store/services/opening.service';
+import { useGetOpeningDetailQuery, useRemoveOpeningMutation } from '~/store/services/opening.service';
 import TableCell from '../../_components/TableCell';
+import Link from 'next/link';
 
 type IStoreRowProps = {
     id: number;

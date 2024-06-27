@@ -2,13 +2,17 @@ import { Eye, Plus, Trash2Icon } from 'lucide-react';
 import PopupDetailOpening from '~/app/[locale]/(protected)/admin/store/edit/[id]/_components/PopupDetailOpening';
 import PopupModal from '~/components/_common/PopupModal';
 import FormOpening from '~/components/_common/TableDisplay/Rows/Opening/FormOpening';
+import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import { Button } from '~/components/ui/button';
-import { useGetOpeningDetailQuery } from '~/store/services/opening.service';
+import { useGetOpeningDetailQuery, useRemoveOpeningMutation } from '~/store/services/opening.service';
 import { IStore } from '~/types/Store';
 
 export default function HourOpening({ store }: { store: IStore }) {
+    const [mutate] = useRemoveOpeningMutation();
+
     const { data, isLoading } = useGetOpeningDetailQuery(store.id, { skip: !store.id });
     const opening = data?.data.data;
+
     return (
         <>
             <div className='w-full px-6'>
@@ -28,9 +32,9 @@ export default function HourOpening({ store }: { store: IStore }) {
                 </div>
                 <div className='no-scrollbar max-h-[424px] w-full overflow-y-scroll rounded-md'>
                     <div className='flex  w-full flex-wrap gap-x-6 gap-y-3  text-lg dark:text-white'>
-                        {opening?.map((item, index) => {
+                        {opening?.map((item) => {
                             return (
-                                <div key={index} className='mb-2 flex gap-3 rounded-md bg-card p-5'>
+                                <div key={item.id} className='mb-2 flex gap-3 rounded-md bg-card p-5'>
                                     <div>
                                         <p className='flex items-center'>
                                             <strong>Day: </strong>
@@ -45,13 +49,25 @@ export default function HourOpening({ store }: { store: IStore }) {
                                             {item.closing_time}
                                         </p>
                                     </div>
+
                                     <div className='flex flex-col items-center justify-between'>
                                         <PopupDetailOpening store={store} detail={item}>
                                             <Eye />
                                         </PopupDetailOpening>
-                                        <Button>
-                                            <Trash2Icon className='h-4 w-4 cursor-pointer ' />
-                                        </Button>
+
+                                        <AlertDialogConfirm
+                                            handleConfirm={mutate}
+                                            content={{
+                                                title: 'Bạn có chắc chắn không?',
+                                                description:
+                                                    'Bạn có muốn xóa danh mục này không khi xóa sẽ không thể khổi phục',
+                                                idContent: item.id,
+                                            }}
+                                        >
+                                            <div className='flex h-[36px] w-[48px] items-center justify-center rounded-sm bg-primary leading-[28px] text-white'>
+                                                <Trash2Icon className='h-4 w-4 cursor-pointer' />
+                                            </div>
+                                        </AlertDialogConfirm>
                                     </div>
                                 </div>
                             );

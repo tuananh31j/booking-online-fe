@@ -42,7 +42,7 @@ const StaffListManager = () => {
                     role={item.role}
                     phone={item.phone}
                     address={item.address}
-                    store_information_id={item.store_information_id}
+                    store_id={item.store_id}
                     createAt={item.updated_at ? formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
                 />
             ))}

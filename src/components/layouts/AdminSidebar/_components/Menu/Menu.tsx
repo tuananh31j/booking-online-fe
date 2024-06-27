@@ -41,6 +41,7 @@ const Menu: React.FC = () => {
     ];
 
     useEffect(() => {
+        console.log(isAdmin);
         const MENU_LIST = isAdmin ? ADMIN_MENU : STAFF_MENU;
         setMenuList(MENU_LIST);
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -43,7 +43,7 @@
 
     "AlertDiaLog": {
         "title": "Are you sure?",
-        "desc": "Your information will revert to the previous step.",
+        "desc": "Your progress will be reverted to the previous step!",
         "button": {
             "cancel": "Cancel",
             "yes": "Yes"
