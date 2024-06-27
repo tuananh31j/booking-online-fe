@@ -1,0 +1,31 @@
+@media (max-width: 1280px) {
+    .display-sidebar {
+        display: block;
+        animation: display_sidebar 0.3s 1 forwards;
+    }
+
+    .hidden-sidebar {
+        animation: hide_sidebar 0.3s 1 forwards;
+    }
+}
+
+/* animation display sidebar */
+@keyframes display_sidebar {
+    0% {
+        transform: translate(-400px, 0);
+    }
+    100% {
+        transform: translate(-240px, 0);
+    }
+}
+
+/* animation hide sidebar */
+@keyframes hide_sidebar {
+    0% {
+        transform: translate(-240px, 0);
+    }
+    100% {
+        transform: translate(-500px, 0);
+        display: none;
+    }
+}
