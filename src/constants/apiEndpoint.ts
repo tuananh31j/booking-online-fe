@@ -16,11 +16,11 @@ const API_ENDPOINT = {
         REMOVE: '/categories/delete', // @id
     },
     USER: {
-        ADD: '/admin_users/',
-        EDIT: '/admin_users/update', // @id
-        DETAILS: '/admin_users/show', // @id
+        ADD: '/admin_users',
+        EDIT: '/admin_users', // @id
+        DETAILS: '/admin_users', // @id
         LIST: '/admin_users',
-        REMOVE: '/admin_users/delete', // @id
+        REMOVE: '/admin_users', // @id
         EDIT_PROFILE: '/user/profile/update',
         ADD_SCHEDULES: '/user/schedules',
         BOOKING_SCHEDULES: 'user/listbooking',

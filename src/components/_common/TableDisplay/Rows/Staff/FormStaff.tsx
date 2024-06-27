@@ -16,16 +16,17 @@ import useToastDisplay from '~/hooks/useToastDisplay';
 import { useCreateStaffMutation, useEditStaffMutation, useGetStaffDetailQuery } from '~/store/services/staff.service';
 import { useGetListStoreQuery } from '~/store/services/store.service';
 import { ErrorStaffFields, isStaffError } from '~/types/Error/Helper/Store';
+import { Input } from '~/components/ui/input';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
     const [isSaveImage, setIsSaveImage] = useState<boolean>(true);
 
     const toast = useToastDisplay();
-    const { data, isLoading } = useGetListStoreQuery();
-    const stores = data?.data?.data;
+    const { data: storeData, isLoading } = useGetListStoreQuery();
+    const stores = storeData?.data?.data;
 
     const [createStaff, createStaffState] = useCreateStaffMutation();
     const [updateStaff, updateStaffState] = useEditStaffMutation();
@@ -34,13 +35,15 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const detailStaff = detail?.data?.data;
 
     const saveImageId = useId();
+    const imageId = useId();
+
     const [preview, setPreview] = useState('');
 
     const imageSchema = isSaveImage
         ? z.any()
         : z
-              .custom<FileList>((val) => val instanceof FileList, 'Required')
-              .refine((files) => files?.length > 0, `Required`)
+              .custom<FileList>((val) => val instanceof FileList, 'Required image')
+              .refine((files) => files?.length >= 1, `Required image`)
               .refine(
                   (files) => Array.from(files).every((file) => file?.size <= MAX_FILE_SIZE),
                   `Each file size should be less than 5 MB.`
@@ -49,7 +52,6 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                   (files) => Array.from(files).every((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type)),
                   'Only these types are allowed .jpg, .jpeg, .png and .webp'
               );
-
     const FormStaffSchema = z.object({
         store_information_id: z
             .string({ required_error: 'Cửa hàng không được để trống!' })
@@ -62,13 +64,14 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             .string({ required_error: 'Số điện thoại không được để trống!' })
             .min(3, { message: 'Số điện thoại ít nhất phải có 9 ký tự !' }),
         password: z.string().min(6, { message: 'Password phải có ít nhất 6 ký tự!' }),
+        role: z.string({ required_error: 'Role không được để trống!' }),
         address: z
             .string({ required_error: 'Địa chỉ không được để trống!' })
             .min(3, { message: 'Địa chỉ ít nhất phải có 10 ký tự !' }),
         image: !id
             ? z
                   .custom<FileList>((val) => val instanceof FileList, 'Xin hãy upload ảnh!')
-                  .refine((files) => files?.length > 0, `Xin hãy upload ảnh!`)
+                  .refine((files) => files?.length >= 1, `Xin hãy upload ảnh!`)
                   .refine(
                       (files) => Array.from(files).every((file) => file?.size <= MAX_FILE_SIZE),
                       `Each file size should be less than 5 MB.`
@@ -94,32 +97,34 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         },
     });
 
-    const onSubmit: SubmitHandler<IFormStaff> = async (fData) => {
+    const onSubmit: SubmitHandler<IFormStaff> = async (data) => {
         try {
-            console.log(fData);
             const formData = new FormData();
+            console.log(data);
             // eslint-disable-next-line camelcase
-            const { store_information_id, name, address, phone, password, email } = fData;
-            const image = fData.image?.[0];
+            const { store_information_id, role, name, address, phone, password, email } = data;
+            const image = data.image?.[0];
             console.log(image);
             if (!id) {
                 formData.append('store_information_id', store_information_id);
+                formData.append('role', `${role}`);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
                 formData.append('phone', phone);
                 formData.append('address', address);
                 formData.append('image', image);
-                formData.append('password', password);
+                formData.append('password', password || '');
                 createStaff(formData);
             } else {
                 formData.append('store_information_id', store_information_id);
+                formData.append('role', `${role}`);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
                 formData.append('phone', phone);
                 formData.append('address', address);
-                formData.append('password', password);
+                formData.append('password', password || '');
                 formData.append('_method', 'PUT');
 
                 if (!isSaveImage) {
@@ -171,42 +176,35 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         <div className='mx-auto flex flex-col justify-center overflow-y-auto px-4 py-6 sm:h-[80vh] xl:pt-0 2xl:h-[unset] '>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='pt-8 2xl:pt-0'>
-                    {!id && (
-                        <FormField
-                            control={form.control}
-                            name='store_information_id'
-                            render={({ field }) => (
-                                <FormItem className='mb-4'>
-                                    <FormLabel>
-                                        Cửa hàng <span className='text-[#e41a0f]'>*</span> <br />
-                                    </FormLabel>
+                    <FormField
+                        control={form.control}
+                        name='store_information_id'
+                        render={({ field }) => (
+                            <FormItem className='mb-4'>
+                                <FormLabel>
+                                    Cửa hàng <span className='text-[#e41a0f]'>*</span> <br />
+                                </FormLabel>
 
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder='Chọn cửa hàng' />
-                                            </SelectTrigger>
-                                        </FormControl>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder='Chọn cửa hàng' className='text' />
+                                        </SelectTrigger>
+                                    </FormControl>
 
-                                        <SelectContent>
-                                            {stores?.map((store) => (
-                                                <SelectItem
-                                                    key={store.id}
-                                                    value={store.id.toString()}
-                                                    className='text-black'
-                                                >
-                                                    {store.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                    <SelectContent>
+                                        {stores?.map((store) => (
+                                            <SelectItem key={store.id} value={store.id.toString()} className='text'>
+                                                {store.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
 
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    )}
-
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <FormField
                         control={form.control}
                         name='name'
@@ -279,24 +277,81 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
 
                     <FormField
                         control={form.control}
+                        name='role'
+                        render={({ field }) => (
+                            <FormItem className='mb-4'>
+                                <FormLabel>
+                                    Quyền <span className='text-[#e41a0f]'>*</span> <br />
+                                </FormLabel>
+
+                                <Select onValueChange={field.onChange}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder='Chọn quyền' className='text' />
+                                        </SelectTrigger>
+                                    </FormControl>
+
+                                    <SelectContent>
+                                        <SelectItem key={0} value={'0'} className='text'>
+                                            Admin
+                                        </SelectItem>
+                                        <SelectItem key={1} value={'1'} className='text'>
+                                            Staff
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+
+                                <FormMessage className='text' />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
                         name='image'
                         disabled={id ? isSaveImage : false}
                         render={({ field: { onChange }, formState, fieldState, ...passField }) => (
-                            <FormItemDisplay
-                                title='Image:'
-                                {...passField}
-                                require
-                                disabled={id ? isSaveImage : false}
-                                type='file'
-                                onChange={(event) => {
-                                    const inputElement = event.target as HTMLInputElement;
-                                    if (inputElement.files) {
-                                        const displayUrl = URL.createObjectURL(inputElement.files[0]);
-                                        setPreview(displayUrl);
-                                        onChange(inputElement.files);
-                                    }
-                                }}
-                            />
+                            <FormItem className='mb-3 flex w-full flex-col'>
+                                <FormLabel>
+                                    {'Image:'}
+                                    <span className='text-[#e41a0f]'>*</span>
+                                </FormLabel>
+                                <FormControl>
+                                    <Input
+                                        type='file'
+                                        id={imageId}
+                                        {...passField}
+                                        disabled={id ? isSaveImage : false}
+                                        className='w-full rounded-[3px] border border-gray-500 p-2 focus:border-card'
+                                        onChange={(event) => {
+                                            console.log(event.target.files);
+                                            const inputElement = event.target as HTMLInputElement;
+                                            if (inputElement.files) {
+                                                const displayUrl = URL.createObjectURL(inputElement.files[0]);
+                                                setPreview(displayUrl);
+                                                onChange(inputElement.files);
+                                                console.log(inputElement.files[0]);
+                                            }
+                                        }}
+                                    ></Input>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            // <FormItemDisplay
+                            //     title='Image:'
+                            //     {...passField}
+                            //     require
+                            //     disabled={id ? isSaveImage : false}
+                            //     type='file'
+                            //     onChange={(event) => {
+                            // const inputElement = event.target as HTMLInputElement;
+                            // if (inputElement.files) {
+                            //     const displayUrl = URL.createObjectURL(inputElement.files[0]);
+                            //     setPreview(displayUrl);
+                            //     onChange(inputElement.files);
+                            //     console.log(inputElement.files[0]);
+                            // }
+                            //     }}
+                            // />
                         )}
                     />
 
