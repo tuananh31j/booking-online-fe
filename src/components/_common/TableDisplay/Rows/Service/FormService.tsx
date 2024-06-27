@@ -109,16 +109,16 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
             {!isLoading && (
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                        <div className='flex justify-between'>
-                            <div>
+                        <div className='flex flex-wrap items-center justify-between'>
+                            <div className='mx-auto w-full sm:w-96'>
                                 <FormField
                                     control={form.control}
                                     name='categorie_id'
                                     render={({ field }) => {
                                         return (
-                                            <FormItem className='my-3 flex flex-col gap-2'>
+                                            <FormItem className=' my-3 gap-2'>
                                                 <FormLabel>
-                                                    Danh mục <span className='text-[#e41a0f]'>*</span>
+                                                    Danh mục <span className=' text-[#e41a0f]'>*</span>
                                                 </FormLabel>
                                                 <Select
                                                     onValueChange={field.onChange}
@@ -166,7 +166,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                     }}
                                 />
                             </div>
-                            <div>
+                            <div className='mx-auto w-full sm:w-96'>
                                 <FormField
                                     control={form.control}
                                     name='describe'

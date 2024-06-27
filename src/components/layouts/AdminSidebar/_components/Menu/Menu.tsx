@@ -47,10 +47,10 @@ const Menu: React.FC = () => {
     }, [isAdmin]);
 
     return (
-        <>
-            <div className='fixed bottom-0 left-0 right-0 top-0 -z-10 bg-[#5e72e4] bg-card transition-colors duration-300'></div>
+        <div className=''>
+            <div className='fixed bottom-0 left-0 right-0 top-0 -z-10 bg-card  transition-colors duration-300'></div>
             <div className='block max-h-screen w-auto grow basis-full items-center overflow-auto bg-card'>
-                <ul className='mb-0 flex flex-col pl-0'>
+                <ul className='mb-0 flex flex-col  pl-0'>
                     {menuList.map((item, i) => {
                         const Icon = item.icon;
                         return (
@@ -61,7 +61,7 @@ const Menu: React.FC = () => {
                     })}
                 </ul>
             </div>
-        </>
+        </div>
     );
 };
 

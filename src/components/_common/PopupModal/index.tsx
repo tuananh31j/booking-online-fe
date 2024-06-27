@@ -23,11 +23,11 @@ const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, chi
         setIsOpen(!isOpen);
     };
     return (
-        <>
+        <div>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger className={className}>{btnName}</DialogTrigger>
 
-                <DialogContent className='w-[700px]'>
+                <DialogContent className='w-96 sm:w-[700px]'>
                     <DialogHeader>
                         <DialogTitle className='mb-4 text-2xl'>{title}</DialogTitle>
 
@@ -37,7 +37,7 @@ const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, chi
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
-        </>
+        </div>
     );
 };
 

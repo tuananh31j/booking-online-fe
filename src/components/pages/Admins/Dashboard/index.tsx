@@ -84,8 +84,9 @@ const DashboardPage = () => {
 
     return (
         <div>
-            <div className='flex justify-between'>
+            <div className='flex flex-wrap justify-evenly'>
                 <StatsCard
+                    className='w-full sm:w-64 md:w-96 lg:w-[unset]'
                     title="Today's Money"
                     amount='$53,000'
                     percentage={55}
@@ -95,6 +96,7 @@ const DashboardPage = () => {
                     iconColor='text-white'
                 />
                 <StatsCard
+                    className='w-full sm:w-64 md:w-96 lg:w-[unset]'
                     title="Today's Users"
                     amount='2,300'
                     percentage={3}
@@ -104,6 +106,7 @@ const DashboardPage = () => {
                     iconColor='text-white'
                 />
                 <StatsCard
+                    className='w-full sm:w-64 md:w-96 lg:w-[unset]'
                     title='New Clients'
                     amount='+3,462'
                     percentage={-2}
@@ -113,6 +116,7 @@ const DashboardPage = () => {
                     iconColor='text-white'
                 />
                 <StatsCard
+                    className='w-full sm:w-64 md:w-96 lg:w-[unset]'
                     title='Sales'
                     amount='$103,430'
                     percentage={5}
@@ -123,10 +127,10 @@ const DashboardPage = () => {
                 />
             </div>
             <div className='gap my-6 grid grid-cols-1 justify-between lg:grid-cols-[58%,40%]'>
-                <div className='rounded-3xl bg-card p-2'>
+                <div className='m-2 rounded-3xl bg-card p-2'>
                     <ReactApexChart options={areaChart.options} series={areaChart.series} height={350} type='area' />
                 </div>
-                <div className='rounded-3xl bg-card p-2'>
+                <div className='m-2 rounded-3xl bg-card p-2'>
                     <div className='mt-10'>
                         <ReactApexChart options={pieChart.options} series={pieChart.series} height={350} type='donut' />
                     </div>
