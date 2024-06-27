@@ -11,7 +11,7 @@ import { CalendarPlus, Trash } from 'lucide-react';
 function isFetchBaseQueryError(error: any): error is FetchBaseQueryError {
     return typeof error === 'object' && error !== null && 'status' in error;
 }
-const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
+const FormSchedule = ({ onCloseModal, refetch }: { onCloseModal: () => void; refetch: () => void }) => {
     // console.log(onCloseModal);
     const toast = useToastDisplay();
     const [choosingDate, setChoosingDate] = useState(false);
@@ -76,6 +76,7 @@ const FormSchedule = ({ onCloseModal }: { onCloseModal: () => void }) => {
                 title: 'Đăng ký / cập nhật thành công!',
                 status: 'success',
             });
+            refetch();
             onCloseModal();
         }
     }, [createScheduleState]);

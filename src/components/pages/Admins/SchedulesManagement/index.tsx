@@ -11,7 +11,7 @@ import { useGetListBookingQuery } from '~/store/services/staff.service';
 import { IScheduleResponse } from '~/types/Schedule';
 
 export default function ScheduleManagement() {
-    const { data, isLoading, error } = useGetListBookingQuery();
+    const { data, isLoading, error, refetch } = useGetListBookingQuery();
     const [listSchedule, setListSchedule] = useState<IScheduleResponse[]>();
     // const [refreshList, setRefreshList] = useState(false);
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function ScheduleManagement() {
                 title='Schedules Management'
                 columnNames={ORDER_COLUMN_NAMES}
                 action={{
-                    element: (e) => <FormSchedule onCloseModal={e.onCloseModal} />,
+                    element: (e) => <FormSchedule refetch={refetch} onCloseModal={e.onCloseModal} />,
                     modalTitle: 'Đăng ký giờ làm',
                 }}
             >
