@@ -39,6 +39,7 @@ const Menu: React.FC = () => {
     const [menuList, setMenuList] = useState<MenuItemProps[]>([]);
     const { isAdmin } = useAuth();
     useEffect(() => {
+        console.log(isAdmin);
         const MENU_LIST = isAdmin ? ADMIN_MENU : STAFF_MENU;
         setMenuList(MENU_LIST);
     }, [isAdmin]);

@@ -21,8 +21,8 @@ const useLogin = () => {
         if (loginState.isSuccess) {
             dispatch(loginAction(loginState.data.data));
             handleMessage({ title: 'Đăng nhập thành công!', status: 'success' });
-            cookies.set('user', loginState.data.data.data);
-            cookies.set('accessToken', loginState.data.data.token);
+            cookies.set('user', loginState.data.data.data, { path: '/' });
+            cookies.set('accessToken', loginState.data.data.token, { path: '/' });
             if (loginState.data.data.data.role === 0) {
                 router.replace('/admin/dashboard');
             } else {

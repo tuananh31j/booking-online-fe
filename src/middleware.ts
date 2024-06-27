@@ -10,14 +10,13 @@ const intlMiddleware = createMiddleware({
 
 export default async function middleware(req: NextRequest) {
     const res = intlMiddleware(req);
-
+    const hasToken = req.cookies.has('accessToken');
     const { pathname } = req.nextUrl;
-    const token = req.cookies.get('accessToken')?.value;
     const user = req.cookies.get('user')?.value;
     const url = req.nextUrl.clone();
 
     if (pathname === '/login') {
-        if (token) {
+        if (hasToken) {
             url.pathname = '/404';
             return NextResponse.redirect(url);
         }
@@ -25,7 +24,7 @@ export default async function middleware(req: NextRequest) {
     if (pathname.startsWith('/admin') || pathname.startsWith('/staff')) {
         if (user) {
             const userObj = JSON.parse(user);
-            if (!token) {
+            if (!hasToken) {
                 url.pathname = '/login';
                 return NextResponse.redirect(url);
             }
