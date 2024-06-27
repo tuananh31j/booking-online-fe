@@ -1,8 +1,15 @@
 export interface IOderResponse {
-    facility: string;
-    service: string;
+    booking_id: number;
+    created_at: string;
     date: string;
-    time: string;
-    employee: string;
-    booker: string;
+    email: string;
+    id: number;
+    name: string;
+    note: string;
+    phone: string;
+    staff_name: string;
+    status: string;
+    store_name: string;
+    total_price: string;
+    updated_at: string;
 }
