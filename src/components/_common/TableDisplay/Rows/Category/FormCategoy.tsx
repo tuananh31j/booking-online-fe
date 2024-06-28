@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -18,6 +19,7 @@ import {
 import { CategoryErrorField, isCategoryError } from '~/types/Error/Helper/Store';
 
 const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number }) => {
+    const t = useTranslations('Table.Category');
     const [createCategory, createCategoryState] = useCreateCategoryMutation();
     const [updateCategory, updateCategoryState] = useEditCategoryMutation();
     const isFirstRender = useRef(true);
@@ -57,7 +59,6 @@ const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: num
         }
     }, [detailCategory, form, id]);
     useEffect(() => {
-        // if (!isFirstRender.current) {
         console.log('isFirstRender', isFirstRender.current);
         if (createCategoryState?.isError) {
             const { error } = createCategoryState;
@@ -84,18 +85,13 @@ const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: num
             }
         }
         if (updateCategoryState.isSuccess || createCategoryState.isSuccess) {
-            // if (id) {
-            //     refetch();
-            // }
             onCloseModal();
             toast({
-                title: `${id ? 'Chỉnh sửa danh mục thành công!' : 'Thêm danh mục thành công!'} `,
+                title: `${id ? t('edit.success') : t('add.success')} `,
                 status: 'success',
             });
         }
-        // } else {
-        //     isFirstRender.current = false;
-        // }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createCategoryState, id, updateCategoryState]);
 

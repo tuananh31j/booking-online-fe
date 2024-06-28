@@ -17,11 +17,14 @@ import { useCreateStaffMutation, useEditStaffMutation, useGetStaffDetailQuery } 
 import { useGetListStoreQuery } from '~/store/services/store.service';
 import { ErrorStaffFields, isStaffError } from '~/types/Error/Helper/Store';
 import { Input } from '~/components/ui/input';
+import { useTranslations } from 'next-intl';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
+    const t = useTranslations('Table.Staff');
+
     const [isSaveImage, setIsSaveImage] = useState<boolean>(true);
 
     const toast = useToastDisplay();
@@ -100,13 +103,12 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const onSubmit: SubmitHandler<IFormStaff> = async (data) => {
         try {
             const formData = new FormData();
-            console.log(data);
             // eslint-disable-next-line camelcase
             const { store_id, role, name, address, phone, password, email } = data;
             const image = data.image?.[0];
             console.log(image);
             if (!id) {
-                formData.append('store_information_id', store_id);
+                formData.append('store_id', store_id);
                 formData.append('role', `${role}`);
                 formData.append('name', name);
                 formData.append('address', address);
@@ -117,7 +119,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 formData.append('password', password || '');
                 createStaff(formData);
             } else {
-                formData.append('store_information_id', store_id);
+                formData.append('store_id', store_id);
                 formData.append('role', `${role}`);
                 formData.append('name', name);
                 formData.append('address', address);
@@ -152,7 +154,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         }
         if (createStaffState.isSuccess || updateStaffState.isSuccess) {
             toast({
-                title: `${!id ? 'Thêm mới nhân viên thành công!' : 'Chỉnh sửa nhân viên thành công!'}`,
+                title: `${!id ? t('add.success') : t('edit.success')}`,
                 status: 'success',
             });
             if (id) {

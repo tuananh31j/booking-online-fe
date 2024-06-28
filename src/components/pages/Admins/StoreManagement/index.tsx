@@ -27,11 +27,11 @@ const StoreListManagement = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            toast({ title: 'Xóa cửa hàng thành công', status: 'success' });
+            toast({ title: t('delete.success'), status: 'success' });
         }
 
         if (isError) {
-            toast({ title: 'Xóa cửa hàng thất bại', status: 'destructive' });
+            toast({ title: t('delete.fail'), status: 'destructive' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess, isError]);
