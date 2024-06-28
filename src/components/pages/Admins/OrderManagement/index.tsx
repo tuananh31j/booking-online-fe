@@ -27,26 +27,25 @@ import { IOderResponse } from '~/types/Order';
 
 const OrderManagement = () => {
     const { data, isError, isLoading } = useGetBookingsListQuery();
-    const [listOrder, setListOrder] = useState<IOderResponse[]>([]);
 
-    useEffect(() => {
-        if (!isError && !isLoading) {
-            setListOrder(data?.data.data || []);
-        }
-    }, [isLoading]);
+    const listOrder = data?.data.data || [];
 
     return (
         <div>
             <TableDisplay title='Order Management' columnNames={ORDER_COLUMN_NAMES}>
-                {listOrder.map((item, i) => (
+                {listOrder.map((item: IOderResponse, i) => (
+                    // <div key={i}></div>
                     <OrderRow
+                        bookingId={item.booking_id}
                         key={i}
-                        facility={item.facility}
-                        service={item.service}
+                        name={item.name}
+                        phone={item.phone}
                         date={item.date}
-                        time={item.time}
-                        employee={item.employee}
-                        booker={item.booker}
+                        staffName={item.staff_name}
+                        storeName={item.store_name}
+                        status={item.status}
+                        totalPrice={item.total_price}
+                        note={item.note}
                     />
                 ))}
                 {listOrder.length <= 0 && (

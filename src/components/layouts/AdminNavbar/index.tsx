@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, Settings, Slash, UserCircle2 } from 'lucide-react';
+import { Menu, Search, Settings, Slash, UserCircle2 } from 'lucide-react';
 import { useState } from 'react';
 import ProfileCard from '~/components/elements/ProfileCard';
 import {
@@ -24,17 +24,27 @@ import { Input } from '~/components/ui/input';
 import AdminNotificationCard from '~/components/elements/AdminNotificationCard';
 import useLogout from '~/hooks/useLogout';
 
-const AdminNavbar = () => {
+const AdminNavbar = ({
+    setIsOpenSideBar,
+    isOpenSideBar,
+}: {
+    setIsOpenSideBar: (state: boolean) => void;
+    isOpenSideBar: boolean;
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const handleLogout = useLogout();
 
     return (
         <>
-            <nav className='duration-250 relative mx-6 mt-[0.313rem] flex flex-wrap items-center justify-between rounded-2xl bg-card px-0 py-2 shadow-none transition-all ease-in lg:flex-nowrap lg:justify-start'>
-                <div className='flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1'>
-                    <nav>
+            <nav className='duration-250 flex-wraps relative mx-6 mt-[0.313rem] flex items-center justify-between rounded-2xl border bg-card px-0 py-2 shadow-xl  transition-all ease-in dark:bg-[#111c44] sm:flex-nowrap  md:flex-nowrap lg:justify-start'>
+                <Menu
+                    onClick={() => setIsOpenSideBar(true)}
+                    className='ms-4 block cursor-pointer hover:opacity-45  xl:hidden'
+                />
+                <div className='mx-auto flex w-full  flex-nowrap items-center justify-between px-4 py-1 '>
+                    <nav className='hidden sm:block'>
                         <Breadcrumb>
-                            <BreadcrumbList>
+                            <BreadcrumbList className='flex-nowrap'>
                                 <BreadcrumbItem>
                                     <BreadcrumbLink href='/'>Pages</BreadcrumbLink>
                                 </BreadcrumbItem>
@@ -53,15 +63,15 @@ const AdminNavbar = () => {
                     </nav>
 
                     {/* css grow */}
-                    <div className='mt-2 flex  items-center sm:mr-6 sm:mt-0 md:mr-0 lg:flex lg:basis-auto'>
-                        <div className='flex items-center md:ml-auto md:pr-4'>
+                    <div className='mt-2 flex w-full items-center justify-end sm:mr-6 sm:mt-0 md:mr-0 lg:flex lg:basis-auto'>
+                        <div className='w-full items-center sm:w-[unset] md:ml-auto md:pr-4'>
                             <form>
                                 <div className=' flex items-center justify-center rounded-lg bg-content px-2'>
                                     <Search size={16} strokeWidth={1.75} className='text-default' />
 
                                     <Input
                                         type='text'
-                                        className='w-[8rem] border-none outline-none sm:w-[unset]'
+                                        className='w-11/12  border-none outline-none sm:w-[unset]'
                                         placeholder='Type Here... '
                                     />
                                 </div>
@@ -69,7 +79,7 @@ const AdminNavbar = () => {
                         </div>
 
                         <ul className='md-max:w-full mb-0 ml-2 flex list-none flex-row justify-end pl-0 md:ml-0'>
-                            <li className='flex cursor-pointer items-center p-1'>
+                            <li className='flex  cursor-pointer items-center p-1 sm:block'>
                                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                     <DialogTrigger asChild>
                                         <UserCircle2 size={16} strokeWidth={1.75} />
