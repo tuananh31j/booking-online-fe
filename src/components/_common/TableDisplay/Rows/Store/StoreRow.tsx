@@ -10,7 +10,7 @@ import { Button } from '~/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 import { ScrollArea } from '~/components/ui/scroll-area';
 // eslint-disable-next-line import/no-cycle
-import { useGetOpeningDetailQuery, useRemoveOpeningMutation } from '~/store/services/opening.service';
+import { useGetOpeningDetailQuery } from '~/store/services/opening.service';
 import TableCell from '../../_components/TableCell';
 import Link from 'next/link';
 
@@ -61,7 +61,7 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
             <TableCell>
                 <div className='flex items-center gap-3'>
                     <Link href={`store/edit/[id]`} as={`store/edit/${id}`}>
-                        Detail
+                        Settings
                     </Link>
                     <AlertDialogConfirm
                         handleConfirm={action}

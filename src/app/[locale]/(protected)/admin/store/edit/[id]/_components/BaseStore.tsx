@@ -67,6 +67,8 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
         formData.append('name', name);
         formData.append('address', address);
         formData.append('phone', phone);
+        formData.append('latitude', '0');
+        formData.append('longitude', '0');
         if (!isSaveImage) {
             const image = data.image?.[0];
             formData.append('image', image);

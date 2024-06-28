@@ -22,18 +22,18 @@ export const openingApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.OPENING],
         }),
-        removeOpening: builder.mutation<object, number>({
-            query: (id) => ({
-                url: `${API_ENDPOINT.OPENING.REMOVE}/${id}`,
-                method: 'DELETE',
-            }),
-            invalidatesTags: [QUERY_KEY.OPENING],
-        }),
         updateOpening: builder.mutation<IApiResponse<IOpeningResponse>, { id: number; formData: IOpeningBody }>({
             query: ({ id, formData }) => ({
                 url: `${API_ENDPOINT.OPENING.EDIT}/${id}`,
-                method: 'PUT',
+                method: 'POST',
                 body: formData,
+            }),
+            invalidatesTags: [QUERY_KEY.OPENING],
+        }),
+        removeOneDay: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `${API_ENDPOINT.OPENING.REMOVE}/${id}`,
+                method: 'DELETE',
             }),
             invalidatesTags: [QUERY_KEY.OPENING],
         }),
@@ -42,8 +42,8 @@ export const openingApi = baseApi.injectEndpoints({
 
 export const {
     useGetListOpeningQuery,
+    useRemoveOneDayMutation,
     useCreateOpeningMutation,
-    useRemoveOpeningMutation,
     useGetOpeningDetailQuery,
     useUpdateOpeningMutation,
 } = openingApi;

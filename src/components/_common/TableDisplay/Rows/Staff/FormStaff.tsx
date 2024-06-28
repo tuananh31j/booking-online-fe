@@ -102,11 +102,11 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             const formData = new FormData();
             console.log(data);
             // eslint-disable-next-line camelcase
-            const { store_information_id, role, name, address, phone, password, email } = data;
+            const { store_id, role, name, address, phone, password, email } = data;
             const image = data.image?.[0];
             console.log(image);
             if (!id) {
-                formData.append('store_information_id', store_information_id);
+                formData.append('store_id', store_id);
                 formData.append('role', `${role}`);
                 formData.append('name', name);
                 formData.append('address', address);
@@ -117,7 +117,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 formData.append('password', password || '');
                 createStaff(formData);
             } else {
-                formData.append('store_information_id', store_information_id);
+                formData.append('store_id', store_id);
                 formData.append('role', `${role}`);
                 formData.append('name', name);
                 formData.append('address', address);
@@ -178,7 +178,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 <form onSubmit={form.handleSubmit(onSubmit)} className='pt-8 2xl:pt-0'>
                     <FormField
                         control={form.control}
-                        name='store_information_id'
+                        name='store_id'
                         render={({ field }) => (
                             <FormItem className='mb-4'>
                                 <FormLabel>

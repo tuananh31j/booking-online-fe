@@ -22,6 +22,11 @@ interface StaffErrorWithData extends CustomErrors {
         error: Record<ErrorStaffFields, string[]>;
     };
 }
+interface MessageError {
+    data: {
+        message: string | [];
+    };
+}
 
 // Hàm kiểm tra xem một giá trị có phải là một ErrorField hay không
 
@@ -46,4 +51,8 @@ export interface CategoryErrorWithData extends CategoryError {
 }
 export const isCategoryError = (error: any): error is CategoryErrorWithData => {
     return error && error.data && 'error' in error.data;
+};
+
+export const isMessageError = (error: any): error is MessageError => {
+    return error && error.data;
 };
