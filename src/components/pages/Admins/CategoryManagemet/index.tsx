@@ -1,16 +1,21 @@
 'use client';
 
 import { formatDate } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import { CATEGORY_COLUMN_NAMES, CategoryRow } from '~/components/_common/TableDisplay/Rows/Category/CategoryRow';
+import { CategoryRow } from '~/components/_common/TableDisplay/Rows/Category/CategoryRow';
 import FormCategory from '~/components/_common/TableDisplay/Rows/Category/FormCategoy';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import { CategoryTableColumnName } from '~/schemas/CategoryTableColumnName';
 import { useGetListCategoryQuery, useRemoveCategoryMutation } from '~/store/services/category.service';
 import { ICategoryItem } from '~/types/Category';
 
 const CategoryManagment = () => {
+    const t = useTranslations('Table.Category');
+    const CATEGORY_COLUMN_NAMES = CategoryTableColumnName(t);
+
     const { data, isLoading } = useGetListCategoryQuery();
     const categories = data?.data?.data;
     const [mutate, { isLoading: PendingRemove, isSuccess, isError }] = useRemoveCategoryMutation();
@@ -29,9 +34,9 @@ const CategoryManagment = () => {
     return (
         <>
             <TableDisplay
-                title='Danh sách danh mục'
+                title={t('title')}
                 columnNames={CATEGORY_COLUMN_NAMES}
-                action={{ element: FormCategory, modalTitle: 'Thêm mới danh mục' }}
+                action={{ element: FormCategory, modalTitle: t('modal_title') }}
             >
                 {!isLoading &&
                     !PendingRemove &&

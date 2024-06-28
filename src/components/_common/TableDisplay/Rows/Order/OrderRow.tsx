@@ -2,6 +2,7 @@ import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormOrder from './FormOrder';
 import TableCell from '../../_components/TableCell';
+import { useTranslations } from 'next-intl';
 
 type IOrderRowProps = {
     name: string;
@@ -14,17 +15,6 @@ type IOrderRowProps = {
     bookingId: number;
     note: string;
 };
-
-const ORDER_COLUMN_NAMES = [
-    'Customer Name',
-    'Phone',
-    'Date',
-    'Staff Name',
-    'StoreName',
-    'Status',
-    'Toatal Price',
-    'Note',
-];
 
 const OrderRow: FC<IOrderRowProps> = ({
     name,
@@ -60,4 +50,4 @@ const OrderRow: FC<IOrderRowProps> = ({
     );
 };
 
-export { OrderRow, ORDER_COLUMN_NAMES };
+export { OrderRow };

@@ -7,6 +7,7 @@ import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import { useGetOpeningDetailQuery, useRemoveOpeningMutation } from '~/store/services/opening.service';
 import TableCell from '../../_components/TableCell';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 type IStoreRowProps = {
     id: number;
@@ -24,6 +25,8 @@ export type IStoreOpeningItem = {
 };
 
 const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, action }) => {
+    const t = useTranslations('Table');
+
     const [currentStoreId, setCurrentStoreId] = useState<number>(null!);
     const [isQueryEnabled, setIsQueryEnabled] = useState<boolean>(false);
 
@@ -60,8 +63,8 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
-                            title: 'Bạn có chắc chắn không?',
-                            description: 'Bạn có muốn xóa sản phẩm này không khi xóa sẽ không thể khổi phục',
+                            title: t('Store.confirm.title'),
+                            description: t('Store.confirm.description'),
                             idContent: id,
                         }}
                     >
