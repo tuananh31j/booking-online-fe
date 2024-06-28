@@ -9,5 +9,5 @@ export type IScheduleResponse = {
     start_time: string;
     end_time: string;
     created_at: string;
-    error: string;
+    error: string | null;
 };

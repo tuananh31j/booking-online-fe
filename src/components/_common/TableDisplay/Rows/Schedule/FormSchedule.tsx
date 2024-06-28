@@ -12,7 +12,6 @@ function isFetchBaseQueryError(error: any): error is FetchBaseQueryError {
     return typeof error === 'object' && error !== null && 'status' in error;
 }
 const FormSchedule = ({ onCloseModal, refetch }: { onCloseModal: () => void; refetch: () => void }) => {
-    // console.log(onCloseModal);
     const toast = useToastDisplay();
     const [choosingDate, setChoosingDate] = useState(false);
 
@@ -61,20 +60,20 @@ const FormSchedule = ({ onCloseModal, refetch }: { onCloseModal: () => void; ref
     useEffect(() => {
         if (createScheduleState.isError) {
             const { error } = createScheduleState;
-            // let errorMessage = 'Đăng ký / cập nhật thất bại';
+
             if (isFetchBaseQueryError(error) && error.data && typeof error.data === 'object') {
                 const errorData = error.data as { message: string[] };
-                // errorMessage =
                 setFormMessage(errorData.message.map((e) => typeof e === 'string' && e).join(' '));
             }
         }
 
         if (createScheduleState.isSuccess) {
+            refetch();
+
             toast({
                 title: 'Đăng ký / cập nhật thành công!',
                 status: 'success',
             });
-            refetch();
             onCloseModal();
         }
     }, [createScheduleState]);
