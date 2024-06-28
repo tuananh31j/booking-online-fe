@@ -249,7 +249,8 @@
                 "Role": "Role",
                 "Phone_number": "Contact",
                 "Created_at": "Created at",
-                "Actions": "Options"
+                "Actions": "Options",
+                "nullData": "No data"
             }
         },
 
@@ -296,11 +297,9 @@
                 "fail": "Service Addition Failed!"
             },
 
-            "confirm": {
-                "title": "Are you sure?",
-                "description": "Cannot recover once deleted!",
-                "yes": "Confirm",
-                "no": "Cancel"
+            "delete": {
+                "success": "Service Removed Successfully!",
+                "fail": "Service Removal Failed!"
             },
 
             "edit": {
@@ -308,14 +307,23 @@
                 "fail": "Service Update Failed!"
             },
 
+            "confirm": {
+                "title": "Are you sure?",
+                "description": "Cannot recover once deleted!",
+                "yes": "Confirm",
+                "no": "Cancel"
+            },
+
             "columns": {
+                "No": "No",
                 "Name": "Name",
                 "Category": "Category",
                 "Description": "Description",
                 "Price": "Price",
                 "Duration": "Duration",
                 "Created_at": "Created at",
-                "Actions": "Options"
+                "Actions": "Options",
+                "Minute": "Minute"
             }
         }
     }

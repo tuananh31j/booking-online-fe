@@ -2,6 +2,7 @@ import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import TableCell from '../../_components/TableCell';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
 
 type IOpeningRowProps = {
     index: number;
@@ -55,13 +56,11 @@ const OpeningRow: FC<IOpeningRowProps> = ({
             <TableCell>{updatedAt}</TableCell>
             <TableCell>
                 <PopupModal
-                    btnName='Edit'
+                    btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
                     title="Change the service's information here"
-                    className='underline hover:text-blue-800'
                     id={id}
                     // Form={FormService}
                 />
-                |
                 <AlertDialogConfirm
                     // handleConfirm={}
                     content={{
@@ -70,7 +69,7 @@ const OpeningRow: FC<IOpeningRowProps> = ({
                         idContent: id,
                     }}
                 >
-                    <p className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500'>Delete</p>
+                    <Trash2Icon className='cursor-pointer duration-300 hover:text-red-500'>Delete</Trash2Icon>
                 </AlertDialogConfirm>
             </TableCell>
         </tr>

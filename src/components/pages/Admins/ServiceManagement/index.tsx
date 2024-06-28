@@ -2,23 +2,36 @@
 
 import { formatDate } from 'date-fns';
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 import FormService from '~/components/_common/TableDisplay/Rows/Service/FormService';
 import { ServiceRow } from '~/components/_common/TableDisplay/Rows/Service/ServiceRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
+import useToastDisplay from '~/hooks/useToastDisplay';
 import { ServiceTableColumnName } from '~/schemas/ServiceTableColumnName';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
 import { useGetListServiceQuery, useRemoveServiceMutation } from '~/store/services/service.service';
 
 const ServiceManagement = () => {
     const t = useTranslations('Table.Service');
-    const SERVICE_COLUMN_NAMES = ServiceTableColumnName(t);
 
+    const SERVICE_COLUMN_NAMES = ServiceTableColumnName(t);
     const { data, isLoading } = useGetListServiceQuery();
-    const [mutate, { isLoading: PendingRemove }] = useRemoveServiceMutation();
+    const [mutate, { isLoading: PendingRemove, isError, isSuccess }] = useRemoveServiceMutation();
+    const toast = useToastDisplay();
     const handleDeleteService = (id: number) => {
         mutate(id);
     };
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast({ title: t('delete.success'), status: 'success' });
+        }
+        if (isError) {
+            toast({ title: t('delete.fail'), status: 'destructive' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSuccess, isError]);
     const { data: categoryData } = useGetListCategoryQuery();
     const service = data?.data?.data;
     return (
@@ -42,8 +55,8 @@ const ServiceManagement = () => {
                             }
                             describe={item.describe}
                             price={item.price}
-                            createdAt={item.updated_at ? formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
-                            updatedAt={item.updated_at ? formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
+                            duration={item.time}
+                            createdAt={item.created_at ? formatDate(item.created_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
                             handleDeleteService={handleDeleteService}
                         />
                     ))}

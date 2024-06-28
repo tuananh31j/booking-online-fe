@@ -249,7 +249,8 @@
                 "Role": "Vai trò",
                 "Phone_number": "Số điện thoại",
                 "Created_at": "Ngày tạo",
-                "Actions": "Tùy chọn"
+                "Actions": "Tùy chọn",
+                "nullData": "Không có dữ liệu"
             }
         },
 
@@ -302,6 +303,10 @@
                 "yes": "Chắc chắn",
                 "no": "Hủy"
             },
+            "delete": {
+                "success": "Xóa nhân viên thành công!",
+                "fail": "Xóa nhân viên thất bại!"
+            },
 
             "edit": {
                 "success": "Sửa dịch vụ thành công!",
@@ -309,13 +314,15 @@
             },
 
             "columns": {
+                "No": "STT",
                 "Name": "Tên dịch vụ",
                 "Category": "Danh mục",
                 "Description": "Mô tả",
                 "Price": "Giá",
                 "Duration": "Thời lượng",
                 "Created_at": "Ngày tạo",
-                "Actions": "Tùy chọn"
+                "Actions": "Tùy chọn",
+                "Minute": "Phút"
             }
         }
     }

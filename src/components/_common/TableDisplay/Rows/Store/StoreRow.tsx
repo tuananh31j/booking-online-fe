@@ -56,10 +56,13 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
             <TableCell>{createAt}</TableCell>
             <TableCell>
                 <div className='flex items-center gap-3'>
-                    <Link href={`store/edit/[id]`} as={`store/edit/${id}`}>
+                    <Link
+                        className='cursor-pointer duration-300 hover:text-blue-500'
+                        href={`store/edit/[id]`}
+                        as={`store/edit/${id}`}
+                    >
                         Settings
                     </Link>
-
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
@@ -68,7 +71,7 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
                             idContent: id,
                         }}
                     >
-                        <Trash2Icon className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500' />
+                        <Trash2Icon className='cursor-pointer duration-300 hover:text-red-500'>Delete</Trash2Icon>
                     </AlertDialogConfirm>
                 </div>
             </TableCell>

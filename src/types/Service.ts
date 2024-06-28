@@ -18,6 +18,7 @@ export type IServiceBody = {
     categorie_id: number;
     price: string;
     describe: string;
+    time: number;
 };
 
 export type IServiceResponse = {
