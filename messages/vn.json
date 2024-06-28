@@ -263,6 +263,10 @@
                 "yes": "Chắc chắn",
                 "no": "Hủy"
             },
+            "delete": {
+                "success": "Xóa nhân viên thành công!",
+                "fail": "Xóa nhân viên thất bại!"
+            },
 
             "columns": {
                 "Name": "Tên dịch vụ",

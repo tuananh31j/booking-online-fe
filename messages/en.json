@@ -264,6 +264,11 @@
                 "no": "Cancel"
             },
 
+            "delete": {
+                "success": " Removed Successfully!",
+                "fail": " Removal Failed!"
+            },
+
             "columns": {
                 "No": "No",
                 "Name": "Name",

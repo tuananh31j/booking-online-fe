@@ -24,8 +24,7 @@ const FormServiceSchema = z.object({
     categorie_id: z.string({ required_error: 'Danh mục không được để tr' }),
     describe: z.string({ required_error: 'Số điện thoại không được để trống!' }),
     price: z.string({ required_error: 'Vui lòng nhập giá cả!', invalid_type_error: 'Giá trị không đúng!' }),
-    // .positive({ message: 'Giá phải là số dương!' })
-    // .min(1000, { message: 'Giá không được nhỏ hơn 1000!' }),
+    time: z.string({ required_error: 'Vui lòng nhập thời gian!', invalid_type_error: 'Thời gian không đúng!' }),
 });
 
 type IFormService = z.infer<typeof FormServiceSchema>;
@@ -51,7 +50,6 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                 return;
             }
         }
-
         await new Promise((resolve) => {
             resolve(data);
         });
@@ -63,7 +61,9 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                     categorie_id: Number(data.categorie_id), // Chuyển đổi category thành số
                     price: data.price,
                     describe: data.describe,
+                    time: Number(data.time),
                 }).unwrap();
+
                 toast({ title: 'Thêm dịch vụ thành công!', status: 'success' });
                 onCloseModal();
             } catch (error) {
@@ -80,12 +80,11 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                         categorie_id: Number(data.categorie_id), // Chuyển đổi category thành số
                         price: data.price,
                         describe: data.describe,
+                        time: Number(data.time),
                     },
                 });
-                toast({ title: 'Sửa dịch vụ thành công!', status: 'success' });
             } catch (error) {
                 console.log(error);
-                toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
             }
         }
     };
@@ -97,11 +96,17 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                 price: replace(service?.data.data.price ?? '', /\.00$/, ''), // Sử dụng toán tử ?? để cung cấp giá trị mặc định '' khi service?.data.data.price là undefined
                 categorie_id: service?.data.data.categorie_id.toString(),
                 describe: service?.data.data.describe,
+                time: service?.data.data.time.toString() || '0',
             });
         }
         if (updateServiceSate.isSuccess || createServiceState.isSuccess) {
+            toast({ title: 'Sửa dịch vụ thành công!', status: 'success' });
             onCloseModal();
             console.log('success');
+        } else if (updateServiceSate.isError || createServiceState.isError) {
+            onCloseModal();
+            console.log('error');
+            toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createServiceState, form, id, service, updateServiceSate]);
@@ -110,44 +115,41 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
             {!isLoading && (
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                        <FormField
+                            control={form.control}
+                            name='categorie_id'
+                            render={({ field }) => {
+                                return (
+                                    <FormItem className='w-full'>
+                                        <FormLabel>
+                                            Danh mục <span className=' text-[#e41a0f]'>*</span>
+                                        </FormLabel>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={service?.data.data.categorie_id.toString()}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder='Chọn danh mục' />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {!isCategoryLoading &&
+                                                    categoryData?.data.data.map((category) => (
+                                                        <SelectItem key={category.id} value={category.id.toString()}>
+                                                            {category.name}
+                                                        </SelectItem>
+                                                    ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormDescription>{''}</FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                );
+                            }}
+                        />
                         <div className='grid grid-cols-2 gap-3'>
                             <div className='flex flex-col items-center'>
-                                <FormField
-                                    control={form.control}
-                                    name='categorie_id'
-                                    render={({ field }) => {
-                                        return (
-                                            <FormItem className='w-full'>
-                                                <FormLabel>
-                                                    Danh mục <span className=' text-[#e41a0f]'>*</span>
-                                                </FormLabel>
-                                                <Select
-                                                    onValueChange={field.onChange}
-                                                    defaultValue={service?.data.data.categorie_id.toString()}
-                                                >
-                                                    <FormControl>
-                                                        <SelectTrigger>
-                                                            <SelectValue placeholder='Chọn danh mục' />
-                                                        </SelectTrigger>
-                                                    </FormControl>
-                                                    <SelectContent>
-                                                        {!isCategoryLoading &&
-                                                            categoryData?.data.data.map((category) => (
-                                                                <SelectItem
-                                                                    key={category.id}
-                                                                    value={category.id.toString()}
-                                                                >
-                                                                    {category.name}
-                                                                </SelectItem>
-                                                            ))}
-                                                    </SelectContent>
-                                                </Select>
-                                                <FormDescription>{''}</FormDescription>
-                                                <FormMessage />
-                                            </FormItem>
-                                        );
-                                    }}
-                                />
                                 <FormField
                                     control={form.control}
                                     name='name'
@@ -166,8 +168,25 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                         );
                                     }}
                                 />
-                            </div>
 
+                                <FormField
+                                    control={form.control}
+                                    name='time'
+                                    render={({ field }) => {
+                                        return (
+                                            <>
+                                                <FormItemDisplay
+                                                    title='Thời gian dịch vụ'
+                                                    placeholder='Nhập thời gian dịch vụ!'
+                                                    {...field}
+                                                    require
+                                                    type='number'
+                                                />
+                                            </>
+                                        );
+                                    }}
+                                />
+                            </div>
                             <div className='flex flex-col items-center'>
                                 <FormField
                                     control={form.control}

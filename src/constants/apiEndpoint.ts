@@ -43,7 +43,7 @@ const API_ENDPOINT = {
         DETAILS: '/services', // @id
         LIST: '/services',
         LIST_SERVICE_CLIENT: '/client/list-service',
-        REMOVE: '/services/delete', // @id
+        REMOVE: '/services', // @id
     },
     BOOKING: {
         ADD: '/client/store_booking',
