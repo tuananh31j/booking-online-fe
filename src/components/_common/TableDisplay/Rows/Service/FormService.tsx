@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { title } from 'process';
 import { replace, set } from 'lodash';
+import { useTranslations } from 'next-intl';
 
 const FormServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
@@ -31,6 +32,8 @@ const FormServiceSchema = z.object({
 type IFormService = z.infer<typeof FormServiceSchema>;
 
 const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
+    const t = useTranslations('Table.Service');
+
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
     const { data: service, refetch, isLoading } = useGetDetailServiceQuery(id, { skip: !id });
     const [createService, createServiceState] = useCreateServiceMutation();
@@ -64,11 +67,11 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                     price: data.price,
                     describe: data.describe,
                 }).unwrap();
-                toast({ title: 'Thêm dịch vụ thành công!', status: 'success' });
+                toast({ title: t('add.success'), status: 'success' });
                 onCloseModal();
             } catch (error) {
                 console.log(error);
-                toast({ title: 'Thêm dịch vụ thất bại!', status: 'destructive' });
+                toast({ title: t('add.fail'), status: 'destructive' });
             }
         } else {
             try {
@@ -82,10 +85,10 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                         describe: data.describe,
                     },
                 });
-                toast({ title: 'Sửa dịch vụ thành công!', status: 'success' });
+                toast({ title: t('edit.success'), status: 'success' });
             } catch (error) {
                 console.log(error);
-                toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
+                toast({ title: t('edit.fail'), status: 'destructive' });
             }
         }
     };
@@ -117,7 +120,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                     name='categorie_id'
                                     render={({ field }) => {
                                         return (
-                                            <FormItem className='w-full'>
+                                            <FormItem className='mb-3 flex w-full flex-col'>
                                                 <FormLabel>
                                                     Danh mục <span className=' text-[#e41a0f]'>*</span>
                                                 </FormLabel>
@@ -148,6 +151,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                         );
                                     }}
                                 />
+
                                 <FormField
                                     control={form.control}
                                     name='name'
@@ -182,6 +186,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                         />
                                     )}
                                 />
+
                                 <FormField
                                     control={form.control}
                                     name='price'

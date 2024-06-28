@@ -25,11 +25,12 @@ const CategoryManagment = () => {
     };
     useEffect(() => {
         if (isSuccess) {
-            toast({ title: 'Xóa danh mục thành công', status: 'success' });
+            toast({ title: t('delete.success'), status: 'success' });
         }
         if (isError) {
-            toast({ title: 'Xóa danh mục thất bại', status: 'destructive' });
+            toast({ title: t('delete.fail'), status: 'destructive' });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess, isError]);
     return (
         <>

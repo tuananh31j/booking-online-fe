@@ -9,11 +9,11 @@ const API_ENDPOINT = {
     },
     // backend chửa lại route '/user/showprofile',
     CATEGORY: {
-        ADD: '/categories/post',
-        EDIT: '/categories/update', // @id
+        ADD: '/categories',
+        EDIT: '/categories', // @id
         DETAILS: '/categories', // @id
-        LIST: '/categories/list',
-        REMOVE: '/categories/delete', // @id
+        LIST: '/categories',
+        REMOVE: '/categories', // @id
     },
     USER: {
         ADD: '/admin_users',
