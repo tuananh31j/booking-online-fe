@@ -3,6 +3,7 @@ import PopupModal from '~/components/_common/PopupModal';
 import FormOrder from './FormOrder';
 import TableCell from '../../_components/TableCell';
 import { useTranslations } from 'next-intl';
+import { PencilIcon } from 'lucide-react';
 
 type IOrderRowProps = {
     name: string;
@@ -40,7 +41,7 @@ const OrderRow: FC<IOrderRowProps> = ({
 
             <TableCell>
                 <PopupModal
-                    btnName='Edit'
+                    btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
                     className='underline hover:text-blue-800'
                     title="Change the order's information here"
                     Form={FormOrder}

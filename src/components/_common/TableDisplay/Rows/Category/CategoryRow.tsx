@@ -1,4 +1,4 @@
-import { Trash2Icon } from 'lucide-react';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
 import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
@@ -25,13 +25,11 @@ const CategoryRow: FC<ICategoryRowProps> = ({ index, id, name, createAt, action 
             <TableCell>
                 <div className='flex items-center gap-2'>
                     <PopupModal
-                        className='cursor-pointer duration-300 hover:text-blue-500'
+                        btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
                         id={id}
                         Form={FormCategory}
-                        btnName='Edit'
                         title='Chỉnh sửa thông tin danh mục'
                     />
-                    |
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
@@ -40,7 +38,7 @@ const CategoryRow: FC<ICategoryRowProps> = ({ index, id, name, createAt, action 
                             idContent: id,
                         }}
                     >
-                        <p className='cursor-pointer duration-300 hover:text-red-500'>Delete</p>
+                        <Trash2Icon className='cursor-pointer duration-300 hover:text-red-500'>Delete</Trash2Icon>
                     </AlertDialogConfirm>
                 </div>
             </TableCell>

@@ -6,7 +6,7 @@ import { disPlayRoleName } from '~/lib/utils';
 import FormStaff from './FormStaff';
 import Cookies from 'universal-cookie';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
-import { Trash2Icon } from 'lucide-react';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 import { useGetDetailStoreQuery } from '~/store/services/store.service';
 import { useRouter } from 'next/navigation';
@@ -121,13 +121,11 @@ const UserRow: FC<IUserRowProps> = ({
             <TableCell>
                 <div className='flex items-center gap-2'>
                     <PopupModal
-                        className=' cursor-pointer duration-300 hover:text-blue-500'
+                        btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
                         Form={FormStaff}
                         id={id}
-                        btnName='Edit'
                         title='Chỉnh sửa thông tin nhân viên'
                     />
-                    |
                     {id !== user.id && (
                         <AlertDialogConfirm
                             handleConfirm={action}
@@ -137,8 +135,7 @@ const UserRow: FC<IUserRowProps> = ({
                                 idContent: id,
                             }}
                         >
-                            {/* <Trash2Icon className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500' /> */}
-                            <p className='ursor-pointer h-4 duration-300 hover:text-red-500'>Delete</p>
+                            <Trash2Icon className='cursor-pointer duration-300 hover:text-red-500'>Delete</Trash2Icon>
                         </AlertDialogConfirm>
                     )}
                     {id === user.id && (

@@ -63,7 +63,6 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
                     >
                         Settings
                     </Link>
-                    |
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
@@ -72,7 +71,7 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
                             idContent: id,
                         }}
                     >
-                        <p className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500'>Delete</p>
+                        <Trash2Icon className='cursor-pointer duration-300 hover:text-red-500'>Delete</Trash2Icon>
                     </AlertDialogConfirm>
                 </div>
             </TableCell>
