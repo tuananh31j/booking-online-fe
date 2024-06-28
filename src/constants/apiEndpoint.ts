@@ -9,11 +9,11 @@ const API_ENDPOINT = {
     },
     // backend chửa lại route '/user/showprofile',
     CATEGORY: {
-        ADD: '/categories/post',
-        EDIT: '/categories/update', // @id
+        ADD: '/categories',
+        EDIT: '/categories', // @id
         DETAILS: '/categories', // @id
-        LIST: '/categories/list',
-        REMOVE: '/categories/delete', // @id
+        LIST: '/categories',
+        REMOVE: '/categories', // @id
     },
     USER: {
         ADD: '/admin_users',
@@ -26,7 +26,8 @@ const API_ENDPOINT = {
         BOOKING_SCHEDULES: 'user/listbooking',
         SEE_SCHEDULES: '/user/see-schedule',
         LIST_STAFF_OF_STORE: '/client/list-user',
-        LIST_WORK_SCHEDULE: '/client/list-schedule', // test
+        LIST_WORK_SCHEDULE: '/client/list-schedule',
+        LIST_HOURS_VALID: '/client/list_time',
         SEE_OPENING_HOURS: '/user/see-opeening-hours',
     },
     STORE: {
@@ -38,12 +39,12 @@ const API_ENDPOINT = {
         REMOVE: '/stores', // @id
     },
     SERVICE: {
-        ADD: '/services/post',
-        EDIT: '/services/update', // @id
+        ADD: '/services',
+        EDIT: '/services', // @id
         DETAILS: '/services', // @id
-        LIST: '/services/list',
+        LIST: '/services',
         LIST_SERVICE_CLIENT: '/client/list-service',
-        REMOVE: '/services/delete', // @id
+        REMOVE: '/services', // @id
     },
     BOOKING: {
         ADD: '/client/store_booking',

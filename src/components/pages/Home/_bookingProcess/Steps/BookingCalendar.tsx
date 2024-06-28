@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format, getHours, parse } from 'date-fns';
+import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,30 +15,21 @@ import useBooking from '~/hooks/useBooking';
 
 const BookingCalendar = () => {
     const t = useTranslations('Calendar');
-    const { bookingInfo, totalSeviceCompletionTime } = useBooking();
-    const [chooseDate, setChooseDate] = useState<string>('');
-    const [workTime, setWorkTime] = useState<{ start: string; end: string } | null>(null);
-    const [workDate, setWorkDate] = useState<Date[]>([]);
-    const [hours, setHours] = useState<number[]>([]);
-    const dayOff = 'Sun';
-    const { data: listWorkSchedule, isLoading } = useGetListWorkScheduleStaffClientQuery(bookingInfo.user_id);
+    const [dateValid, setDateValid] = useState<Date[]>();
+    const { bookingInfo } = useBooking();
+    const [pickDay, setPickDay] = useState<string>();
+
+    // @query
+    const { data: listWorkSchedule, isLoading } = useGetListWorkScheduleStaffClientQuery(bookingInfo.user!.id);
+
+    // @side effect
     useEffect(() => {
         const specialDays = listWorkSchedule?.data.data.schedules.map((item) => new Date(item.day));
+        console.log('ddddddddđobject');
         if (specialDays) {
-            setWorkDate(specialDays);
+            setDateValid(specialDays);
         }
-        if (chooseDate && workTime) {
-            const hoursArr: number[] = [];
-            const start = parse(workTime.start, 'HH:mm:ss', new Date());
-            const end = parse(workTime.end, 'HH:mm:ss', new Date());
-            const hourStart = getHours(start);
-            const hourEnd = getHours(end);
-            for (let i = hourStart; i <= hourEnd; i += 1) {
-                hoursArr.push(i);
-            }
-            setHours(hoursArr);
-        }
-    }, [isLoading, workTime]);
+    }, [isLoading, listWorkSchedule]);
     const dateNow = new Date();
     dateNow.setDate(dateNow.getDate() - 1);
     const FormSchema = z.object({
@@ -56,17 +47,16 @@ const BookingCalendar = () => {
     function onSubmit(data: z.infer<typeof FormSchema>) {
         const { dob } = data;
         const formated = format(new Date(dob), 'yyyy-MM-dd');
-        console.log(formated);
-        setChooseDate(formated);
-        listWorkSchedule?.data.data.schedules.forEach((item) => {
-            if (item.day === formated) {
-                setWorkTime({ start: item.start_time, end: item.end_time });
-            }
-        });
+        setPickDay(formated);
     }
+    const isPickedTime = Boolean(bookingInfo.time && bookingInfo.day);
 
     return (
-        <WrapperBooking stepKeyTranslation='step_dateTime' isLoading={isLoading}>
+        <WrapperBooking
+            stepKeyTranslation='step_dateTime'
+            isButtonNextStep={{ active: isPickedTime, isHide: false }}
+            isLoading={isLoading}
+        >
             <div className='relative'>
                 <div className='absolute'>
                     <p>Chú thích:</p>
@@ -90,14 +80,14 @@ const BookingCalendar = () => {
                                         <FormItem className='flex justify-center'>
                                             <div className='h-[100px overflow-scroll]'>
                                                 <CalendarBooking
-                                                    specialDays={workDate}
+                                                    specialDays={dateValid}
                                                     className='rounded-2xl border-[1px] border-[#D5D4DF] border-reverse bg-reverse p-5 shadow-xl'
                                                     fromMonth={dateNow}
                                                     mode='single'
                                                     selected={field.value}
                                                     onSelect={field.onChange}
                                                     disabled={(date) => {
-                                                        return date.toDateString().startsWith(dayOff) || date < dateNow;
+                                                        return date < dateNow;
                                                     }}
                                                     footer={
                                                         <>
@@ -119,9 +109,9 @@ const BookingCalendar = () => {
                                 />
                             </form>
                         </Form>
-                        {chooseDate && (
+                        {pickDay && (
                             <div className='my-10 grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-12'>
-                                <TimePicker totalTime={totalSeviceCompletionTime} hours={hours} />
+                                <TimePicker day={pickDay} />
                             </div>
                         )}
                     </>

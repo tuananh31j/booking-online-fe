@@ -7,7 +7,7 @@ import WrapperBooking from '../WrapperBooking';
 
 const ChooseStaff = () => {
     const { bookingInfo, chooseStaffinfo } = useBooking();
-    const { data, isLoading } = useGetListStaffClientQuery(bookingInfo.store_id);
+    const { data, isLoading } = useGetListStaffClientQuery(bookingInfo.store!.id);
 
     console.log(data);
     return (
@@ -15,7 +15,7 @@ const ChooseStaff = () => {
             <div className='grid grid-cols-1 justify-between sm:grid-cols-2 md:grid-cols-4'>
                 {data &&
                     data.data.data.map((item, index: number) => (
-                        <StaffCard key={index} staff={item} handleGetStaff={() => chooseStaffinfo(item.id)} />
+                        <StaffCard key={index} staff={item} handleGetStaff={() => chooseStaffinfo(item)} />
                     ))}
             </div>
         </WrapperBooking>

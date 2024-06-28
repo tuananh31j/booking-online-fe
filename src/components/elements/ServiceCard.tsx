@@ -3,19 +3,24 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '~/
 import ChatIcon from '~/components/_common/Icons/chatting/ChatIcon';
 import { IService } from '~/types/Service';
 import { FC } from 'react';
+import useBooking from '~/hooks/useBooking';
 
 interface ServiceItemProps {
     service: Omit<IService, 'updated_at'>;
+    id: number;
     handleRemove: () => void;
     handleSelect: () => void;
 }
 
-const ServiceCard: FC<ServiceItemProps> = ({ service, handleRemove, handleSelect }) => {
+const ServiceCard: FC<ServiceItemProps> = ({ service, id, handleRemove, handleSelect }) => {
+    const { bookingInfo } = useBooking();
+    console.log(bookingInfo.service_ids.includes(id), 'ooooooooodfdfd', id, bookingInfo.service_ids);
     return (
         <div className='mt-4 flex justify-between rounded-3xl border-2 hover:border-default'>
             <div className='service-content flex min-w-[500px]'>
                 <div className='checkbox flex items-center md:px-3 lg:px-10'>
                     <Checkbox
+                        checked={bookingInfo.service_ids.includes(id)}
                         onCheckedChange={(value) => {
                             if (value) {
                                 handleSelect();

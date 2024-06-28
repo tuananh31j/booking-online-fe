@@ -1,4 +1,3 @@
-import exp from 'constants';
 import { Step } from '~/constants/enums';
 import { IBooking } from '~/types/Booking';
 import { IStore } from '~/types/Store';
@@ -17,16 +16,17 @@ export type IProgressObj = {
 };
 export type IDatePayload = { day: string; time: string };
 
-export type IPlayloadServices = { services: number[]; totalTime: number };
+export type IPlayloadServices = { services: number[] };
 
 export type IInittialStateBooking = {
     booking: IBooking;
+    servicesName: { id: number; name: string }[];
     progressObj: IProgressObj;
     currentStep: Step;
     currentStoreInfo: IStore | null;
-    totalSeviceCompletionTime: number;
 };
 export const initialState: IInittialStateBooking = {
+    servicesName: [],
     progressObj: {
         store: {
             active: false,
@@ -51,18 +51,12 @@ export const initialState: IInittialStateBooking = {
         },
     },
     currentStoreInfo: null,
-    totalSeviceCompletionTime: 0,
     booking: {
-        store_id: 0,
-        user_id: 0,
+        store: null,
+        user: null,
         day: '',
         time: '',
         service_ids: [],
-        customer_name: '',
-        customer_date: '',
-        customer_phone: '',
-        customer_note: '',
-        customer_email: '',
     },
     currentStep: Step.chooseStore,
 };

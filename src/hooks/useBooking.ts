@@ -4,11 +4,13 @@ import {
     chooseService,
     chooseStaff,
     chooseStore,
+    getNameServices,
     nextStep,
     resetStep,
 } from '~/store/slice/booking/booking.slice';
 import { IDatePayload, IPlayloadServices } from '~/store/slice/booking/booking.slice.type';
 import { useAppDispatch, useTypedSelector } from '~/store/store';
+import { IStaff } from '~/types/Staff';
 import { IStore } from '~/types/Store';
 
 const useBooking = () => {
@@ -18,16 +20,19 @@ const useBooking = () => {
         currentStep,
         currentStoreInfo,
         progressObj,
-        totalSeviceCompletionTime,
+        servicesName,
     } = useTypedSelector((state) => state.booking);
     const chooseStoreinfo = (store: IStore) => {
         dispatch(chooseStore(store));
     };
-    const chooseStaffinfo = (id: number) => {
-        dispatch(chooseStaff(id));
+    const chooseStaffinfo = (staff: IStaff) => {
+        dispatch(chooseStaff(staff));
     };
     const chooseServiceinfo = (services: IPlayloadServices) => {
         dispatch(chooseService(services));
+    };
+    const selectServicesName = (services: { id: number; name: string }[]) => {
+        dispatch(getNameServices(services));
     };
     const chooseDateTime = (dateTime: IDatePayload) => {
         dispatch(chooseDate(dateTime));
@@ -50,11 +55,12 @@ const useBooking = () => {
         backToPrevStep,
         nextToStep,
         resetStepBooking,
+        selectServicesName,
+        servicesName,
         bookingInfo,
         currentStep,
         currentStoreInfo,
         progressObj,
-        totalSeviceCompletionTime,
     };
 };
 

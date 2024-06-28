@@ -20,7 +20,7 @@ const WrapperBooking: FC<IWrapperBookingProps> = ({ stepKeyTranslation, isButton
 
     return (
         <div>
-            <div className='mb-[35px] flex items-center  justify-between  text-2xl text-default'>
+            <div className='mb-[35px]  flex items-center  justify-between  text-2xl text-default'>
                 <span className='font-medium'>{t(stepKeyTranslation)}</span>
                 {isButtonNextStep && !isButtonNextStep.isHide && (
                     <button
@@ -29,10 +29,14 @@ const WrapperBooking: FC<IWrapperBookingProps> = ({ stepKeyTranslation, isButton
                                 nextToStep();
                             }
                         }}
-                        className={cn({
-                            ['opacity-10']: !isButtonNextStep.active,
-                            ['animate-bounce duration-150']: isButtonNextStep.active,
-                        })}
+                        className={cn(
+                            {
+                                ['opacity-10']: !isButtonNextStep.active,
+                                ['rounded-md border border-transparent bg-pink-700 p-2 text-white duration-200']:
+                                    isButtonNextStep.active,
+                            },
+                            'fixed bottom-14 right-40 z-50'
+                        )}
                         disabled={!isButtonNextStep.active}
                     >
                         <span className='flex items-center gap-1'>

@@ -47,7 +47,13 @@ export type IListSchedulesStaff = {
         schedules: IWorkDate[];
     };
 };
-
+export type IListTimeStaff = {
+    data: {
+        working_time_slots: string[];
+        booked_time_slots: string[];
+        available_time_slots: string[];
+    };
+};
 export type IOpeningHoursResponse = {
     day: string;
     opening_time: string;

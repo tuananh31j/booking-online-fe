@@ -2,18 +2,19 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import ButtonSubmit from '~/components/_common/ButtonSubmit';
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '~/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '~/components/ui/form';
 import { Textarea } from '~/components/ui/textarea';
+import useBooking from '~/hooks/useBooking';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import StaticImages from '~/static';
 import { useCreateBookingMutation } from '~/store/services/booking.service';
 import { ErrorFields, isBookingError } from '~/types/Error/Helper/Booking';
-// import { useRouter } from 'next/router';
-// import { redirect } from 'next/navigation';
 
 const bookingConfirmSchema = z.object({
     email: z.string({ required_error: 'Email không được để trống!' }).email('Email không hợp lệ!'),
@@ -26,9 +27,8 @@ const bookingConfirmSchema = z.object({
 type IBookingConfirmSchema = z.infer<typeof bookingConfirmSchema>;
 
 const ConfirmationForm = () => {
-    // const router = useRouter();
     const toast = useToastDisplay();
-    // const bookingData = useSelector((state: RootState) => state.booking.booking);
+    const { bookingInfo, servicesName, resetStepBooking } = useBooking();
     const [createBooking, { isSuccess, isError, error: createBookingError, isLoading }] = useCreateBookingMutation();
     const t = useTranslations('ConfirmBookingForm');
     const form = useForm<IBookingConfirmSchema>({ resolver: zodResolver(bookingConfirmSchema) });
@@ -53,10 +53,14 @@ const ConfirmationForm = () => {
                 customer_phone: data.phone,
                 customer_note: data.note,
                 customer_email: data.email,
-                ...fakeData,
+                user_id: bookingInfo.user!.id,
+                time: bookingInfo.time,
+                service_ids: bookingInfo.service_ids,
+                day: bookingInfo.day,
             });
             // redirect('/ordersuccess');
             // router.push('/ordersuccess');
+            resetStepBooking();
         } catch (error) {
             console.log(error);
         }
@@ -76,11 +80,12 @@ const ConfirmationForm = () => {
         if (isError) {
             toast({ title: 'Confirm booking failed!', status: 'destructive' });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess, isError]);
     return (
-        <div className='mx-auto flex flex-col justify-center rounded-lg bg-form px-5 py-6 sm:w-[50vw]  md:w-[45vw] lg:w-[30vw]'>
+        <div className='mx-auto grid grid-cols-12 items-start justify-between rounded-lg bg-form px-5 py-6'>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='col-span-6'>
                     <FormField
                         control={form.control}
                         name='email'
@@ -145,6 +150,57 @@ const ConfirmationForm = () => {
                     <ButtonSubmit isSubmitting={form.formState.isSubmitting || isLoading} name={t('confirm')} />
                 </form>
             </Form>
+            <div className='col-span-1'></div>
+            <div className='col-span-5'>
+                <ul>
+                    <li>
+                        <div>
+                            <span className='font-bold'>Lịch hẹn ngày:</span>{' '}
+                            <span className=''>{bookingInfo.day}</span> <span className='font-bold'>lúc:</span>{' '}
+                            <span className=''>{bookingInfo.time}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span className='font-bold'>Thông tin nhân viên:</span>{' '}
+                            <ul className='ml-10 list-disc'>
+                                <li className=''>
+                                    <Image
+                                        src={bookingInfo.user?.image || StaticImages.userImageDf}
+                                        width={400}
+                                        height={400}
+                                        className='h-8 w-8 object-cover'
+                                        alt='avt'
+                                    />
+                                </li>
+                                <li className=''>{bookingInfo.user?.name}</li>
+                                <li className=''>{bookingInfo.user?.phone}</li>
+                                <li className=''>{bookingInfo.user?.email}</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span className='font-bold'>Thông tin cửa hàng:</span>{' '}
+                            <ul className='ml-10 list-disc'>
+                                <li className=''>{bookingInfo.store?.name}</li>
+                                {bookingInfo.store?.phone && <li className=''>{bookingInfo.store?.phone}</li>}
+                                <li className=''>{bookingInfo.store?.address}</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span className='font-bold'>Các dịch vụ bao gồm:</span>{' '}
+                            <ul className='ml-10 list-disc'>
+                                {servicesName.map((item) => (
+                                    <li key={item.id}>{item.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
             {/* Toast message */}
         </div>

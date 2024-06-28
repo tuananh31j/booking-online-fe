@@ -1,4 +1,5 @@
-import { BookingStatus } from '~/constants/enums';
+import { IStore } from './Store';
+import { IStaff } from './Staff';
 
 export type IBookingTest = {
     store_name: string;
@@ -11,23 +12,12 @@ export type IBookingTest = {
     service_id: string;
     time_order: string;
     date_order: string;
-    customer_name: string;
-    customer_phone: string;
-    customer_date: string;
-    customer_note: string;
-    customer_email: string;
-    booking_status: BookingStatus;
 };
 
 export type IBooking = {
-    store_id: number;
-    user_id: number;
+    store: IStore | null;
+    user: IStaff | null;
     day: string;
     time: string;
     service_ids: number[];
-    customer_name: string;
-    customer_date: string;
-    customer_phone: string;
-    customer_note: string;
-    customer_email: string;
 };
