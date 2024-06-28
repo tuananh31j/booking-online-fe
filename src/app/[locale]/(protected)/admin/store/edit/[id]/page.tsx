@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 import BaseStore from '~/app/[locale]/(protected)/admin/store/edit/[id]/_components/BaseStore';
 import HourOpening from '~/app/[locale]/(protected)/admin/store/edit/[id]/_components/HourOpening';
+import ManagerStaff from '~/app/[locale]/(protected)/admin/store/edit/[id]/_components/staff/ManegerStaff';
 import LoadingButton from '~/components/elements/LoadingButton';
 import { TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { useGetDetailStoreQuery } from '~/store/services/store.service';
@@ -36,19 +37,21 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                                     <Database />
                                     Base
                                 </TabsTrigger>
+
                                 <TabsTrigger
                                     className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
-                                    value='password'
+                                    value='managerStaff'
                                 >
-                                    <CircleUserIcon />
-                                    Edit Staff
+                                    <Clock />
+                                    Opening Hours
                                 </TabsTrigger>
+
                                 <TabsTrigger
                                     className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
                                     value='opening'
                                 >
-                                    <Clock />
-                                    Opening Hours
+                                    <CircleUserIcon />
+                                    manager Staff
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value='base' className='w-full'>
@@ -56,6 +59,9 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                             </TabsContent>
                             <TabsContent value='opening' className='w-full'>
                                 {detailStore && <HourOpening store={detailStore} />}
+                            </TabsContent>
+                            <TabsContent value='managerStaff' className='w-full'>
+                                {detailStore && <ManagerStaff store={detailStore} />}
                             </TabsContent>
                         </Tabs>
                     </div>
