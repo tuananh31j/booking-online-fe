@@ -70,7 +70,7 @@ const OpeningRow: FC<IOpeningRowProps> = ({
                         idContent: id,
                     }}
                 >
-                    <p className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500'>Delete</p>
+                    <p className='cursor-pointer duration-300 hover:text-red-500'>Delete</p>
                 </AlertDialogConfirm>
             </TableCell>
         </tr>

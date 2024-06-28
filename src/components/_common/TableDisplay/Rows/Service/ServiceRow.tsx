@@ -14,14 +14,24 @@ type IServiceRowProps = {
     category: number | string | boolean;
     describe: string;
     price: string;
+    duration: number;
     createdAt?: string;
-    updatedAt?: string;
     handleDeleteService: (id: number) => void;
 };
 
-const ServiceRow: FC<IServiceRowProps> = ({ index, id, name, category, describe, price, handleDeleteService }) => {
+const ServiceRow: FC<IServiceRowProps> = ({
+    index,
+    id,
+    name,
+    category,
+    describe,
+    price,
+    duration,
+    createdAt,
+    handleDeleteService,
+}) => {
     const t = useTranslations('Table');
-
+    const m = useTranslations('Table.Service.columns');
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
     const [catID, setCatID] = useState(0);
     useEffect(() => {
@@ -39,6 +49,10 @@ const ServiceRow: FC<IServiceRowProps> = ({ index, id, name, category, describe,
             <TableCell>{category}</TableCell>
             <TableCell>{describe}</TableCell>
             <TableCell>{price}</TableCell>
+            <TableCell>
+                {duration} {m('Minute')}
+            </TableCell>
+            <TableCell>{createdAt}</TableCell>
             <TableCell>
                 <PopupModal
                     btnName='Edit'

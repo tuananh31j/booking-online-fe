@@ -40,7 +40,7 @@ const UserRow: FC<IUserRowProps> = ({
     action,
 }) => {
     const t = useTranslations('Table');
-
+    const noData = useTranslations('Table.Staff.columns');
     // eslint-disable-next-line camelcase
     const storeId = store_id;
     const router = useRouter();
@@ -99,11 +99,12 @@ const UserRow: FC<IUserRowProps> = ({
                                                 </p>
 
                                                 <p className='mb-2'>
-                                                    <strong>Contact number:</strong> {phone && phone}
+                                                    <strong>Contact number:</strong>{' '}
+                                                    {(phone && phone) || noData('nullData')}
                                                 </p>
 
                                                 <p className='mb-2'>
-                                                    <strong>Working at:</strong> {store?.name || 'Chưa được đăng ký'}
+                                                    <strong>Working at:</strong> {store?.name || noData('nullData')}
                                                 </p>
                                             </div>
                                         </div>
@@ -115,11 +116,18 @@ const UserRow: FC<IUserRowProps> = ({
                 </div>
             </TableCell>
             <TableCell>{roleName}</TableCell>
-            <TableCell>{phone}</TableCell>
-            <TableCell>{createAt}</TableCell>
+            <TableCell>{phone || noData('nullData')}</TableCell>
+            <TableCell>{createAt || noData('nullData')}</TableCell>
             <TableCell>
-                <div className='flex items-center justify-center gap-2'>
-                    <PopupModal Form={FormStaff} id={id} btnName='Edit' title='Chỉnh sửa thông tin nhân viên' />
+                <div className='flex items-center gap-2'>
+                    <PopupModal
+                        className=' cursor-pointer duration-300 hover:text-blue-500'
+                        Form={FormStaff}
+                        id={id}
+                        btnName='Edit'
+                        title='Chỉnh sửa thông tin nhân viên'
+                    />
+                    |
                     {id !== user.id && (
                         <AlertDialogConfirm
                             handleConfirm={action}
@@ -129,7 +137,8 @@ const UserRow: FC<IUserRowProps> = ({
                                 idContent: id,
                             }}
                         >
-                            <Trash2Icon className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500' />
+                            {/* <Trash2Icon className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500' /> */}
+                            <p className='ursor-pointer h-4 duration-300 hover:text-red-500'>Delete</p>
                         </AlertDialogConfirm>
                     )}
                     {id === user.id && (

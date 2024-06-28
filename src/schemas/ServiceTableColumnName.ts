@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 export const ServiceTableColumnName = (t: (key: string) => string) => {
     return [
+        t('columns.No'),
         t('columns.Name'),
         t('columns.Category'),
         t('columns.Description'),

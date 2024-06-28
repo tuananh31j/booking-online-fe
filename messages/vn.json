@@ -229,7 +229,8 @@
                 "Role": "Vai trò",
                 "Phone_number": "Số điện thoại",
                 "Created_at": "Ngày tạo",
-                "Actions": "Tùy chọn"
+                "Actions": "Tùy chọn",
+                "nullData": "Không có dữ liệu"
             }
         },
 
@@ -270,7 +271,8 @@
                 "Price": "Giá",
                 "Duration": "Thời lượng",
                 "Created_at": "Ngày tạo",
-                "Actions": "Tùy chọn"
+                "Actions": "Tùy chọn",
+                "Minute": "Phút"
             }
         }
     }

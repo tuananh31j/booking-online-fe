@@ -13,7 +13,6 @@ import { useGetListServiceQuery, useRemoveServiceMutation } from '~/store/servic
 const ServiceManagement = () => {
     const t = useTranslations('Table.Service');
     const SERVICE_COLUMN_NAMES = ServiceTableColumnName(t);
-
     const { data, isLoading } = useGetListServiceQuery();
     const [mutate, { isLoading: PendingRemove }] = useRemoveServiceMutation();
     const handleDeleteService = (id: number) => {
@@ -42,8 +41,8 @@ const ServiceManagement = () => {
                             }
                             describe={item.describe}
                             price={item.price}
-                            createdAt={item.updated_at ? formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
-                            updatedAt={item.updated_at ? formatDate(item.updated_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
+                            duration={item.time}
+                            createdAt={item.created_at ? formatDate(item.created_at, 'yyyy/MM/dd | hh:mm:ss') : ''}
                             handleDeleteService={handleDeleteService}
                         />
                     ))}

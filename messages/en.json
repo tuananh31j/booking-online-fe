@@ -229,7 +229,8 @@
                 "Role": "Role",
                 "Phone_number": "Contact",
                 "Created_at": "Created at",
-                "Actions": "Options"
+                "Actions": "Options",
+                "nullData": "No data"
             }
         },
 
@@ -264,13 +265,15 @@
             },
 
             "columns": {
+                "No": "No",
                 "Name": "Name",
                 "Category": "Category",
                 "Description": "Description",
                 "Price": "Price",
                 "Duration": "Duration",
                 "Created_at": "Created at",
-                "Actions": "Options"
+                "Actions": "Options",
+                "Minute": "Minute"
             }
         }
     }

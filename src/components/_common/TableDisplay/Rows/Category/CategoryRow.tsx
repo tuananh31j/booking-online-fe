@@ -24,7 +24,14 @@ const CategoryRow: FC<ICategoryRowProps> = ({ index, id, name, createAt, action 
             <TableCell>{createAt}</TableCell>
             <TableCell>
                 <div className='flex items-center gap-2'>
-                    <PopupModal id={id} Form={FormCategory} btnName='Edit' title='Chỉnh sửa thông tin danh mục' />
+                    <PopupModal
+                        className='cursor-pointer duration-300 hover:text-blue-500'
+                        id={id}
+                        Form={FormCategory}
+                        btnName='Edit'
+                        title='Chỉnh sửa thông tin danh mục'
+                    />
+                    |
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
@@ -33,7 +40,7 @@ const CategoryRow: FC<ICategoryRowProps> = ({ index, id, name, createAt, action 
                             idContent: id,
                         }}
                     >
-                        <Trash2Icon className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500' />
+                        <p className='cursor-pointer duration-300 hover:text-red-500'>Delete</p>
                     </AlertDialogConfirm>
                 </div>
             </TableCell>
