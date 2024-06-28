@@ -19,7 +19,7 @@ export const staffAPI = baseApi.injectEndpoints({
             providesTags: [QUERY_KEY.STAFF],
         }),
         getStaffDetail: builder.query<IApiResponse<{ data: IStaff }>, number | undefined>({
-            query: (id) => ({ url: `/admin_users/show/${id}` }),
+            query: (id) => ({ url: `${API_ENDPOINT.USER.DETAILS}/${id}` }),
         }),
         createStaff: builder.mutation<IApiResponse<IStaffResponse>, FormData>({
             query(formData) {

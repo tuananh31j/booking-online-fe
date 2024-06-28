@@ -1,57 +1,41 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { ORDER_COLUMN_NAMES, OrderRow } from '~/components/_common/TableDisplay/Rows/Order/OrderRow';
+import { useTranslations } from 'next-intl';
+import { OrderRow } from '~/components/_common/TableDisplay/Rows/Order/OrderRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
+import { BookingTableColumnName } from '~/schemas/BookingTableColumnName';
 import { useGetBookingsListQuery } from '~/store/services/order.service';
 import { IOderResponse } from '~/types/Order';
 
-// const dataFake = [
-//     {
-//         facility: 'Nail kitchen 1',
-//         service: 'Manicure',
-//         date: '2022-01-01',
-//         time: '19:30',
-//         employee: 'John Doe',
-//         booker: 'Dave Smith',
-//     },
-//     {
-//         facility: 'Nail kitchen 2',
-//         service: 'Pedicure',
-//         date: '2022-02-15',
-//         time: '20:45',
-//         employee: 'Alice Johnson',
-//         booker: 'Bob Brown',
-//     },
-// ];
-
 const OrderManagement = () => {
-    const { data, isError, isLoading } = useGetBookingsListQuery();
-    const [listOrder, setListOrder] = useState<IOderResponse[]>([]);
+    const t = useTranslations('Table.Booking');
+    const BOOKING_COLUMN_NAMES = BookingTableColumnName(t);
 
-    useEffect(() => {
-        if (!isError && !isLoading) {
-            setListOrder(data?.data.data || []);
-        }
-    }, [isLoading]);
+    const { data, isError, isLoading } = useGetBookingsListQuery();
+
+    const listOrder = data?.data.data || [];
 
     return (
         <div>
-            <TableDisplay title='Order Management' columnNames={ORDER_COLUMN_NAMES}>
-                {listOrder.map((item, i) => (
+            <TableDisplay title={t('title')} columnNames={BOOKING_COLUMN_NAMES}>
+                {listOrder.map((item: IOderResponse, i) => (
+                    // <div key={i}></div>
                     <OrderRow
+                        bookingId={item.booking_id}
                         key={i}
-                        facility={item.facility}
-                        service={item.service}
+                        name={item.name}
+                        phone={item.phone}
                         date={item.date}
-                        time={item.time}
-                        employee={item.employee}
-                        booker={item.booker}
+                        staffName={item.staff_name}
+                        storeName={item.store_name}
+                        status={item.status}
+                        totalPrice={item.total_price}
+                        note={item.note}
                     />
                 ))}
                 {listOrder.length <= 0 && (
                     <td colSpan={7} className='text-center text-amber-500'>
-                        Hiện chưa có order nào!
+                        {t('empty_table')}
                     </td>
                 )}
             </TableDisplay>

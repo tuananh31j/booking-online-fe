@@ -24,6 +24,7 @@ export type IOpeningResponse = {
 };
 
 export type IOpeningByIdStoreResponse = {
+    id: number;
     day: string;
     opening_time: string;
     closing_time: string;

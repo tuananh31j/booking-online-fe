@@ -103,20 +103,21 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
             onCloseModal();
             console.log('success');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createServiceState, form, id, service, updateServiceSate]);
     return (
         <div className='mx-auto flex flex-col justify-center'>
             {!isLoading && (
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                        <div className='flex flex-wrap items-center justify-between'>
-                            <div className='mx-auto w-full sm:w-96'>
+                        <div className='grid grid-cols-2 gap-3'>
+                            <div className='flex flex-col items-center'>
                                 <FormField
                                     control={form.control}
                                     name='categorie_id'
                                     render={({ field }) => {
                                         return (
-                                            <FormItem className=' my-3 gap-2'>
+                                            <FormItem className='w-full'>
                                                 <FormLabel>
                                                     Danh mục <span className=' text-[#e41a0f]'>*</span>
                                                 </FormLabel>
@@ -166,7 +167,8 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                     }}
                                 />
                             </div>
-                            <div className='mx-auto w-full sm:w-96'>
+
+                            <div className='flex flex-col items-center'>
                                 <FormField
                                     control={form.control}
                                     name='describe'
@@ -194,10 +196,13 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                     )}
                                 />
                             </div>
+
+                            <div className='col-span-2'>
+                                <button className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'>
+                                    Submit
+                                </button>
+                            </div>
                         </div>
-                        <button className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'>
-                            Submit
-                        </button>
                     </form>
                 </Form>
             )}

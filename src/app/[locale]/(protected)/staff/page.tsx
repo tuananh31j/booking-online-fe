@@ -1,5 +1,13 @@
-import { redirect } from 'next/navigation';
+'use client';
 
-export default function AdminRedirectToDashboard() {
-    redirect('/staff/schedules');
+import { redirect } from 'next/navigation';
+import useAuth from '~/hooks/useAuth';
+
+export default function StaffRedirectToSchedules() {
+    const { isAuth } = useAuth();
+    if (!isAuth) {
+        return redirect('/login');
+    }
+
+    return redirect('/staff/schedules');
 }

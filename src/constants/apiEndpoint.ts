@@ -16,11 +16,11 @@ const API_ENDPOINT = {
         REMOVE: '/categories/delete', // @id
     },
     USER: {
-        ADD: '/admin_users/',
-        EDIT: '/admin_users/update', // @id
-        DETAILS: '/admin_users/show', // @id
+        ADD: '/admin_users',
+        EDIT: '/admin_users', // @id
+        DETAILS: '/admin_users', // @id
         LIST: '/admin_users',
-        REMOVE: '/admin_users/delete', // @id
+        REMOVE: '/admin_users', // @id
         EDIT_PROFILE: '/user/profile/update',
         ADD_SCHEDULES: '/user/schedules',
         BOOKING_SCHEDULES: 'user/listbooking',
@@ -49,7 +49,7 @@ const API_ENDPOINT = {
         ADD: '/client/store_booking',
         EDIT: '/bookings/update', // @id
         DETAILS: '/bookings', // @id
-        LIST: '/bookings/list',
+        LIST: '/bookings',
         REMOVE: '/bookings/delete', // @id
     },
     OPENING: {
@@ -60,8 +60,8 @@ const API_ENDPOINT = {
         // xem chi tiết ngày h mở cửa theo id cửa hàng
         DETAILS: '/opening-hours', // @id
         LIST: '/opening-hours/list',
-        // xóa nngày đã qua theo id cửa hàng
-        REMOVE: 'opening-hours/delete/', // @id
+        // xóa nngày đã qua theo id openingHours
+        REMOVE: '/opening-hours/delete', // @id
     },
 };
 

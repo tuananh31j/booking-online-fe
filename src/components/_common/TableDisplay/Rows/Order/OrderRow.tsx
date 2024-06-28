@@ -2,49 +2,42 @@ import { FC } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormOrder from './FormOrder';
 import TableCell from '../../_components/TableCell';
+import { useTranslations } from 'next-intl';
 
 type IOrderRowProps = {
-    facility: string;
-    service: string;
+    name: string;
+    phone: string;
     date: string;
-    time: string;
-    employee: string;
-    booker: string;
+    staffName: string;
+    storeName: string;
+    status: string;
+    totalPrice: string;
+    bookingId: number;
+    note: string;
 };
 
-const ORDER_COLUMN_NAMES = ['Facility', 'Service', 'Date', 'Time', 'Employee', 'Booker', 'Actions'];
-
-const OrderRow: FC<IOrderRowProps> = ({ facility, service, date, time, employee, booker }) => {
+const OrderRow: FC<IOrderRowProps> = ({
+    name,
+    phone,
+    date,
+    staffName,
+    storeName,
+    status,
+    totalPrice,
+    bookingId,
+    note,
+}) => {
     return (
         <tr>
-            <TableCell>{facility}</TableCell>
-            <TableCell>{service}</TableCell>
-            <TableCell>{date}</TableCell>
-            <TableCell>{time}</TableCell>
-            <TableCell>{employee}</TableCell>
-            <TableCell>
-                <PopupModal
-                    btnName={booker}
-                    title="Booker's details"
-                    className='mb-0 text-xs font-semibold capitalize leading-tight underline dark:text-white dark:opacity-80'
-                >
-                    <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                        Name: {booker}
-                    </div>
+            <TableCell> {name}</TableCell>
+            <TableCell> {phone}</TableCell>
+            <TableCell> {date}</TableCell>
+            <TableCell> {staffName}</TableCell>
+            <TableCell> {storeName}</TableCell>
+            <TableCell> {status}</TableCell>
+            <TableCell> {totalPrice}</TableCell>
+            <TableCell> {note}</TableCell>
 
-                    <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                        Phone: 0123456789
-                    </div>
-
-                    <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                        Address: 123 Example St, Example City
-                    </div>
-
-                    <div className='text-sm font-semibold capitalize leading-tight dark:text-white dark:opacity-80'>
-                        Email: {booker.toLowerCase().replace(' ', '.')}@example.com
-                    </div>
-                </PopupModal>
-            </TableCell>
             <TableCell>
                 <PopupModal
                     btnName='Edit'
@@ -57,4 +50,4 @@ const OrderRow: FC<IOrderRowProps> = ({ facility, service, date, time, employee,
     );
 };
 
-export { OrderRow, ORDER_COLUMN_NAMES };
+export { OrderRow };

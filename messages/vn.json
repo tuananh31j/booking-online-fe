@@ -41,6 +41,10 @@
         }
     },
 
+    "Logout": {
+        "logout_success": "Đăng xuất thành công!"
+    },
+
     "AlertDiaLog": {
         "title": "Bạn có chắc chắn không?",
         "desc": "Bạn sẽ quay trở lại bước nhập thông tin trước đó",
@@ -141,28 +145,131 @@
         "Admin_SideBar_Menu": {
             "dashboard": "Bảng điều khiển",
             "stores": "Cửa hàng",
-            "orders": "Đơn khách hàng",
+            "orders": "Bookings",
             "staffs": "Nhân viên",
             "categories": "Danh mục",
             "services": "Dịch vụ"
         },
 
         "Staff_SideBar_Menu": {
-            "orders": "Đơn khách hàng",
+            "orders": "Bookings",
             "schedules": "Lịch làm việc"
         }
     },
 
     "Table": {
+        "Pagination": {
+            "previous_btn": "Trước",
+            "next_btn": "Sau"
+        },
+
         "Store": {
             "title": "Danh Sách Cửa Hàng",
-            "modalTitle": "Thêm Mới Cửa Hàng",
+            "modal_title": "Thêm Mới Cửa Hàng",
+
+            "confirm": {
+                "title": "Bạn có chắc chắn không?",
+                "description": "Khi đã xóa sẽ không thể khổi phục!",
+                "yes": "Chắc chắn",
+                "no": "Hủy"
+            },
+
             "columns": {
                 "No": "STT",
                 "Name": "Tên cửa hàng",
                 "Address": "Địa chỉ",
                 "Phone_number": "Số điện thoại",
-                "Created_at": "Ngày tạo cửa hàng",
+                "Created_at": "Ngày tạo",
+                "Actions": "Tùy chọn"
+            }
+        },
+
+        "Booking": {
+            "title": "Danh Sách Booking",
+            "empty_table": "Hiện chưa có booking nào!",
+
+            "confirm": {
+                "title": "Bạn có chắc chắn không?",
+                "description": "Khi đã xóa sẽ không thể khổi phục!",
+                "yes": "Chắc chắn",
+                "no": "Hủy"
+            },
+
+            "columns": {
+                "Customer_name": "Tên khách hàng",
+                "Phone_number": "Số điện thoại",
+                "Date": "Ngày",
+                "Staff_name": "Nhân viên",
+                "Store_name": "Cửa hàng",
+                "Status": "Trạng thái",
+                "Total_price": "Tổng giá",
+                "Note": "Ghi chú",
+                "Actions": "Tùy chọn"
+            }
+        },
+
+        "Staff": {
+            "title": "Danh Sách Nhân Viên",
+            "modal_title": "Thêm Mới Nhân Viên",
+
+            "delete": {
+                "success": "Xóa nhân viên thành công!",
+                "fail": "Xóa nhân viên thất bại!"
+            },
+
+            "confirm": {
+                "title": "Bạn có chắc chắn không?",
+                "description": "Khi đã xóa sẽ không thể khổi phục!",
+                "yes": "Chắc chắn",
+                "no": "Hủy"
+            },
+
+            "columns": {
+                "Name": "Tên nhân viên",
+                "Role": "Vai trò",
+                "Phone_number": "Số điện thoại",
+                "Created_at": "Ngày tạo",
+                "Actions": "Tùy chọn"
+            }
+        },
+
+        "Category": {
+            "title": "Danh Sách Danh Mục",
+            "modal_title": "Thêm Mới Danh Mục",
+
+            "confirm": {
+                "title": "Bạn có chắc chắn không?",
+                "description": "Khi đã xóa sẽ không thể khổi phục!",
+                "yes": "Chắc chắn",
+                "no": "Hủy"
+            },
+
+            "columns": {
+                "No": "STT",
+                "Name": "Tên danh mục",
+                "Created_at": "Ngày tạo",
+                "Actions": "Tùy chọn"
+            }
+        },
+
+        "Service": {
+            "title": "Danh Sách Dịch Vụ",
+            "modal_title": "Thêm Mới Dịch Vụ",
+
+            "confirm": {
+                "title": "Bạn có chắc chắn không?",
+                "description": "Khi đã xóa sẽ không thể khổi phục!",
+                "yes": "Chắc chắn",
+                "no": "Hủy"
+            },
+
+            "columns": {
+                "Name": "Tên dịch vụ",
+                "Category": "Danh mục",
+                "Description": "Mô tả",
+                "Price": "Giá",
+                "Duration": "Thời lượng",
+                "Created_at": "Ngày tạo",
                 "Actions": "Tùy chọn"
             }
         }

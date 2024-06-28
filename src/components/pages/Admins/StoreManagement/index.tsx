@@ -14,9 +14,12 @@ import { IStoreItem } from '~/types/Store';
 
 const StoreListManagement = () => {
     const t = useTranslations('Table.Store');
+    const STORE_COLUMN_NAMES = StoreTableColumnName(t);
+
     const { data, isLoading } = useGetListStoreQuery();
     const [mutate, { isLoading: PendingRemove, isSuccess, isError }] = useRemoveStoreMutation();
     const store = data?.data?.data;
+
     const toast = useToastDisplay();
     const handleRemoveStore = (id: number) => {
         mutate(id).unwrap();
@@ -33,14 +36,12 @@ const StoreListManagement = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess, isError]);
 
-    const STORE_COLUMN_NAMES = StoreTableColumnName(t);
-
     return (
         <>
             <TableDisplay
                 title={t('title')}
                 columnNames={STORE_COLUMN_NAMES}
-                action={{ element: FormStore, modalTitle: t('modalTitle') }}
+                action={{ element: FormStore, modalTitle: t('modal_title') }}
             >
                 {!isLoading &&
                     !PendingRemove &&

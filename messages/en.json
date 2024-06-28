@@ -41,9 +41,13 @@
         }
     },
 
+    "Logout": {
+        "logout_success": "Logout Successfully!"
+    },
+
     "AlertDiaLog": {
         "title": "Are you sure?",
-        "desc": "Your information will revert to the previous step.",
+        "desc": "Your progress will be reverted to the previous step!",
         "button": {
             "cancel": "Cancel",
             "yes": "Yes"
@@ -154,14 +158,117 @@
     },
 
     "Table": {
+        "Pagination": {
+            "previous_btn": "Previous",
+            "next_btn": "Next"
+        },
+
         "Store": {
             "title": "List of Stores",
-            "modalTitle": "Add A New Store",
+            "modal_title": "Add A New Store",
+
+            "confirm": {
+                "title": "Are you sure?",
+                "description": "Cannot recover once deleted!",
+                "yes": "Confirm",
+                "no": "Cancel"
+            },
+
             "columns": {
                 "No": "No",
                 "Name": "Name",
                 "Address": "Address",
                 "Phone_number": "Contact",
+                "Created_at": "Created at",
+                "Actions": "Options"
+            }
+        },
+
+        "Booking": {
+            "title": "List of Bookings",
+            "empty_table": "There are no bookings at the moment!",
+
+            "confirm": {
+                "title": "Are you sure?",
+                "description": "Cannot recover once deleted!",
+                "yes": "Confirm",
+                "no": "Cancel"
+            },
+
+            "columns": {
+                "Customer_name": "Customer Name",
+                "Phone_number": "Contact",
+                "Date": "Date",
+                "Staff_name": "Staff",
+                "Store_name": "Store",
+                "Status": "Status",
+                "Total_price": "Total Price",
+                "Note": "Note",
+                "Actions": "Options"
+            }
+        },
+
+        "Staff": {
+            "title": "List of Staffs",
+            "modal_title": "Add A New Staff",
+
+            "delete": {
+                "success": "Staff Removed Successfully!",
+                "fail": "Staff Removal Failed!"
+            },
+
+            "confirm": {
+                "title": "Are you sure?",
+                "description": "Cannot recover once deleted!",
+                "yes": "Confirm",
+                "no": "Cancel"
+            },
+
+            "columns": {
+                "Name": "Name",
+                "Role": "Role",
+                "Phone_number": "Contact",
+                "Created_at": "Created at",
+                "Actions": "Options"
+            }
+        },
+
+        "Category": {
+            "title": "List of Categories",
+            "modal_title": "Add A New Category",
+
+            "confirm": {
+                "title": "Are you sure?",
+                "description": "Cannot recover once deleted!",
+                "yes": "Confirm",
+                "no": "Cancel"
+            },
+
+            "columns": {
+                "No": "No",
+                "Name": "Name",
+                "Created_at": "Created at",
+                "Actions": "Options"
+            }
+        },
+
+        "Service": {
+            "title": "List of Services",
+            "modal_title": "Add A New Service",
+
+            "confirm": {
+                "title": "Are you sure?",
+                "description": "Cannot recover once deleted!",
+                "yes": "Confirm",
+                "no": "Cancel"
+            },
+
+            "columns": {
+                "Name": "Name",
+                "Category": "Category",
+                "Description": "Description",
+                "Price": "Price",
+                "Duration": "Duration",
                 "Created_at": "Created at",
                 "Actions": "Options"
             }

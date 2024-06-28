@@ -52,12 +52,15 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                                     Opening Hours
                                 </TabsTrigger>
                             </TabsList>
+
                             <TabsContent value='base' className='w-full'>
                                 {detailStore && <BaseStore store={detailStore} refetch={refetch} />}
                             </TabsContent>
+
                             <TabsContent value='staff' className='w-full'>
                                 {detailStore && <ManagerStaff store={detailStore} />}
                             </TabsContent>
+
                             <TabsContent value='opening' className='w-full'>
                                 {detailStore && <HourOpening store={detailStore} />}
                             </TabsContent>

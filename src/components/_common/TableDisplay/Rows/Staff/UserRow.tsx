@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useGetDetailStoreQuery } from '~/store/services/store.service';
 import { useRouter } from 'next/navigation';
 import TableCell from '../../_components/TableCell';
+import { useTranslations } from 'next-intl';
 
 type IUserRowProps = {
     id: number;
@@ -20,12 +21,10 @@ type IUserRowProps = {
     role: number;
     phone: string | null;
     address: string | null;
-    store_information_id: number;
+    store_id: number;
     action: (id: number) => void;
     createAt?: string;
 };
-
-const USER_COLUMN_NAMES = ['Người dùng', 'Chức vụ', 'Điện thoại', 'Ngày tạo', 'Tùy chọn'];
 
 const cookies = new Cookies();
 const UserRow: FC<IUserRowProps> = ({
@@ -36,12 +35,14 @@ const UserRow: FC<IUserRowProps> = ({
     role,
     phone,
     // eslint-disable-next-line camelcase
-    store_information_id,
+    store_id,
     createAt,
     action,
 }) => {
+    const t = useTranslations('Table');
+
     // eslint-disable-next-line camelcase
-    const storeId = store_information_id;
+    const storeId = store_id;
     const router = useRouter();
 
     const { data } = useGetDetailStoreQuery(storeId, { skip: !storeId });
@@ -124,8 +125,8 @@ const UserRow: FC<IUserRowProps> = ({
                         <AlertDialogConfirm
                             handleConfirm={action}
                             content={{
-                                title: 'Bạn có chắc chắn không?',
-                                description: 'Bạn có muốn xóa sản phẩm này không khi xóa sẽ không thể khổi phục',
+                                title: t('Staff.confirm.title'),
+                                description: t('Staff.confirm.description'),
                                 idContent: id,
                             }}
                         >
@@ -151,4 +152,4 @@ const UserRow: FC<IUserRowProps> = ({
     );
 };
 
-export { UserRow, USER_COLUMN_NAMES };
+export { UserRow };
