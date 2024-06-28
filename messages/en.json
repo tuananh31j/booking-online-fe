@@ -167,11 +167,21 @@
             "title": "List of Stores",
             "modal_title": "Add A New Store",
 
+            "add": {
+                "success": "Store Added Successfully!",
+                "fail": "Store Addition Failed!"
+            },
+
             "confirm": {
                 "title": "Are you sure?",
                 "description": "Cannot recover once deleted!",
                 "yes": "Confirm",
                 "no": "Cancel"
+            },
+
+            "delete": {
+                "success": "Store Removed Successfully!",
+                "fail": "Store Removal Failed!"
             },
 
             "columns": {
@@ -212,9 +222,19 @@
             "title": "List of Staffs",
             "modal_title": "Add A New Staff",
 
+            "add": {
+                "success": "Staff Added Successfully!",
+                "fail": "Staff Addition Failed!"
+            },
+
             "delete": {
                 "success": "Staff Removed Successfully!",
                 "fail": "Staff Removal Failed!"
+            },
+
+            "edit": {
+                "success": "Staff Updated Successfully!",
+                "fail": "Staff Update Failed!"
             },
 
             "confirm": {
@@ -238,6 +258,21 @@
             "title": "List of Categories",
             "modal_title": "Add A New Category",
 
+            "add": {
+                "success": "Category Added Successfully!",
+                "fail": "Category Addition Failed!"
+            },
+
+            "delete": {
+                "success": "Category Removed Successfully!",
+                "fail": "Category Removal Failed!"
+            },
+
+            "edit": {
+                "success": "Category Updated Successfully!",
+                "fail": "Category Update Failed!"
+            },
+
             "confirm": {
                 "title": "Are you sure?",
                 "description": "Cannot recover once deleted!",
@@ -257,16 +292,26 @@
             "title": "List of Services",
             "modal_title": "Add A New Service",
 
+            "add": {
+                "success": "Service Added Successfully!",
+                "fail": "Service Addition Failed!"
+            },
+
+            "delete": {
+                "success": "Service Removed Successfully!",
+                "fail": "Service Removal Failed!"
+            },
+
+            "edit": {
+                "success": "Service Updated Successfully!",
+                "fail": "Service Update Failed!"
+            },
+
             "confirm": {
                 "title": "Are you sure?",
                 "description": "Cannot recover once deleted!",
                 "yes": "Confirm",
                 "no": "Cancel"
-            },
-
-            "delete": {
-                "success": " Removed Successfully!",
-                "fail": " Removal Failed!"
             },
 
             "columns": {

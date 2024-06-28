@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,6 +18,8 @@ import { ErrorFields, isStoreError } from '~/types/Error/Helper/Store';
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number }) => {
+    const t = useTranslations('Table.Store');
+
     const formSchema = z.object({
         name: z.string().min(2, {
             message: 'Name must be at least 2 characters.',
@@ -85,17 +88,18 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                     form.setError(key, { message: errorMessage });
                 });
             } else {
-                toast({ title: 'Có lỗi xảy ra', status: 'destructive' });
+                toast({ title: t('add.fail'), status: 'destructive' });
             }
         }
 
         if (createStoreState.isSuccess) {
             onCloseModal();
             toast({
-                title: `${'Thêm cửa hàng thành công!'} `,
+                title: t('add.success'),
                 status: 'success',
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createStoreState]);
 
     return (

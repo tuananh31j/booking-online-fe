@@ -167,11 +167,21 @@
             "title": "Danh Sách Cửa Hàng",
             "modal_title": "Thêm Mới Cửa Hàng",
 
+            "add": {
+                "success": "Thêm cửa hàng thành công!",
+                "fail": "Thêm cửa hàng thất bại!"
+            },
+
             "confirm": {
                 "title": "Bạn có chắc chắn không?",
                 "description": "Khi đã xóa sẽ không thể khổi phục!",
                 "yes": "Chắc chắn",
                 "no": "Hủy"
+            },
+
+            "delete": {
+                "success": "Xóa cửa hàng thành công!",
+                "fail": "Xóa cửa hàng thất bại!"
             },
 
             "columns": {
@@ -212,9 +222,19 @@
             "title": "Danh Sách Nhân Viên",
             "modal_title": "Thêm Mới Nhân Viên",
 
+            "add": {
+                "success": "Thêm nhân viên thành công!",
+                "fail": "Thêm nhân viên thất bại!"
+            },
+
             "delete": {
                 "success": "Xóa nhân viên thành công!",
                 "fail": "Xóa nhân viên thất bại!"
+            },
+
+            "edit": {
+                "success": "Sửa nhân viên thành công!",
+                "fail": "Sửa nhân viên thất bại!"
             },
 
             "confirm": {
@@ -238,6 +258,21 @@
             "title": "Danh Sách Danh Mục",
             "modal_title": "Thêm Mới Danh Mục",
 
+            "add": {
+                "success": "Thêm danh mục thành công!",
+                "fail": "Thêm danh mục thất bại!"
+            },
+
+            "delete": {
+                "success": "Xóa dịch vụ thành công!",
+                "fail": "Xóa dịch vụ thất bại!"
+            },
+
+            "edit": {
+                "success": "Sửa danh mục thành công!",
+                "fail": "Sửa danh mục thất bại!"
+            },
+
             "confirm": {
                 "title": "Bạn có chắc chắn không?",
                 "description": "Khi đã xóa sẽ không thể khổi phục!",
@@ -257,6 +292,11 @@
             "title": "Danh Sách Dịch Vụ",
             "modal_title": "Thêm Mới Dịch Vụ",
 
+            "add": {
+                "success": "Thêm dịch vụ thành công!",
+                "fail": "Thêm dịch vụ thất bại!"
+            },
+
             "confirm": {
                 "title": "Bạn có chắc chắn không?",
                 "description": "Khi đã xóa sẽ không thể khổi phục!",
@@ -268,7 +308,13 @@
                 "fail": "Xóa nhân viên thất bại!"
             },
 
+            "edit": {
+                "success": "Sửa dịch vụ thành công!",
+                "fail": "Sửa dịch vụ thất bại!"
+            },
+
             "columns": {
+                "No": "STT",
                 "Name": "Tên dịch vụ",
                 "Category": "Danh mục",
                 "Description": "Mô tả",

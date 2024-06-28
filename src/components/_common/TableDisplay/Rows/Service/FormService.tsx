@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { title } from 'process';
 import { replace, set } from 'lodash';
+import { useTranslations } from 'next-intl';
 
 const FormServiceSchema = z.object({
     name: z.string({ required_error: 'Họ và tên không được để trống!' }),
@@ -30,6 +31,8 @@ const FormServiceSchema = z.object({
 type IFormService = z.infer<typeof FormServiceSchema>;
 
 const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
+    const t = useTranslations('Table.Service');
+
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
     const { data: service, refetch, isLoading } = useGetDetailServiceQuery(id, { skip: !id });
     const [createService, createServiceState] = useCreateServiceMutation();
@@ -63,12 +66,12 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                     describe: data.describe,
                     time: Number(data.time),
                 }).unwrap();
-
-                toast({ title: 'Thêm dịch vụ thành công!', status: 'success' });
+                toast({ title: t('add.success'), status: 'success' });
                 onCloseModal();
             } catch (error) {
                 console.log(error);
-                toast({ title: 'Thêm dịch vụ thất bại!', status: 'destructive' });
+                onCloseModal();
+                toast({ title: t('add.fail'), status: 'destructive' });
             }
         } else {
             try {
@@ -83,8 +86,12 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                         time: Number(data.time),
                     },
                 });
+                onCloseModal();
+                toast({ title: t('edit.success'), status: 'success' });
             } catch (error) {
                 console.log(error);
+                onCloseModal();
+                toast({ title: t('edit.fail'), status: 'destructive' });
             }
         }
     };
@@ -99,16 +106,6 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                 time: service?.data.data.time.toString() || '0',
             });
         }
-        if (updateServiceSate.isSuccess || createServiceState.isSuccess) {
-            toast({ title: 'Sửa dịch vụ thành công!', status: 'success' });
-            onCloseModal();
-            console.log('success');
-        } else if (updateServiceSate.isError || createServiceState.isError) {
-            onCloseModal();
-            console.log('error');
-            toast({ title: 'Sửa dịch vụ Thất bại!', status: 'destructive' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createServiceState, form, id, service, updateServiceSate]);
     return (
         <div className='mx-auto flex flex-col justify-center'>
@@ -201,6 +198,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                         />
                                     )}
                                 />
+
                                 <FormField
                                     control={form.control}
                                     name='price'
