@@ -90,7 +90,7 @@ const DashboardPage = () => {
                     title="Today's Money"
                     amount='$53,000'
                     percentage={55}
-                    since='since yesterday'
+                    since=' since yesterday'
                     icon={DollarSign}
                     bgColor='bg-gradient-to-tl from-blue-500 to-violet-500'
                     iconColor='text-white'
@@ -100,7 +100,7 @@ const DashboardPage = () => {
                     title="Today's Users"
                     amount='2,300'
                     percentage={3}
-                    since='since last week'
+                    since=' since last week'
                     icon={Users}
                     bgColor='bg-gradient-to-tl from-red-600 to-orange-600'
                     iconColor='text-white'
@@ -110,7 +110,7 @@ const DashboardPage = () => {
                     title='New Clients'
                     amount='+3,462'
                     percentage={-2}
-                    since='since last quarter'
+                    since=' since last quarter'
                     icon={UserPlus}
                     bgColor='bg-gradient-to-tl from-emerald-500 to-teal-400'
                     iconColor='text-white'
@@ -120,7 +120,7 @@ const DashboardPage = () => {
                     title='Sales'
                     amount='$103,430'
                     percentage={5}
-                    since='than last month'
+                    since=' than last month'
                     icon={ShoppingCart}
                     bgColor='bg-gradient-to-tl from-orange-500 to-yellow-500'
                     iconColor='text-white'
