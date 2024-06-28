@@ -121,7 +121,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                             className=' w-[60%]  space-y-4'
                             encType='multipart/form-data'
                         >
-                            <div className='flex  gap-10'>
+                            <div className='flex  flex-wrap gap-10'>
                                 {preview && (
                                     <Image
                                         src={preview}
@@ -131,7 +131,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         height={120}
                                     />
                                 )}
-                                <div className='flex flex-col justify-between pt-5'>
+                                <div className='flex w-full flex-col justify-between pt-5'>
                                     <div className='flex items-center gap-2 '>
                                         <Checkbox
                                             id={saveImageId}

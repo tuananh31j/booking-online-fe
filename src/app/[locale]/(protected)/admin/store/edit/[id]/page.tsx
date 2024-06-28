@@ -27,36 +27,38 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                     </div>
                     <hr className='mt-2' />
                     <div className='mt-4'>
-                        <Tabs defaultValue='base' className='flex gap-5'>
-                            <TabsList className='flex flex-col justify-start gap-5'>
+                        <Tabs defaultValue='base' className='flex flex-wrap gap-5 md:flex-nowrap'>
+                            <TabsList className='flex w-full flex-col flex-wrap justify-start gap-5 md:w-[unset] md:flex-nowrap'>
                                 <TabsTrigger
-                                    className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
+                                    className='flex w-fit max-w-80 items-center justify-start gap-5 bg-muted  text-xl text-default md:w-full'
                                     value='base'
                                 >
                                     <Database />
-                                    Base
+                                    <span className='hidden md:block'>Base</span>
                                 </TabsTrigger>
                                 <TabsTrigger
-                                    className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
+                                    className='flex w-fit max-w-80 items-center justify-start gap-5 bg-muted  text-xl text-default md:w-full'
                                     value='password'
                                 >
                                     <CircleUserIcon />
-                                    Edit Staff
+                                    <span className='hidden md:block'> Edit Staff</span>
                                 </TabsTrigger>
                                 <TabsTrigger
-                                    className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
+                                    className='flex w-fit max-w-80 items-center justify-start gap-5 bg-muted  text-xl text-default md:w-full'
                                     value='opening'
                                 >
                                     <Clock />
-                                    Opening Hours
+                                    <span className='hidden md:block'> Opening Hours</span>
                                 </TabsTrigger>
                             </TabsList>
-                            <TabsContent value='base' className='w-full'>
-                                {detailStore && <BaseStore store={detailStore} refetch={refetch} />}
-                            </TabsContent>
-                            <TabsContent value='opening' className='w-full'>
-                                {detailStore && <HourOpening store={detailStore} />}
-                            </TabsContent>
+                            <div>
+                                <TabsContent value='base' className='w-full'>
+                                    {detailStore && <BaseStore store={detailStore} refetch={refetch} />}
+                                </TabsContent>
+                                <TabsContent value='opening' className='w-full'>
+                                    {detailStore && <HourOpening store={detailStore} />}
+                                </TabsContent>
+                            </div>
                         </Tabs>
                     </div>
                 </div>

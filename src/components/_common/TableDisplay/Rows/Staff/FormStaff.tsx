@@ -175,7 +175,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     return (
         <div className='mx-auto justify-center overflow-y-auto px-4 xl:pt-0'>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='grid grid-cols-2 gap-3 pt-8 2xl:pt-0'>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='pt-8 md:grid md:grid-cols-2 md:gap-3 2xl:pt-0'>
                     <div className='flex flex-col items-center'>
                         {/* Name */}
                         <FormField

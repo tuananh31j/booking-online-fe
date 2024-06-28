@@ -86,7 +86,7 @@ const DashboardPage = () => {
         <div>
             <div className='flex flex-wrap justify-evenly'>
                 <StatsCard
-                    className='w-full sm:w-64 md:w-96 lg:w-[unset]'
+                    className='w-full min-w-52 sm:w-full md:w-80 lg:min-w-52'
                     title="Today's Money"
                     amount='$53,000'
                     percentage={55}
@@ -96,7 +96,7 @@ const DashboardPage = () => {
                     iconColor='text-white'
                 />
                 <StatsCard
-                    className='w-full sm:w-64 md:w-96 lg:w-[unset]'
+                    className='w-full min-w-52 sm:w-full md:w-80 lg:min-w-52'
                     title="Today's Users"
                     amount='2,300'
                     percentage={3}
@@ -106,7 +106,7 @@ const DashboardPage = () => {
                     iconColor='text-white'
                 />
                 <StatsCard
-                    className='w-full sm:w-64 md:w-96 lg:w-[unset]'
+                    className='w-full min-w-52 sm:w-full md:w-80 lg:min-w-52'
                     title='New Clients'
                     amount='+3,462'
                     percentage={-2}
@@ -116,7 +116,7 @@ const DashboardPage = () => {
                     iconColor='text-white'
                 />
                 <StatsCard
-                    className='w-full sm:w-64 md:w-96 lg:w-[unset]'
+                    className='w-full min-w-52 sm:w-full md:w-80 lg:min-w-52'
                     title='Sales'
                     amount='$103,430'
                     percentage={5}
