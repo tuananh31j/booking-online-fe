@@ -114,7 +114,7 @@ export default function LoginPage() {
                                     type='submit'
                                     className='w-full bg-primary text-primary-foreground hover:bg-secondary'
                                 >
-                                    {t('Button')}
+                                    {t('button')}
                                 </Button>
                             </form>
                         </Form>

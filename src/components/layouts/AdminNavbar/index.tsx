@@ -33,6 +33,7 @@ const AdminNavbar = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const handleLogout = useLogout();
+
     return (
         <>
             <nav className='duration-250 flex-wraps relative mx-6 mt-[0.313rem] flex items-center justify-between rounded-2xl border bg-card px-0 py-2 shadow-xl  transition-all ease-in dark:bg-[#111c44] sm:flex-nowrap  md:flex-nowrap lg:justify-start'>
@@ -47,22 +48,27 @@ const AdminNavbar = ({
                                 <BreadcrumbItem>
                                     <BreadcrumbLink href='/'>Pages</BreadcrumbLink>
                                 </BreadcrumbItem>
+
                                 <BreadcrumbSeparator>
                                     <Slash />
                                 </BreadcrumbSeparator>
+
                                 <BreadcrumbItem>
                                     <BreadcrumbLink href='/'>Dashboard</BreadcrumbLink>
                                 </BreadcrumbItem>
                             </BreadcrumbList>
                         </Breadcrumb>
+
                         <h6 className='mb-0 font-bold capitalize'>Dashboard</h6>
                     </nav>
+
                     {/* css grow */}
                     <div className='mt-2 flex w-full items-center justify-end sm:mr-6 sm:mt-0 md:mr-0 lg:flex lg:basis-auto'>
                         <div className='w-full items-center sm:w-[unset] md:ml-auto md:pr-4'>
                             <form>
                                 <div className=' flex items-center justify-center rounded-lg bg-content px-2'>
                                     <Search size={16} strokeWidth={1.75} className='text-default' />
+
                                     <Input
                                         type='text'
                                         className='w-11/12  border-none outline-none sm:w-[unset]'
@@ -71,17 +77,20 @@ const AdminNavbar = ({
                                 </div>
                             </form>
                         </div>
+
                         <ul className='md-max:w-full mb-0 ml-2 flex list-none flex-row justify-end pl-0 md:ml-0'>
                             <li className='flex  cursor-pointer items-center p-1 sm:block'>
                                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                     <DialogTrigger asChild>
                                         <UserCircle2 size={16} strokeWidth={1.75} />
                                     </DialogTrigger>
+
                                     <DialogContent className=''>
                                         <ProfileCard />
                                     </DialogContent>
                                 </Dialog>
                             </li>
+
                             <li className='flex items-center pl-4'>
                                 <span className='ease-nav-brand block p-0 text-sm transition-all'>
                                     <AdminNotificationCard />
@@ -98,14 +107,18 @@ const AdminNavbar = ({
                                             className='cursor-pointer text-default'
                                         />
                                     </DropdownMenuTrigger>
+
                                     <DropdownMenuContent className='mr-5 w-56'>
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
+
                                         <DropdownMenuSeparator />
+
                                         <DropdownMenuGroup>
                                             <DropdownMenuItem>Profile</DropdownMenuItem>
                                             <DropdownMenuItem>Billing</DropdownMenuItem>
                                             <DropdownMenuItem>Settings</DropdownMenuItem>
                                         </DropdownMenuGroup>
+
                                         <DropdownMenuSeparator />
 
                                         <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>

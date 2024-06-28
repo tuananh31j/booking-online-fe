@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import MenuItem from '~/components/layouts/AdminSidebar/_components/Menu/MenuItem';
 import useAuth from '~/hooks/useAuth';
+import { useTranslations } from 'next-intl';
 
 interface MenuItemProps {
     path: string;
@@ -20,28 +21,30 @@ interface MenuItemProps {
     icon: LucideIcon;
 }
 
-const ADMIN_MENU: MenuItemProps[] = [
-    { path: '/admin/dashboard', name: 'Dashboard', icon: LayoutDashboard },
-    { path: '/admin/store', name: 'Store', icon: StoreIcon },
-    { path: '/admin/orders', name: 'Orders', icon: ListOrdered },
-    { path: '/admin/staff-list', name: 'Manage staffs', icon: UserRound },
-    { path: '/admin/category', name: 'Manage category', icon: Sofa },
-    { path: '/admin/services', name: 'Services', icon: HandPlatter },
-    // { path: 'opening', name: 'Manage opening', icon: Clock },
-];
-
-const STAFF_MENU: MenuItemProps[] = [
-    { path: 'orders', name: 'Orders', icon: ListOrdered },
-    { path: 'schedules', name: 'Manage schedules', icon: CalendarDays },
-];
-
 const Menu: React.FC = () => {
     const [menuList, setMenuList] = useState<MenuItemProps[]>([]);
     const { isAdmin } = useAuth();
+    const t = useTranslations('SideBar');
+
+    const ADMIN_MENU: MenuItemProps[] = [
+        { path: '/admin/dashboard', name: t('Admin_SideBar_Menu.dashboard'), icon: LayoutDashboard },
+        { path: '/admin/store', name: t('Admin_SideBar_Menu.stores'), icon: StoreIcon },
+        { path: '/admin/orders', name: t('Admin_SideBar_Menu.orders'), icon: ListOrdered },
+        { path: '/admin/staff-list', name: t('Admin_SideBar_Menu.staffs'), icon: UserRound },
+        { path: '/admin/category', name: t('Admin_SideBar_Menu.categories'), icon: Sofa },
+        { path: '/admin/services', name: t('Admin_SideBar_Menu.services'), icon: HandPlatter },
+    ];
+
+    const STAFF_MENU: MenuItemProps[] = [
+        { path: 'orders', name: t('Staff_SideBar_Menu.orders'), icon: ListOrdered },
+        { path: 'schedules', name: t('Staff_SideBar_Menu.schedules'), icon: CalendarDays },
+    ];
+
     useEffect(() => {
         console.log(isAdmin);
         const MENU_LIST = isAdmin ? ADMIN_MENU : STAFF_MENU;
         setMenuList(MENU_LIST);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdmin]);
 
     return (

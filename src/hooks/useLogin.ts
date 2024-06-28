@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Cookies from 'universal-cookie';
@@ -15,14 +16,15 @@ const useLogin = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const [login, loginState] = useLoginMutation();
+    const t = useTranslations('Login');
 
     useEffect(() => {
         console.log(loginState.isError);
         if (loginState.isSuccess) {
             dispatch(loginAction(loginState.data.data));
-            handleMessage({ title: 'Đăng nhập thành công!', status: 'success' });
-            cookies.set('user', loginState.data.data.data, { path: '/' });
-            cookies.set('accessToken', loginState.data.data.token, { path: '/' });
+            handleMessage({ title: t('login_success'), status: 'success' });
+            cookies.set('user', loginState.data.data.data);
+            cookies.set('accessToken', loginState.data.data.token);
             if (loginState.data.data.data.role === 0) {
                 router.replace('/admin/dashboard');
             } else {
@@ -30,7 +32,7 @@ const useLogin = () => {
             }
         }
         if (loginState.isError) {
-            handleMessage({ title: 'Thông tin đăng nhập sai!', status: 'destructive' });
+            handleMessage({ title: t('login_fail'), status: 'destructive' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loginState]);

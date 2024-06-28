@@ -3,7 +3,6 @@
 import { ArrowBigRightDash } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FC, ReactNode } from 'react';
-import { boolean } from 'zod';
 import { SkeletonCard } from '~/components/_common/SkeletonCard';
 import useBooking from '~/hooks/useBooking';
 import { cn } from '~/lib/utils';
@@ -18,6 +17,7 @@ type IWrapperBookingProps = {
 const WrapperBooking: FC<IWrapperBookingProps> = ({ stepKeyTranslation, isButtonNextStep, isLoading, children }) => {
     const t = useTranslations('StepBooking');
     const { nextToStep } = useBooking();
+
     return (
         <div>
             <div className='mb-[35px] flex items-center  justify-between  text-2xl text-default'>
@@ -36,7 +36,7 @@ const WrapperBooking: FC<IWrapperBookingProps> = ({ stepKeyTranslation, isButton
                         disabled={!isButtonNextStep.active}
                     >
                         <span className='flex items-center gap-1'>
-                            Tiếp tục <ArrowBigRightDash />
+                            {t('Service.continue_btn')} <ArrowBigRightDash />
                         </span>
                     </button>
                 )}

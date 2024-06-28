@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { Progress } from '~/components/ui/progress';
 import { cn } from '~/lib/utils';
 
@@ -9,17 +10,19 @@ const Checkponit = ({ active, title }: { active: boolean; title: string }) => {
                 ['bg-pink-700 ']: active,
             })}
         >
-            <span className='absolute top-7 -translate-x-[40%]'>{title}</span>
+            <span className='absolute top-7 w-[100px] -translate-x-[40%] text-center'>{title}</span>
         </div>
     );
 };
 
 const ItemLine = ({ active, last, title }: { active: boolean; last?: boolean; title: string }) => {
+    const t = useTranslations('StepBooking');
+
     return (
         <div className='relative flex w-full items-center justify-center'>
-            <Checkponit active={active} title={title} />{' '}
+            <Checkponit active={active} title={title} />
             <Progress value={active ? 100 : 0} className='-ml-3 bg-default' />
-            {last && <Checkponit active={active} title={'done'} />}
+            {last && <Checkponit active={active} title={t('Timeline.Done')} />}
         </div>
     );
 };
