@@ -23,6 +23,7 @@ import {
 import { Input } from '~/components/ui/input';
 import AdminNotificationCard from '~/components/elements/AdminNotificationCard';
 import useLogout from '~/hooks/useLogout';
+import BreadCrumbComponent from '~/components/_common/Breadcrumb';
 
 const AdminNavbar = ({
     setIsOpenSideBar,
@@ -41,29 +42,15 @@ const AdminNavbar = ({
                     onClick={() => setIsOpenSideBar(true)}
                     className='ms-4 block cursor-pointer hover:opacity-45  xl:hidden'
                 />
-                <div className='mx-auto flex w-full  flex-nowrap items-center justify-between px-4 py-1 '>
-                    <nav className='hidden sm:block'>
-                        <Breadcrumb>
-                            <BreadcrumbList className='flex-nowrap'>
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink href='/'>Pages</BreadcrumbLink>
-                                </BreadcrumbItem>
-
-                                <BreadcrumbSeparator>
-                                    <Slash />
-                                </BreadcrumbSeparator>
-
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink href='/'>Dashboard</BreadcrumbLink>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
+                <div className='mx-auto flex w-full flex-nowrap items-center justify-between px-4 py-1 '>
+                    <nav className='hidden w-1/2 sm:block'>
+                        <BreadCrumbComponent />
 
                         <h6 className='mb-0 font-bold capitalize'>Dashboard</h6>
                     </nav>
 
                     {/* css grow */}
-                    <div className='mt-2 flex w-full items-center justify-end sm:mr-6 sm:mt-0 md:mr-0 lg:flex lg:basis-auto'>
+                    <div className='mt-2 flex w-1/2 items-center justify-end sm:mr-6 sm:mt-0 md:mr-0 lg:flex lg:basis-auto'>
                         <div className='w-full items-center sm:w-[unset] md:ml-auto md:pr-4'>
                             <form>
                                 <div className=' flex items-center justify-center rounded-lg bg-content px-2'>
