@@ -9,6 +9,7 @@ import {
     AlertDialogTrigger,
 } from '~/components/ui/alert-dialog';
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 type IAlerdialogProps = {
     children: React.ReactNode;
@@ -22,6 +23,7 @@ type IAlerdialogProps = {
 };
 
 export default function AlertDialogConfirm({ children, handleConfirm, content, type }: IAlerdialogProps) {
+    const t = useTranslations('Table');
     return (
         <>
             <AlertDialog>
@@ -49,12 +51,12 @@ export default function AlertDialogConfirm({ children, handleConfirm, content, t
                     <AlertDialogFooter>
                         {handleConfirm && (
                             <>
-                                <AlertDialogCancel className='bg-card'>Không</AlertDialogCancel>
+                                <AlertDialogCancel className='bg-card'>{t('Store.confirm.no')}</AlertDialogCancel>
                                 <AlertDialogAction
                                     className='bg-red-500'
                                     onClick={() => handleConfirm(content.idContent)}
                                 >
-                                    Chắc Chắn
+                                    {t('Store.confirm.yes')}
                                 </AlertDialogAction>
                             </>
                         )}

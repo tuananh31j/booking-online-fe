@@ -5,6 +5,7 @@ import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
 import FormService from './FormService';
 import TableCell from '../../_components/TableCell';
+import { useTranslations } from 'next-intl';
 
 type IServiceRowProps = {
     index: number;
@@ -18,9 +19,9 @@ type IServiceRowProps = {
     handleDeleteService: (id: number) => void;
 };
 
-const ORDER_COLUMN_NAMES = ['#', 'Name', 'Category', 'Description', 'Price', 'Actions'];
-
 const ServiceRow: FC<IServiceRowProps> = ({ index, id, name, category, describe, price, handleDeleteService }) => {
+    const t = useTranslations('Table');
+
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
     const [catID, setCatID] = useState(0);
     useEffect(() => {
@@ -50,8 +51,8 @@ const ServiceRow: FC<IServiceRowProps> = ({ index, id, name, category, describe,
                 <AlertDialogConfirm
                     handleConfirm={handleDeleteService}
                     content={{
-                        title: 'Bạn có chắc chắn không?',
-                        description: 'Bạn có muốn xóa sản phẩm này không khi xóa sẽ không thể khổi phục',
+                        title: t('Service.confirm.title'),
+                        description: t('Service.confirm.description'),
                         idContent: id,
                     }}
                 >
@@ -62,4 +63,4 @@ const ServiceRow: FC<IServiceRowProps> = ({ index, id, name, category, describe,
     );
 };
 
-export { ORDER_COLUMN_NAMES, ServiceRow };
+export { ServiceRow };

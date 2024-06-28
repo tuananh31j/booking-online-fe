@@ -1,14 +1,19 @@
 'use client';
 
 import { formatDate } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import { USER_COLUMN_NAMES, UserRow } from '~/components/_common/TableDisplay/Rows';
+import { UserRow } from '~/components/_common/TableDisplay/Rows';
 import FormStaff from '~/components/_common/TableDisplay/Rows/Staff/FormStaff';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import { StaffTableColumnName } from '~/schemas/StaffTableColumnName';
 import { useDeleteStaffMutation, useGetListStaffQuery } from '~/store/services/staff.service';
 
 const StaffListManager = () => {
+    const t = useTranslations('Table.Staff');
+    const STAFF_COLUMN_NAMES = StaffTableColumnName(t);
+
     const { data } = useGetListStaffQuery();
     const toast = useToastDisplay();
     const [mutate, { isSuccess, isError }] = useDeleteStaffMutation();
@@ -18,18 +23,19 @@ const StaffListManager = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            toast({ title: 'Xóa cửa hàng thành công', status: 'success' });
+            toast({ title: t('delete.success'), status: 'success' });
         }
         if (isError) {
-            toast({ title: 'Xóa cửa hàng thất bại', status: 'destructive' });
+            toast({ title: t('delete.fail'), status: 'destructive' });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess, isError]);
 
     return (
         <TableDisplay
-            title='Danh sách nhân viên'
-            columnNames={USER_COLUMN_NAMES}
-            action={{ element: FormStaff, modalTitle: 'Thêm mới nhân viên' }}
+            title={t('title')}
+            columnNames={STAFF_COLUMN_NAMES}
+            action={{ element: FormStaff, modalTitle: t('modal_title') }}
         >
             {data?.data.data.map((item) => (
                 <UserRow

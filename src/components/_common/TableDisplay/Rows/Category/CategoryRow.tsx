@@ -4,6 +4,7 @@ import PopupModal from '~/components/_common/PopupModal';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import FormCategory from './FormCategoy';
 import TableCell from '../../_components/TableCell';
+import { useTranslations } from 'next-intl';
 
 type ICategoryRowProps = {
     id: number;
@@ -13,9 +14,9 @@ type ICategoryRowProps = {
     action: (id: number) => void;
 };
 
-const CATEGORY_COLUMN_NAMES = ['STT', 'Tên Danh mục', 'Thời gian tạo', 'Tùy chọn'];
-
 const CategoryRow: FC<ICategoryRowProps> = ({ index, id, name, createAt, action }) => {
+    const t = useTranslations('Table');
+
     return (
         <tr>
             <TableCell>{index}</TableCell>
@@ -27,8 +28,8 @@ const CategoryRow: FC<ICategoryRowProps> = ({ index, id, name, createAt, action 
                     <AlertDialogConfirm
                         handleConfirm={action}
                         content={{
-                            title: 'Bạn có chắc chắn không?',
-                            description: 'Bạn có muốn xóa danh mục này không khi xóa sẽ không thể khổi phục',
+                            title: t('Category.confirm.title'),
+                            description: t('Category.confirm.description'),
                             idContent: id,
                         }}
                     >
@@ -40,4 +41,4 @@ const CategoryRow: FC<ICategoryRowProps> = ({ index, id, name, createAt, action 
     );
 };
 
-export { CATEGORY_COLUMN_NAMES, CategoryRow };
+export { CategoryRow };

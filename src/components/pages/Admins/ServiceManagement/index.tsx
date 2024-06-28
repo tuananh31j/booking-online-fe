@@ -1,14 +1,19 @@
 'use client';
 
 import { formatDate } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import FormService from '~/components/_common/TableDisplay/Rows/Service/FormService';
-import { ORDER_COLUMN_NAMES, ServiceRow } from '~/components/_common/TableDisplay/Rows/Service/ServiceRow';
+import { ServiceRow } from '~/components/_common/TableDisplay/Rows/Service/ServiceRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
+import { ServiceTableColumnName } from '~/schemas/ServiceTableColumnName';
 import { useGetListCategoryQuery } from '~/store/services/category.service';
 import { useGetListServiceQuery, useRemoveServiceMutation } from '~/store/services/service.service';
 
 const ServiceManagement = () => {
+    const t = useTranslations('Table.Service');
+    const SERVICE_COLUMN_NAMES = ServiceTableColumnName(t);
+
     const { data, isLoading } = useGetListServiceQuery();
     const [mutate, { isLoading: PendingRemove }] = useRemoveServiceMutation();
     const handleDeleteService = (id: number) => {
@@ -19,9 +24,9 @@ const ServiceManagement = () => {
     return (
         <div>
             <TableDisplay
-                title='Service Management'
-                columnNames={ORDER_COLUMN_NAMES}
-                action={{ element: FormService, modalTitle: 'Thêm mới dịch vụ' }}
+                title={t('title')}
+                columnNames={SERVICE_COLUMN_NAMES}
+                action={{ element: FormService, modalTitle: t('modal_title') }}
             >
                 {!isLoading &&
                     !PendingRemove &&
@@ -42,7 +47,7 @@ const ServiceManagement = () => {
                             handleDeleteService={handleDeleteService}
                         />
                     ))}
-                {(isLoading || PendingRemove) && <RowSkeleton rows={3} cols={ORDER_COLUMN_NAMES.length} />}
+                {(isLoading || PendingRemove) && <RowSkeleton rows={3} cols={SERVICE_COLUMN_NAMES.length} />}
             </TableDisplay>
         </div>
     );

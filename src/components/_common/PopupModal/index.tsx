@@ -1,10 +1,7 @@
 'use client';
 
-import React, { FC, ReactNode, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-
+import React, { FC, ReactNode, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
-import { RootState, useAppDispatch } from '~/store/store';
 
 type IPopupModalProps = {
     btnName: string | React.ReactNode;
@@ -18,7 +15,6 @@ type IPopupModalProps = {
 // className is CSS for only dialogtrigger on line 26
 const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, children, id }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const dispatch = useAppDispatch();
     const handleOpen = () => {
         setIsOpen(!isOpen);
     };
@@ -27,7 +23,7 @@ const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, chi
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger className={className}>{btnName}</DialogTrigger>
 
-                <DialogContent className='w-96 sm:w-[700px]'>
+                <DialogContent className='min-w-[800px]'>
                     <DialogHeader>
                         <DialogTitle className='mb-4 text-2xl'>{title}</DialogTitle>
 

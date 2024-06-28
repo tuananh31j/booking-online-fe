@@ -19,7 +19,6 @@ const useLogin = () => {
     const t = useTranslations('Login');
 
     useEffect(() => {
-        console.log(loginState.isError);
         if (loginState.isSuccess) {
             dispatch(loginAction(loginState.data.data));
             handleMessage({ title: t('login_success'), status: 'success' });
