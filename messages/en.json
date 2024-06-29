@@ -134,9 +134,10 @@
     },
 
     "OrderSuccess": {
+        "title": "Your Booking's Information:",
         "idBooking": "Booking code",
         "locationStore": "Store Address",
-        "informationCustomer": "Booking customer information",
+        "informationCustomer": "Customer name",
         "email": "Email",
         "birthday": "Date of Birth",
         "informationService": "Service Information",
@@ -144,9 +145,19 @@
         "timedoneservice": "Expected Service Completion Time",
         "dateBooking": "Date of Service Booking",
         "timeBooking": "Hour",
-        "phonenumber": "Number Phone",
+        "phonenumber": "Contact",
         "AssignedStaff": "Assigned Staff",
-        "showStaff": "View Staff Details"
+        "showStaff": "View Staff Details",
+        "success": {
+            "title": "Thanks for chossing us!",
+            "desc": "has placed a booking on"
+        },
+        "emailStaff": "Staff's Email",
+        "nameStaff": "Staff's Name",
+        "totalServiceTime": "Total Service Time",
+        "createdOn": "Created on",
+        "serviceList": "Service List",
+        "totalPrice": "Total Price"
     },
 
     "SideBar": {
