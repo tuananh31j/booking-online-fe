@@ -2,26 +2,24 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { IUserResponse } from '~/types/User';
-import { never, z } from 'zod';
-// import { Form, SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormField } from '~/components/ui/form';
 
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
-import { Avatar, AvatarImage, Image } from '@radix-ui/react-avatar';
+import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { Button } from '~/components/ui/button';
 import clsx from 'clsx';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 import { Check, X } from 'lucide-react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useUpdateUserProfileMutation } from '~/store/services/user.service';
-import { useToast } from '~/components/ui/use-toast';
-import { title } from 'process';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import StaticImages from '~/static';
+import { Input } from '~/components/ui/input';
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 export default function FormProfile({
     onCloseModal,
@@ -40,28 +38,33 @@ export default function FormProfile({
         previewImage === userData.image
             ? z.any()
             : z
-                  .custom<FileList>((val) => val instanceof FileList, 'Required')
-                  .refine((files) => files?.length > 0, `Required`)
+                  .custom<FileList>((val) => val instanceof FileList, 'Required Image')
+                  .refine((files) => files?.length > 0, `Error Import Image`)
                   .refine(
                       (files) => Array.from(files).every((file) => file?.size <= MAX_FILE_SIZE),
                       `Each file size should be less than 5 MB.`
                   )
                   .refine(
                       (files) => Array.from(files).every((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type)),
-                      'Only these types are allowed .jpg, .jpeg, .png and .webp'
+                      'Only these types are allowed: .jpg, .jpeg, .png, and .webp'
                   );
 
+    const validateImage = (files: FileList) => {
+        const result = imageSchema.safeParse(files);
+        console.log(result);
+        return result.success;
+    };
+
     const FormProfileSchema = z.object({
-        // email: z.string().email('Email không hợp lệ!'),
         name: z
             .string({ required_error: 'Họ và tên không được để trống!' })
-            .min(3, { message: 'Họ và tên ít nhất phải có 2 ký tự !' }),
+            .min(2, { message: 'Họ và tên ít nhất phải có 2 ký tự!' }),
         phone: z
             .string({ required_error: 'Số điện thoại không được để trống!' })
-            .min(3, { message: 'Số điện thoại ít nhất phải có 9 ký tự !' }),
+            .min(9, { message: 'Số điện thoại ít nhất phải có 9 ký tự!' }),
         address: z
             .string({ required_error: 'Địa chỉ không được để trống!' })
-            .min(3, { message: 'Địa chỉ ít nhất phải có 10 ký tự !' }),
+            .min(10, { message: 'Địa chỉ ít nhất phải có 10 ký tự!' }),
         current_password: z
             .string({ required_error: 'Vui lòng nhập mật khẩu' })
             .min(6, { message: 'Password phải có ít nhất 6 ký tự!' }),
@@ -75,27 +78,30 @@ export default function FormProfile({
         resolver: zodResolver(FormProfileSchema),
         defaultValues: {
             name: userData.name,
-            // email: userData.email,
             phone: userData.phone,
             address: userData.address,
             image: undefined,
-            current_password: '12345678',
+            // current_password: '12345678',
         },
     });
 
     const onSubmit: SubmitHandler<IFormProfile> = async (data) => {
         const formData = new FormData();
 
-        if (!data.image) delete data.image;
-
         const image = data.image?.[0];
 
         formData.append('name', data.name);
         formData.append('address', data.address);
         formData.append('phone', data.phone);
-        formData.append('image', image);
         formData.append('current_password', data.current_password);
-        formData.append('new_password', data.new_password);
+
+        if (image !== undefined) {
+            formData.append('image', image);
+        }
+
+        if (data.new_password !== undefined) {
+            formData.append('new_password', data.new_password);
+        }
 
         updateProfile(formData);
     };
@@ -108,8 +114,7 @@ export default function FormProfile({
         }
 
         if (updateProfileState.isError) {
-            console.log(updateProfileState);
-            toast({ title: "updateProfileState.error.data.message.join(' - ')", status: 'destructive' });
+            toast({ title: 'Update profile thất bại!', status: 'destructive' });
         }
     }, [updateProfileState]);
 
@@ -149,7 +154,6 @@ export default function FormProfile({
                                     }}
                                     className='h-6 w-6 rounded-full bg-red-500 p-1 text-white hover:cursor-pointer'
                                 />
-                                {/* <Check className='h-6 w-6 rounded-full bg-green-500 p-1 text-white hover:cursor-pointer' /> */}
                             </div>
                         </div>
                         <AvatarImage
@@ -163,7 +167,7 @@ export default function FormProfile({
                             control={form.control}
                             name='image'
                             render={({ field: { onChange }, formState, fieldState, ...passField }) => (
-                                <FormItemDisplay
+                                <Input
                                     ref={inputRef}
                                     title='Image:'
                                     {...passField}
@@ -171,13 +175,10 @@ export default function FormProfile({
                                     onChange={(event) => {
                                         const inputElement = event.target as HTMLInputElement;
                                         if (inputElement.files) {
-                                            try {
-                                                const displayUrl = URL.createObjectURL(inputElement.files[0]);
-                                                setPreviewImage(displayUrl);
-                                                onChange(inputElement.files);
-                                            } catch (error) {
-                                                console.error('Unknown Error, can not choose new image!');
-                                            }
+                                            const displayUrl = URL.createObjectURL(inputElement.files[0]);
+                                            setPreviewImage(displayUrl);
+                                            onChange(inputElement.files);
+                                            validateImage(inputElement.files);
                                         }
                                     }}
                                 />
@@ -198,19 +199,7 @@ export default function FormProfile({
                             />
                         )}
                     />
-                    {/* <FormField
-                        control={form.control}
-                        name='email'
-                        render={({ field }) => (
-                            <FormItemDisplay
-                                title='Email'
-                                placeholder='Nhập địa chỉ email!'
-                                {...field}
-                                require
-                                type='email'
-                            />
-                        )}
-                    /> */}
+
                     <FormField
                         control={form.control}
                         name='phone'
@@ -266,11 +255,7 @@ export default function FormProfile({
                     />
 
                     <div className='flex flex-wrap items-center justify-between'>
-                        <Button
-                            type='submit'
-                            // onClick={() => onSubmit(form.getValues())}
-                            className='w-52 hover:opacity-90'
-                        >
+                        <Button type='submit' className='w-52 hover:opacity-90'>
                             Submit
                         </Button>
 
