@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import MapIcon from '~/components/_common/Icons/map/Map';
 import PopupLocationDetails from '~/components/elements/PopupStoreDetails';
+import { Button } from '~/components/ui/button';
 import useBooking from '~/hooks/useBooking';
 // import PopupStaffProfile from '~/components/elements/PopupStaffProfile';
 import useToastDisplay from '~/hooks/useToastDisplay';
@@ -15,6 +16,10 @@ export default function OrderSuccess() {
     const router = useRouter();
 
     const toast = useToastDisplay();
+
+    const hangleClick = () => {
+        router.replace('/');
+    };
     useEffect(() => {
         if (!booked) {
             resetStepBooking();
@@ -28,7 +33,8 @@ export default function OrderSuccess() {
     }, []);
     return (
         <>
-            <div className='mb-4'>
+            <div className='mb-4 flex items-center gap-2'>
+                <Button onClick={hangleClick}>Back home</Button>
                 <h3 className='text-2xl'>Thông tin đăng ký lịch đặt:</h3>
             </div>
             {booked && (
@@ -74,46 +80,37 @@ export default function OrderSuccess() {
                                 <span className='text-[#777777]'>{t('birthday')}:</span>
                                 <span className=' h-[35px] text-xl'>{booked.data.customer_date}</span>
                             </div>
-                            <div className='mt-2 h-[1px] w-full bg-card' />
+                            <h1 className='text-2xl'>Nhân viên: </h1>
+                            <div className='mt-4 flex flex-col gap-2'>
+                                <span className='text-[#777777]'>{t('emailStaff')}:</span>
+                                <span className=' h-[35px] text-xl'>{booked.data.staff_email}</span>
+                            </div>
+                            <div className='mt-4 flex flex-col gap-2'>
+                                <span className='text-[#777777]'>{t('nameStaff')}:</span>
+                                <span className=' h-[35px] text-xl'>{booked.data.staff_name}</span>
+                            </div>
+                            <div className='mt-4 flex flex-col gap-2'>
+                                <span className='text-[#777777]'>{t('birthday')}:</span>
+                                <span className=' h-[35px] text-xl'>{booked.data.staff_phone}</span>
+                            </div>
                         </div>
-                        <div className='w-[50%]'>
+                        <div className='h-[10vh] w-[50%]'>
                             <div className=' flex flex-col gap-2'>
                                 <span className='text-[#777777]'>{t('informationService')}:</span>
-                                <span className='h-[35px] text-xl'>Nail Care (Nail Care)</span>
+                                <span className='h-[35px] text-xl'>Tổng thời gian làm: {booked.data.total_time}</span>
+                                <span className='h-[35px] text-xl'>Ngày tạo đơn: {booked.data.date_order}</span>
+                                <span className='h-[35px] text-xl'>Tổng tiền: {booked.data.total_price}</span>
                             </div>
-                            <div className='mt-2 h-[1px] w-full bg-card' />
-                            <div className='mt-4 flex flex-col gap-2'>
-                                <span className='text-[#777777]'>{t('descService')}:</span>
-                                <span className='h-[35px] text-base'>
-                                    Do you want to have a manicure or pedicare? Please leave a note for us for better
-                                    service.
-                                </span>
+                            <div>
+                                <h1 className='text-2xl'>Danh sách dịch vụ:</h1>{' '}
+                                <ul className=' ml-10 flex list-disc flex-col gap-2'>
+                                    {booked.data.services.map((item) => (
+                                        <li key={item.id} className='h-[35px] text-xl'>
+                                            {item.name}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
-                            <div className='mt-2 h-[1px] w-full bg-card' />
-                            <div className='mt-4 flex flex-col gap-2'>
-                                <span className='text-[#777777]'>{t('timedoneservice')}:</span>
-                                <span className='h-[35px] text-xl'>1 tiếng 30 phút</span>
-                            </div>
-                            <div className='mt-2 h-[1px] w-full bg-card' />
-                            <div className='mt-4 flex justify-between'>
-                                <div className='flex flex-col gap-2'>
-                                    <span className='text-[#777777]'>{t('dateBooking')}:</span>
-                                    <span className='h-[35px] text-xl'>1/6/2024</span>
-                                </div>
-                                <div className='flex flex-col gap-2'>
-                                    <span className='text-[#777777]'>Thời gian:</span>
-                                    <span className='h-[35px] text-xl'>13:30</span>
-                                </div>
-                            </div>
-                            <div className='mt-2 h-[1px] w-full bg-card' />
-                            <div className='mt-4 flex items-center justify-between'>
-                                <div className='flex flex-col gap-2'>
-                                    <span className='text-[#777777]'>{t('AssignedStaff')}:</span>
-                                    <span className='h-[35px] text-xl'>Lương Chính Quốc</span>
-                                </div>
-                                <div>{/* <PopupStaffProfile /> */}</div>
-                            </div>
-                            <div className='mt-2 h-[1px] w-full bg-card' />
                         </div>
                     </div>
                 </div>
