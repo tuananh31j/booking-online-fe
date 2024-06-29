@@ -60,7 +60,7 @@ const ServiceRow: FC<IServiceRowProps> = ({
                     <PopupModal
                         btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
                         title="Change the service's information here"
-                        className='underline hover:text-blue-800'
+                        className='flex items-center underline hover:text-blue-800'
                         id={id}
                         Form={FormService}
                     />

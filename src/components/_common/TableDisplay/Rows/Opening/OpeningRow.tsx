@@ -57,6 +57,7 @@ const OpeningRow: FC<IOpeningRowProps> = ({
             <TableCell>
                 <PopupModal
                     btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
+                    className='flex items-center'
                     title="Change the service's information here"
                     id={id}
                     // Form={FormService}

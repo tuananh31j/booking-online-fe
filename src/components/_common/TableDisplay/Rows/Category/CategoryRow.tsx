@@ -26,6 +26,7 @@ const CategoryRow: FC<ICategoryRowProps> = ({ index, id, name, createAt, action 
                 <div className='flex items-center gap-2'>
                     <PopupModal
                         btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
+                        className='flex items-center'
                         id={id}
                         Form={FormCategory}
                         title='Chỉnh sửa thông tin danh mục'
