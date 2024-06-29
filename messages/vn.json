@@ -134,9 +134,10 @@
     },
 
     "OrderSuccess": {
+        "title": "Thông tin đặt lịch của bạn:",
         "idBooking": "Mã đặt lịch",
         "locationStore": "Địa chỉ cửa hàng đặt lịch",
-        "informationCustomer": "Thông tin người đặt lịch",
+        "informationCustomer": "Tên khách hàng",
         "email": "Email",
         "birthday": "Ngày sinh",
         "informationService": "Thông tin dịch vụ",
@@ -146,7 +147,17 @@
         "timeBooking": "Thời gian",
         "phonenumber": "Số điện thoại",
         "AssignedStaff": "Nhân viên thực hiện",
-        "showStaff": "Xem chi tiết nhân viên"
+        "showStaff": "Xem chi tiết nhân viên",
+        "success": {
+            "title": "Cảm ơn bạn đã đặt lịch!",
+            "desc": "đã đặt dịch vuh vào"
+        },
+        "emailStaff": "Email nhân viên",
+        "nameStaff": "Tên nhân viên",
+        "totalServiceTime": "Tổng thời gian dịch vụ",
+        "createdOn": "Ngày tạo",
+        "serviceList": "Danh sách dịch vụ",
+        "totalPrice": "Tổng tiền"
     },
 
     "SideBar": {

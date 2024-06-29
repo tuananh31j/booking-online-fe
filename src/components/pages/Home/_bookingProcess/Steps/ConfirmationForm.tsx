@@ -182,7 +182,7 @@ const ConfirmationForm = () => {
                     </li>
                     <li>
                         <div>
-                            <span className='font-bold'>{t('conf')}:</span>{' '}
+                            <span className='font-bold'>{t('confirm')}:</span>{' '}
                             <ul className='ml-10 list-disc'>
                                 <li>{bookingInfo.store?.name}</li>
                                 {bookingInfo.store?.phone && <li>{bookingInfo.store?.phone}</li>}
