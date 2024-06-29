@@ -49,7 +49,7 @@ const TimePicker = ({ day }: { day: string }) => {
                     }
                     return null;
                 })
-                .filter((index) => index !== null);
+                .filter((index): index is number => index !== null);
             setIsBookedIndexs(bookedIndexes);
         }
     }, [data]);
