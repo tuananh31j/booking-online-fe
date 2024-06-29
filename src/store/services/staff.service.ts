@@ -57,7 +57,6 @@ export const staffAPI = baseApi.injectEndpoints({
                 method: 'POST',
                 body: formData,
             }),
-            // invalidatesTags: [QUERY_KEY.SERVICE],
         }),
         getListStaffClient: builder.query<IApiResponse<{ data: IStaff[] }>, number>({
             query: (id) => ({ url: `${API_ENDPOINT.USER.LIST_STAFF_OF_STORE}?storeId=${id}` }),

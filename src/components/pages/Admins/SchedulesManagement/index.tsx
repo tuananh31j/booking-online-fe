@@ -18,7 +18,7 @@ export default function ScheduleManagement() {
         if (!isLoading) {
             setListSchedule(data?.data.data || []);
         }
-    }, [isLoading]);
+    }, [isLoading, data]);
     return (
         <div>
             <TableDisplay
@@ -47,7 +47,7 @@ export default function ScheduleManagement() {
                               startTime={item.start_time}
                               endTime={item.end_time}
                               createdAt={item.created_at}
-                              error={item.error}
+                              error={item.error || ''}
                               key={i}
                               index={i + 1}
                           />
