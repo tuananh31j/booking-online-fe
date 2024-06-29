@@ -5,40 +5,25 @@ import TableCell from '../../_components/TableCell';
 import { PencilIcon } from 'lucide-react';
 
 type IOrderRowProps = {
-    name: string;
-    phone: string;
-    date: string;
-    staffName: string;
-    storeName: string;
+    index: number;
+    day: string;
+    time: string;
     status: string;
-    totalPrice: string;
-    bookingId: number;
-    note: string;
+    storeName: string;
+    storeAddress: string;
 };
 
-const OrderRow: FC<IOrderRowProps> = ({
-    name,
-    phone,
-    date,
-    staffName,
-    storeName,
-    status,
-    totalPrice,
-    bookingId,
-    note,
-}) => {
+const OrderRow: FC<IOrderRowProps> = ({ index, day, time, status, storeName, storeAddress }) => {
     return (
         <tr>
-            <TableCell> {name}</TableCell>
-            <TableCell> {phone}</TableCell>
-            <TableCell> {date}</TableCell>
-            <TableCell> {staffName}</TableCell>
-            <TableCell> {storeName}</TableCell>
-            <TableCell> {status}</TableCell>
-            <TableCell> {totalPrice}</TableCell>
-            <TableCell> {note}</TableCell>
+            <TableCell>{index}</TableCell>
+            <TableCell>{day}</TableCell>
+            <TableCell>{time}</TableCell>
+            <TableCell>{status}</TableCell>
+            <TableCell>{storeName}</TableCell>
+            <TableCell>{storeAddress}</TableCell>
 
-            <TableCell>
+            {/* <TableCell>
                 <PopupModal
                     btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
                     className='flex items-center underline hover:text-blue-800'
@@ -46,7 +31,7 @@ const OrderRow: FC<IOrderRowProps> = ({
                     Form={FormOrder}
                     id={bookingId}
                 ></PopupModal>
-            </TableCell>
+            </TableCell> */}
         </tr>
     );
 };
