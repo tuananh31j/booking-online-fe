@@ -96,15 +96,9 @@ const AdminNavbar = ({
                                     </DropdownMenuTrigger>
 
                                     <DropdownMenuContent className='mr-5 w-56'>
-                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-
                                         <DropdownMenuSeparator />
 
-                                        <DropdownMenuGroup>
-                                            <DropdownMenuItem>Profile</DropdownMenuItem>
-                                            <DropdownMenuItem>Billing</DropdownMenuItem>
-                                            <DropdownMenuItem>Settings</DropdownMenuItem>
-                                        </DropdownMenuGroup>
+                                        <DropdownMenuGroup></DropdownMenuGroup>
 
                                         <DropdownMenuSeparator />
 

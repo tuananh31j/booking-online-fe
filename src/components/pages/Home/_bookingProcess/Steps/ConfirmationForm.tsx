@@ -60,6 +60,9 @@ const ConfirmationForm = () => {
             });
             // redirect('/ordersuccess');
             // router.push('/ordersuccess');
+            if (isSuccess) {
+                toast({ title: 'Confirm booking successfully!', status: 'success' });
+            }
             resetStepBooking();
         } catch (error) {
             console.log(error);

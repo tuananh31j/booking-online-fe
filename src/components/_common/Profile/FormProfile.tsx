@@ -18,6 +18,7 @@ import { useUpdateUserProfileMutation } from '~/store/services/user.service';
 import { useToast } from '~/components/ui/use-toast';
 import { title } from 'process';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import StaticImages from '~/static';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -153,10 +154,7 @@ export default function FormProfile({
                         </div>
                         <AvatarImage
                             className='h-32 w-32 rounded-full'
-                            src={
-                                previewImage ||
-                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YreOWfDX3kK-QLAbAL4ufCPc84ol2MA8Xg&s'
-                            }
+                            src={previewImage || StaticImages.userImageDf}
                         />
                     </Avatar>
 

@@ -145,7 +145,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                 );
                             }}
                         />
-                        <div className='grid grid-cols-2 gap-3'>
+                        <div className='md:grid md:grid-cols-2 md:gap-3'>
                             <div className='flex flex-col items-center'>
                                 <FormField
                                     control={form.control}

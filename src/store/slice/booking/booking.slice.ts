@@ -49,6 +49,9 @@ const bookingSlice = createSlice({
                 state.booking.time = '';
                 state.progressObj.service = { ...state.progressObj.service, active: false };
             }
+            if (state.currentStep === Step.confirmBooking) {
+                state.progressObj.date = { ...state.progressObj.date, active: false };
+            }
             state.currentStep -= 1;
         },
         nextStep: (state) => {
@@ -61,7 +64,11 @@ const bookingSlice = createSlice({
             state.currentStep += 1;
         },
         resetStep: (state) => {
-            state = { ...initialState };
+            state.booking = initialState.booking;
+            state.currentStep = initialState.currentStep;
+            state.progressObj = initialState.progressObj;
+            state.servicesName = initialState.servicesName;
+            state.currentStoreInfo = initialState.currentStoreInfo;
         },
     },
 });

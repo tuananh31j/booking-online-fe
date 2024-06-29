@@ -31,8 +31,8 @@ const WrapperBooking: FC<IWrapperBookingProps> = ({ stepKeyTranslation, isButton
                         }}
                         className={cn(
                             {
-                                ['opacity-10']: !isButtonNextStep.active,
-                                ['rounded-md border border-transparent bg-pink-700 p-2 text-white duration-200']:
+                                ['hidden']: !isButtonNextStep.active,
+                                ['block rounded-md border  border-transparent bg-pink-700 p-2 text-white duration-200']:
                                     isButtonNextStep.active,
                             },
                             'fixed bottom-14 right-40 z-50'

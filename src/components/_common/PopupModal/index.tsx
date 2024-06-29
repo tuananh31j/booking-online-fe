@@ -22,8 +22,7 @@ const PopupModal: FC<IPopupModalProps> = ({ btnName, title, className, Form, chi
         <div>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger className={className}>{btnName}</DialogTrigger>
-
-                <DialogContent className='min-w-[800px]'>
+                <DialogContent className='w-full max-w-[500px]'>
                     <DialogHeader>
                         <DialogTitle className='mb-4 text-2xl'>{title}</DialogTitle>
 

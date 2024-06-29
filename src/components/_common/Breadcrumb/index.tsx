@@ -36,13 +36,11 @@ const BreadCrumbComponent = () => {
                         <Fragment key={index}>
                             <BreadcrumbItem suppressHydrationWarning={true}>
                                 {!isLastPath ? (
-                                    <BreadcrumbLink suppressHydrationWarning={true}>
+                                    <BreadcrumbLink href={href} suppressHydrationWarning={true}>
                                         {isEditItem ? (
                                             <BreadcrumbPage suppressHydrationWarning={true}>{linkName}</BreadcrumbPage>
                                         ) : (
-                                            <Link href={href} suppressHydrationWarning={true}>
-                                                {linkName}
-                                            </Link>
+                                            <p suppressHydrationWarning={true}>{linkName}</p>
                                         )}
                                     </BreadcrumbLink>
                                 ) : (
