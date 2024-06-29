@@ -51,7 +51,7 @@ const API_ENDPOINT = {
         UPDATE: '/bookings', // @id
         DETAILS: '/bookings', // @id
         LIST: '/bookings',
-        REMOVE: '/bookings/delete', // @id
+        REMOVE: '/bookings', // @id
     },
     OPENING: {
         // thêm ngày h mở cửa theo id cửa hàng

@@ -4,14 +4,14 @@ import { Tabs } from '@radix-ui/react-tabs';
 import { CircleUserIcon, Clock, Database } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import BaseStore from '~/components/pages/Admins/StoreManagement/_components/BaseStore';
-import HourOpening from '~/components/pages/Admins/StoreManagement/_components/HourOpening';
-
-import LoadingButton from '~/components/elements/LoadingButton';
 import { TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { useGetDetailStoreQuery } from '~/store/services/store.service';
+import BaseStore from './_components/BaseStore';
+import ManagerStaff from './_components/staff/ManegerStaff';
+import HourOpening from './_components/HourOpening';
+import LoadingButton from '~/components/elements/LoadingButton';
 
-export default function DetailStorePage({ params }: { params: { id: number } }) {
+export default function DetailStore({ params }: { params: { id: number } }) {
     const { data, isLoading, refetch } = useGetDetailStoreQuery(params.id);
     const detailStore = data?.data.data;
     return (
@@ -28,40 +28,41 @@ export default function DetailStorePage({ params }: { params: { id: number } }) 
                     </div>
                     <hr className='mt-2' />
                     <div className='mt-4'>
-                        <Tabs defaultValue='base' className='flex flex-wrap gap-5 md:flex-nowrap'>
-                            <TabsList className='flex w-full flex-col flex-wrap justify-start gap-5 md:w-[unset] md:flex-nowrap'>
+                        <Tabs defaultValue='base' className='flex gap-5'>
+                            <TabsList className='flex flex-col justify-start gap-5'>
                                 <TabsTrigger
-                                    className='flex w-fit max-w-80 items-center justify-start gap-5 bg-muted  text-xl text-default md:w-full'
+                                    className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
                                     value='base'
                                 >
                                     <Database />
-                                    <span className='hidden md:block'>Base</span>
+                                    Base
                                 </TabsTrigger>
 
                                 <TabsTrigger
-                                    className='flex w-fit max-w-80 items-center justify-start gap-5 bg-muted  text-xl text-default md:w-full'
-                                    value='password'
-                                >
-                                    <CircleUserIcon />
-                                    <span className='hidden md:block'> Edit Staff</span>
-                                </TabsTrigger>
-
-                                <TabsTrigger
-                                    className='flex w-fit max-w-80 items-center justify-start gap-5 bg-muted  text-xl text-default md:w-full'
+                                    className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
                                     value='opening'
                                 >
                                     <Clock />
-                                    <span className='hidden md:block'> Opening Hours</span>
+                                    Opening Hours
+                                </TabsTrigger>
+
+                                <TabsTrigger
+                                    className='flex w-full items-center justify-start gap-5  bg-muted text-xl text-default'
+                                    value='managerStaff'
+                                >
+                                    <CircleUserIcon />
+                                    manager Staff
                                 </TabsTrigger>
                             </TabsList>
-                            <div>
-                                <TabsContent value='base' className='w-full'>
-                                    {detailStore && <BaseStore store={detailStore} refetch={refetch} />}
-                                </TabsContent>
-                                <TabsContent value='opening' className='w-full'>
-                                    {detailStore && <HourOpening store={detailStore} />}
-                                </TabsContent>
-                            </div>
+                            <TabsContent value='base' className='w-full'>
+                                {detailStore && <BaseStore store={detailStore} refetch={refetch} />}
+                            </TabsContent>
+                            <TabsContent value='opening' className='w-full'>
+                                {detailStore && <HourOpening store={detailStore} />}
+                            </TabsContent>
+                            <TabsContent value='managerStaff' className='w-full'>
+                                {detailStore && <ManagerStaff store={detailStore} />}
+                            </TabsContent>
                         </Tabs>
                     </div>
                 </div>
