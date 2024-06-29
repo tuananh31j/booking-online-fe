@@ -46,11 +46,11 @@ export function ModeToggle({ className }: { className?: string }) {
                     </DropdownMenuItem>
                 )}
 
-                {!isAuth && (
+                {/* {!isAuth && (
                     <DropdownMenuItem>
                         <Link href={'/login'}>{t('ThemeMode.login')}</Link>
                     </DropdownMenuItem>
-                )}
+                )} */}
             </DropdownMenuContent>
         </DropdownMenu>
     );
