@@ -34,9 +34,11 @@ const OrderManagement = () => {
                     />
                 ))}
                 {listOrder.length <= 0 && (
-                    <td colSpan={7} className='text-center text-amber-500'>
-                        {t('empty_table')}
-                    </td>
+                    <tr>
+                        <td colSpan={7} className='text-center text-amber-500'>
+                            {t('empty_table')}
+                        </td>
+                    </tr>
                 )}
             </TableDisplay>
         </div>

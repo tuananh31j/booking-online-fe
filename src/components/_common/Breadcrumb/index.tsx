@@ -23,8 +23,8 @@ const BreadCrumbComponent = () => {
                     <BreadcrumbLink href='/admin' asChild>
                         Home
                     </BreadcrumbLink>
-                </BreadcrumbItem> */}
-                {/* {pathNames.length > 0 && <BreadcrumbSeparator />} */}
+                </BreadcrumbItem>
+                {pathNames.length > 0 && <BreadcrumbSeparator />} */}
 
                 {pathNames.map((pathName: string, index: number) => {
                     const href: string = `/${pathNames.slice(0, index + 1).join('/')}`;
@@ -34,17 +34,13 @@ const BreadCrumbComponent = () => {
 
                     return (
                         <Fragment key={index}>
-                            <BreadcrumbItem suppressHydrationWarning={true}>
+                            <BreadcrumbItem>
                                 {!isLastPath ? (
-                                    <BreadcrumbLink href={href} suppressHydrationWarning={true}>
-                                        {isEditItem ? (
-                                            <BreadcrumbPage suppressHydrationWarning={true}>{linkName}</BreadcrumbPage>
-                                        ) : (
-                                            <p suppressHydrationWarning={true}>{linkName}</p>
-                                        )}
+                                    <BreadcrumbLink href={href}>
+                                        {isEditItem ? <BreadcrumbPage>{linkName}</BreadcrumbPage> : <p>{linkName}</p>}
                                     </BreadcrumbLink>
                                 ) : (
-                                    <BreadcrumbPage suppressHydrationWarning={true}>{linkName}</BreadcrumbPage>
+                                    <BreadcrumbPage>{linkName}</BreadcrumbPage>
                                 )}
                             </BreadcrumbItem>
 

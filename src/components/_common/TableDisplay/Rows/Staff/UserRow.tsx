@@ -122,6 +122,7 @@ const UserRow: FC<IUserRowProps> = ({
                 <div className='flex items-center gap-2'>
                     <PopupModal
                         btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
+                        className='flex items-center'
                         Form={FormStaff}
                         id={id}
                         title='Chỉnh sửa thông tin nhân viên'
@@ -139,17 +140,15 @@ const UserRow: FC<IUserRowProps> = ({
                         </AlertDialogConfirm>
                     )}
                     {id === user.id && (
-                        <div>
-                            <AlertDialogConfirm
-                                content={{
-                                    title: 'Bạn không được phép!',
-                                    description: 'Bạn đang đăng nhập ở tài khoản này không thể xóa tài khoản này',
-                                    idContent: id,
-                                }}
-                            >
-                                <Trash2Icon className='h-4 w-4 cursor-pointer duration-300 hover:text-red-500' />
-                            </AlertDialogConfirm>
-                        </div>
+                        <AlertDialogConfirm
+                            content={{
+                                title: 'Bạn không được phép!',
+                                description: 'Bạn đang đăng nhập ở tài khoản này không thể xóa tài khoản này',
+                                idContent: id,
+                            }}
+                        >
+                            <Trash2Icon className='cursor-pointer duration-300 hover:text-red-500' />
+                        </AlertDialogConfirm>
                     )}
                 </div>
             </TableCell>
