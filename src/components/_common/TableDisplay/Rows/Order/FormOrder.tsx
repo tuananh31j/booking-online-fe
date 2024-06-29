@@ -6,26 +6,57 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import ButtonSubmit from '~/components/_common/ButtonSubmit';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
+import { useUpdateBookingStatusMutation } from '~/store/services/booking.service';
+import useToastDisplay from '~/hooks/useToastDisplay';
+import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 
-const FormUpdateOrderSchema = z.object({
-    status: z.string({ required_error: 'Vui lòng chọn cửa hàng!' }),
-});
+const FormOrder = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
+    const t = useTranslations('Table.Booking');
+    const toast = useToastDisplay();
 
-type IFormStatusSchema = z.infer<typeof FormUpdateOrderSchema>;
+    const [updateStatus, updateStatusState] = useUpdateBookingStatusMutation();
 
-const FormOrder = ({ onCloseModal }: { onCloseModal: () => void }) => {
-    const form = useForm<IFormStatusSchema>({ resolver: zodResolver(FormUpdateOrderSchema) });
+    const FormUpdateOrderSchema = z.object({
+        status: z.string({ required_error: 'Please choose!' }),
+    });
+
+    type IFormStatusSchema = z.infer<typeof FormUpdateOrderSchema>;
+
+    const form = useForm<IFormStatusSchema>({
+        resolver: zodResolver(FormUpdateOrderSchema),
+    });
+
     const onSubmit: SubmitHandler<IFormStatusSchema> = async (data) => {
-        await new Promise((resolve) => {
-            setTimeout(resolve, 1000);
-        });
         try {
-            console.log(data);
-            onCloseModal();
+            const bookingId = id;
+
+            const req = {
+                bodyReq: {
+                    status: data.status,
+                },
+                id: bookingId,
+            };
+
+            updateStatus(req);
         } catch (error) {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        if (updateStatusState.isSuccess) {
+            toast({ title: t('update.success'), status: 'success' });
+
+            onCloseModal();
+        }
+        if (updateStatusState.isError) {
+            toast({ title: t('update.fail'), status: 'destructive' });
+            onCloseModal();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [updateStatusState]);
+
     return (
         <div className='mx-auto flex w-[30vw] flex-col justify-center'>
             <Form {...form}>
@@ -36,20 +67,24 @@ const FormOrder = ({ onCloseModal }: { onCloseModal: () => void }) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>
-                                    Trạng thái <span className='text-[#e41a0f]'>*</span>
+                                    Status <span className='text-[#e41a0f]'>*</span>
                                 </FormLabel>
+
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger>
-                                            <SelectValue placeholder='Cập nhật trạng thái' />
+                                            <SelectValue placeholder='Update status' />
                                         </SelectTrigger>
                                     </FormControl>
+
                                     <SelectContent>
-                                        <SelectItem value='m@example.com'>Pending</SelectItem>
-                                        <SelectItem value='m@google.com'>Confirmed</SelectItem>
-                                        <SelectItem value='m@support.com'>Done</SelectItem>
+                                        <SelectItem value='doing'>Doing</SelectItem>
+                                        <SelectItem value='confirmed'>Confirm</SelectItem>
+                                        <SelectItem value='done'>Done</SelectItem>
+                                        <SelectItem value='canceled'>Cancel</SelectItem>
                                     </SelectContent>
                                 </Select>
+
                                 <FormMessage />
                             </FormItem>
                         )}

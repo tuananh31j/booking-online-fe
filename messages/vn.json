@@ -206,6 +206,11 @@
             "title": "Danh Sách Booking",
             "empty_table": "Hiện chưa có booking nào!",
 
+            "update": {
+                "success": "Cập nhật trạng thái thành công!",
+                "fail": "Cập nhật trạng thái thất bại!"
+            },
+
             "confirm": {
                 "title": "Bạn có chắc chắn không?",
                 "description": "Khi đã xóa sẽ không thể khổi phục!",

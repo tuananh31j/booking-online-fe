@@ -206,6 +206,11 @@
             "title": "List of Bookings",
             "empty_table": "There are no bookings at the moment!",
 
+            "update": {
+                "success": "Status Updated Successfully!",
+                "fail": "Status Update Failed!"
+            },
+
             "confirm": {
                 "title": "Are you sure?",
                 "description": "Cannot recover once deleted!",

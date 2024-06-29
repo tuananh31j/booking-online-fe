@@ -42,8 +42,9 @@ const OrderRow: FC<IOrderRowProps> = ({
                 <PopupModal
                     btnName={<PencilIcon className='cursor-pointer duration-300 hover:text-blue-500' />}
                     className='flex items-center underline hover:text-blue-800'
-                    title="Change the order's information here"
+                    title="Update Booking's Status"
                     Form={FormOrder}
+                    id={bookingId}
                 ></PopupModal>
             </TableCell>
         </tr>

@@ -48,7 +48,7 @@ const API_ENDPOINT = {
     },
     BOOKING: {
         ADD: '/client/store_booking',
-        EDIT: '/bookings/update', // @id
+        UPDATE: '/bookings', // @id
         DETAILS: '/bookings', // @id
         LIST: '/bookings',
         REMOVE: '/bookings/delete', // @id
