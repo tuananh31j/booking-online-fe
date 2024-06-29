@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LoadingButton from '~/components/elements/LoadingButton';
@@ -22,7 +22,6 @@ const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: num
     const t = useTranslations('Table.Category');
     const [createCategory, createCategoryState] = useCreateCategoryMutation();
     const [updateCategory, updateCategoryState] = useEditCategoryMutation();
-    const isFirstRender = useRef(true);
     const { data: detail } = useGetDetailCategoryQuery(id, { skip: !id });
     const toast = useToastDisplay();
     const detailCategory = detail?.data;
@@ -40,12 +39,12 @@ const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: num
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
             if (!id) {
-                await createCategory(data);
+                await createCategory(data).unwrap();
             } else {
                 await updateCategory({
                     name: data.name,
                     id,
-                });
+                }).unwrap();
             }
         } catch (error) {
             console.error('Error message:', error);
@@ -56,10 +55,11 @@ const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: num
             form.reset({
                 name: detailCategory.data.name,
             });
+        } else {
+            form.reset();
         }
-    }, [detailCategory, form, id]);
+    }, [detailCategory, form, id, detail]);
     useEffect(() => {
-        console.log('isFirstRender', isFirstRender.current);
         if (createCategoryState?.isError) {
             const { error } = createCategoryState;
             if (isCategoryError(error)) {

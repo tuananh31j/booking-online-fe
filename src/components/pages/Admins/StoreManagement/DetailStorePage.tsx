@@ -11,7 +11,7 @@ import LoadingButton from '~/components/elements/LoadingButton';
 import { TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { useGetDetailStoreQuery } from '~/store/services/store.service';
 
-export default function DetailStore({ params }: { params: { id: number } }) {
+export default function DetailStorePage({ params }: { params: { id: number } }) {
     const { data, isLoading, refetch } = useGetDetailStoreQuery(params.id);
     const detailStore = data?.data.data;
     return (

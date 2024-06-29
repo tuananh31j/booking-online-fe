@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { Trash2Icon } from 'lucide-react';
+import { Cog, Trash2Icon } from 'lucide-react';
 import { FC, useEffect, useState } from 'react';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
 // eslint-disable-next-line import/no-cycle
@@ -61,7 +61,7 @@ const StoreRow: FC<IStoreRowProps> = ({ id, no, name, address, phone, createAt, 
                         href={`store/edit/[id]`}
                         as={`store/edit/${id}`}
                     >
-                        Settings
+                        <Cog />
                     </Link>
                     <AlertDialogConfirm
                         handleConfirm={action}

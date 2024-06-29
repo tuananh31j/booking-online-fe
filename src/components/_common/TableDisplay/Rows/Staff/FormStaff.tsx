@@ -28,7 +28,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const [isSaveImage, setIsSaveImage] = useState<boolean>(true);
 
     const toast = useToastDisplay();
-    const { data: storeData, isLoading } = useGetListStoreQuery();
+    const { data: storeData } = useGetListStoreQuery();
     const stores = storeData?.data?.data;
 
     const [createStaff, createStaffState] = useCreateStaffMutation();
@@ -171,6 +171,12 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                     });
                 }
             }
+        }
+        if (createStaffState.isError) {
+            toast({
+                title: `${!id ? t('add.error') : t('edit.error')}`,
+                status: 'destructive',
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createStaffState, id, detailStaff, updateStaffState]);

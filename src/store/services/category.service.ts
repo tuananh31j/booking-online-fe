@@ -12,6 +12,15 @@ export const categoryApi = baseApi.injectEndpoints({
         }),
         getDetailCategory: builder.query<IApiResponse<{ data: ICategoryItem }>, number | undefined>({
             query: (id) => `${API_ENDPOINT.CATEGORY.DETAILS}/${id}`,
+            providesTags: (result) => (result ? [{ type: 'Category', id: result.data.data.id }] : []),
+        }),
+        editCategory: builder.mutation<IApiResponse<ICategoryResponse>, { name: string; id: number }>({
+            query: ({ name, id }) => ({
+                url: `${API_ENDPOINT.CATEGORY.EDIT}/${id}`,
+                method: 'PUT',
+                body: { name },
+            }),
+            invalidatesTags: (result) => (result ? [{ type: 'Category', id: result.data.data.id }] : []),
         }),
         removeCategory: builder.mutation<object, number>({
             query: (id) => ({
@@ -25,14 +34,6 @@ export const categoryApi = baseApi.injectEndpoints({
                 url: `${API_ENDPOINT.CATEGORY.ADD}`,
                 method: 'POST',
                 body: name,
-            }),
-            invalidatesTags: [QUERY_KEY.CATEGORIES],
-        }),
-        editCategory: builder.mutation<IApiResponse<ICategoryResponse>, { name: string; id: number }>({
-            query: ({ name, id }) => ({
-                url: `${API_ENDPOINT.CATEGORY.EDIT}/${id}`,
-                method: 'PUT',
-                body: { name },
             }),
             invalidatesTags: [QUERY_KEY.CATEGORIES],
         }),

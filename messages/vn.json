@@ -71,14 +71,22 @@
             "label": "Ghi chú",
             "placeholder": "Nhập ghi chú"
         },
-        "confirm": "Xác nhận"
+        "confirm": "Xác nhận",
+        "store": "Cửa hàng",
+        "pickedDate": "Lịch hẹn",
+        "hour": "Lúc",
+        "staff": "Thông tin nhân viên",
+        "services": "Các dịch vụ bao gồm"
     },
 
     "Calendar": {
         "confirm": "Xác nhận",
         "validate": "Bạn chưa chọn ngày đặt lịch!",
         "unavailable": "Đã kín lịch",
-        "available": "Còn trống"
+        "available": "Còn trống",
+        "date_is_not_valid": "Nhân viên chưa có giờ làm!",
+        "annotation": "Chú thích",
+        "rejectPickTime": "Vui lòng chọn giờ khác!"
     },
 
     "StepBooking": {
@@ -221,7 +229,7 @@
         "Staff": {
             "title": "Danh Sách Nhân Viên",
             "modal_title": "Thêm Mới Nhân Viên",
-
+            "error": "Vui lòng kiểm tra lại thông tin!",
             "add": {
                 "success": "Thêm nhân viên thành công!",
                 "fail": "Thêm nhân viên thất bại!"

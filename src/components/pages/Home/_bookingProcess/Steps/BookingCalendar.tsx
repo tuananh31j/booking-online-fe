@@ -25,7 +25,6 @@ const BookingCalendar = () => {
     // @side effect
     useEffect(() => {
         const specialDays = listWorkSchedule?.data.data.schedules.map((item) => new Date(item.day));
-        console.log('ddddddddđobject');
         if (specialDays) {
             setDateValid(specialDays);
         }
@@ -59,7 +58,7 @@ const BookingCalendar = () => {
         >
             <div className='relative'>
                 <div className='absolute'>
-                    <p>Chú thích:</p>
+                    <p>{t('annotation')}:</p>
                     <div className='my-4 flex items-center gap-2'>
                         <div className='h-7 w-7 rounded-sm border border-transparent bg-green-800'></div>
                         <span>Recommend</span>
@@ -116,6 +115,7 @@ const BookingCalendar = () => {
                         )}
                     </>
                 )}
+                {!listWorkSchedule && <p className='text-center'>{t('date_is_not_valid')}</p>}
             </div>
         </WrapperBooking>
     );

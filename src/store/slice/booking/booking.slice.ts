@@ -5,6 +5,7 @@ import { Step } from '~/constants/enums';
 import { IStore } from '~/types/Store';
 import { IDatePayload, initialState, IPlayloadServices } from './booking.slice.type';
 import { IStaff } from '~/types/Staff';
+import { IBookingResponse } from '~/types/Booking';
 
 const bookingSlice = createSlice({
     name: 'booking',
@@ -34,6 +35,9 @@ const bookingSlice = createSlice({
         chooseDate: (state, action: PayloadAction<IDatePayload>) => {
             state.booking.day = action.payload.day;
             state.booking.time = action.payload.time;
+        },
+        setBooking: (state, action: PayloadAction<IBookingResponse>) => {
+            state.booked = action.payload;
         },
         backStep: (state) => {
             if (state.currentStep === Step.chooseStaff) {
@@ -74,8 +78,17 @@ const bookingSlice = createSlice({
 });
 
 // export action
-export const { chooseDate, chooseService, chooseStaff, chooseStore, backStep, resetStep, nextStep, getNameServices } =
-    bookingSlice.actions;
+export const {
+    chooseDate,
+    chooseService,
+    chooseStaff,
+    chooseStore,
+    backStep,
+    resetStep,
+    nextStep,
+    getNameServices,
+    setBooking,
+} = bookingSlice.actions;
 
 // export reducer
 export default bookingSlice;

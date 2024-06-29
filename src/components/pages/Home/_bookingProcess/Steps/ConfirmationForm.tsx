@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -27,46 +28,44 @@ const bookingConfirmSchema = z.object({
 type IBookingConfirmSchema = z.infer<typeof bookingConfirmSchema>;
 
 const ConfirmationForm = () => {
-    const toast = useToastDisplay();
-    const { bookingInfo, servicesName, resetStepBooking } = useBooking();
-    const [createBooking, { isSuccess, isError, error: createBookingError, isLoading }] = useCreateBookingMutation();
     const t = useTranslations('ConfirmBookingForm');
+    const { bookingInfo, servicesName, submitconfirm, resetStepBooking } = useBooking();
+    const toast = useToastDisplay();
+    const router = useRouter();
+
+    // @query
+    const [createBooking, { isSuccess, isError, error: createBookingError, isLoading }] = useCreateBookingMutation();
     const form = useForm<IBookingConfirmSchema>({ resolver: zodResolver(bookingConfirmSchema) });
-    const fakeData = {
-        user_id: 6,
-        time: '16:00:00',
-        service_ids: [
-            {
-                id: 1,
-            },
-        ],
-        day: '2024-08-03',
-    };
+
     const onSubmit: SubmitHandler<IBookingConfirmSchema> = async (data) => {
         await new Promise((resolve) => {
             setTimeout(resolve, 500);
         });
-        try {
-            createBooking({
-                customer_name: data.fullName,
-                customer_date: data.date,
-                customer_phone: data.phone,
-                customer_note: data.note,
-                customer_email: data.email,
-                user_id: bookingInfo.user!.id,
-                time: bookingInfo.time,
-                service_ids: bookingInfo.service_ids,
-                day: bookingInfo.day,
-            });
-            // redirect('/ordersuccess');
-            // router.push('/ordersuccess');
-            if (isSuccess) {
+        const booking = {
+            customer_name: data.fullName,
+            customer_date: data.date,
+            customer_phone: data.phone,
+            customer_note: data.note,
+            customer_email: data.email,
+            user_id: bookingInfo.user!.id,
+            time: bookingInfo.time,
+            service_ids: bookingInfo.service_ids,
+            day: bookingInfo.day,
+        };
+        createBooking(booking)
+            .unwrap()
+            .then((booked) => {
+                if (booked) {
+                    console.log(booked);
+                    submitconfirm(booked.data);
+                    resetStepBooking();
+                }
+                router.replace('/ordersuccess');
                 toast({ title: 'Confirm booking successfully!', status: 'success' });
-            }
-            resetStepBooking();
-        } catch (error) {
-            console.log(error);
-        }
+            })
+            .catch((error) => {
+                console.error('Failed to edit category', error);
+            });
     };
     useEffect(() => {
         if (isBookingError(createBookingError)) {
@@ -158,16 +157,15 @@ const ConfirmationForm = () => {
                 <ul>
                     <li>
                         <div>
-                            <span className='font-bold'>Lịch hẹn ngày:</span>{' '}
-                            <span className=''>{bookingInfo.day}</span> <span className='font-bold'>lúc:</span>{' '}
-                            <span className=''>{bookingInfo.time}</span>
+                            <span className='font-bold'>{t('pickedDate')}:</span> <span>{bookingInfo.day}</span>{' '}
+                            <span className='font-bold'>{t('hour')}:</span> <span>{bookingInfo.time}</span>
                         </div>
                     </li>
                     <li>
                         <div>
-                            <span className='font-bold'>Thông tin nhân viên:</span>{' '}
+                            <span className='font-bold'>{t('staff')}:</span>{' '}
                             <ul className='ml-10 list-disc'>
-                                <li className=''>
+                                <li>
                                     <Image
                                         src={bookingInfo.user?.image || StaticImages.userImageDf}
                                         width={400}
@@ -176,25 +174,25 @@ const ConfirmationForm = () => {
                                         alt='avt'
                                     />
                                 </li>
-                                <li className=''>{bookingInfo.user?.name}</li>
-                                <li className=''>{bookingInfo.user?.phone}</li>
-                                <li className=''>{bookingInfo.user?.email}</li>
+                                <li>{bookingInfo.user?.name}</li>
+                                <li>{bookingInfo.user?.phone}</li>
+                                <li>{bookingInfo.user?.email}</li>
                             </ul>
                         </div>
                     </li>
                     <li>
                         <div>
-                            <span className='font-bold'>Thông tin cửa hàng:</span>{' '}
+                            <span className='font-bold'>{t('conf')}:</span>{' '}
                             <ul className='ml-10 list-disc'>
-                                <li className=''>{bookingInfo.store?.name}</li>
-                                {bookingInfo.store?.phone && <li className=''>{bookingInfo.store?.phone}</li>}
-                                <li className=''>{bookingInfo.store?.address}</li>
+                                <li>{bookingInfo.store?.name}</li>
+                                {bookingInfo.store?.phone && <li>{bookingInfo.store?.phone}</li>}
+                                <li>{bookingInfo.store?.address}</li>
                             </ul>
                         </div>
                     </li>
                     <li>
                         <div>
-                            <span className='font-bold'>Các dịch vụ bao gồm:</span>{' '}
+                            <span className='font-bold'>{t('services')}:</span>{' '}
                             <ul className='ml-10 list-disc'>
                                 {servicesName.map((item) => (
                                     <li key={item.id}>{item.name}</li>

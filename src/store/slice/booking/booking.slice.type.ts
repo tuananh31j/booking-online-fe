@@ -1,5 +1,5 @@
 import { Step } from '~/constants/enums';
-import { IBooking } from '~/types/Booking';
+import { IBooking, IBookingResponse } from '~/types/Booking';
 import { IStore } from '~/types/Store';
 
 export type IItemProgress = {
@@ -23,10 +23,12 @@ export type IInittialStateBooking = {
     servicesName: { id: number; name: string }[];
     progressObj: IProgressObj;
     currentStep: Step;
+    booked: IBookingResponse | null;
     currentStoreInfo: IStore | null;
 };
 export const initialState: IInittialStateBooking = {
     servicesName: [],
+    booked: null,
     progressObj: {
         store: {
             active: false,
@@ -57,6 +59,11 @@ export const initialState: IInittialStateBooking = {
         day: '',
         time: '',
         service_ids: [],
+        customer_name: '',
+        customer_date: '',
+        customer_phone: '',
+        customer_note: '',
+        customer_email: '',
     },
     currentStep: Step.chooseStore,
 };

@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable no-plusplus */
+
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
@@ -7,16 +9,25 @@ import useBooking from '~/hooks/useBooking';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useGetListHoursValidQuery } from '~/store/services/staff.service';
 
-function generateArray(n: number, m: number, prev?: boolean): number[] {
+function generateArray(index: number, total: number, prev?: boolean): number[] {
     const result: number[] = [];
     // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < m; i++) {
+    for (let i = 0; i < total; i++) {
         if (prev) {
-            result.push(n - i);
+            result.push(index - i);
+        } else {
+            result.push(index + i);
         }
-        result.push(n + i);
     }
     return result;
+}
+function checkArrayIntersection(arr1: number[], arr2: number[]): boolean {
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr2.includes(arr1[i])) {
+            return true;
+        }
+    }
+    return false;
 }
 const TimePicker = ({ day }: { day: string }) => {
     const t = useTranslations('Calendar');
@@ -28,11 +39,12 @@ const TimePicker = ({ day }: { day: string }) => {
     const [pickHour, setPickHour] = useState<{ hour: string; indexs: number[] }>();
     const { data } = useGetListHoursValidQuery({ userId: bookingInfo.user!.id, day });
     const handlePickHour = ({ hour, index }: { hour: string; index: number }) => {
-        const isBookedNext = isBookedIndexs.includes(index + totalServices);
-        const isBookedPrev = isBookedIndexs.includes(index - totalServices);
+        const isBookedNext = checkArrayIntersection(generateArray(index, totalServices), isBookedIndexs);
+        const isBookedPrev = checkArrayIntersection(generateArray(index, totalServices, true), isBookedIndexs);
+        console.log(index, isBookedPrev, 'nêfff', generateArray(index, totalServices, true));
         if (isBookedNext) {
             if (isBookedPrev || index - totalServices < 0) {
-                return handleMessage({ title: 'Vui lòng chọn giờ khác!' });
+                return handleMessage({ title: t('rejectPickTime') });
             }
             chooseDateTime({ day, time: hour });
             return setPickHour({ hour, indexs: generateArray(index, totalServices, true) });

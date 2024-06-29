@@ -71,14 +71,22 @@
             "label": "Note",
             "placeholder": "Enter your note"
         },
-        "confirm": "Submit"
+        "confirm": "Submit",
+        "store": "Store",
+        "pickedDate": "Date",
+        "hour": "In",
+        "staff": "Staff",
+        "services": "Services"
     },
 
     "Calendar": {
         "confirm": "Confirm",
         "validate": "Please pick a date!",
         "unavailable": "Full",
-        "available": "available"
+        "available": "available",
+        "date_is_not_valid": "Employees don't have working hours yet!",
+        "annotation": "annotation",
+        "rejectPickTime": "Please choose another time!"
     },
 
     "StepBooking": {
@@ -221,7 +229,7 @@
         "Staff": {
             "title": "List of Staffs",
             "modal_title": "Add A New Staff",
-
+            "error": "Something wrong!",
             "add": {
                 "success": "Staff Added Successfully!",
                 "fail": "Staff Addition Failed!"
