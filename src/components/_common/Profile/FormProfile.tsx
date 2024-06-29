@@ -114,7 +114,6 @@ export default function FormProfile({
         }
 
         if (updateProfileState.isError) {
-            console.log(updateProfileState.error);
             toast({ title: 'Update profile thất bại!', status: 'destructive' });
         }
     }, [updateProfileState]);
