@@ -1,12 +1,11 @@
-'use client';
-
 import { redirect } from 'next/navigation';
-import useAuth from '~/hooks/useAuth';
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 export default function StaffRedirectToSchedules() {
-    const { isAuth } = useAuth();
+    const isAuth = cookies.get('accessToken');
     if (!isAuth) {
-        return redirect('/login');
+        return redirect('/404');
     }
 
     return redirect('/staff/schedules');
