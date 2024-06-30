@@ -29,6 +29,7 @@ const API_ENDPOINT = {
         LIST_WORK_SCHEDULE: '/client/list-schedule',
         LIST_HOURS_VALID: '/client/list_time',
         SEE_OPENING_HOURS: '/user/see-opeening-hours',
+        LIST_BOOKING: '/bookings/list',
     },
     STORE: {
         ADD: '/stores',

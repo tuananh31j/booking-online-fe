@@ -229,7 +229,7 @@
                 "no": "Cancel"
             },
 
-            "columns": {
+            "admin-columns": {
                 "Customer_name": "Customer Name",
                 "Phone_number": "Contact",
                 "Date": "Date",
@@ -239,6 +239,15 @@
                 "Total_price": "Total Price",
                 "Note": "Note",
                 "Actions": "Options"
+            },
+
+            "staff-columns": {
+                "Day": "Day",
+                "Phone_number": "Contact",
+                "Status": "Status",
+                "Store_address": "Store address",
+                "Store_name": "Store name",
+                "Time": "Time"
             }
         },
 

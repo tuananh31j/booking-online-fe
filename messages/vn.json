@@ -239,6 +239,14 @@
                 "Total_price": "Tổng giá",
                 "Note": "Ghi chú",
                 "Actions": "Tùy chọn"
+            },
+
+            "staff-columns": {
+                "Day": "Ngày",
+                "Status": "Trạng thái",
+                "Store_address": "Địa chỉ",
+                "Store_name": "Tên cửa hàng",
+                "Time": "Thời gian"
             }
         },
 

@@ -2,33 +2,32 @@
 
 import { useTranslations } from 'next-intl';
 import { OrderRow } from '~/components/_common/TableDisplay/Rows/Order/OrderRow';
+import { StaffOrdersRow } from '~/components/_common/TableDisplay/Rows/Order/StaffOdersRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
-import { AdminBookingTableColumnName } from '~/schemas/BookingTableColumnName';
-import { useAdminGetBookingsListQuery } from '~/store/services/booking.service';
-import { IOderResponse } from '~/types/Order';
+import { StaffBookingTableColumnName } from '~/schemas/BookingTableColumnName';
+import { useStaffGetBookingsListQuery } from '~/store/services/booking.service';
+import { IOderResponse, IStaffOderResponse } from '~/types/Order';
 
-const OrderManagement = () => {
+const StaffOrderManagement = () => {
     const t = useTranslations('Table.Booking');
-    const BOOKING_COLUMN_NAMES = AdminBookingTableColumnName(t);
+    const BOOKING_COLUMN_NAMES = StaffBookingTableColumnName(t);
 
-    const { data } = useAdminGetBookingsListQuery();
+    const { data } = useStaffGetBookingsListQuery();
     const listOrder = data?.data.data || [];
+
+    console.log(data);
 
     return (
         <div>
             <TableDisplay title={t('title')} columnNames={BOOKING_COLUMN_NAMES}>
-                {listOrder.map((item: IOderResponse, i) => (
-                    <OrderRow
-                        bookingId={item.booking_id}
+                {listOrder.map((item: IStaffOderResponse, i) => (
+                    <StaffOrdersRow
                         key={i}
-                        name={item.name}
-                        phone={item.phone}
-                        date={item.date}
-                        staffName={item.staff_name}
-                        storeName={item.store_name}
                         status={item.status}
-                        totalPrice={item.total_price}
-                        note={item.note}
+                        storeName={item.store_name}
+                        storeAddress={item.store_address}
+                        time={item.time}
+                        day={item.day}
                     />
                 ))}
                 {listOrder.length <= 0 && (
@@ -43,4 +42,4 @@ const OrderManagement = () => {
     );
 };
 
-export default OrderManagement;
+export default StaffOrderManagement;

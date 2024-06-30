@@ -1,14 +1,24 @@
 /* eslint-disable no-unused-vars */
-export const BookingTableColumnName = (t: (key: string) => string) => {
+export const AdminBookingTableColumnName = (t: (key: string) => string) => {
     return [
-        t('columns.Customer_name'),
-        t('columns.Phone_number'),
-        t('columns.Date'),
-        t('columns.Staff_name'),
-        t('columns.Store_name'),
-        t('columns.Status'),
-        t('columns.Total_price'),
-        t('columns.Note'),
-        t('columns.Actions'),
+        t('admin-columns.Customer_name'),
+        t('admin-columns.Phone_number'),
+        t('admin-columns.Date'),
+        t('admin-columns.Staff_name'),
+        t('admin-columns.Store_name'),
+        t('admin-columns.Status'),
+        t('admin-columns.Total_price'),
+        t('admin-columns.Note'),
+        t('admin-columns.Actions'),
+    ];
+};
+
+export const StaffBookingTableColumnName = (t: (key: string) => string) => {
+    return [
+        t('staff-columns.Day'),
+        t('staff-columns.Status'),
+        t('staff-columns.Store_address'),
+        t('staff-columns.Store_name'),
+        t('staff-columns.Time'),
     ];
 };

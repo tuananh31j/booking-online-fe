@@ -1,7 +1,7 @@
-import OrderManagement from '~/components/pages/Admins/OrderManagement';
+import StaffOrderManagement from '~/components/pages/Admins/OrderManagement/list-orders-staff';
 
 const OrdersPage = () => {
-    return <OrderManagement />;
+    return <StaffOrderManagement />;
 };
 
 export default OrdersPage;

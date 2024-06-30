@@ -13,3 +13,12 @@ export interface IOderResponse {
     total_price: string;
     updated_at: string;
 }
+
+export interface IStaffOderResponse {
+    day: string;
+    id: number;
+    status: string;
+    store_address: string;
+    store_name: string;
+    time: string;
+}
