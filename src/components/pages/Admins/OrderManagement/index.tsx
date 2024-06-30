@@ -18,7 +18,6 @@ const OrderManagement = () => {
         <div>
             <TableDisplay title={t('title')} columnNames={BOOKING_COLUMN_NAMES}>
                 {listOrder.map((item: IOderResponse, i) => (
-                    // <div key={i}></div>
                     <OrderRow
                         bookingId={item.booking_id}
                         key={i}
