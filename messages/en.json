@@ -172,6 +172,7 @@
 
         "Staff_SideBar_Menu": {
             "orders": "My Bookings",
+            "orderStaff": "My Order Staff",
             "schedules": "My Schedules"
         }
     },

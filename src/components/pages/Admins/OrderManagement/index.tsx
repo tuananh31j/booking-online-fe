@@ -1,46 +1,44 @@
 'use client';
 
-import { lightFormat } from 'date-fns';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
 import { OrderRow } from '~/components/_common/TableDisplay/Rows/Order/OrderRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
-import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
 import { BookingTableColumnName } from '~/schemas/BookingTableColumnName';
-import { useGetBookingScheduleQuery } from '~/store/services/user.service';
+import { useGetBookingsListQuery } from '~/store/services/order.service';
 import { IOderResponse } from '~/types/Order';
 
 const OrderManagement = () => {
     const t = useTranslations('Table.Booking');
     const BOOKING_COLUMN_NAMES = BookingTableColumnName(t);
-    const { data, isLoading, error } = useGetBookingScheduleQuery();
 
-    const [memessage, setMemessage] = useState('');
-
-    useEffect(() => {
-        if (error) {
-            setMemessage(t('message'));
-        }
-    }, [error, data]);
+    const { data } = useGetBookingsListQuery();
+    const listOrder = data?.data.data || [];
 
     return (
         <div>
             <TableDisplay title={t('title')} columnNames={BOOKING_COLUMN_NAMES}>
-                {data?.data.data.map((order: IOderResponse, i) => (
+                {listOrder.map((item: IOderResponse, i) => (
+                    // <div key={i}></div>
                     <OrderRow
+                        bookingId={item.booking_id}
                         key={i}
-                        index={i + 1}
-                        day={order.day}
-                        time={order.time}
-                        status={order.status}
-                        storeName={order.store_name}
-                        storeAddress={order.store_address}
+                        name={item.name}
+                        phone={item.phone}
+                        date={item.date}
+                        staffName={item.staff_name}
+                        storeName={item.store_name}
+                        status={item.status}
+                        totalPrice={item.total_price}
+                        note={item.note}
                     />
                 ))}
-                <td colSpan={7} className='text-center text-yellow-500'>
-                    {memessage}
-                </td>
-                {isLoading && <RowSkeleton rows={5} cols={BOOKING_COLUMN_NAMES.length} />}
+                {listOrder.length <= 0 && (
+                    <tr>
+                        <td colSpan={7} className='text-center text-amber-500'>
+                            {t('empty_table')}
+                        </td>
+                    </tr>
+                )}
             </TableDisplay>
         </div>
     );

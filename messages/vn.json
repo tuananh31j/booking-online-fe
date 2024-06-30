@@ -172,6 +172,7 @@
 
         "Staff_SideBar_Menu": {
             "orders": "Bookings",
+            "orderStaff": "Danh sách đặt lịch",
             "schedules": "Lịch làm việc"
         }
     },
