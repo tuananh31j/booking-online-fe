@@ -316,11 +316,13 @@
 
             "add": {
                 "success": "Service Added Successfully!",
-                "fail": "Service Addition Failed!"
+                "fail": "Service Addition Failed!",
+                "uniqueName": "service name already exists!"
             },
 
             "delete": {
                 "success": "Service Removed Successfully!",
+
                 "fail": "Service Removal Failed!"
             },
 
