@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import {
     CalendarDays,
     HandPlatter,
@@ -40,8 +40,7 @@ const Menu: React.FC = () => {
         { path: 'schedules', name: t('Staff_SideBar_Menu.schedules'), icon: CalendarDays },
     ];
 
-    useEffect(() => {
-        // console.log(isAdmin);
+    useLayoutEffect(() => {
         const MENU_LIST = isAdmin ? ADMIN_MENU : STAFF_MENU;
         setMenuList(MENU_LIST);
         // eslint-disable-next-line react-hooks/exhaustive-deps

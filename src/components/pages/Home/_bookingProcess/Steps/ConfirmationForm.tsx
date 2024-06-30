@@ -56,7 +56,6 @@ const ConfirmationForm = () => {
             .unwrap()
             .then((booked) => {
                 if (booked) {
-                    console.log(booked);
                     submitconfirm(booked.data);
                     resetStepBooking();
                 }

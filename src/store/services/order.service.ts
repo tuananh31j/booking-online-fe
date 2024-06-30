@@ -7,7 +7,7 @@ import { QUERY_KEY } from '~/constants/queryKey';
 export const bookingAPI = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getBookingsList: builder.query<IApiResponse<{ data: IOderResponse[] }>, void>({
-            query: () => ({ url: API_ENDPOINT.BOOKING.LIST }),
+            query: () => ({ url: API_ENDPOINT.BOOKING.STAFF_BOOKINGS }),
             providesTags: [QUERY_KEY.ORDER],
         }),
     }),

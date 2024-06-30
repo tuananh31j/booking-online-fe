@@ -40,7 +40,6 @@ const AdminSidebar = ({
                         className='me-4 cursor-pointer hover:opacity-45 xl:hidden'
                         onClick={() => {
                             setIsOpenSideBar(false);
-                            console.log(isOpenSideBar);
                         }}
                     />
                 </div>

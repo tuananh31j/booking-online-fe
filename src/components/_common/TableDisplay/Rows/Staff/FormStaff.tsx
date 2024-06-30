@@ -106,7 +106,6 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             // eslint-disable-next-line camelcase
             const { store_id, role, name, address, phone, password, email } = data;
             const image = data.image?.[0];
-            console.log(image);
             if (!id) {
                 formData.append('store_id', store_id);
                 formData.append('role', `${role}`);
@@ -344,13 +343,11 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                                             disabled={id ? isSaveImage : false}
                                             className='w-full rounded-[3px] border border-gray-500 p-2 focus:border-card'
                                             onChange={(event) => {
-                                                console.log(event.target.files);
                                                 const inputElement = event.target as HTMLInputElement;
                                                 if (inputElement.files) {
                                                     const displayUrl = URL.createObjectURL(inputElement.files[0]);
                                                     setPreview(displayUrl);
                                                     onChange(inputElement.files);
-                                                    console.log(inputElement.files[0]);
                                                 }
                                             }}
                                         ></Input>

@@ -21,7 +21,6 @@ export default function ManagerStaff({ store }: { store: IStore }) {
         if (!isLoading) {
             setlistStaff(data?.data.data || []);
         }
-        console.log(listStaff, 'listStaff');
     }, [isLoading]);
     return (
         <Table>

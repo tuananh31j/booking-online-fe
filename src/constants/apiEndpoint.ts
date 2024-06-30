@@ -52,6 +52,7 @@ const API_ENDPOINT = {
         DETAILS: '/bookings', // @id
         LIST: '/bookings',
         REMOVE: '/bookings', // @id
+        STAFF_BOOKINGS: '/user/listbooking', // @id
     },
     OPENING: {
         // thêm ngày h mở cửa theo id cửa hàng

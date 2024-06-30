@@ -58,7 +58,6 @@ export default function PopupDetailOpening({
                     },
                 ],
             };
-            console.log(formRaw);
             mutate({
                 id: store.id,
                 formData: formRaw,
@@ -69,7 +68,9 @@ export default function PopupDetailOpening({
     };
     useEffect(() => {
         form.reset(detail);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detail, isOpen]);
+
     useEffect(() => {
         if (isMessageError(updateOpeningState.error)) {
             toast({ title: `${updateOpeningState.error.data.message}`, status: 'destructive' });
@@ -98,7 +99,6 @@ export default function PopupDetailOpening({
                                                     control={form.control}
                                                     name='opening_time'
                                                     render={({ field }) => {
-                                                        // console.log(field);
                                                         return (
                                                             <FormItemDisplay
                                                                 title='Giờ mở cửa '

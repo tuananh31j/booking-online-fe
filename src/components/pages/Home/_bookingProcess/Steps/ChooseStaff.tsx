@@ -9,7 +9,6 @@ const ChooseStaff = () => {
     const { bookingInfo, chooseStaffinfo } = useBooking();
     const { data, isLoading } = useGetListStaffClientQuery(bookingInfo.store!.id);
 
-    console.log(data);
     return (
         <WrapperBooking stepKeyTranslation='step_staff' isLoading={isLoading}>
             <div className='grid grid-cols-1 justify-between sm:grid-cols-2 md:grid-cols-4'>

@@ -51,7 +51,6 @@ export default function FormProfile({
 
     const validateImage = (files: FileList) => {
         const result = imageSchema.safeParse(files);
-        console.log(result);
         return result.success;
     };
 

@@ -64,7 +64,6 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                 control={form.control}
                                 name='day'
                                 render={({ field }) => {
-                                    // console.log(field);
                                     return (
                                         <FormItemDisplay
                                             title='Ngày mở cửa '
@@ -81,7 +80,6 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                 control={form.control}
                                 name='opening_time'
                                 render={({ field }) => {
-                                    // console.log(field);
                                     return (
                                         <FormItemDisplay
                                             title='Giờ mở cửa '

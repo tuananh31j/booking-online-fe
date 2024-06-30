@@ -6,8 +6,7 @@ import { useGetListCategoryQuery } from '~/store/services/category.service';
 import FormService from './FormService';
 import TableCell from '../../_components/TableCell';
 import { useTranslations } from 'next-intl';
-import { DeleteIcon, Icon, Pen, PenIcon, PencilIcon, Trash, Trash2Icon } from 'lucide-react';
-import { Pencil2Icon } from '@radix-ui/react-icons';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
 
 type IServiceRowProps = {
     index: number;
@@ -41,8 +40,8 @@ const ServiceRow: FC<IServiceRowProps> = ({
             const categoryId = categoryData?.data.data.find((cat) => cat.name === category)?.id || 0;
             setCatID(categoryId);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isCategoryLoading]);
-    console.log('catID', catID);
 
     return (
         <tr className='h-10'>

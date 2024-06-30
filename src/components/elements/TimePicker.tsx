@@ -41,7 +41,6 @@ const TimePicker = ({ day }: { day: string }) => {
     const handlePickHour = ({ hour, index }: { hour: string; index: number }) => {
         const isBookedNext = checkArrayIntersection(generateArray(index, totalServices), isBookedIndexs);
         const isBookedPrev = checkArrayIntersection(generateArray(index, totalServices, true), isBookedIndexs);
-        console.log(index, isBookedPrev, 'nêfff', generateArray(index, totalServices, true));
         if (isBookedNext) {
             if (isBookedPrev || index - totalServices < 0) {
                 return handleMessage({ title: t('rejectPickTime') });

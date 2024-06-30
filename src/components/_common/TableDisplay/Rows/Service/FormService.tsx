@@ -75,7 +75,6 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
             }
         } else {
             try {
-                console.log(data);
                 updateService({
                     id,
                     formData: {

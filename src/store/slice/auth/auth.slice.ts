@@ -6,8 +6,8 @@ import { ILoginData, ILoginResponse } from '~/types/Auth';
 
 const cookies = new Cookies();
 
-const initialState: { user: ILoginData | '' } = {
-    user: cookies.get('user') ? cookies.get('user') : '',
+const initialState: { user: ILoginData | null } = {
+    user: cookies.get('user') ? cookies.get('user') : null,
 };
 const authSlice = createSlice({
     name: 'auth',
@@ -17,7 +17,7 @@ const authSlice = createSlice({
             state.user = action.payload.data;
         },
         logout: (state) => {
-            state.user = '';
+            state.user = null;
         },
     },
 });

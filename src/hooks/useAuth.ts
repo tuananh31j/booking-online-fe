@@ -5,7 +5,7 @@ const useAuth = () => {
     const isAuth = Boolean(user);
     const isAdmin = Boolean(user && user.role === 0);
 
-    return { isAuth, isAdmin };
+    return { isAuth, isAdmin, user };
 };
 
 export default useAuth;

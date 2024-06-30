@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import Image from 'next/image';
-import { FC } from 'react';
+import { FC, useLayoutEffect } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import { disPlayRoleName } from '~/lib/utils';
 import FormStaff from './FormStaff';
-import Cookies from 'universal-cookie';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
 import { PencilIcon, Trash2Icon } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
@@ -12,6 +11,7 @@ import { useGetDetailStoreQuery } from '~/store/services/store.service';
 import { useRouter } from 'next/navigation';
 import TableCell from '../../_components/TableCell';
 import { useTranslations } from 'next-intl';
+import useAuth from '~/hooks/useAuth';
 
 type IUserRowProps = {
     id: number;
@@ -26,7 +26,6 @@ type IUserRowProps = {
     createAt?: string;
 };
 
-const cookies = new Cookies();
 const UserRow: FC<IUserRowProps> = ({
     id,
     image,
@@ -44,15 +43,19 @@ const UserRow: FC<IUserRowProps> = ({
     // eslint-disable-next-line camelcase
     const storeId = store_id;
     const router = useRouter();
+    const { isAdmin, user } = useAuth();
 
     const { data } = useGetDetailStoreQuery(storeId, { skip: !storeId });
     const store = data?.data?.data;
 
     const roleName = disPlayRoleName(role);
-    const user = cookies.get('user');
-    if (!user) {
-        router.replace('/login');
-    }
+    useLayoutEffect(() => {
+        if (!isAdmin && user) {
+            router.replace('/404');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAdmin, user]);
+
     return (
         <tr>
             <TableCell>
@@ -127,7 +130,7 @@ const UserRow: FC<IUserRowProps> = ({
                         id={id}
                         title='Chỉnh sửa thông tin nhân viên'
                     />
-                    {id !== user.id && (
+                    {user && id !== user.id && (
                         <AlertDialogConfirm
                             handleConfirm={action}
                             content={{
@@ -139,7 +142,7 @@ const UserRow: FC<IUserRowProps> = ({
                             <Trash2Icon className='cursor-pointer duration-300 hover:text-red-500'>Delete</Trash2Icon>
                         </AlertDialogConfirm>
                     )}
-                    {id === user.id && (
+                    {user && id === user.id && (
                         <AlertDialogConfirm
                             content={{
                                 title: 'Bạn không được phép!',

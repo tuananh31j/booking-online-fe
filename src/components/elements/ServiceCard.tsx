@@ -14,7 +14,6 @@ interface ServiceItemProps {
 
 const ServiceCard: FC<ServiceItemProps> = ({ service, id, handleRemove, handleSelect }) => {
     const { bookingInfo } = useBooking();
-    console.log(bookingInfo.service_ids.includes(id), 'ooooooooodfdfd', id, bookingInfo.service_ids);
     return (
         <div className='mt-4 flex justify-between rounded-3xl border-2 hover:border-default'>
             <div className='service-content flex min-w-[500px]'>

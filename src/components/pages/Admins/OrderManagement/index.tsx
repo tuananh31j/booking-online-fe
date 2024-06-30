@@ -11,8 +11,7 @@ const OrderManagement = () => {
     const t = useTranslations('Table.Booking');
     const BOOKING_COLUMN_NAMES = BookingTableColumnName(t);
 
-    const { data, isError, isLoading } = useGetBookingsListQuery();
-
+    const { data } = useGetBookingsListQuery();
     const listOrder = data?.data.data || [];
 
     return (

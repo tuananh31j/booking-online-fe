@@ -11,30 +11,30 @@ const intlMiddleware = createMiddleware({
 export default async function middleware(req: NextRequest) {
     const res = intlMiddleware(req);
     const hasToken = req.cookies.has('accessToken');
-    const { pathname } = req.nextUrl;
+    const pathname = req.url;
     const user = req.cookies.get('user')?.value;
     const url = req.nextUrl.clone();
 
-    if (pathname === '/login') {
+    if (pathname.includes('/login')) {
         if (hasToken) {
             url.pathname = '/404';
             return NextResponse.redirect(url);
         }
     }
-    if (pathname.startsWith('/admin') || pathname.startsWith('/staff')) {
+    if (pathname.includes('admin') || pathname.includes('staff')) {
         if (user) {
             const userObj = JSON.parse(user);
             if (!hasToken) {
                 url.pathname = '/login';
                 return NextResponse.redirect(url);
             }
-            if (pathname.startsWith('/admin')) {
+            if (pathname.includes('admin')) {
                 if (userObj.role !== 0) {
                     url.pathname = '/404';
                     return NextResponse.redirect(url);
                 }
             }
-            if (pathname.startsWith('/staff') && userObj.role === 0) {
+            if (url.pathname.startsWith('/staff') && userObj.role === 0) {
                 url.pathname = '/admin/dashboard';
                 return NextResponse.redirect(url);
             }
