@@ -42,7 +42,6 @@ const ServiceRow: FC<IServiceRowProps> = ({
             setCatID(categoryId);
         }
     }, [isCategoryLoading]);
-    console.log('catID', catID);
 
     return (
         <tr className='h-10'>
