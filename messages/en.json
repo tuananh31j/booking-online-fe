@@ -318,7 +318,8 @@
 
             "add": {
                 "success": "Service Added Successfully!",
-                "fail": "Service Addition Failed!"
+                "fail": "Service Addition Failed!",
+                "uniqueName": "Service name already exists!"
             },
 
             "delete": {
