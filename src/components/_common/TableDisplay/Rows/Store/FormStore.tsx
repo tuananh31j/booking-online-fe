@@ -13,7 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '~/components/ui/input';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useCreateStoreMutation } from '~/store/services/store.service';
-import { ErrorFields, isStoreError } from '~/types/Error/Helper/Store';
+import { ErrorFields, isMessageError, isStoreError } from '~/types/Error/Helper/Store';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -87,8 +87,9 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                     const errorMessage = error.data.error[key].join(', ');
                     form.setError(key, { message: errorMessage });
                 });
-            } else {
-                toast({ title: t('add.fail'), status: 'destructive' });
+            }
+            if (isMessageError(error)) {
+                toast({ title: `${error.data.message}`, status: 'destructive' });
             }
         }
 
