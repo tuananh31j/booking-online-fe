@@ -3,17 +3,22 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
 import { Button } from '~/components/ui/button';
 import { Calendar } from '~/components/ui/calendar';
+import { Checkbox } from '~/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { cn } from '~/lib/utils';
-import { useCreateOpeningMutation, useGetOpeningDetailQuery } from '~/store/services/opening.service';
+import {
+    useCreateOpeningMutation,
+    useGetOpeningDetailQuery,
+    useQuickCreateOpeningMutation,
+} from '~/store/services/opening.service';
 import { ErrorOpeningHours, isMessageError, isOpeningHourError } from '~/types/Error/Helper/Store';
 
 const FormOpeningSchema = z.object({
@@ -26,7 +31,10 @@ type IFormOpening = z.infer<typeof FormOpeningSchema>;
 
 const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
     const toast = useToastDisplay();
-    const [createOpening, createOpeningState] = useCreateOpeningMutation();
+    const [quickCreate, setQuickCreate] = useState(false);
+    const idQuickCreate = useId();
+    const [createOpening] = useCreateOpeningMutation();
+    const [quickCreateOpening] = useQuickCreateOpeningMutation();
     const { data: OpeningData, isError } = useGetOpeningDetailQuery(id, { skip: !id });
     const opening = OpeningData?.data.data;
     const form = useForm<IFormOpening>({ resolver: zodResolver(FormOpeningSchema) });
@@ -46,14 +54,28 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                 },
             ];
 
-            const res = await createOpening({
-                id,
-                formData: {
-                    opening_hours: openingHours,
-                },
-            }).unwrap();
-            toast({ title: 'Thêm mới thành công', status: 'success' });
-            onCloseModal();
+            if (!quickCreate) {
+                const res = await createOpening({
+                    id,
+                    formData: {
+                        opening_hours: openingHours,
+                    },
+                }).unwrap();
+                toast({ title: 'Thêm mới thành công', status: 'success' });
+                onCloseModal();
+            }
+            if (quickCreate) {
+                const res = await quickCreateOpening({
+                    id,
+                    formData: {
+                        start_date: dayFormat,
+                        opening_time: appendSeconds(data.opening_time),
+                        closing_time: appendSeconds(data.closing_time),
+                    },
+                }).unwrap();
+                toast({ title: 'Thêm nhanh 5 ngày thành công', status: 'success' });
+                onCloseModal();
+            }
         } catch (error) {
             if (isOpeningHourError(error)) {
                 const objectKeys = Object.keys(error.data.error) as ErrorOpeningHours[];
@@ -78,122 +100,132 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
             setValidDay(null);
         }
     }, [OpeningData]);
-    console.log(dateValid);
     return (
         <div className='mx-auto flex flex-col justify-center'>
-            {
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                        <div className='flex justify-center gap-2'>
-                            <FormField
-                                control={form.control}
-                                name='day'
-                                render={({ field }) => {
-                                    // console.log(field);
-                                    return (
-                                        <FormItem className='flex flex-col'>
-                                            <FormLabel className='flex justify-between'>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+                    <div className='flex justify-center gap-2'>
+                        <FormField
+                            control={form.control}
+                            name='day'
+                            render={({ field }) => {
+                                // console.log(field);
+                                return (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel className='flex justify-between'>
+                                            {!quickCreate && (
                                                 <span>
                                                     Ngày mở cửa: <span className='text-[#e41a0f]'>*</span>
                                                 </span>
-                                            </FormLabel>
-                                            <Popover>
-                                                <PopoverTrigger asChild>
-                                                    <FormControl>
-                                                        <Button
-                                                            variant={'outline'}
-                                                            className={cn(
-                                                                'w-[240px] rounded-[3px]  border-gray-500 pl-3 text-left font-normal',
-                                                                !field.value && 'text-muted-foreground'
-                                                            )}
-                                                        >
-                                                            {field.value ? (
-                                                                format(field.value, 'yyyy-MM-dd')
-                                                            ) : (
-                                                                <span>Chọn ngày mở cửa</span>
-                                                            )}
-                                                            <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
-                                                        </Button>
-                                                    </FormControl>
-                                                </PopoverTrigger>
-                                                <PopoverContent className='w-auto p-0' align='start'>
-                                                    <Calendar
-                                                        mode='single'
-                                                        onSelect={field.onChange}
-                                                        disabled={(date) => {
-                                                            const currentDate = new Date();
-                                                            currentDate.setDate(new Date().getDate() - 1);
+                                            )}
+                                            {quickCreate && (
+                                                <span>
+                                                    Ngày bắt đầu: <span className='text-[#e41a0f]'>*</span>
+                                                </span>
+                                            )}
+                                        </FormLabel>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button
+                                                        variant={'outline'}
+                                                        className={cn(
+                                                            'w-[240px] rounded-[3px]  border-gray-500 pl-3 text-left font-normal',
+                                                            !field.value && 'text-muted-foreground'
+                                                        )}
+                                                    >
+                                                        {field.value ? (
+                                                            format(field.value, 'yyyy-MM-dd')
+                                                        ) : quickCreate ? (
+                                                            <span>Chọn ngày bắt đầu</span>
+                                                        ) : (
+                                                            <span>Chọn ngày mở cửa</span>
+                                                        )}
+                                                        <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className='w-auto p-0' align='start'>
+                                                <Calendar
+                                                    mode='single'
+                                                    onSelect={field.onChange}
+                                                    disabled={(date) => {
+                                                        const currentDate = new Date();
+                                                        currentDate.setDate(new Date().getDate() - 1);
+                                                        if (date < currentDate) {
+                                                            return true;
+                                                        }
+                                                        if (dateValid && dateValid.length > 0) {
+                                                            return dateValid.some((validDate) => {
+                                                                return (
+                                                                    validDate.getFullYear() === date.getFullYear() &&
+                                                                    validDate.getMonth() === date.getMonth() &&
+                                                                    validDate.getDate() === date.getDate()
+                                                                );
+                                                            });
+                                                        }
 
-                                                            if (date < currentDate) {
-                                                                return true;
-                                                            }
-                                                            if (dateValid && dateValid.length > 0) {
-                                                                return dateValid.some((validDate) => {
-                                                                    return (
-                                                                        validDate.getFullYear() ===
-                                                                            date.getFullYear() &&
-                                                                        validDate.getMonth() === date.getMonth() &&
-                                                                        validDate.getDate() === date.getDate()
-                                                                    );
-                                                                });
-                                                            }
+                                                        return false;
+                                                    }}
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
 
-                                                            return false;
-                                                        }}
-                                                        initialFocus
-                                                    />
-                                                </PopoverContent>
-                                            </Popover>
+                                        <FormMessage />
+                                    </FormItem>
+                                );
+                            }}
+                        />
 
-                                            <FormMessage />
-                                        </FormItem>
-                                    );
-                                }}
-                            />
+                        <FormField
+                            control={form.control}
+                            name='opening_time'
+                            render={({ field }) => {
+                                // console.log(field);
+                                return (
+                                    <FormItemDisplay
+                                        title='Giờ mở cửa '
+                                        placeholder='Nhập giờ bắt đầu mở cửa !'
+                                        {...field}
+                                        require
+                                        type='time'
+                                    />
+                                );
+                            }}
+                        />
 
-                            <FormField
-                                control={form.control}
-                                name='opening_time'
-                                render={({ field }) => {
-                                    // console.log(field);
-                                    return (
-                                        <FormItemDisplay
-                                            title='Giờ mở cửa '
-                                            placeholder='Nhập giờ bắt đầu mở cửa !'
-                                            {...field}
-                                            require
-                                            type='time'
-                                        />
-                                    );
-                                }}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name='closing_time'
-                                render={({ field }) => {
-                                    return (
-                                        <FormItemDisplay
-                                            title='Giờ đóng cửa'
-                                            placeholder='Nhập giờ đóng cửa !'
-                                            {...field}
-                                            require
-                                            type='time'
-                                        />
-                                    );
-                                }}
-                            />
-                            <FormMessage></FormMessage>
-                        </div>
-                        <button
-                            disabled={createOpeningState.isLoading}
-                            className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'
+                        <FormField
+                            control={form.control}
+                            name='closing_time'
+                            render={({ field }) => {
+                                return (
+                                    <FormItemDisplay
+                                        title='Giờ đóng cửa'
+                                        placeholder='Nhập giờ đóng cửa !'
+                                        {...field}
+                                        require
+                                        type='time'
+                                    />
+                                );
+                            }}
+                        />
+                        <FormMessage></FormMessage>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                        <Checkbox id={idQuickCreate} onCheckedChange={() => setQuickCreate(!quickCreate)} />
+                        <label
+                            htmlFor={idQuickCreate}
+                            className='cursor-pointer select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                         >
-                            Submit
-                        </button>
-                    </form>
-                </Form>
-            }
+                            Thêm nhanh 5 ngày
+                        </label>
+                    </div>
+                    <button className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'>
+                        Submit
+                    </button>
+                </form>
+            </Form>
         </div>
     );
 };

@@ -22,6 +22,11 @@ export type IOpeningResponse = {
         };
     };
 };
+export type IQuickCreateData = {
+    start_date: string;
+    closing_time: string;
+    opening_time: string;
+};
 
 export type IOpeningByIdStoreResponse = {
     id: number;
