@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format } from 'date-fns';
+import { format, getDate } from 'date-fns';
 import { CalendarIcon, HelpCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -78,6 +78,7 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
             setValidDay(null);
         }
     }, [OpeningData]);
+    console.log(dateValid);
     return (
         <div className='mx-auto flex flex-col justify-center'>
             {
@@ -120,17 +121,24 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                                         mode='single'
                                                         onSelect={field.onChange}
                                                         disabled={(date) => {
-                                                            if (!dateValid) {
-                                                                return false;
+                                                            const currentDate = new Date();
+                                                            currentDate.setDate(new Date().getDate() - 1);
+
+                                                            if (date < currentDate) {
+                                                                return true;
                                                             }
-                                                            console.log(dateValid);
-                                                            return dateValid.some((validDate) => {
-                                                                return (
-                                                                    validDate.getFullYear() === date.getFullYear() &&
-                                                                    validDate.getMonth() === date.getMonth() &&
-                                                                    validDate.getDate() === date.getDate()
-                                                                );
-                                                            });
+                                                            if (dateValid && dateValid.length > 0) {
+                                                                return dateValid.some((validDate) => {
+                                                                    return (
+                                                                        validDate.getFullYear() ===
+                                                                            date.getFullYear() &&
+                                                                        validDate.getMonth() === date.getMonth() &&
+                                                                        validDate.getDate() === date.getDate()
+                                                                    );
+                                                                });
+                                                            }
+
+                                                            return false;
                                                         }}
                                                         initialFocus
                                                     />
