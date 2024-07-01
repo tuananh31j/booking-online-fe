@@ -21,14 +21,13 @@ export default function OrderSuccess() {
         router.replace('/');
     };
     useEffect(() => {
-        if (!booked) {
-            resetStepBooking();
-        } else {
+        if (booked) {
             toast({
                 title: t('success.title'),
                 status: 'success',
                 description: `${booked.data.customer_name} ${t('success.desc')} ${booked.data.date_order} ${booked.data.time_order}`,
             });
+            resetStepBooking();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

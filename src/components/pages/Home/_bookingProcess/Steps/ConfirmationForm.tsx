@@ -57,9 +57,8 @@ const ConfirmationForm = () => {
             .then((booked) => {
                 if (booked) {
                     submitconfirm(booked.data);
-                    resetStepBooking();
+                    router.replace('/ordersuccess');
                 }
-                router.replace('/ordersuccess');
                 toast({ title: 'Confirm booking successfully!', status: 'success' });
             })
             .catch((error) => {

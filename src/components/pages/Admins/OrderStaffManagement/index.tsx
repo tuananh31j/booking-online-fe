@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { OrderStaffRow } from '~/components/_common/TableDisplay/Rows/OrderStaff/OrderStaffRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
-import { BookingTableColumnName } from '~/schemas/BookingTableColumnName';
+import { StaffBookingTableColumnName } from '~/schemas/BookingTableColumnName';
 import { useGetBookingScheduleQuery } from '~/store/services/user.service';
 import { IOderStaffResponse } from '~/types/OrderStaff';
 
 const OrderStaffManagement = () => {
     const t = useTranslations('Table.Booking');
-    const BOOKING_COLUMN_NAMES = BookingTableColumnName(t);
+    const BOOKING_COLUMN_NAMES = StaffBookingTableColumnName(t);
     const { data, isLoading, error } = useGetBookingScheduleQuery();
 
     const [memessage, setMemessage] = useState('');
