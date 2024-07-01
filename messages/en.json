@@ -230,14 +230,25 @@
                 "no": "Cancel"
             },
 
-            "columns": {
-                "No": "No",
-                "Day": "Day",
-                "Time": "Time",
-                "Status": "Status",
+            "admin-columns": {
+                "Customer_name": "Customer Name",
+                "Phone_number": "Contact",
+                "Date": "Date",
+                "Staff_name": "Staff",
                 "Store_name": "Store",
-                "Store_address": "Address",
-                "nullData": "No data"
+                "Status": "Status",
+                "Total_price": "Total Price",
+                "Note": "Note",
+                "Actions": "Options"
+            },
+
+            "staff-columns": {
+                "Day": "Day",
+                "Phone_number": "Contact",
+                "Status": "Status",
+                "Store_address": "Store address",
+                "Store_name": "Store name",
+                "Time": "Time"
             }
         },
 

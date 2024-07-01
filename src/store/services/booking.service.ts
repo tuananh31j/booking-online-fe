@@ -3,6 +3,7 @@ import baseApi from '../apis/baseApi';
 import { IApiResponse } from '~/types/Api';
 import { IBookingPayload, IBookingResponse } from '~/types/Booking';
 import { QUERY_KEY } from '~/constants/queryKey';
+import { IOderResponse, IStaffOderResponse } from '~/types/Order';
 
 const bookingAPi = baseApi.injectEndpoints({
     endpoints: (buildder) => ({
@@ -21,7 +22,20 @@ const bookingAPi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [QUERY_KEY.ORDER],
         }),
+        adminGetBookingsList: buildder.query<IApiResponse<{ data: IOderResponse[] }>, void>({
+            query: () => ({ url: API_ENDPOINT.BOOKING.LIST }),
+            providesTags: [QUERY_KEY.ORDER],
+        }),
+        staffGetBookingsList: buildder.query<IApiResponse<{ data: IStaffOderResponse[] }>, void>({
+            query: () => ({ url: API_ENDPOINT.BOOKING.STAFF_BOOKINGS }),
+            providesTags: [QUERY_KEY.ORDER],
+        }),
     }),
 });
 
-export const { useCreateBookingMutation, useUpdateBookingStatusMutation } = bookingAPi;
+export const {
+    useCreateBookingMutation,
+    useUpdateBookingStatusMutation,
+    useAdminGetBookingsListQuery,
+    useStaffGetBookingsListQuery,
+} = bookingAPi;
