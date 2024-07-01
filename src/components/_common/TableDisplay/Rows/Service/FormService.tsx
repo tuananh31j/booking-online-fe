@@ -21,11 +21,13 @@ import { replace, set } from 'lodash';
 import { useTranslations } from 'next-intl';
 
 const FormServiceSchema = z.object({
-    name: z.string({ required_error: 'Họ và tên không được để trống!' }),
-    categorie_id: z.string({ required_error: 'Danh mục không được để tr' }),
-    describe: z.string({ required_error: 'Số điện thoại không được để trống!' }),
-    price: z.string({ required_error: 'Vui lòng nhập giá cả!', invalid_type_error: 'Giá trị không đúng!' }),
-    time: z.string({ required_error: 'Vui lòng nhập thời gian!', invalid_type_error: 'Thời gian không đúng!' }),
+    name: z.string({ required_error: 'Họ và tên không được để trống!' }).nonempty('Họ và tên không được để trống!'),
+    categorie_id: z.string({ required_error: 'Danh mục không được để trống' }).nonempty('Danh mục không được để trống'),
+    describe: z
+        .string({ required_error: 'Số điện thoại không được để trống!' })
+        .nonempty('Số điện thoại không được để trống!'),
+    price: z.string({ required_error: 'Vui lòng nhập giá cả!' }).nonempty('Vui lòng nhập giá cả!'),
+    time: z.string({ required_error: 'Vui lòng nhập thời gian!' }).nonempty('Vui lòng nhập thời gian!'),
 });
 
 type IFormService = z.infer<typeof FormServiceSchema>;
@@ -34,28 +36,19 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
     const t = useTranslations('Table.Service');
 
     const { data: categoryData, isLoading: isCategoryLoading } = useGetListCategoryQuery();
-    const { data: service, refetch, isLoading } = useGetDetailServiceQuery(id, { skip: !id });
+    const { data: service, isLoading, refetch } = useGetDetailServiceQuery(id, { skip: !id });
     const [createService, createServiceState] = useCreateServiceMutation();
     const [updateService, updateServiceSate] = useUpdateServiceMutation();
     const { data: serviceList } = useGetListServiceQuery();
     const form = useForm<IFormService>({ resolver: zodResolver(FormServiceSchema) });
-    const [categoryId, setCategoryId] = useState('');
     const toast = useToastDisplay();
-
-    const [errorMessageName, seterrorMessageName] = useState('');
-
     const onSubmit: SubmitHandler<IFormService> = async (data) => {
-        seterrorMessageName('');
-
         if (!id) {
             if (serviceList?.data.data.find((item) => item.name === data.name)) {
-                seterrorMessageName('Tên dịch vụ đã tồn tại');
+                toast({ title: t('add.uniqueName'), status: 'destructive' });
                 return;
             }
         }
-        await new Promise((resolve) => {
-            resolve(data);
-        });
 
         if (!id) {
             try {
@@ -67,6 +60,7 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                     time: Number(data.time),
                 }).unwrap();
                 toast({ title: t('add.success'), status: 'success' });
+                refetch();
                 onCloseModal();
             } catch (error) {
                 console.log(error);
@@ -84,8 +78,9 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                         describe: data.describe,
                         time: Number(data.time),
                     },
-                });
+                }).unwrap();
                 onCloseModal();
+                refetch();
                 toast({ title: t('edit.success'), status: 'success' });
             } catch (error) {
                 console.log(error);
@@ -97,15 +92,17 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
 
     useEffect(() => {
         if (id) {
+            refetch();
             form.reset({
                 name: service?.data.data.name,
-                price: replace(service?.data.data.price ?? '', /\.00$/, ''), // Sử dụng toán tử ?? để cung cấp giá trị mặc định '' khi service?.data.data.price là undefined
+                price: replace(service?.data.data.price ?? '', /\.00$/, ''),
                 categorie_id: service?.data.data.categorie_id.toString(),
                 describe: service?.data.data.describe,
                 time: service?.data.data.time.toString() || '0',
             });
         }
-    }, [createServiceState, form, id, service, updateServiceSate]);
+    }, [createServiceState, form, id, service]);
+
     return (
         <div className='mx-auto flex flex-col justify-center'>
             {!isLoading && (
@@ -159,7 +156,6 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                                     require
                                                     type='text'
                                                 />
-                                                <FormMessage>{errorMessageName}</FormMessage>
                                             </>
                                         );
                                     }}

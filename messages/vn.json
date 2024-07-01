@@ -172,6 +172,7 @@
 
         "Staff_SideBar_Menu": {
             "orders": "Bookings",
+            "orderStaff": "Danh sách đặt lịch",
             "schedules": "Lịch làm việc"
         }
     },
@@ -318,6 +319,7 @@
 
             "add": {
                 "success": "Thêm dịch vụ thành công!",
+                "uniqueName": "tên dịch vụ đã tồn tại!",
                 "fail": "Thêm dịch vụ thất bại!"
             },
 

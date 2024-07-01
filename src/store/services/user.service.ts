@@ -3,6 +3,8 @@ import baseApi from '../apis/baseApi';
 import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import { IFormProfileBody, IUserResponse } from '~/types/User';
+import { IOderResponse } from '~/types/Order';
+import { IOderStaffResponse } from '~/types/OrderStaff';
 
 export const userApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -19,7 +21,11 @@ export const userApi = baseApi.injectEndpoints({
                 };
             },
         }),
+        getBookingSchedule: builder.query<IApiResponse<{ data: IOderStaffResponse[] }>, void>({
+            query: () => `${API_ENDPOINT.USER.BOOKING_SCHEDULES}`,
+            providesTags: [QUERY_KEY.USER],
+        }),
     }),
 });
 
-export const { useGetDetailUserQuery, useUpdateUserProfileMutation } = userApi;
+export const { useGetDetailUserQuery, useUpdateUserProfileMutation, useGetBookingScheduleQuery } = userApi;

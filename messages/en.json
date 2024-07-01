@@ -172,6 +172,7 @@
 
         "Staff_SideBar_Menu": {
             "orders": "My Bookings",
+            "orderStaff": "My Order Staff",
             "schedules": "My Schedules"
         }
     },
@@ -216,7 +217,7 @@
         "Booking": {
             "title": "List of Bookings",
             "empty_table": "There are no bookings at the moment!",
-
+            "message": "You have no bookings at the moment!",
             "update": {
                 "success": "Status Updated Successfully!",
                 "fail": "Status Update Failed!"
@@ -230,15 +231,13 @@
             },
 
             "columns": {
-                "Customer_name": "Customer Name",
-                "Phone_number": "Contact",
-                "Date": "Date",
-                "Staff_name": "Staff",
-                "Store_name": "Store",
+                "No": "No",
+                "Day": "Day",
+                "Time": "Time",
                 "Status": "Status",
-                "Total_price": "Total Price",
-                "Note": "Note",
-                "Actions": "Options"
+                "Store_name": "Store",
+                "Store_address": "Address",
+                "nullData": "No data"
             }
         },
 
@@ -318,11 +317,13 @@
 
             "add": {
                 "success": "Service Added Successfully!",
-                "fail": "Service Addition Failed!"
+                "fail": "Service Addition Failed!",
+                "uniqueName": "service name already exists!"
             },
 
             "delete": {
                 "success": "Service Removed Successfully!",
+
                 "fail": "Service Removal Failed!"
             },
 

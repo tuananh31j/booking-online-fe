@@ -37,6 +37,7 @@ const Menu: React.FC = () => {
 
     const STAFF_MENU: MenuItemProps[] = [
         { path: 'orders', name: t('Staff_SideBar_Menu.orders'), icon: ListOrdered },
+        { path: 'orderStaff', name: t('Staff_SideBar_Menu.orderStaff'), icon: CalendarDays },
         { path: 'schedules', name: t('Staff_SideBar_Menu.schedules'), icon: CalendarDays },
     ];
 
