@@ -1,8 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format, getDate } from 'date-fns';
-import { CalendarIcon, HelpCircle } from 'lucide-react';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -103,12 +103,12 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                                         <Button
                                                             variant={'outline'}
                                                             className={cn(
-                                                                'w-[240px] pl-3 text-left font-normal',
+                                                                'w-[240px] rounded-[3px]  border-gray-500 pl-3 text-left font-normal',
                                                                 !field.value && 'text-muted-foreground'
                                                             )}
                                                         >
                                                             {field.value ? (
-                                                                format(field.value, 'PPP')
+                                                                format(field.value, 'yyyy-MM-dd')
                                                             ) : (
                                                                 <span>Chọn ngày mở cửa</span>
                                                             )}

@@ -2,20 +2,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
-import { IOpeningByIdStoreResponse } from '~/types/Opening';
-import { IStore } from '~/types/Store';
 import FormItemDisplay from '~/components/_common/FormItemDisplay';
-import { Form, FormControl, FormField, FormLabel, FormMessage } from '~/components/ui/form';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
+import { Form, FormField, FormMessage } from '~/components/ui/form';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useUpdateOpeningMutation } from '~/store/services/opening.service';
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
-import { Button } from '~/components/ui/button';
-import { CalendarIcon } from 'lucide-react';
-import { Calendar } from '~/components/ui/calendar';
-import { cn } from '~/lib/utils';
-import { format } from 'date-fns';
-import { isMessageError } from '~/types/Error/Helper/Store';
+import { ErrorOpeningHours, isMessageError, isOpeningHourError } from '~/types/Error/Helper/Store';
+import { IOpeningByIdStoreResponse } from '~/types/Opening';
+import { IStore } from '~/types/Store';
 
 const FormOpeningSchema = z.object({
     opening_time: z.string({ required_error: 'Vui lòng chọn giờ bắt đầu!' }),
@@ -40,7 +34,7 @@ export default function PopupDetailOpening({
     const form = useForm({
         resolver: zodResolver(FormOpeningSchema),
     });
-    const handleOnsubmit = (data: any) => {
+    const handleOnsubmit = async (data: any) => {
         const appendSeconds = (time: string) => (time.includes(':') ? `${time}:00` : `${time}:00`);
         try {
             const formRaw = {
@@ -58,34 +52,36 @@ export default function PopupDetailOpening({
                     },
                 ],
             };
-            console.log(formRaw);
-            mutate({
+            await mutate({
                 id: store.id,
                 formData: formRaw,
-            });
+            }).unwrap();
+            handleOpen();
+            toast({ title: `Sửa giờ mở cửa của ngày ${detail?.day} thành công!`, status: 'success' });
         } catch (error) {
-            toast({ title: 'Có lỗi xảy ra', status: 'destructive' });
+            if (isOpeningHourError(error)) {
+                const objectKey = Object.keys(error.data.error) as ErrorOpeningHours[];
+                objectKey.forEach((key) => {
+                    const messageJoined = error.data.error[key].join(', ');
+                    form.setError(key, { message: messageJoined });
+                });
+            }
+            if (isMessageError(error)) {
+                toast({ title: `${error.data.message}`, status: 'destructive' });
+            }
         }
     };
     useEffect(() => {
         form.reset(detail);
     }, [detail, isOpen]);
-    useEffect(() => {
-        if (isMessageError(updateOpeningState.error)) {
-            toast({ title: `${updateOpeningState.error.data.message}`, status: 'destructive' });
-        }
-        if (updateOpeningState.isSuccess) {
-            handleOpen();
-            toast({ title: `Sửa giờ mở cửa của ngày ${detail?.day} thành công!`, status: 'success' });
-        }
-    }, [updateOpeningState]);
+
     return (
         <>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger className='flex h-[36px] w-[48px] items-center justify-center rounded-sm bg-primary text-reverse'>
                     {children}
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent style={{ minWidth: '35vw' }}>
                     <DialogHeader>
                         <DialogTitle>
                             <div className='text-2xl font-bold dark:text-white'>Sửa lịch mở cửa: {detail?.day}</div>

@@ -76,7 +76,9 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                 formData.append('image', image);
             }
             formData.append('_method', 'PUT');
-            await mutate({ formdata: formData, id: store ? store?.id : 0 }).unwrap();
+            const res = await mutate({ formdata: formData, id: store ? store?.id : 0 }).unwrap();
+            toast({ title: `${res.message}`, status: 'success' });
+            refetch();
         } catch (error) {
             if (isStoreError(error)) {
                 const objectKey = Object.keys(error.data.error) as ErrorFields[];
