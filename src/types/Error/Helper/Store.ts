@@ -1,8 +1,8 @@
 export type ErrorFields = 'name' | 'address' | 'phone' | 'image';
 export type ErrorStaffFields = 'name' | 'address' | 'phone' | 'image' | 'password' | 'email';
-
+export type ErrorOpeningHours = 'day' | 'closing_time' | 'opening_time';
 interface CustomErrors {
-    status?: number; // Status không bắt buộc nữa
+    status?: number;
     data?: {
         error: Record<ErrorFields, string[]>;
     };
@@ -17,6 +17,7 @@ interface StoreErrorWithData extends CustomErrors {
         error: Record<ErrorFields, string[]>;
     };
 }
+
 interface StaffErrorWithData extends CustomErrors {
     data: {
         error: Record<ErrorStaffFields, string[]>;
@@ -54,5 +55,13 @@ export const isCategoryError = (error: any): error is CategoryErrorWithData => {
 };
 
 export const isMessageError = (error: any): error is MessageError => {
-    return error && error.data;
+    return error && error.data && 'message' in error.data;
+};
+interface OpeningHoursWithData {
+    data: {
+        error: Record<ErrorOpeningHours, string[]>;
+    };
+}
+export const isOpeningHourError = (error: any): error is OpeningHoursWithData => {
+    return error && error.data && 'error' in error.data;
 };

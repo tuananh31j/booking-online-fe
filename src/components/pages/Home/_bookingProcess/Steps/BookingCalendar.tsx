@@ -21,7 +21,6 @@ const BookingCalendar = () => {
 
     // @query
     const { data: listWorkSchedule, isLoading } = useGetListWorkScheduleStaffClientQuery(bookingInfo.user!.id);
-
     // @side effect
     useEffect(() => {
         const specialDays = listWorkSchedule?.data.data.schedules.map((item) => new Date(item.day));
@@ -49,7 +48,6 @@ const BookingCalendar = () => {
         setPickDay(formated);
     }
     const isPickedTime = Boolean(bookingInfo.time && bookingInfo.day);
-
     return (
         <WrapperBooking
             stepKeyTranslation='step_dateTime'
@@ -86,7 +84,16 @@ const BookingCalendar = () => {
                                                     selected={field.value}
                                                     onSelect={field.onChange}
                                                     disabled={(date) => {
-                                                        return date < dateNow;
+                                                        if (!dateValid) {
+                                                            return true;
+                                                        }
+                                                        return !dateValid.some((validDate) => {
+                                                            return (
+                                                                validDate.getFullYear() === date.getFullYear() &&
+                                                                validDate.getMonth() === date.getMonth() &&
+                                                                validDate.getDate() === date.getDate()
+                                                            );
+                                                        });
                                                     }}
                                                     footer={
                                                         <>
