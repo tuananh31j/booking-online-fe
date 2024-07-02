@@ -11,10 +11,19 @@ import { ErrorOpeningHours, isMessageError, isOpeningHourError } from '~/types/E
 import { IOpeningByIdStoreResponse } from '~/types/Opening';
 import { IStore } from '~/types/Store';
 
-const FormOpeningSchema = z.object({
-    opening_time: z.string({ required_error: 'Vui lòng chọn giờ bắt đầu!' }),
-    closing_time: z.string({ required_error: 'Vui lòng chọn giờ kết thúc!' }),
-});
+const FormOpeningSchema = z
+    .object({
+        opening_time: z.string({ required_error: 'Vui lòng chọn giờ bắt đầu!' }),
+        closing_time: z.string({ required_error: 'Vui lòng chọn giờ kết thúc!' }),
+    })
+    .refine(
+        (data) => {
+            const openingTime = new Date(`01/01/2000 ${data.opening_time}`);
+            const closingTime = new Date(`01/01/2000 ${data.closing_time}`);
+            return openingTime < closingTime;
+        },
+        { message: `Giờ đóng cửa phải sau giờ mở cửa!`, path: ['closing_time'] }
+    );
 
 export default function PopupDetailOpening({
     children,
