@@ -85,11 +85,11 @@ const FormCategory = ({ onCloseModal, id }: { onCloseModal: () => void; id?: num
             }
         }
         if (updateCategoryState.isSuccess || createCategoryState.isSuccess) {
-            onCloseModal();
             toast({
                 title: `${id ? t('edit.success') : t('add.success')} `,
                 status: 'success',
             });
+            onCloseModal();
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

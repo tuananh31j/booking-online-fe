@@ -20,7 +20,8 @@ export const categoryApi = baseApi.injectEndpoints({
                 method: 'PUT',
                 body: { name },
             }),
-            invalidatesTags: (result) => (result ? [{ type: 'Category', id: result.data.data.id }] : []),
+            invalidatesTags: (result) =>
+                result ? [{ type: 'Category', id: result.data.data.id }, QUERY_KEY.CATEGORIES] : [],
         }),
         removeCategory: builder.mutation<object, number>({
             query: (id) => ({

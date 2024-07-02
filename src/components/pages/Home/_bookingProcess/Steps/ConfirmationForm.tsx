@@ -21,7 +21,16 @@ const bookingConfirmSchema = z.object({
     email: z.string({ required_error: 'Email không được để trống!' }).email('Email không hợp lệ!'),
     fullName: z.string({ required_error: 'Email không được để trống!' }),
     phone: z.string({ required_error: 'Số điện thoại không được để trống!' }),
-    date: z.string({ required_error: 'Ngày đặt không được để trống!' }),
+    birthday: z.string({ required_error: 'Ngày đặt không được để trống!' }).refine(
+        (birthday) => {
+            const yearIndex = 0;
+            const yearNow = new Date().getFullYear();
+            const birthdayDate = birthday.split('-');
+
+            return yearNow - Number(birthdayDate?.[yearIndex]);
+        },
+        { message: 'Tuổi phải lớn hơn 12 tuổi' }
+    ),
     note: z.string().optional(),
 });
 
@@ -43,7 +52,7 @@ const ConfirmationForm = () => {
         });
         const booking = {
             customer_name: data.fullName,
-            customer_date: data.date,
+            customer_date: data.birthday,
             customer_phone: data.phone,
             customer_note: data.note,
             customer_email: data.email,
@@ -127,7 +136,7 @@ const ConfirmationForm = () => {
                     />
                     <FormField
                         control={form.control}
-                        name='date'
+                        name='birthday'
                         render={({ field }) => <FormItemDisplay title='Birthday' {...field} require type='date' />}
                     />
                     <FormField
