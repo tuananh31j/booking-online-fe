@@ -30,14 +30,17 @@ const StaffListManager = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess, isError]);
+    const sortedData = data?.data.data ? [...data.data.data] : [];
 
+    // Sort by role descending (from 1 to 0)
+    sortedData.sort((a, b) => a.role - b.role);
     return (
         <TableDisplay
             title={t('title')}
             columnNames={STAFF_COLUMN_NAMES}
             action={{ element: FormStaff, modalTitle: t('modal_title') }}
         >
-            {data?.data.data.map((item) => (
+            {sortedData.map((item) => (
                 <UserRow
                     key={item.id}
                     id={item.id}
