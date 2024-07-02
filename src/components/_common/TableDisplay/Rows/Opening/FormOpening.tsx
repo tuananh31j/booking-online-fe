@@ -21,11 +21,32 @@ import {
 } from '~/store/services/opening.service';
 import { ErrorOpeningHours, isMessageError, isOpeningHourError } from '~/types/Error/Helper/Store';
 
-const FormOpeningSchema = z.object({
-    day: z.date({ required_error: 'Vui lòng chọn ngày!' }),
-    opening_time: z.string({ required_error: 'Vui lòng chọn giờ bắt đầu!' }),
-    closing_time: z.string({ required_error: 'Vui lòng chọn giờ kết thúc!' }),
-});
+const FormOpeningSchema = z
+    .object({
+        day: z.date({ required_error: 'Vui lòng chọn ngày!' }),
+        opening_time: z.string({ required_error: 'Vui lòng chọn giờ bắt đầu!' }),
+        closing_time: z.string({ required_error: 'Vui lòng chọn giờ kết thúc!' }),
+    })
+    .refine(
+        (data) => {
+            const openingTime = new Date(`01/01/2000 ${data.opening_time}`);
+            const closingTime = new Date(`01/01/2000 ${data.closing_time}`);
+            return openingTime < closingTime;
+        },
+        { message: `Giờ đóng cửa phải sau giờ mở cửa!`, path: ['closing_time'] }
+    )
+    .refine(
+        (data) => {
+            const selectedDate = new Date(data.day);
+            const currentDate = new Date();
+            currentDate.setDate(new Date().getDate() - 1);
+            return selectedDate >= currentDate;
+        },
+        {
+            message: 'Không được chọn ngày trong quá khứ!',
+            path: ['day'],
+        }
+    );
 
 type IFormOpening = z.infer<typeof FormOpeningSchema>;
 
@@ -164,7 +185,6 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                                                 );
                                                             });
                                                         }
-
                                                         return false;
                                                     }}
                                                     initialFocus

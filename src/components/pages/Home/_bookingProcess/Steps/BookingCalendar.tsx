@@ -22,8 +22,12 @@ const BookingCalendar = () => {
     // @query
     const { data: listWorkSchedule, isLoading } = useGetListWorkScheduleStaffClientQuery(bookingInfo.user!.id);
     // @side effect
+    const currentDate = new Date();
     useEffect(() => {
-        const specialDays = listWorkSchedule?.data.data.schedules.map((item) => new Date(item.day));
+        const specialDays = listWorkSchedule?.data.data.schedules
+            .map((item) => new Date(item.day))
+            .filter((date) => date.getDate() >= currentDate.getDate());
+        console.log(specialDays);
         if (specialDays) {
             setDateValid(specialDays);
         }
