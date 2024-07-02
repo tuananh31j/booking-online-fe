@@ -1,8 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useId, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -12,12 +12,12 @@ import LoadingButton from '~/components/elements/LoadingButton';
 import { Button } from '~/components/ui/button';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
+import { Input } from '~/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useCreateStaffMutation, useEditStaffMutation, useGetStaffDetailQuery } from '~/store/services/staff.service';
 import { useGetListStoreQuery } from '~/store/services/store.service';
 import { ErrorStaffFields, isStaffError } from '~/types/Error/Helper/Store';
-import { Input } from '~/components/ui/input';
-import { useTranslations } from 'next-intl';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
@@ -41,6 +41,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const imageId = useId();
 
     const [preview, setPreview] = useState('');
+    const [storeId, setStoreId] = useState<string>('');
 
     const imageSchema = isSaveImage
         ? z.any()
@@ -55,6 +56,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                   (files) => Array.from(files).every((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type)),
                   'Only these types are allowed .jpg, .jpeg, .png and .webp'
               );
+    const roleSchema = z.string().optional();
     const FormStaffSchema = z.object({
         store_id: z
             .string({ required_error: 'Cửa hàng không được để trống!' })
@@ -67,7 +69,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             .string({ required_error: 'Số điện thoại không được để trống!' })
             .min(3, { message: 'Số điện thoại ít nhất phải có 9 ký tự !' }),
         password: z.string().min(6, { message: 'Password phải có ít nhất 6 ký tự!' }),
-        role: z.string({ required_error: 'Role không được để trống!' }),
+        role: id ? z.string({ required_error: 'Role không được để trống!' }) : roleSchema,
         address: z
             .string({ required_error: 'Địa chỉ không được để trống!' })
             .min(3, { message: 'Địa chỉ ít nhất phải có 10 ký tự !' }),
@@ -108,7 +110,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
             const image = data.image?.[0];
             if (!id) {
                 formData.append('store_id', store_id);
-                formData.append('role', `${role}`);
+                formData.append('role', `${role ?? 1}`);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
@@ -143,12 +145,17 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
 
     useEffect(() => {
         if (id && detailStaff !== undefined && Object.values(detailStaff).length > 0) {
+            console.log('detailStaff', detailStaff);
+
             form.reset({
                 name: detailStaff.name,
                 email: detailStaff.email,
                 address: detailStaff?.address || '',
                 phone: detailStaff?.phone || '',
+                role: `${detailStaff?.role}` || '1',
+                store_id: `${detailStaff?.store_id}`,
             });
+            setStoreId(`${detailStaff?.store_id}`);
             setPreview(detailStaff?.image || '');
         }
         if (createStaffState.isSuccess || updateStaffState.isSuccess) {
@@ -179,233 +186,251 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createStaffState, id, detailStaff, updateStaffState]);
+    const renderStore = () => {
+        return (
+            <SelectContent>
+                {stores?.map((store) => {
+                    return (
+                        <SelectItem key={store.id} value={store.id.toString()} className='text'>
+                            {store.name}
+                        </SelectItem>
+                    );
+                })}
+            </SelectContent>
+        );
+    };
     return (
-        <div className='mx-auto justify-center overflow-y-auto px-4 xl:pt-0'>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='pt-8 md:grid md:grid-cols-2 md:gap-3 2xl:pt-0'>
-                    <div className='flex flex-col items-center'>
-                        {/* Name */}
-                        <FormField
-                            control={form.control}
-                            name='name'
-                            render={({ field }) => (
-                                <FormItemDisplay
-                                    title='Họ và tên'
-                                    placeholder='Nhập tên nhân viên!'
-                                    {...field}
-                                    require
-                                    type='text'
-                                />
-                            )}
-                        />
-
-                        {/* Email */}
-                        <FormField
-                            control={form.control}
-                            name='email'
-                            render={({ field }) => (
-                                <FormItemDisplay
-                                    title='Email'
-                                    placeholder='Nhập email nhân viên!'
-                                    {...field}
-                                    require
-                                    type='email'
-                                />
-                            )}
-                        />
-
-                        {/* Password */}
-                        <FormField
-                            control={form.control}
-                            name='password'
-                            render={({ field }) => (
-                                <FormItemDisplay
-                                    title='Password'
-                                    placeholder='Nhập password nhân viên!'
-                                    {...field}
-                                    require
-                                    type='password'
-                                />
-                            )}
-                        />
-
-                        {/* Phone */}
-                        <FormField
-                            control={form.control}
-                            name='phone'
-                            render={({ field }) => (
-                                <FormItemDisplay
-                                    title='Số điện thoại'
-                                    placeholder='Nhập số điện thoại!'
-                                    {...field}
-                                    require
-                                    type='text'
-                                />
-                            )}
-                        />
-
-                        {/* Address */}
-                        <FormField
-                            control={form.control}
-                            name='address'
-                            render={({ field }) => (
-                                <FormItemDisplay
-                                    title='Địa chỉ'
-                                    placeholder='Nhập địa chỉ!'
-                                    {...field}
-                                    require
-                                    type='text'
-                                />
-                            )}
-                        />
-                    </div>
-
-                    <div>
-                        {/* Store select */}
-                        <FormField
-                            control={form.control}
-                            name='store_id'
-                            render={({ field }) => (
-                                <FormItem className='mb-3 flex w-full flex-col'>
-                                    <FormLabel>
-                                        Cửa hàng <span className='text-[#e41a0f]'>*</span> <br />
-                                    </FormLabel>
-
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder='Chọn cửa hàng' className='text' />
-                                            </SelectTrigger>
-                                        </FormControl>
-
-                                        <SelectContent>
-                                            {stores?.map((store) => (
-                                                <SelectItem key={store.id} value={store.id.toString()} className='text'>
-                                                    {store.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        {/* Role select */}
-                        <FormField
-                            control={form.control}
-                            name='role'
-                            render={({ field }) => (
-                                <FormItem className='mb-4'>
-                                    <FormLabel>
-                                        Quyền <span className='text-[#e41a0f]'>*</span> <br />
-                                    </FormLabel>
-
-                                    <Select onValueChange={field.onChange}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder='Chọn quyền' className='text' />
-                                            </SelectTrigger>
-                                        </FormControl>
-
-                                        <SelectContent>
-                                            <SelectItem key={0} value={'0'} className='text'>
-                                                Admin
-                                            </SelectItem>
-                                            <SelectItem key={1} value={'1'} className='text'>
-                                                Staff
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
-
-                                    <FormMessage className='text' />
-                                </FormItem>
-                            )}
-                        />
-
-                        {/* Image */}
-                        <FormField
-                            control={form.control}
-                            name='image'
-                            disabled={id ? isSaveImage : false}
-                            render={({ field: { onChange }, formState, fieldState, ...passField }) => (
-                                <FormItem className='mb-3 flex w-full flex-col'>
-                                    <FormLabel>
-                                        {'Image:'}
-                                        <span className='text-[#e41a0f]'>*</span>
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type='file'
-                                            id={imageId}
-                                            {...passField}
-                                            disabled={id ? isSaveImage : false}
-                                            className='w-full rounded-[3px] border border-gray-500 p-2 focus:border-card'
-                                            onChange={(event) => {
-                                                const inputElement = event.target as HTMLInputElement;
-                                                if (inputElement.files) {
-                                                    const displayUrl = URL.createObjectURL(inputElement.files[0]);
-                                                    setPreview(displayUrl);
-                                                    onChange(inputElement.files);
-                                                }
-                                            }}
-                                        ></Input>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        {/* Image preview */}
-                        {id && (
-                            <div className='flex items-center gap-2 '>
-                                <Checkbox
-                                    id={saveImageId}
-                                    defaultChecked
-                                    onCheckedChange={() => setIsSaveImage(!isSaveImage)}
-                                />
-                                <label
-                                    htmlFor={saveImageId}
-                                    className='cursor-pointer select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                                >
-                                    Giữ lại ảnh cũ
-                                </label>
-                            </div>
-                        )}
-                        {preview && (
-                            <Image
-                                src={preview}
-                                className='my-3 h-24 w-24 rounded-xl object-cover'
-                                alt='image'
-                                width={100}
-                                height={100}
+        <div className='mx-auto min-h-[74vh] justify-center overflow-y-auto px-4 xl:pt-0'>
+            {detailStaff && (
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className='pt-8 md:grid md:grid-cols-2 md:gap-3 2xl:pt-0'
+                    >
+                        <div className='flex flex-col items-center'>
+                            {/* Name */}
+                            <FormField
+                                control={form.control}
+                                name='name'
+                                render={({ field }) => (
+                                    <FormItemDisplay
+                                        title='Họ và tên'
+                                        placeholder='Nhập tên nhân viên!'
+                                        {...field}
+                                        require
+                                        type='text'
+                                    />
+                                )}
                             />
-                        )}
-                    </div>
 
-                    <div className='col-span-2 text-center'>
-                        <Button type='submit' className='w-52 hover:opacity-90'>
-                            {!createStaffState.isLoading && !updateStaffState.isLoading && (
-                                <>
-                                    <Plus />
-                                    {id ? 'Update' : 'Create'}
-                                </>
+                            {/* Email */}
+                            <FormField
+                                control={form.control}
+                                name='email'
+                                render={({ field }) => (
+                                    <FormItemDisplay
+                                        title='Email'
+                                        placeholder='Nhập email nhân viên!'
+                                        {...field}
+                                        require
+                                        type='email'
+                                    />
+                                )}
+                            />
+
+                            {/* Password */}
+                            <FormField
+                                control={form.control}
+                                name='password'
+                                render={({ field }) => (
+                                    <FormItemDisplay
+                                        title='Password'
+                                        placeholder='Nhập password nhân viên!'
+                                        {...field}
+                                        require
+                                        type='password'
+                                    />
+                                )}
+                            />
+
+                            {/* Phone */}
+                            <FormField
+                                control={form.control}
+                                name='phone'
+                                render={({ field }) => (
+                                    <FormItemDisplay
+                                        title='Số điện thoại'
+                                        placeholder='Nhập số điện thoại!'
+                                        {...field}
+                                        require
+                                        type='text'
+                                    />
+                                )}
+                            />
+
+                            {/* Address */}
+                            <FormField
+                                control={form.control}
+                                name='address'
+                                render={({ field }) => (
+                                    <FormItemDisplay
+                                        title='Địa chỉ'
+                                        placeholder='Nhập địa chỉ!'
+                                        {...field}
+                                        require
+                                        type='text'
+                                    />
+                                )}
+                            />
+                        </div>
+
+                        <div>
+                            {/* Store select */}
+                            <FormField
+                                control={form.control}
+                                name='store_id'
+                                render={({ field }) => {
+                                    return (
+                                        <FormItem className='mb-3 flex w-full flex-col'>
+                                            <FormLabel>
+                                                Cửa hàng <span className='text-[#e41a0f]'>*</span> <br />
+                                            </FormLabel>
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                defaultValue={detailStaff?.store_id?.toString()}
+                                            >
+                                                <FormControl>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder='Chọn cửa hàng' className='text' />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                {!form.formState.isLoading && renderStore()}
+                                            </Select>
+
+                                            <FormMessage />
+                                        </FormItem>
+                                    );
+                                }}
+                            />
+
+                            {/* Role select */}
+                            {id && (
+                                <FormField
+                                    control={form.control}
+                                    name='role'
+                                    render={({ field }) => {
+                                        return (
+                                            <FormItem className='mb-4'>
+                                                <FormLabel>
+                                                    Quyền <span className='text-[#e41a0f]'>*</span> <br />
+                                                </FormLabel>
+                                                <Select onValueChange={field.onChange} defaultValue='1'>
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder='Chọn quyền' className='text' />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+
+                                                    <SelectContent>
+                                                        <SelectItem key={0} value={'0'} className='text'>
+                                                            Admin
+                                                        </SelectItem>
+                                                        <SelectItem key={1} value={'1'} className='text'>
+                                                            Staff
+                                                        </SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+
+                                                <FormMessage className='text' />
+                                            </FormItem>
+                                        );
+                                    }}
+                                />
                             )}
-                            {createStaffState.isLoading && (
-                                <>
-                                    <LoadingButton className='h-6 w-6' />
-                                </>
+
+                            {/* Image */}
+                            <FormField
+                                control={form.control}
+                                name='image'
+                                disabled={id ? isSaveImage : false}
+                                render={({ field: { onChange }, formState, fieldState, ...passField }) => (
+                                    <FormItem className='mb-3 flex w-full flex-col'>
+                                        <FormLabel>
+                                            {'Image:'}
+                                            <span className='text-[#e41a0f]'>*</span>
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type='file'
+                                                id={imageId}
+                                                {...passField}
+                                                disabled={id ? isSaveImage : false}
+                                                className='w-full rounded-[3px] border border-gray-500 p-2 focus:border-card'
+                                                onChange={(event) => {
+                                                    const inputElement = event.target as HTMLInputElement;
+                                                    if (inputElement.files) {
+                                                        const displayUrl = URL.createObjectURL(inputElement.files[0]);
+                                                        setPreview(displayUrl);
+                                                        onChange(inputElement.files);
+                                                    }
+                                                }}
+                                            ></Input>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Image preview */}
+                            {id && (
+                                <div className='flex items-center gap-2 '>
+                                    <Checkbox
+                                        id={saveImageId}
+                                        defaultChecked
+                                        onCheckedChange={() => setIsSaveImage(!isSaveImage)}
+                                    />
+                                    <label
+                                        htmlFor={saveImageId}
+                                        className='cursor-pointer select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                    >
+                                        Giữ lại ảnh cũ
+                                    </label>
+                                </div>
                             )}
-                            {updateStaffState.isLoading && (
-                                <>
-                                    <LoadingButton className='h-6 w-6' />
-                                </>
+                            {preview && (
+                                <Image
+                                    src={preview}
+                                    className='my-3 h-24 w-24 rounded-xl object-cover'
+                                    alt='image'
+                                    width={100}
+                                    height={100}
+                                />
                             )}
-                        </Button>
-                    </div>
-                </form>
-            </Form>
+                        </div>
+
+                        <div className='col-span-2 text-center'>
+                            <Button type='submit' className='w-52 hover:opacity-90'>
+                                {!createStaffState.isLoading && !updateStaffState.isLoading && (
+                                    <>
+                                        <Plus />
+                                        {id ? 'Update' : 'Create'}
+                                    </>
+                                )}
+                                {createStaffState.isLoading && (
+                                    <>
+                                        <LoadingButton className='h-6 w-6' />
+                                    </>
+                                )}
+                                {updateStaffState.isLoading && (
+                                    <>
+                                        <LoadingButton className='h-6 w-6' />
+                                    </>
+                                )}
+                            </Button>
+                        </div>
+                    </form>
+                </Form>
+            )}
         </div>
     );
 };

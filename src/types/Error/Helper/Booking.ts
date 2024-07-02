@@ -1,4 +1,4 @@
-export type ErrorFields = 'email' | 'fullName' | 'date' | 'phone';
+export type ErrorFields = 'email' | 'fullName' | 'birthday' | 'phone';
 
 interface CustomErrros {
     status?: number;
