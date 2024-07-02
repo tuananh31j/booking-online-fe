@@ -30,6 +30,7 @@ export default function HourOpening({ store }: { store: IStore }) {
     const handleRemove = (id: number) => {
         mutate(id);
     };
+
     useEffect(() => {
         if (removeOneDayState.isSuccess) {
             toast({ title: 'Xóa giờ mở cửa thành công', status: 'success' });
@@ -61,6 +62,10 @@ export default function HourOpening({ store }: { store: IStore }) {
                             sortedData?.length &&
                             !isError &&
                             sortedData.map((item, index) => {
+                                const currentDate = new Date();
+                                currentDate.setDate(new Date().getDate() - 1);
+                                const openingDate = new Date(item.day);
+                                const isPastDate = currentDate > openingDate;
                                 return (
                                     <div key={index} className='mb-2 flex gap-3 rounded-md bg-content p-5'>
                                         <div>
@@ -78,9 +83,23 @@ export default function HourOpening({ store }: { store: IStore }) {
                                             </p>
                                         </div>
                                         <div className='flex flex-col items-center justify-between'>
-                                            <PopupDetailOpening store={store} detail={item}>
-                                                <PenLine />
-                                            </PopupDetailOpening>
+                                            {!isPastDate && (
+                                                <PopupDetailOpening store={store} detail={item}>
+                                                    <PenLine />
+                                                </PopupDetailOpening>
+                                            )}
+                                            {isPastDate && (
+                                                <AlertDialogConfirm
+                                                    type='button'
+                                                    content={{
+                                                        title: 'Thông báo',
+                                                        description: `Ngày ${item.day} đã qua nên bạn không thể chỉnh sửa`,
+                                                        idContent: item.id,
+                                                    }}
+                                                >
+                                                    <PenLine />
+                                                </AlertDialogConfirm>
+                                            )}
                                             <AlertDialogConfirm
                                                 type='button'
                                                 handleConfirm={handleRemove}
