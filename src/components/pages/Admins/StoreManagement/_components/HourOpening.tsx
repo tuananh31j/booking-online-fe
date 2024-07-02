@@ -1,20 +1,31 @@
 'use client';
 
-import { PenLine, Plus, Trash2Icon, Eye } from 'lucide-react';
-import { useEffect } from 'react';
-import PopupDetailOpening from '~/components/pages/Admins/StoreManagement/_components/PopupDetailOpening';
+import { PenLine, Plus, Trash2Icon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormOpening from '~/components/_common/TableDisplay/Rows/Opening/FormOpening';
 import AlertDialogConfirm from '~/components/elements/AlertDialog';
+import PopupDetailOpening from '~/components/pages/Admins/StoreManagement/_components/PopupDetailOpening';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useGetOpeningDetailQuery, useRemoveOneDayMutation } from '~/store/services/opening.service';
 import { isMessageError } from '~/types/Error/Helper/Store';
+import { IOpeningByIdStoreResponse } from '~/types/Opening';
 import { IStore } from '~/types/Store';
 
 export default function HourOpening({ store }: { store: IStore }) {
     const { data, isLoading, isError } = useGetOpeningDetailQuery(store.id, { skip: !store.id });
     const [mutate, removeOneDayState] = useRemoveOneDayMutation();
-    const opening = data?.data.data;
+    const [sortedData, setDataSorted] = useState<IOpeningByIdStoreResponse[]>();
+    useEffect(() => {
+        if (data?.data) {
+            const sorted = [...data.data.data].sort((a, b) => {
+                const dateA = new Date(a.day).getTime();
+                const dateB = new Date(b.day).getTime();
+                return dateA - dateB;
+            });
+            setDataSorted(sorted);
+        }
+    }, [data]);
     const toast = useToastDisplay();
     const handleRemove = (id: number) => {
         mutate(id);
@@ -44,12 +55,12 @@ export default function HourOpening({ store }: { store: IStore }) {
                         title={`Thêm ngày mở cửa cho cửa hàng ${store.name}`}
                     />
                 </div>
-                <div className='no-scrollbar max-h-[424px] w-full overflow-y-scroll rounded-md'>
+                <div className='no-scrollbar max-h-[460px] w-full overflow-y-scroll rounded-md'>
                     <div className='flex  w-full flex-wrap gap-x-6 gap-y-3  text-lg dark:text-white'>
                         {!isLoading &&
-                            opening?.length &&
+                            sortedData?.length &&
                             !isError &&
-                            opening?.map((item, index) => {
+                            sortedData.map((item, index) => {
                                 return (
                                     <div key={index} className='mb-2 flex gap-3 rounded-md bg-content p-5'>
                                         <div>
@@ -86,7 +97,7 @@ export default function HourOpening({ store }: { store: IStore }) {
                                 );
                             })}
 
-                        {isError && (
+                        {!sortedData?.length && (
                             <div className='mt-6 w-full shrink-0 text-center'>Cửa hàng chưa có lịch mở cửa</div>
                         )}
                     </div>

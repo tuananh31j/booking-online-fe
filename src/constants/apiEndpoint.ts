@@ -57,7 +57,8 @@ const API_ENDPOINT = {
     },
     OPENING: {
         // thêm ngày h mở cửa theo id cửa hàng
-        ADD: '/opening-hours/post', // @id
+        ADD: '/opening-hours/post',
+        QUICK_ADD: `/opening-hours/post_5day`, // @id
         // cập nhật ngày h mở cửa theo id cửa hàng
         EDIT: '/opening-hours/update', // @id
         // xem chi tiết ngày h mở cửa theo id cửa hàng

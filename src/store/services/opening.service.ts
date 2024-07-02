@@ -2,7 +2,13 @@ import API_ENDPOINT from '~/constants/apiEndpoint';
 import { QUERY_KEY } from '~/constants/queryKey';
 import baseApi from '~/store/apis/baseApi';
 import { IApiResponse } from '~/types/Api';
-import { IOpeningBody, IOpeningByIdStoreResponse, IOpeningItem, IOpeningResponse } from '~/types/Opening';
+import {
+    IOpeningBody,
+    IOpeningByIdStoreResponse,
+    IOpeningItem,
+    IOpeningResponse,
+    IQuickCreateData,
+} from '~/types/Opening';
 
 export const openingApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -17,6 +23,17 @@ export const openingApi = baseApi.injectEndpoints({
         createOpening: builder.mutation<IApiResponse<IOpeningResponse>, { id: number; formData: IOpeningBody }>({
             query: ({ id, formData }) => ({
                 url: `${API_ENDPOINT.OPENING.ADD}/${id}`,
+                method: 'POST',
+                body: formData,
+            }),
+            invalidatesTags: [QUERY_KEY.OPENING],
+        }),
+        quickCreateOpening: builder.mutation<
+            IApiResponse<IOpeningResponse>,
+            { id: number; formData: IQuickCreateData }
+        >({
+            query: ({ id, formData }) => ({
+                url: `/opening-hours/post_5day/${id}`,
                 method: 'POST',
                 body: formData,
             }),
@@ -46,4 +63,5 @@ export const {
     useCreateOpeningMutation,
     useGetOpeningDetailQuery,
     useUpdateOpeningMutation,
+    useQuickCreateOpeningMutation,
 } = openingApi;

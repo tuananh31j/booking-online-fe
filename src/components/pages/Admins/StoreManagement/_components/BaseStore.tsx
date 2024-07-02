@@ -11,6 +11,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useUpdateStoreMutation } from '~/store/services/store.service';
 import useToastDisplay from '~/hooks/useToastDisplay';
+import { ErrorFields, isMessageError, isStoreError } from '~/types/Error/Helper/Store';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -61,21 +62,35 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
         },
     });
     const saveImageId = useId();
-    const handleOnsubmit = (data: z.infer<typeof formSchema>) => {
-        const formData = new FormData();
-        const { name, address, phone } = data;
-        formData.append('name', name);
-        formData.append('address', address);
-        formData.append('phone', phone);
-        formData.append('latitude', '0');
-        formData.append('longitude', '0');
-        if (!isSaveImage) {
-            const image = data.image?.[0];
-            formData.append('image', image);
+    const handleOnsubmit = async (data: z.infer<typeof formSchema>) => {
+        try {
+            const formData = new FormData();
+            const { name, address, phone } = data;
+            formData.append('name', name);
+            formData.append('address', address);
+            formData.append('phone', phone);
+            formData.append('latitude', '0');
+            formData.append('longitude', '0');
+            if (!isSaveImage) {
+                const image = data.image?.[0];
+                formData.append('image', image);
+            }
+            formData.append('_method', 'PUT');
+            const res = await mutate({ formdata: formData, id: store ? store?.id : 0 }).unwrap();
+            toast({ title: `${res.message}`, status: 'success' });
+            refetch();
+        } catch (error) {
+            if (isStoreError(error)) {
+                const objectKey = Object.keys(error.data.error) as ErrorFields[];
+                objectKey.forEach((key) => {
+                    const messageJoined = error.data.error[key].join(', ');
+                    form.setError(key, { message: messageJoined });
+                });
+            }
+            if (isMessageError(error)) {
+                toast({ title: `${error.data.message}`, status: 'destructive' });
+            }
         }
-        formData.append('_method', 'PUT');
-        mutate({ formdata: formData, id: store ? store?.id : 0 });
-        console.log(data);
     };
     const watchFields = form.watch(['name', 'address', 'phone', 'image']);
     useEffect(() => {
@@ -92,12 +107,6 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
             form.setValue('image', undefined);
         }
     }, [isSaveImage]);
-    useEffect(() => {
-        if (updateStoreState.isSuccess) {
-            refetch();
-            toast({ title: 'Cập nhật cửa hàng thành công!', status: 'success' });
-        }
-    }, [updateStoreState]);
     useEffect(() => {
         if (
             watchFields[0] !== store?.name ||
