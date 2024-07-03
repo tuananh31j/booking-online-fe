@@ -60,7 +60,6 @@ const FormService = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                     time: Number(data.time),
                 }).unwrap();
                 toast({ title: t('add.success'), status: 'success' });
-                refetch();
                 onCloseModal();
             } catch (error) {
                 console.log(error);

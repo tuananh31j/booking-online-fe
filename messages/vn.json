@@ -230,7 +230,7 @@
                 "no": "Hủy"
             },
 
-            "columns": {
+            "admin-columns": {
                 "Customer_name": "Tên khách hàng",
                 "Phone_number": "Số điện thoại",
                 "Date": "Ngày",
