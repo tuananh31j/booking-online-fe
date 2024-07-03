@@ -45,6 +45,7 @@ const OrderRow: FC<IOrderRowProps> = ({
                     title="Update Booking's Status"
                     Form={FormOrder}
                     id={bookingId}
+                    bookingStatus={status}
                 ></PopupModal>
             </TableCell>
         </tr>

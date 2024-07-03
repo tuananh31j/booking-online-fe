@@ -10,8 +10,17 @@ import { useUpdateBookingStatusMutation } from '~/store/services/booking.service
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { cn } from '~/lib/utils';
 
-const FormOrder = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
+const FormOrder = ({
+    onCloseModal,
+    id,
+    bookingStatus,
+}: {
+    onCloseModal: () => void;
+    id: number;
+    bookingStatus: string;
+}) => {
     const t = useTranslations('Table.Booking');
     const toast = useToastDisplay();
 
@@ -57,6 +66,12 @@ const FormOrder = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updateStatusState]);
 
+    console.log(bookingStatus);
+
+    useEffect(() => {
+        form.reset({ status: bookingStatus });
+    }, [bookingStatus]);
+
     return (
         <div className='mx-auto flex w-[30vw] flex-col justify-center'>
             <Form {...form}>
@@ -70,7 +85,7 @@ const FormOrder = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                                     Status <span className='text-[#e41a0f]'>*</span>
                                 </FormLabel>
 
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <Select {...field} onValueChange={field.onChange} defaultValue={bookingStatus}>
                                     <FormControl>
                                         <SelectTrigger>
                                             <SelectValue placeholder='Update status' />
@@ -78,10 +93,27 @@ const FormOrder = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                                     </FormControl>
 
                                     <SelectContent>
+                                        <SelectItem disabled={true} className='hidden' value='pending'>
+                                            Pending
+                                        </SelectItem>
+
+                                        <SelectItem
+                                            value='confirmed'
+                                            className={`${bookingStatus === 'pending' ? '' : 'hidden'}`}
+                                        >
+                                            Confirmed
+                                        </SelectItem>
+
                                         <SelectItem value='doing'>Doing</SelectItem>
-                                        <SelectItem value='confirmed'>Confirm</SelectItem>
+
                                         <SelectItem value='done'>Done</SelectItem>
-                                        <SelectItem value='canceled'>Cancel</SelectItem>
+
+                                        <SelectItem
+                                            value='canceled'
+                                            className={`${bookingStatus === 'doing' || bookingStatus === 'done' ? 'hidden' : ''}`}
+                                        >
+                                            Cancel
+                                        </SelectItem>
                                     </SelectContent>
                                 </Select>
 
