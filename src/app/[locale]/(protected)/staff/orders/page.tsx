@@ -1,4 +1,4 @@
-import StaffOrderManagement from '~/components/pages/Admins/OrderManagement/list-orders-staff';
+import StaffOrderManagement from '~/components/pages/Admins/OrderStaffManagement/list-orders-staff';
 
 const OrdersPage = () => {
     return <StaffOrderManagement />;
