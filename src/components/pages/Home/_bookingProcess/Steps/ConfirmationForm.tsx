@@ -26,10 +26,9 @@ const bookingConfirmSchema = z.object({
             const yearIndex = 0;
             const yearNow = new Date().getFullYear();
             const birthdayDate = birthday.split('-');
-
-            return yearNow - Number(birthdayDate?.[yearIndex]);
+            return yearNow - Number(birthdayDate?.[yearIndex]) >= 13;
         },
-        { message: 'Tuổi phải lớn hơn 12 tuổi' }
+        { message: 'Tuổi phải lớn hơn hoặc bằng 13 tuổi' }
     ),
     note: z.string().optional(),
 });
