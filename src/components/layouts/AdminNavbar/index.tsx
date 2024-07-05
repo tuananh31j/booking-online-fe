@@ -1,29 +1,20 @@
 'use client';
 
-import { Menu, Search, Settings, Slash, UserCircle2 } from 'lucide-react';
+import { Menu, Search, Settings, UserCircle2 } from 'lucide-react';
 import { useState } from 'react';
+import BreadCrumbComponent from '~/components/_common/Breadcrumb';
+import AdminNotificationCard from '~/components/elements/AdminNotificationCard';
 import ProfileCard from '~/components/elements/ProfileCard';
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbSeparator,
-} from '~/components/ui/breadcrumb';
+import SwitchModeAdmin from '~/components/elements/SwitchModeAdmin';
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog';
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import { Input } from '~/components/ui/input';
-import AdminNotificationCard from '~/components/elements/AdminNotificationCard';
 import useLogout from '~/hooks/useLogout';
-import BreadCrumbComponent from '~/components/_common/Breadcrumb';
 
 const AdminNavbar = ({
     setIsOpenSideBar,
@@ -51,7 +42,7 @@ const AdminNavbar = ({
 
                     {/* css grow */}
                     <div className='mt-2 flex w-1/2 items-center justify-end sm:mr-6 sm:mt-0 md:mr-0 lg:flex lg:basis-auto'>
-                        <div className='w-full items-center sm:w-[unset] md:ml-auto md:pr-4'>
+                        <div className='flex w-full items-center gap-5 sm:w-[unset] md:ml-auto md:pr-4'>
                             <form>
                                 <div className=' flex items-center justify-center rounded-lg bg-content px-2'>
                                     <Search size={16} strokeWidth={1.75} className='text-default' />
@@ -63,6 +54,7 @@ const AdminNavbar = ({
                                     />
                                 </div>
                             </form>
+                            <SwitchModeAdmin />
                         </div>
 
                         <ul className='md-max:w-full mb-0 ml-2 flex list-none flex-row justify-end pl-0 md:ml-0'>
@@ -83,7 +75,6 @@ const AdminNavbar = ({
                                     <AdminNotificationCard />
                                 </span>
                             </li>
-
                             <li className='relative flex items-center px-4'>
                                 {/* notifications */}
                                 <DropdownMenu>
@@ -94,15 +85,10 @@ const AdminNavbar = ({
                                             className='cursor-pointer text-default'
                                         />
                                     </DropdownMenuTrigger>
-
                                     <DropdownMenuContent className='mr-5 w-56'>
-                                        <DropdownMenuSeparator />
-
-                                        <DropdownMenuGroup></DropdownMenuGroup>
-
-                                        <DropdownMenuSeparator />
-
-                                        <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
+                                        <DropdownMenuItem className='cursor-pointer' onClick={handleLogout}>
+                                            Log out
+                                        </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </li>
