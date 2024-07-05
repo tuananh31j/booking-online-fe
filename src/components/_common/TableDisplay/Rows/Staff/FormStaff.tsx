@@ -41,7 +41,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const imageId = useId();
 
     const [preview, setPreview] = useState('');
-    const [storeId, setStoreId] = useState<string>('');
+    const [loadingForm, setLoadingForm] = useState<boolean>(false);
 
     const imageSchema = isSaveImage
         ? z.any()
@@ -58,9 +58,10 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
               );
     const roleSchema = z.string().optional();
     const FormStaffSchema = z.object({
-        store_id: z
+        storeId: z
             .string({ required_error: 'Cửa hàng không được để trống!' })
-            .min(1, { message: 'Cửa hàng không được để trống!' }),
+            .min(1, { message: 'Cửa hàng không được để trống!' })
+            .optional(),
         email: z.string().email('Email không hợp lệ!'),
         name: z
             .string({ required_error: 'Họ và tên không được để trống!' })
@@ -68,7 +69,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         phone: z
             .string({ required_error: 'Số điện thoại không được để trống!' })
             .min(3, { message: 'Số điện thoại ít nhất phải có 9 ký tự !' }),
-        password: z.string().min(6, { message: 'Password phải có ít nhất 6 ký tự!' }),
+        password: z.string().min(6, { message: 'Password phải có ít nhất 6 ký tự!' }).optional(),
         role: id ? z.string({ required_error: 'Role không được để trống!' }) : roleSchema,
         address: z
             .string({ required_error: 'Địa chỉ không được để trống!' })
@@ -93,7 +94,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     const form = useForm<IFormStaff>({
         resolver: zodResolver(FormStaffSchema),
         defaultValues: {
-            store_id: undefined,
+            storeId: undefined,
             name: '',
             email: '',
             phone: '',
@@ -106,10 +107,12 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         try {
             const formData = new FormData();
             // eslint-disable-next-line camelcase
-            const { store_id, role, name, address, phone, password, email } = data;
+            const { storeId, role, name, address, phone, password, email } = data;
             const image = data.image?.[0];
             if (!id) {
-                formData.append('store_id', store_id);
+                if (storeId && storeId !== 'null') {
+                    formData.append('store_id', storeId);
+                }
                 formData.append('role', `${role ?? 1}`);
                 formData.append('name', name);
                 formData.append('address', address);
@@ -120,14 +123,20 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 formData.append('password', password || '');
                 createStaff(formData);
             } else {
-                formData.append('store_id', store_id);
+                if (storeId && storeId !== 'null') {
+                    console.log('OK');
+                    formData.append('store_id', storeId);
+                }
                 formData.append('role', `${role}`);
                 formData.append('name', name);
                 formData.append('address', address);
                 formData.append('email', email);
                 formData.append('phone', phone);
                 formData.append('address', address);
-                formData.append('password', password || '');
+                console.log('Password: ', password);
+                if (password) {
+                    formData.append('password', password || '');
+                }
                 formData.append('_method', 'PUT');
 
                 if (!isSaveImage) {
@@ -144,18 +153,18 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
     };
 
     useEffect(() => {
-        if (id && detailStaff !== undefined && Object.values(detailStaff).length > 0) {
-            console.log('detailStaff', detailStaff);
+        const detailStaffLength = Object.values(detailStaff ?? {}).length;
 
+        if (id && detailStaff !== undefined && detailStaffLength > 0) {
+            console.log(detailStaff);
             form.reset({
                 name: detailStaff.name,
                 email: detailStaff.email,
                 address: detailStaff?.address || '',
                 phone: detailStaff?.phone || '',
                 role: `${detailStaff?.role}` || '1',
-                store_id: `${detailStaff?.store_id}`,
+                storeId: `${detailStaff?.store_id}`,
             });
-            setStoreId(`${detailStaff?.store_id}`);
             setPreview(detailStaff?.image || '');
         }
         if (createStaffState.isSuccess || updateStaffState.isSuccess) {
@@ -184,25 +193,18 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 status: 'destructive',
             });
         }
+        if (!id) {
+            setLoadingForm(true);
+        } else if (detailStaffLength) {
+            setLoadingForm(true);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createStaffState, id, detailStaff, updateStaffState]);
-    const renderStore = () => {
-        return (
-            <SelectContent>
-                {stores?.map((store) => {
-                    return (
-                        <SelectItem key={store.id} value={store.id.toString()} className='text'>
-                            {store.name}
-                        </SelectItem>
-                    );
-                })}
-            </SelectContent>
-        );
-    };
+
     return (
         <div className='mx-auto min-h-[74vh] justify-center overflow-y-auto px-4 xl:pt-0'>
-            {detailStaff && (
-                <Form {...form}>
+            <Form {...form}>
+                {loadingForm && (
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
                         className='pt-8 md:grid md:grid-cols-2 md:gap-3 2xl:pt-0'
@@ -288,7 +290,7 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                             {/* Store select */}
                             <FormField
                                 control={form.control}
-                                name='store_id'
+                                name='storeId'
                                 render={({ field }) => {
                                     return (
                                         <FormItem className='mb-3 flex w-full flex-col'>
@@ -304,7 +306,21 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                                                         <SelectValue placeholder='Chọn cửa hàng' className='text' />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                {!form.formState.isLoading && renderStore()}
+                                                {!form.formState.isLoading && (
+                                                    <SelectContent>
+                                                        {stores?.map((store) => {
+                                                            return (
+                                                                <SelectItem
+                                                                    key={store.id}
+                                                                    value={store.id.toString()}
+                                                                    className='text'
+                                                                >
+                                                                    {store.name}
+                                                                </SelectItem>
+                                                            );
+                                                        })}
+                                                    </SelectContent>
+                                                )}
                                             </Select>
 
                                             <FormMessage />
@@ -429,8 +445,8 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                             </Button>
                         </div>
                     </form>
-                </Form>
-            )}
+                )}
+            </Form>
         </div>
     );
 };
