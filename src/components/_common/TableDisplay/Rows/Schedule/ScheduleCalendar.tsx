@@ -93,7 +93,9 @@ const ScheduleCalendar = ({
                                             disabled={(date) => {
                                                 return dataWorkingTime &&
                                                     dataWorkingTime.find(
-                                                        (e) => e.day === format(new Date(date), 'yyyy-MM-dd')
+                                                        (e) =>
+                                                            e.day === format(new Date(date), 'yyyy-MM-dd') &&
+                                                            e.day > format(new Date(), 'yyyy-MM-dd')
                                                     )
                                                     ? false
                                                     : true;
