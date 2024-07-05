@@ -124,7 +124,6 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 createStaff(formData);
             } else {
                 if (storeId && storeId !== 'null') {
-                    console.log('OK');
                     formData.append('store_id', storeId);
                 }
                 formData.append('role', `${role}`);
@@ -340,7 +339,10 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                                                 <FormLabel>
                                                     Quyền <span className='text-[#e41a0f]'>*</span> <br />
                                                 </FormLabel>
-                                                <Select onValueChange={field.onChange} defaultValue='1'>
+                                                <Select
+                                                    onValueChange={field.onChange}
+                                                    defaultValue={detailStaff?.role.toString()}
+                                                >
                                                     <FormControl>
                                                         <SelectTrigger>
                                                             <SelectValue placeholder='Chọn quyền' className='text' />
