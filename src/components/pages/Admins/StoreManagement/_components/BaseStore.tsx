@@ -3,7 +3,7 @@ import { IStore } from '~/types/Store';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { Button } from '~/components/ui/button';
-import { Plus } from 'lucide-react';
+import { HelpCircle, Plus } from 'lucide-react';
 import { Input } from '~/components/ui/input';
 import Image from 'next/image';
 import { Checkbox } from '~/components/ui/checkbox';
@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useUpdateStoreMutation } from '~/store/services/store.service';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { ErrorFields, isMessageError, isStoreError } from '~/types/Error/Helper/Store';
+import PopupLocationStep from '~/components/_common/PopupLocationStep/PopupLocationStep';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -29,6 +30,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
         address: z.string().min(10, {
             message: 'Address must be at last 10 characters.',
         }),
+        location: z.string().nullable().optional(),
         phone: z
             .string()
             .min(8, {
@@ -58,6 +60,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
             name: '',
             address: '',
             phone: '',
+            location: '',
             image: undefined,
         },
     });
@@ -69,11 +72,12 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
             formData.append('name', name);
             formData.append('address', address);
             formData.append('phone', phone);
-            formData.append('latitude', '0');
-            formData.append('longitude', '0');
             if (!isSaveImage) {
                 const image = data.image?.[0];
                 formData.append('image', image);
+            }
+            if (data.location) {
+                formData.append('location', data.location);
             }
             formData.append('_method', 'PUT');
             const res = await mutate({ formdata: formData, id: store ? store?.id : 0 }).unwrap();
@@ -92,14 +96,21 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
             }
         }
     };
-    const watchFields = form.watch(['name', 'address', 'phone', 'image']);
+    const watchFields = form.watch(['name', 'address', 'phone', 'image', 'location']);
+    const [htmlContent, sethtml] = useState('');
     useEffect(() => {
-        form.reset({
-            name: store?.name,
-            address: store?.address,
-            phone: store?.phone,
-        });
+        if (store) {
+            form.reset({
+                name: store?.name,
+                address: store?.address,
+                phone: store?.phone,
+                location: store.location,
+            });
+        }
         setPreview(store?.image);
+        if (store.location) {
+            sethtml(store.location);
+        }
     }, [store]);
     useEffect(() => {
         if (isSaveImage) {
@@ -107,12 +118,14 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
             form.setValue('image', undefined);
         }
     }, [isSaveImage]);
+
     useEffect(() => {
         if (
             watchFields[0] !== store?.name ||
             watchFields[1] !== store.address ||
             watchFields[2] !== store.phone ||
-            watchFields[3] !== undefined
+            watchFields[3] !== undefined ||
+            watchFields[4] !== store.location
         ) {
             setSaveActive(false);
         } else {
@@ -127,7 +140,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(handleOnsubmit)}
-                            className=' w-[60%]  space-y-4'
+                            className=' w-[80%]  space-y-4'
                             encType='multipart/form-data'
                         >
                             <div className='flex  flex-wrap gap-10'>
@@ -140,7 +153,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         height={120}
                                     />
                                 )}
-                                <div className='flex w-full flex-col justify-between pt-5'>
+                                <div className='flex w-[80%] flex-col justify-between pt-5'>
                                     <div className='flex items-center gap-2 '>
                                         <Checkbox
                                             id={saveImageId}
@@ -189,96 +202,94 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                     )}
                                 </div>
                             </div>
-                            <FormField
-                                control={form.control}
-                                name='name'
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Name: </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder='Enter your salon name'
-                                                {...field}
-                                                className='border-default bg-content'
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name='address'
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Address: </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder='Enter your salon address'
-                                                {...field}
-                                                className='border-default bg-content'
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name='phone'
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Phone number: </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder='Enter your salon phone number'
-                                                {...field}
-                                                className='border-default bg-content'
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
-                            {/* <FormField
-                                control={form.control}
-                                name='image'
-                                render={({ field: { onChange }, formState, fieldState, ...field }) => {
-                                    return (
-                                        <FormItem>
-                                            <FormLabel>Image: </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={id ? !isSaveImage : false}
-                                                    className='cursor-pointer bg-card'
-                                                    type='file'
-                                                    accept='image/*'
-                                                    placeholder='Enter your salon logo'
-                                                    {...field}
-                                                    onChange={(event) => {
-                                                        // desctructuring formState,fieldState because
-                                                        // react they dont need in input props
-                                                        if (event.target.files) {
-                                                            const displayUrl = URL.createObjectURL(
-                                                                event.target.files![0]
-                                                            );
-                                                            setPreview(displayUrl);
-                                                            onChange(event.target.files);
-                                                        }
-                                                    }}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    );
-                                }}
-                            /> */}
-
-                            <Button disabled={isSaveActive} type='submit' className='w-[200px] hover:opacity-90'>
-                                <Plus />
-                                Save
-                            </Button>
+                            <div className='flex gap-10'>
+                                <div className='w-[50%] shrink-0'>
+                                    <FormField
+                                        control={form.control}
+                                        name='name'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Name: </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder='Enter your salon name'
+                                                        {...field}
+                                                        className='border-default bg-content'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name='address'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Address: </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder='Enter your salon address'
+                                                        {...field}
+                                                        className='border-default bg-content'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name='phone'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Phone number: </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder='Enter your salon phone number'
+                                                        {...field}
+                                                        className='border-default bg-content'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <Button
+                                        disabled={isSaveActive}
+                                        type='submit'
+                                        className='mt-4 w-[200px] hover:opacity-90'
+                                    >
+                                        <Plus />
+                                        Save
+                                    </Button>
+                                </div>
+                                <div className='relative'>
+                                    {htmlContent && <div dangerouslySetInnerHTML={{ __html: htmlContent }} />}
+                                    <FormField
+                                        control={form.control}
+                                        name='location'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className='flex items-center gap-3'>
+                                                    <span>Location</span>
+                                                    <PopupLocationStep>
+                                                        <HelpCircle className='cursor-pointer' />
+                                                    </PopupLocationStep>
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder='Enter your location store'
+                                                        {...field}
+                                                        className='border-default bg-content'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
                         </form>
                     </Form>
                 </div>

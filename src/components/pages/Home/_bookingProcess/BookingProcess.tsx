@@ -27,6 +27,7 @@ const BookingProcess = () => {
                                 <p>{currentStoreInfo.name}</p>
                             </div>
                             <PopupStoreDetails
+                                location={currentStoreInfo.location ? currentStoreInfo.location : ''}
                                 name={currentStoreInfo.name}
                                 phone={currentStoreInfo.phone}
                                 address={currentStoreInfo.address}
