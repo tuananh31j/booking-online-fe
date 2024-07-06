@@ -11,7 +11,12 @@ interface IStoreCardProps extends React.HTMLProps<HTMLDivElement> {
 const StoreCard: React.FC<IStoreCardProps> = ({ store, handleGetStore }) => {
     return (
         <div className='border-gray mx-auto mt-5 flex cursor-pointer rounded-lg border-b-[3px] border-l-2 border-r-2 border-t-[1px] px-1 py-[8px] duration-300  hover:border-default dark:border-white md:gap-5 md:px-[16p] lg:px-[32px]'>
-            <PopupStoreDetails address={store.address} name={store.name} phone={store.phone}>
+            <PopupStoreDetails
+                address={store.address}
+                location={store.location ? store.location : ''}
+                name={store.name}
+                phone={store.phone}
+            >
                 <MapIcon className='dark:invert' />
             </PopupStoreDetails>
 

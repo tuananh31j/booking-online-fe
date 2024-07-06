@@ -66,7 +66,7 @@ const UserRow: FC<IUserRowProps> = ({
                             alt=''
                             width={1150}
                             height={5150}
-                            className='mr-4 inline-flex h-9 w-9 items-center justify-center rounded-xl text-sm text-white transition-all duration-200 ease-in-out'
+                            className='mr-4 inline-flex h-9 w-9 items-center justify-center rounded-xl object-cover text-sm text-white transition-all duration-200 ease-in-out'
                         />
                     </div>
                     <div className='flex flex-col justify-center'>
