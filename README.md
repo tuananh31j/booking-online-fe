@@ -1,7 +1,7 @@
 # Booking Online
 
 ## 👨‍👩‍👦Contributors
-| **🚀FE-Leader** | **🚀Member** | **🚀Member** | **🚀Member** | **🚀Member** | **🚀Member** | **🚀Member** |
+| **🚀FE Leader** | **🚀Member** | **🚀Member** | **🚀Member** | **🚀Member** | **🚀Member** | **🚀Member** |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | [Tuan Anh](https://gitlab.com/tuananh31j) | [QuangMphann](https://gitlab.com/quangphan2705) | [HarmonyHieu](https://gitlab.com/hieutvph46786) | [QuocJin](https://gitlab.com/QuocDL) | [sweetcter](https://gitlab.com/sweetcter) |[MWare CEO](https://gitlab.com/mwarevn) | [Đào Minh](https://gitlab.com/minhtit123) | 
 | <img src="https://gitlab.com/uploads/-/system/user/avatar/20802711/avatar.png?width=800" width="100" height="100" alt="booking-online" style="object-fit: cover;" /> | <img src="https://gitlab.com/uploads/-/system/user/avatar/20865606/avatar.png" width="100" height="100" alt="booking-online" style="object-fit: cover;" /> | <img src="https://gitlab.com/uploads/-/system/user/avatar/20865424/avatar.png" width="100" height="100" alt="booking-online" style="object-fit: cover;" /> | <img src="https://gitlab.com/uploads/-/system/user/avatar/21032846/avatar.png" width="100" height="100" alt="booking-online" style="object-fit: cover;" /> | <img src="https://gitlab.com/uploads/-/system/user/avatar/20802710/avatar.png" width="100" height="100" alt="booking-online" style="object-fit: cover;" /> | <img src="https://gitlab.com/uploads/-/system/user/avatar/14881190/avatar.png" width="100" height="100" alt="booking-online" style="object-fit: cover;" /> | <img src="https://gitlab.com/uploads/-/system/user/avatar/21502648/avatar.png" width="100" height="100" alt="booking-online" style="object-fit: cover;" /> |
