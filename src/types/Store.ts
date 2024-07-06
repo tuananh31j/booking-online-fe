@@ -1,6 +1,7 @@
 export type IStoreBody = {
     name: string;
     address: string;
+    location?: string;
     phone: string;
     image?: File | string | FileList;
 };
@@ -18,6 +19,7 @@ export type IStore = {
     address: string;
     phone: string;
     image: string;
+    location?: string;
     updated_at: string;
     created_at: string;
 };
@@ -28,6 +30,7 @@ export type IStoreResponse = {
         name: string;
         address: string;
         phone: string;
+        location?: string;
         image: string;
         updated_at: string;
         created_at: string;
@@ -39,6 +42,7 @@ export interface IStoreItem {
     name: string;
     address: string;
     phone: string;
+    location?: string;
     image: string;
     created_at: string;
     updated_at: string;
