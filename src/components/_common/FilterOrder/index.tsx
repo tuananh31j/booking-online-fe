@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { Input } from '~/components/ui/input';
 import { IOderResponse } from '~/types/Order';
+import { useTranslations } from 'next-intl';
 
 interface Filter {
     storeName: string | null;
@@ -24,6 +25,8 @@ const OrderFilter: React.FC<OrderFilterProps> = ({
     onStaffFilterChange,
     onStatusFilterChange,
 }) => {
+    const t = useTranslations('Table.Booking.filter');
+
     const [storeFilter] = useState<string | null>(null);
     const [staffFilter, setStaffFilter] = useState('');
     const [statusFilter] = useState<string | null>(null);
@@ -36,11 +39,11 @@ const OrderFilter: React.FC<OrderFilterProps> = ({
                     htmlFor='name'
                     className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                 >
-                    Tên hàng khách
+                    {t('labels.Name')}
                 </label>
                 <Input
                     id='name'
-                    placeholder='Nhập tên khách hàng'
+                    placeholder={t('placeholder.Name')}
                     value={staffFilter}
                     onChange={(e) => {
                         setStaffFilter(e.target.value);
@@ -55,14 +58,14 @@ const OrderFilter: React.FC<OrderFilterProps> = ({
                     htmlFor='store'
                     className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                 >
-                    Cửa hàng
+                    {t('labels.Store')}
                 </label>
                 <Select onValueChange={onStoreFilterChange} defaultValue='all' value={storeFilter ?? undefined}>
                     <SelectTrigger className='w-full'>
-                        <SelectValue placeholder='Cửa hàng' />
+                        <SelectValue placeholder={t('placeholder.Store')} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value={'all'}>Tất cả</SelectItem>
+                        <SelectItem value={'all'}>{t('all')}</SelectItem>
                         {/* Lấy danh sách cửa hàng trực tiếp từ orders */}
                         {Array.from(new Set(orders.map((item) => item.store_name)))
                             .sort()
@@ -81,19 +84,19 @@ const OrderFilter: React.FC<OrderFilterProps> = ({
                     htmlFor='status'
                     className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                 >
-                    Trạng thái
+                    {t('labels.Status')}
                 </label>
                 <Select onValueChange={onStatusFilterChange} defaultValue='all' value={statusFilter ?? undefined}>
                     <SelectTrigger id='status'>
-                        <SelectValue placeholder='Chọn trạng thái' />
+                        <SelectValue placeholder={t('placeholder.Status')} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value={'all'}>Tất cả</SelectItem>
-                        <SelectItem value='pending'>Đang chờ</SelectItem>
-                        <SelectItem value='confirmed'>Đã xác nhận</SelectItem>
-                        <SelectItem value='doing'>Đang thực hiện</SelectItem>
-                        <SelectItem value='done'>Hoàn thành</SelectItem>
-                        <SelectItem value='cancel'>Đã hủy</SelectItem>
+                        <SelectItem value={'all'}>{t('all')}</SelectItem>
+                        <SelectItem value='pending'>{t('status_select.pending')}</SelectItem>
+                        <SelectItem value='confirmed'>{t('status_select.confirmed')}</SelectItem>
+                        <SelectItem value='doing'>{t('status_select.doing')}</SelectItem>
+                        <SelectItem value='done'>{t('status_select.done')}</SelectItem>
+                        <SelectItem value='cancel'>{t('status_select.canceled')}</SelectItem>
                     </SelectContent>
                 </Select>
             </div>

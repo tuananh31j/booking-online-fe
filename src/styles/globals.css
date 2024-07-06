@@ -46,6 +46,10 @@
         scrollbar-width: none; /* Firefox */
     }
 }
+.map iframe {
+    width: 450px;
+    height: 250px;
+}
 .theme-switch {
     --toggle-size: 10px;
     /* the size is adjusted using font-size,

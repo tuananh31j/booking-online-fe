@@ -37,7 +37,7 @@ const PopupStoreDetails: FC<IPopupStoreDetailsProps> = ({ children, name, addres
                     <DialogTitle>{t('title')}</DialogTitle>
 
                     <div className='flex flex-col items-center justify-center'>
-                        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                        <div className='map' dangerouslySetInnerHTML={{ __html: htmlContent }} />
                         {!location?.length && !location && (
                             <div className='flex h-[450px] w-[600px] items-center justify-center'>
                                 <h3 className='text-xl font-medium'>Cửa hàng không có địa chỉ trên google maps</h3>

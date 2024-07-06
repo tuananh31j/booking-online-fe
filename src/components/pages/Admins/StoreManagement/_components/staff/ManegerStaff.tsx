@@ -1,19 +1,15 @@
 'use client';
 
-import { lightFormat } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import FormSchedule from '~/components/_common/TableDisplay/Rows/Schedule/FormSchedule';
-import { ORDER_COLUMN_NAMES, ScheduleRow } from '~/components/_common/TableDisplay/Rows/Schedule/ScheduleRow';
-import FormService from '~/components/_common/TableDisplay/Rows/Service/FormService';
-import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
-import RowSkeleton from '~/components/_common/TableDisplay/_components/Skeleton/RowSkeleton';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
-import { useGetListBookingQuery, useGetListStaffClientQuery } from '~/store/services/staff.service';
-import { IScheduleResponse } from '~/types/Schedule';
+import { useEffect, useState } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
+import { useGetListStaffClientQuery } from '~/store/services/staff.service';
 import { IStore } from '~/types/Store';
 
 export default function ManagerStaff({ store }: { store: IStore }) {
+    const t = useTranslations('Table.Store.settings.staff.staff_table');
+
     const { data, isLoading, error } = useGetListStaffClientQuery(store.id);
     const [listStaff, setlistStaff] = useState(data?.data.data);
 
@@ -26,18 +22,18 @@ export default function ManagerStaff({ store }: { store: IStore }) {
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Người dùng</TableHead>
-                    <TableHead>Địa chỉ</TableHead>
-                    <TableHead>SĐT</TableHead>
-                    <TableHead>Email</TableHead>
+                    <TableHead>{t('thead.Name')}</TableHead>
+                    <TableHead>{t('thead.Address')}</TableHead>
+                    <TableHead>{t('thead.Phone_number')}</TableHead>
+                    <TableHead>{t('thead.Email')}</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 {/* <TableCaption>Quản lý nhân viên</TableCaption> */}
                 {isLoading ? (
-                    <p>Đang tải dữ liệu...</p>
+                    <p>{t('trow.loading')}</p>
                 ) : error ? (
-                    <p>Đã có lỗi xảy ra</p>
+                    <p>{t('trow.loading_error')}</p>
                 ) : (
                     listStaff?.map((staff, index) => {
                         return (
@@ -54,9 +50,9 @@ export default function ManagerStaff({ store }: { store: IStore }) {
                                         <span>{staff.name}</span>
                                     </div>
                                 </TableCell>
-                                <TableCell>{staff.address || 'thông tin chưa được cập nhật'}</TableCell>
-                                <TableCell>{staff.phone || 'thông tin chưa được cập nhật'}</TableCell>
-                                <TableCell>{staff.email || 'thông tin chưa được cập nhật'}</TableCell>
+                                <TableCell>{staff.address || t('trow.info_not_updated')}</TableCell>
+                                <TableCell>{staff.phone || t('trow.info_not_updated')}</TableCell>
+                                <TableCell>{staff.email || t('trow.info_not_updated')}</TableCell>
                             </TableRow>
                         );
                     })

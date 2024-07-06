@@ -10,8 +10,11 @@ import BaseStore from './_components/BaseStore';
 import ManagerStaff from './_components/staff/ManegerStaff';
 import HourOpening from './_components/HourOpening';
 import LoadingButton from '~/components/elements/LoadingButton';
+import { useTranslations } from 'next-intl';
 
 export default function DetailStore({ params }: { params: { id: number } }) {
+    const t = useTranslations('Table.Store');
+
     const { data, isLoading, refetch } = useGetDetailStoreQuery(params.id);
     const detailStore = data?.data.data;
     return (
@@ -20,10 +23,10 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                 <div>
                     <div className='flex justify-between'>
                         <h3 className='text-xl font-medium'>
-                            Thông tin chi tiết cửa hàng <b className='text-cyan-700'>{detailStore?.name}</b>
+                            {t('settings.title')} <b className='text-cyan-700'>{detailStore?.name}</b>
                         </h3>
                         <Link href={`/admin/store`} className='text-xl'>
-                            &lt; Quay trở về danh sách
+                            &lt; {t('settings.back_btn')}
                         </Link>
                     </div>
                     <hr className='mt-2' />
@@ -35,7 +38,7 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                                     value='base'
                                 >
                                     <Database />
-                                    Base
+                                    {t('settings.information.sidebar_title')}
                                 </TabsTrigger>
 
                                 <TabsTrigger
@@ -43,7 +46,7 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                                     value='opening'
                                 >
                                     <Clock />
-                                    Opening Hours
+                                    {t('settings.opening_hours.sidebar_title')}
                                 </TabsTrigger>
 
                                 <TabsTrigger
@@ -51,7 +54,7 @@ export default function DetailStore({ params }: { params: { id: number } }) {
                                     value='managerStaff'
                                 >
                                     <CircleUserIcon />
-                                    manager Staff
+                                    {t('settings.staff.sidebar_title')}
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value='base' className='w-full'>

@@ -1,6 +1,7 @@
 'use client';
 
 import { PenLine, Plus, Trash2Icon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import PopupModal from '~/components/_common/PopupModal';
 import FormOpening from '~/components/_common/TableDisplay/Rows/Opening/FormOpening';
@@ -13,6 +14,8 @@ import { IOpeningByIdStoreResponse } from '~/types/Opening';
 import { IStore } from '~/types/Store';
 
 export default function HourOpening({ store }: { store: IStore }) {
+    const t = useTranslations('Table.Store');
+
     const { data, isLoading, isError } = useGetOpeningDetailQuery(store.id, { skip: !store.id });
     const [mutate, removeOneDayState] = useRemoveOneDayMutation();
     const [sortedData, setDataSorted] = useState<IOpeningByIdStoreResponse[]>();
@@ -33,7 +36,7 @@ export default function HourOpening({ store }: { store: IStore }) {
 
     useEffect(() => {
         if (removeOneDayState.isSuccess) {
-            toast({ title: 'Xóa giờ mở cửa thành công', status: 'success' });
+            toast({ title: t('delete_hours.success'), status: 'success' });
         }
         if (isMessageError(removeOneDayState.error)) {
             toast({ title: `${removeOneDayState.error.data.message}`, status: 'destructive' });
@@ -43,17 +46,17 @@ export default function HourOpening({ store }: { store: IStore }) {
         <>
             <div className='w-full px-6'>
                 <div className='flex justify-between'>
-                    <h3 className='mb-2 text-xl'>Thông tin ngày mở cửa</h3>
+                    <h3 className='mb-2 text-xl'>{t('settings.opening_hours.title')}</h3>
                     <PopupModal
                         id={store.id}
                         Form={FormOpening}
                         btnName={
                             <span className='flex items-center'>
                                 <Plus />
-                                Thêm ngày mở cửa
+                                {t('settings.opening_hours.add_btn')}
                             </span>
                         }
-                        title={`Thêm ngày mở cửa cho cửa hàng ${store.name}`}
+                        title={`${t('settings.opening_hours.form.title')} ${store.name}`}
                     />
                 </div>
                 <div className='no-scrollbar max-h-[460px] w-full overflow-y-scroll rounded-md'>
@@ -70,15 +73,15 @@ export default function HourOpening({ store }: { store: IStore }) {
                                     <div key={index} className='mb-2 flex gap-3 rounded-md bg-content p-5'>
                                         <div>
                                             <p className='flex items-center gap-2'>
-                                                <strong>Day:</strong>
+                                                <strong>{t('settings.opening_hours.card.day')}:</strong>
                                                 {item.day}
                                             </p>
                                             <p className=' flex items-center gap-2'>
-                                                <strong>Opening Time:</strong>
+                                                <strong>{t('settings.opening_hours.card.opening_time')}:</strong>
                                                 {item.opening_time}
                                             </p>
                                             <p className='flex items-center gap-2'>
-                                                <strong>Closing Time:</strong>
+                                                <strong>{t('settings.opening_hours.card.closing_time')}:</strong>
                                                 {item.closing_time}
                                             </p>
                                         </div>
@@ -92,8 +95,8 @@ export default function HourOpening({ store }: { store: IStore }) {
                                                 <AlertDialogConfirm
                                                     type='button'
                                                     content={{
-                                                        title: 'Thông báo',
-                                                        description: `Ngày ${item.day} đã qua nên bạn không thể chỉnh sửa`,
+                                                        title: t('settings.opening_hours.past_date_alert.title'),
+                                                        description: `${t('settings.opening_hours.past_date_alert.day')} ${item.day} ${t('settings.opening_hours.past_date_alert.description')}`,
                                                         idContent: item.id,
                                                     }}
                                                 >
@@ -104,8 +107,8 @@ export default function HourOpening({ store }: { store: IStore }) {
                                                 type='button'
                                                 handleConfirm={handleRemove}
                                                 content={{
-                                                    title: 'Bạn có chắc chắn không?',
-                                                    description: `Bạn có chắc chắn muốn xóa ngày ${item.day}`,
+                                                    title: t('confirm.title'),
+                                                    description: t('confirm.description'),
                                                     idContent: item.id,
                                                 }}
                                             >
@@ -117,7 +120,7 @@ export default function HourOpening({ store }: { store: IStore }) {
                             })}
 
                         {!sortedData?.length && (
-                            <div className='mt-6 w-full shrink-0 text-center'>Cửa hàng chưa có lịch mở cửa</div>
+                            <div className='mt-6 w-full shrink-0 text-center'>{t('settings.opening_hours.null')}</div>
                         )}
                     </div>
                 </div>

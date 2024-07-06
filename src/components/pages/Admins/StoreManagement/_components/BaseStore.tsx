@@ -13,11 +13,14 @@ import { useUpdateStoreMutation } from '~/store/services/store.service';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { ErrorFields, isMessageError, isStoreError } from '~/types/Error/Helper/Store';
 import PopupLocationStep from '~/components/_common/PopupLocationStep/PopupLocationStep';
+import { useTranslations } from 'next-intl';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 export default function BaseStore({ store, refetch }: { store: IStore; refetch: () => void }) {
+    const t = useTranslations('Table.Store.settings');
+
     const [mutate, updateStoreState] = useUpdateStoreMutation();
     const toast = useToastDisplay();
     const [isSaveImage, setIsSaveImage] = useState<boolean>(true);
@@ -135,7 +138,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
     return (
         <div>
             <div className='px-6'>
-                <h3 className='text-xl'>Chỉnh sửa thông tin cơ bản</h3>
+                <h3 className='text-xl'>{t('information.title')}</h3>
                 <div className='mt-4 '>
                     <Form {...form}>
                         <form
@@ -144,7 +147,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                             encType='multipart/form-data'
                         >
                             <div className='flex gap-10'>
-                                <div className='w-[30%] shrink-0'>
+                                <div className='w-[50%] shrink-0'>
                                     <div className='flex  flex-wrap gap-10'>
                                         {preview && (
                                             <Image
@@ -166,7 +169,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                                     htmlFor={saveImageId}
                                                     className='cursor-pointer select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                                                 >
-                                                    Giữ lại ảnh cũ
+                                                    {t('information.keep_old_photo')}
                                                 </label>
                                             </div>
                                             {!isSaveImage && (
@@ -214,7 +217,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         name='name'
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Name: </FormLabel>
+                                                <FormLabel>{t('information.form.label_name')}</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         placeholder='Enter your salon name'
@@ -231,7 +234,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         name='address'
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Address: </FormLabel>
+                                                <FormLabel>{t('information.form.label_address')}</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         placeholder='Enter your salon address'
@@ -248,7 +251,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         name='phone'
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Phone number: </FormLabel>
+                                                <FormLabel>{t('information.form.label_phone')}</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         placeholder='Enter your salon phone number'
@@ -266,18 +269,20 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         className='mt-4 w-[200px] hover:opacity-90'
                                     >
                                         <Plus />
-                                        Save
+                                        {t('information.form.save_btn')}
                                     </Button>
                                 </div>
                                 <div>
-                                    {htmlContent && <div dangerouslySetInnerHTML={{ __html: htmlContent }} />}
+                                    {htmlContent && (
+                                        <div className='map' dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                                    )}
                                     <FormField
                                         control={form.control}
                                         name='location'
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className='flex items-center gap-3'>
-                                                    <span>Location</span>
+                                                    <span>{t('information.form.label_location')}</span>
                                                     <PopupLocationStep>
                                                         <HelpCircle className='cursor-pointer' />
                                                     </PopupLocationStep>
