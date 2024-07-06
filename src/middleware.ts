@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
-// Tạo middleware quốc tế hóa
 const intlMiddleware = createMiddleware({
     locales: ['en', 'vn'],
     defaultLocale: 'en',

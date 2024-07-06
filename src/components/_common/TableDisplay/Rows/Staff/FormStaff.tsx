@@ -132,7 +132,6 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                 formData.append('email', email);
                 formData.append('phone', phone);
                 formData.append('address', address);
-                console.log('Password: ', password);
                 if (password) {
                     formData.append('password', password || '');
                 }
@@ -155,7 +154,6 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
         const detailStaffLength = Object.values(detailStaff ?? {}).length;
 
         if (id && detailStaff !== undefined && detailStaffLength > 0) {
-            console.log(detailStaff);
             form.reset({
                 name: detailStaff.name,
                 email: detailStaff.email,
@@ -246,9 +244,8 @@ const FormStaff = ({ onCloseModal, id }: { onCloseModal: () => void; id: number 
                                 render={({ field }) => (
                                     <FormItemDisplay
                                         title='Password'
-                                        placeholder='Nhập password nhân viên!'
+                                        placeholder='Nhập password!'
                                         {...field}
-                                        require
                                         type='password'
                                     />
                                 )}
