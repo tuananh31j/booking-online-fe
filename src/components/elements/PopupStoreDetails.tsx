@@ -14,7 +14,7 @@ type IPopupStoreDetailsProps = {
     children: React.ReactNode;
     name: string;
     address: string;
-    location: string | null;
+    location?: string;
     phone: string;
 };
 
