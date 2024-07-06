@@ -29,6 +29,7 @@ const OrderManagement = () => {
 
     const handleStoreFilterChange = (storeName: string | null) => {
         setFilters((prevFilters) => ({ ...prevFilters, storeName }));
+        console.log(storeName);
     };
 
     const handleStaffFilterChange = (staffName: string) => {
@@ -37,25 +38,26 @@ const OrderManagement = () => {
 
     const handleStatusFilterChange = (status: string | null) => {
         setFilters((prevFilters) => ({ ...prevFilters, status }));
+        console.log(status);
     };
 
     // Lọc dữ liệu sử dụng useEffect để đảm bảo tính nhất quán
     const [filteredOrders, setFilteredOrders] = useState<IOderResponse[]>([]);
-    console.log(filteredOrders);
     useEffect(() => {
         const filtered =
             data?.data.data?.filter((order) => {
-                const storeMatch = filters.storeName === 'all' || order.store_name === filters.storeName;
-                const statusMatch = filters.status === 'all' || order.status === filters.status;
+                const storeMatch =
+                    filters.storeName === null || filters.storeName === 'all' || order.store_name === filters.storeName;
+                const statusMatch =
+                    filters.status === null || filters.status === 'all' || order.status === filters.status;
                 const staffMatch =
-                    filters.staffName === '' ||
-                    order.staff_name.toLowerCase().includes(filters.staffName.toLowerCase());
+                    filters.staffName === '' || order.name.toLowerCase().includes(filters.staffName.toLowerCase());
+
                 return storeMatch && staffMatch && statusMatch;
             }) || [];
+        console.log(filtered);
         setFilteredOrders(filtered);
     }, [data, filters]);
-
-    console.log(filteredOrders);
 
     return (
         <div>

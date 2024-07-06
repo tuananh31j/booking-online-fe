@@ -29,18 +29,18 @@ const OrderFilter: React.FC<OrderFilterProps> = ({
     const [statusFilter] = useState<string | null>(null);
 
     return (
-        <div className='ml-6 grid w-[95%] grid-cols-2 gap-4 rounded-lg p-4 shadow-md'>
+        <div className='ml-6 grid w-[95%] grid-cols-3 gap-4 rounded-lg p-4 shadow-md'>
             {/* Bộ lọc theo tên nhân viên */}
             <div className='flex flex-col gap-4'>
                 <label
                     htmlFor='name'
                     className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                 >
-                    Tên nhân viên
+                    Tên hàng khách
                 </label>
                 <Input
                     id='name'
-                    placeholder='Nhập tên nhân viên'
+                    placeholder='Nhập tên khách hàng'
                     value={staffFilter}
                     onChange={(e) => {
                         setStaffFilter(e.target.value);
@@ -57,8 +57,8 @@ const OrderFilter: React.FC<OrderFilterProps> = ({
                 >
                     Cửa hàng
                 </label>
-                <Select onValueChange={onStoreFilterChange} value={storeFilter ?? undefined}>
-                    <SelectTrigger className='w-[180px]'>
+                <Select onValueChange={onStoreFilterChange} defaultValue='all' value={storeFilter ?? undefined}>
+                    <SelectTrigger className='w-full'>
                         <SelectValue placeholder='Cửa hàng' />
                     </SelectTrigger>
                     <SelectContent>
@@ -83,7 +83,7 @@ const OrderFilter: React.FC<OrderFilterProps> = ({
                 >
                     Trạng thái
                 </label>
-                <Select onValueChange={onStatusFilterChange} value={statusFilter ?? undefined}>
+                <Select onValueChange={onStatusFilterChange} defaultValue='all' value={statusFilter ?? undefined}>
                     <SelectTrigger id='status'>
                         <SelectValue placeholder='Chọn trạng thái' />
                     </SelectTrigger>
