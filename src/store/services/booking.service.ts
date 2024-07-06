@@ -13,6 +13,7 @@ const bookingAPi = baseApi.injectEndpoints({
                 method: 'POST',
                 body: data,
             }),
+            invalidatesTags: [QUERY_KEY.STAFF],
         }),
         updateBookingStatus: buildder.mutation<object, { bodyReq: { status: string }; id: number }>({
             query: ({ bodyReq, id }) => ({

@@ -66,10 +66,9 @@ const FormOrder = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updateStatusState]);
 
-    console.log(bookingStatus);
-
     useEffect(() => {
         form.reset({ status: bookingStatus });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [bookingStatus]);
 
     return (

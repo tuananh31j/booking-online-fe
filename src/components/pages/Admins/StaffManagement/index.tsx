@@ -53,8 +53,6 @@ const StaffListManager = () => {
         }
     }, [data, filters]);
 
-    console.log(filteredStaff);
-
     return (
         <>
             <StaffFilter onFilterChange={setFilters} />

@@ -131,7 +131,6 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                             control={form.control}
                             name='day'
                             render={({ field }) => {
-                                // console.log(field);
                                 return (
                                     <FormItem className='flex flex-col'>
                                         <FormLabel className='flex justify-between'>
@@ -203,7 +202,6 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                             control={form.control}
                             name='opening_time'
                             render={({ field }) => {
-                                // console.log(field);
                                 return (
                                     <FormItemDisplay
                                         title='Giờ mở cửa '
