@@ -19,6 +19,7 @@ const useLogout = () => {
         dispatch(logout());
         hangleMessage({ title: t('logout_success'), status: 'default' });
         router.replace('/login');
+        router.refresh();
     };
 
     return handleLogout;
