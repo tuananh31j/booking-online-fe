@@ -27,10 +27,10 @@ const BookingCalendar = () => {
         const specialDays = listWorkSchedule?.data.data.schedules
             .map((item) => new Date(item.day))
             .filter((date) => date.getDate() >= currentDate.getDate());
-        console.log(specialDays);
         if (specialDays) {
             setDateValid(specialDays);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoading, listWorkSchedule]);
     const dateNow = new Date();
     dateNow.setDate(dateNow.getDate() - 1);

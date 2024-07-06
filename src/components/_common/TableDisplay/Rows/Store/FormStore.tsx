@@ -1,12 +1,13 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus } from 'lucide-react';
+import { HelpCircle, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import PopupLocationStep from '~/components/_common/PopupLocationStep/PopupLocationStep';
 import LoadingButton from '~/components/elements/LoadingButton';
 import { Button } from '~/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
@@ -35,7 +36,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
             .max(15, {
                 message: 'Phone number must be less than 15 characters',
             }),
-
+        location: z.string().optional(),
         image: z
             .custom<FileList>((val) => val instanceof FileList, 'Required')
             .refine((files) => files?.length > 0, `Required`)
@@ -58,6 +59,7 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
             name: '',
             address: '',
             phone: '',
+            location: '',
             image: undefined,
         },
     });
@@ -69,6 +71,9 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
             formData.append('name', name);
             formData.append('address', address);
             formData.append('phone', phone);
+            if (data.location) {
+                formData.append('location', data.location);
+            }
             if (data?.image) {
                 const image = data.image?.[0];
                 formData.append('image', image);
@@ -133,6 +138,25 @@ const FormStore = ({ onCloseModal, id }: { onCloseModal: () => void; id?: number
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Address: </FormLabel>
+                                    <FormControl>
+                                        <Input placeholder='Enter your salon address' {...field} className='bg-card' />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            disabled={createStoreState.isLoading}
+                            name='location'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className='flex items-center gap-3'>
+                                        <span>Location</span>
+                                        <PopupLocationStep>
+                                            <HelpCircle className='cursor-pointer' />
+                                        </PopupLocationStep>
+                                    </FormLabel>
                                     <FormControl>
                                         <Input placeholder='Enter your salon address' {...field} className='bg-card' />
                                     </FormControl>

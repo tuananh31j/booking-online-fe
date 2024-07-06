@@ -1,12 +1,11 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { OrderRow } from '~/components/_common/TableDisplay/Rows/Order/OrderRow';
 import { StaffOrdersRow } from '~/components/_common/TableDisplay/Rows/Order/StaffOdersRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import { StaffBookingTableColumnName } from '~/schemas/BookingTableColumnName';
 import { useStaffGetBookingsListQuery } from '~/store/services/booking.service';
-import { IOderResponse, IStaffOderResponse } from '~/types/Order';
+import { IStaffOderResponse } from '~/types/Order';
 
 const StaffOrderManagement = () => {
     const t = useTranslations('Table.Booking');
@@ -14,8 +13,6 @@ const StaffOrderManagement = () => {
 
     const { data } = useStaffGetBookingsListQuery();
     const listOrder = data?.data.data || [];
-
-    console.log(data);
 
     return (
         <div>
