@@ -13,11 +13,14 @@ import { useUpdateStoreMutation } from '~/store/services/store.service';
 import useToastDisplay from '~/hooks/useToastDisplay';
 import { ErrorFields, isMessageError, isStoreError } from '~/types/Error/Helper/Store';
 import PopupLocationStep from '~/components/_common/PopupLocationStep/PopupLocationStep';
+import { useTranslations } from 'next-intl';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 export default function BaseStore({ store, refetch }: { store: IStore; refetch: () => void }) {
+    const t = useTranslations('Table.Store.settings');
+
     const [mutate, updateStoreState] = useUpdateStoreMutation();
     const toast = useToastDisplay();
     const [isSaveImage, setIsSaveImage] = useState<boolean>(true);
@@ -135,7 +138,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
     return (
         <div>
             <div className='px-6'>
-                <h3 className='text-xl'>Chỉnh sửa thông tin cơ bản</h3>
+                <h3 className='text-xl'>{t('information.title')}</h3>
                 <div className='mt-4 '>
                     <Form {...form}>
                         <form
@@ -143,73 +146,78 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                             className=' w-[80%]  space-y-4'
                             encType='multipart/form-data'
                         >
-                            <div className='flex  flex-wrap gap-10'>
-                                {preview && (
-                                    <Image
-                                        src={preview}
-                                        className='h-[120px] w-[150px] rounded-xl'
-                                        alt='image'
-                                        width={150}
-                                        height={120}
-                                    />
-                                )}
-                                <div className='flex w-[80%] flex-col justify-between pt-5'>
-                                    <div className='flex items-center gap-2 '>
-                                        <Checkbox
-                                            id={saveImageId}
-                                            defaultChecked
-                                            onCheckedChange={() => setIsSaveImage(!isSaveImage)}
-                                        />
-                                        <label
-                                            htmlFor={saveImageId}
-                                            className='cursor-pointer select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                                        >
-                                            Giữ lại ảnh cũ
-                                        </label>
-                                    </div>
-                                    {!isSaveImage && (
-                                        <FormField
-                                            control={form.control}
-                                            name='image'
-                                            render={({ field: { onChange }, formState, fieldState, ...field }) => {
-                                                return (
-                                                    <FormItem>
-                                                        <FormControl>
-                                                            <Input
-                                                                className='cursor-pointer bg-card'
-                                                                type='file'
-                                                                accept='image/*'
-                                                                placeholder='Enter your salon logo'
-                                                                {...field}
-                                                                onChange={(event) => {
-                                                                    // desctructuring formState,fieldState because
-                                                                    // react they dont need in input props
-                                                                    if (event.target.files) {
-                                                                        const displayUrl = URL.createObjectURL(
-                                                                            event.target.files![0]
-                                                                        );
-                                                                        setPreview(displayUrl);
-                                                                        onChange(event.target.files);
-                                                                    }
-                                                                }}
-                                                            />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                );
-                                            }}
-                                        />
-                                    )}
-                                </div>
-                            </div>
                             <div className='flex gap-10'>
                                 <div className='w-[50%] shrink-0'>
+                                    <div className='flex  flex-wrap gap-10'>
+                                        {preview && (
+                                            <Image
+                                                src={preview}
+                                                className='h-[120px] w-[150px] rounded-xl'
+                                                alt='image'
+                                                width={150}
+                                                height={120}
+                                            />
+                                        )}
+                                        <div className='flex w-[80%] flex-col justify-between pt-5'>
+                                            <div className='flex items-center gap-2 '>
+                                                <Checkbox
+                                                    id={saveImageId}
+                                                    defaultChecked
+                                                    onCheckedChange={() => setIsSaveImage(!isSaveImage)}
+                                                />
+                                                <label
+                                                    htmlFor={saveImageId}
+                                                    className='cursor-pointer select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                                >
+                                                    {t('information.keep_old_photo')}
+                                                </label>
+                                            </div>
+                                            {!isSaveImage && (
+                                                <FormField
+                                                    control={form.control}
+                                                    name='image'
+                                                    render={({
+                                                        field: { onChange },
+                                                        formState,
+                                                        fieldState,
+                                                        ...field
+                                                    }) => {
+                                                        return (
+                                                            <FormItem>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        className='cursor-pointer bg-card'
+                                                                        type='file'
+                                                                        accept='image/*'
+                                                                        placeholder='Enter your salon logo'
+                                                                        {...field}
+                                                                        onChange={(event) => {
+                                                                            // desctructuring formState,fieldState because
+                                                                            // react they dont need in input props
+                                                                            if (event.target.files) {
+                                                                                const displayUrl = URL.createObjectURL(
+                                                                                    event.target.files![0]
+                                                                                );
+                                                                                setPreview(displayUrl);
+                                                                                onChange(event.target.files);
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        );
+                                                    }}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
                                     <FormField
                                         control={form.control}
                                         name='name'
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Name: </FormLabel>
+                                                <FormLabel>{t('information.form.label_name')}</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         placeholder='Enter your salon name'
@@ -226,7 +234,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         name='address'
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Address: </FormLabel>
+                                                <FormLabel>{t('information.form.label_address')}</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         placeholder='Enter your salon address'
@@ -243,7 +251,7 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         name='phone'
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Phone number: </FormLabel>
+                                                <FormLabel>{t('information.form.label_phone')}</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         placeholder='Enter your salon phone number'
@@ -261,18 +269,20 @@ export default function BaseStore({ store, refetch }: { store: IStore; refetch: 
                                         className='mt-4 w-[200px] hover:opacity-90'
                                     >
                                         <Plus />
-                                        Save
+                                        {t('information.form.save_btn')}
                                     </Button>
                                 </div>
-                                <div className='relative'>
-                                    {htmlContent && <div dangerouslySetInnerHTML={{ __html: htmlContent }} />}
+                                <div>
+                                    {htmlContent && (
+                                        <div className='map' dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                                    )}
                                     <FormField
                                         control={form.control}
                                         name='location'
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className='flex items-center gap-3'>
-                                                    <span>Location</span>
+                                                    <span>{t('information.form.label_location')}</span>
                                                     <PopupLocationStep>
                                                         <HelpCircle className='cursor-pointer' />
                                                     </PopupLocationStep>

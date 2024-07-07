@@ -1,12 +1,14 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
 import { Input } from '~/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
-import { useState, useCallback, useEffect } from 'react';
-import { Button } from '~/components/ui/button';
 import { FilterStaff } from '~/types/Filter';
 
 const StaffFilter = ({ onFilterChange }: { onFilterChange: (filter: FilterStaff) => void }) => {
+    const t = useTranslations('Table.Staff.filter');
+
     const [nameFilter, setNameFilter] = useState('');
     const [selectedRole, setSelectedRole] = useState<string | null>('all');
     const [roleFilter, setRoleFilter] = useState<number | null>(null);
@@ -37,11 +39,11 @@ const StaffFilter = ({ onFilterChange }: { onFilterChange: (filter: FilterStaff)
                     htmlFor='name'
                     className=' text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                 >
-                    Tên nhân viên
+                    {t('labels.Name')}
                 </label>
                 <Input
                     id='name'
-                    placeholder='Nhập tên nhân viên'
+                    placeholder={t('placeholder.Name')}
                     value={nameFilter}
                     onChange={(e) => setNameFilter(e.target.value)}
                     onBlur={handleFilterChange}
@@ -52,16 +54,16 @@ const StaffFilter = ({ onFilterChange }: { onFilterChange: (filter: FilterStaff)
                     htmlFor='role'
                     className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                 >
-                    Vai trò
+                    {t('labels.Role')}
                 </label>
                 <Select onValueChange={onValueChange} value={selectedRole ?? undefined}>
                     <SelectTrigger id='role'>
-                        <SelectValue placeholder='Chọn vai trò' />
+                        <SelectValue placeholder={t('placeholder.Role')} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value='all'>Tất cả</SelectItem>
-                        <SelectItem value='0'>Quản trị viên</SelectItem>
-                        <SelectItem value='1'>Nhân viên</SelectItem>
+                        <SelectItem value='all'>{t('all')}</SelectItem>
+                        <SelectItem value='0'>{t('role_select.admin')}</SelectItem>
+                        <SelectItem value='1'>{t('role_select.staff')}</SelectItem>
                     </SelectContent>
                 </Select>
             </div>

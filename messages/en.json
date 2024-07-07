@@ -196,7 +196,13 @@
                 "title": "Are you sure?",
                 "description": "Cannot recover once deleted!",
                 "yes": "Confirm",
-                "no": "Cancel"
+                "no": "Cancel",
+                "okay": "Okay"
+            },
+
+            "delete_hours": {
+                "success": "Opening Hours Removed Successfully!",
+                "fail": "Opening Hours Removal Failed!"
             },
 
             "delete": {
@@ -211,6 +217,74 @@
                 "Phone_number": "Contact",
                 "Created_at": "Created at",
                 "Actions": "Options"
+            },
+
+            "settings": {
+                "title": "Details of",
+                "back_btn": "Back to list",
+
+                "information": {
+                    "sidebar_title": "Information",
+                    "title": "Edit store's details",
+                    "keep_old_photo": "Keep old photo",
+
+                    "form": {
+                        "label_name": "Name",
+                        "label_address": "Address",
+                        "label_phone": "Phone number",
+                        "label_location": "Location",
+                        "save_btn": "Save"
+                    }
+                },
+
+                "opening_hours": {
+                    "sidebar_title": "Opening Hours",
+                    "title": "Opening hours details",
+                    "add_btn": "Add new opening hours",
+                    "null": "This store has no opening hours!",
+                    "success": "Opening hours added successfully!",
+                    "success_5": "Quick 5 days added successfully!",
+
+                    "form": {
+                        "title": "Add new opening hours for",
+                        "label_day": "Day",
+                        "label_fast_5": "Add 5 days quickly",
+                        "label_opening_time": "Opening time",
+                        "label_closing_time": "Closing time",
+                        "add_5_btn": "Quick add 5 days",
+                        "submit": "Add"
+                    },
+
+                    "card": {
+                        "day": "Day",
+                        "opening_time": "Opening time",
+                        "closing_time": "Closing time"
+                    },
+
+                    "past_date_alert": {
+                        "title": "Alert",
+                        "day": "This date",
+                        "description": "can't be changed because it is in the past!"
+                    }
+                },
+
+                "staff": {
+                    "sidebar_title": "Staff",
+
+                    "staff_table": {
+                        "thead": {
+                            "Name": "Name",
+                            "Address": "Address",
+                            "Phone_number": "Contact",
+                            "Email": "Email"
+                        },
+                        "trow": {
+                            "loading": "Loading...",
+                            "loading_error": "Error loading data!",
+                            "info_not_updated": "Information not updated!"
+                        }
+                    }
+                }
             }
         },
 
@@ -249,6 +323,30 @@
                 "Store_address": "Store address",
                 "Store_name": "Store name",
                 "Time": "Time"
+            },
+
+            "filter": {
+                "all": "All",
+
+                "labels": {
+                    "Name": "Customer name",
+                    "Store": "Store name",
+                    "Status": "Status"
+                },
+
+                "placeholder": {
+                    "Name": "Enter customer name",
+                    "Store": "Enter store name",
+                    "Status": "Select status"
+                },
+
+                "status_select": {
+                    "pending": "Pending",
+                    "confirmed": "Confirmed",
+                    "doing": "Doing",
+                    "done": "Done",
+                    "canceled": "Canceled"
+                }
             }
         },
 
@@ -285,6 +383,25 @@
                 "Created_at": "Created at",
                 "Actions": "Options",
                 "nullData": "No data"
+            },
+
+            "filter": {
+                "all": "All",
+
+                "labels": {
+                    "Name": "Staff name",
+                    "Role": "Staff role"
+                },
+
+                "placeholder": {
+                    "Name": "Enter staff name",
+                    "Role": "Select staff role"
+                },
+
+                "role_select": {
+                    "admin": "Admin",
+                    "staff": "Staff"
+                }
             }
         },
 

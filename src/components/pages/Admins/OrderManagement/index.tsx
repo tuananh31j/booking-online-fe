@@ -1,7 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useCallback, useState } from 'react';
+import { useState, useEffect } from 'react';
+import OrderFilter from '~/components/_common/FilterOrder';
 import { OrderRow } from '~/components/_common/TableDisplay/Rows/Order/OrderRow';
 import TableDisplay from '~/components/_common/TableDisplay/TableDisplay';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
@@ -9,39 +10,64 @@ import { AdminBookingTableColumnName } from '~/schemas/BookingTableColumnName';
 import { useAdminGetBookingsListQuery } from '~/store/services/booking.service';
 import { IOderResponse } from '~/types/Order';
 
+interface Filter {
+    storeName: string | null;
+    staffName: string;
+    status: string | null;
+}
+
 const OrderManagement = () => {
     const t = useTranslations('Table.Booking');
     const BOOKING_COLUMN_NAMES = AdminBookingTableColumnName(t);
 
-    const { data } = useAdminGetBookingsListQuery();
+    const { data, isError, isLoading } = useAdminGetBookingsListQuery();
 
-    const [selectedStatus, setSelectedStatus] = useState<string>();
+    const [filters, setFilters] = useState<Filter>({
+        storeName: null,
+        staffName: '',
+        status: null,
+    });
 
-    const handleStatusChange = useCallback((status: string | undefined) => {
-        setSelectedStatus(status);
-    }, []);
+    const handleStoreFilterChange = (storeName: string | null) => {
+        setFilters((prevFilters) => ({ ...prevFilters, storeName }));
+        console.log(storeName);
+    };
 
-    const filteredOrders =
-        data?.data.data?.filter((order) => {
-            return !selectedStatus || order.status.toLowerCase() === selectedStatus;
-        }) || [];
+    const handleStaffFilterChange = (staffName: string) => {
+        setFilters((prevFilters) => ({ ...prevFilters, staffName }));
+    };
+
+    const handleStatusFilterChange = (status: string | null) => {
+        setFilters((prevFilters) => ({ ...prevFilters, status }));
+        console.log(status);
+    };
+
+    // Lọc dữ liệu sử dụng useEffect để đảm bảo tính nhất quán
+    const [filteredOrders, setFilteredOrders] = useState<IOderResponse[]>([]);
+    useEffect(() => {
+        const filtered =
+            data?.data.data?.filter((order) => {
+                const storeMatch =
+                    filters.storeName === null || filters.storeName === 'all' || order.store_name === filters.storeName;
+                const statusMatch =
+                    filters.status === null || filters.status === 'all' || order.status === filters.status;
+                const staffMatch =
+                    filters.staffName === '' || order.name.toLowerCase().includes(filters.staffName.toLowerCase());
+
+                return storeMatch && staffMatch && statusMatch;
+            }) || [];
+        console.log(filtered);
+        setFilteredOrders(filtered);
+    }, [data, filters]);
 
     return (
         <div>
-            <div className=' mr-6 flex justify-end gap-4'>
-                <Select onValueChange={handleStatusChange} value={selectedStatus}>
-                    <SelectTrigger className='w-48'>
-                        <SelectValue placeholder='Trạng thái' />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value='pending'>Đang chờ</SelectItem>
-                        <SelectItem value='confirmed'>Đã xác nhận</SelectItem>
-                        <SelectItem value='doing'>Đang thực hiện</SelectItem>
-                        <SelectItem value='done'>Hoàn thành</SelectItem>
-                        <SelectItem value='cancel'>Đã hủy</SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
+            <OrderFilter
+                orders={data?.data.data || []} // Truyền data vào OrderFilter
+                onStoreFilterChange={handleStoreFilterChange}
+                onStaffFilterChange={handleStaffFilterChange}
+                onStatusFilterChange={handleStatusFilterChange}
+            />
             <TableDisplay title={t('title')} columnNames={BOOKING_COLUMN_NAMES}>
                 {filteredOrders.map((item: IOderResponse, i) => (
                     <OrderRow

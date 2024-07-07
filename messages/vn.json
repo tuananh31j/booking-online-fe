@@ -196,12 +196,18 @@
                 "title": "Bạn có chắc chắn không?",
                 "description": "Khi đã xóa sẽ không thể khổi phục!",
                 "yes": "Chắc chắn",
-                "no": "Hủy"
+                "no": "Hủy",
+                "okay": "Tôi đã rõ"
             },
 
             "delete": {
                 "success": "Xóa cửa hàng thành công!",
                 "fail": "Xóa cửa hàng thất bại!"
+            },
+
+            "delete_hours": {
+                "success": "Xóa giờ mở cửa thành công!",
+                "fail": "Xóa giờ mở cửa thất bại!"
             },
 
             "columns": {
@@ -211,6 +217,72 @@
                 "Phone_number": "Số điện thoại",
                 "Created_at": "Ngày tạo",
                 "Actions": "Tùy chọn"
+            },
+
+            "settings": {
+                "title": "Thông tin chi tiết của",
+                "back_btn": "Quay trở về danh sách",
+
+                "information": {
+                    "sidebar_title": "Thông tin",
+                    "title": "Chỉnh sửa thông tin cơ bản",
+                    "keep_old_photo": "Giữ lại ảnh cũ",
+
+                    "form": {
+                        "label_name": "Tên cửa hàng",
+                        "label_address": "Địa chỉ",
+                        "label_phone": "Số điện thoại",
+                        "label_location": "Vị trí",
+                        "save_btn": "Lưu thay đổi"
+                    }
+                },
+                "opening_hours": {
+                    "sidebar_title": "Giờ mở cửa",
+                    "title": "Thông tin ngày mở cửa",
+                    "add_btn": "Thêm ngày mở cửa",
+                    "null": "Cửa hàng chưa có lịch mở cửa",
+                    "success": "Thêm ngày mở cửa thành công!",
+                    "success_5": "Thêm nhanh 5 ngày mở cửa thành công!",
+
+                    "form": {
+                        "title": "Thêm ngày mở cửa cho cửa hàng",
+                        "label_day": "Ngày mở cửa",
+                        "label_fast_5": "Ngày bắt đầu",
+                        "label_opening_time": "Giờ mở cửa",
+                        "label_closing_time": "Giờ đóng cửa",
+                        "add_5_btn": "Thêm nhanh 5 ngày",
+                        "submit": "Thêm"
+                    },
+
+                    "card": {
+                        "day": "Ngày",
+                        "opening_time": "Giờ mở cửa",
+                        "closing_time": "Giờ đóng cửa"
+                    },
+
+                    "past_date_alert": {
+                        "title": "Thông báo",
+                        "day": "Ngày",
+                        "description": "đã qua nên bạn không thể chỉnh sửa!"
+                    }
+                },
+                "staff": {
+                    "sidebar_title": "Nhân viên",
+
+                    "staff_table": {
+                        "thead": {
+                            "Name": "Tên nhân viên",
+                            "Address": "Địa chỉ",
+                            "Phone_number": "Số điện thoại",
+                            "Email": "Email"
+                        },
+                        "trow": {
+                            "loading": "Đang tải dữ liệu...",
+                            "loading_error": "Có lỗi xảy ra khi tải dữ liệu!",
+                            "info_not_updated": "thông tin chưa được cập nhật!"
+                        }
+                    }
+                }
             }
         },
 
@@ -248,6 +320,30 @@
                 "Store_address": "Địa chỉ",
                 "Store_name": "Tên cửa hàng",
                 "Time": "Thời gian"
+            },
+
+            "filter": {
+                "all": "Tất cả",
+
+                "labels": {
+                    "Name": "Tên khách hàng",
+                    "Store": "Cửa hàng",
+                    "Status": "Trạng thái"
+                },
+
+                "placeholder": {
+                    "Name": "Nhập tên khách hàng",
+                    "Store": "Nhập tên cửa hàng",
+                    "Status": "Chọn trạng thái"
+                },
+
+                "status_select": {
+                    "pending": "Đang chờ xác nhận",
+                    "confirmed": "Đã xác nhận",
+                    "doing": "Đang thực hiện",
+                    "done": "Hoàn thành",
+                    "canceled": "Đã hủy"
+                }
             }
         },
 
@@ -284,6 +380,25 @@
                 "Created_at": "Ngày tạo",
                 "Actions": "Tùy chọn",
                 "nullData": "Không có dữ liệu"
+            },
+
+            "filter": {
+                "all": "Tất cả",
+
+                "labels": {
+                    "Name": "Tên nhân viên",
+                    "Role": "Vai trò"
+                },
+
+                "placeholder": {
+                    "Name": "Nhập tên nhân viên",
+                    "Role": "Chọn vai trò"
+                },
+
+                "role_select": {
+                    "admin": "Quản trị viên",
+                    "staff": "Nhân viên"
+                }
             }
         },
 

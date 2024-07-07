@@ -60,7 +60,9 @@ export default function AlertDialogConfirm({ children, handleConfirm, content, t
                                 </AlertDialogAction>
                             </>
                         )}
-                        {!handleConfirm && <AlertDialogCancel className='bg-red-500'>Được thôi</AlertDialogCancel>}
+                        {!handleConfirm && (
+                            <AlertDialogCancel className='bg-red-500'>{t('Store.confirm.okay')}</AlertDialogCancel>
+                        )}
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

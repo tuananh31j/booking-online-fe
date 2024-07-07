@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useId, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -51,6 +52,8 @@ const FormOpeningSchema = z
 type IFormOpening = z.infer<typeof FormOpeningSchema>;
 
 const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: number }) => {
+    const t = useTranslations('Table.Store.settings.opening_hours.form');
+
     const toast = useToastDisplay();
     const [quickCreate, setQuickCreate] = useState(false);
     const idQuickCreate = useId();
@@ -82,7 +85,7 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                         opening_hours: openingHours,
                     },
                 }).unwrap();
-                toast({ title: 'Thêm mới thành công', status: 'success' });
+                toast({ title: t('success'), status: 'success' });
                 onCloseModal();
             }
             if (quickCreate) {
@@ -94,7 +97,7 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                         closing_time: appendSeconds(data.closing_time),
                     },
                 }).unwrap();
-                toast({ title: 'Thêm nhanh 5 ngày thành công', status: 'success' });
+                toast({ title: t('success_5'), status: 'success' });
                 onCloseModal();
             }
         } catch (error) {
@@ -136,12 +139,12 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                         <FormLabel className='flex justify-between'>
                                             {!quickCreate && (
                                                 <span>
-                                                    Ngày mở cửa: <span className='text-[#e41a0f]'>*</span>
+                                                    {t('label_day')} <span className='text-[#e41a0f]'>*</span>
                                                 </span>
                                             )}
                                             {quickCreate && (
                                                 <span>
-                                                    Ngày bắt đầu: <span className='text-[#e41a0f]'>*</span>
+                                                    {t('label_fast_5')} <span className='text-[#e41a0f]'>*</span>
                                                 </span>
                                             )}
                                         </FormLabel>
@@ -158,9 +161,9 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                                                         {field.value ? (
                                                             format(field.value, 'yyyy-MM-dd')
                                                         ) : quickCreate ? (
-                                                            <span>Chọn ngày bắt đầu</span>
+                                                            <span>{t('label_fast_5')} </span>
                                                         ) : (
-                                                            <span>Chọn ngày mở cửa</span>
+                                                            <span>{t('label_day')} </span>
                                                         )}
                                                         <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
                                                     </Button>
@@ -203,13 +206,7 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                             name='opening_time'
                             render={({ field }) => {
                                 return (
-                                    <FormItemDisplay
-                                        title='Giờ mở cửa '
-                                        placeholder='Nhập giờ bắt đầu mở cửa !'
-                                        {...field}
-                                        require
-                                        type='time'
-                                    />
+                                    <FormItemDisplay title={t('label_opening_time')} {...field} require type='time' />
                                 );
                             }}
                         />
@@ -219,13 +216,7 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                             name='closing_time'
                             render={({ field }) => {
                                 return (
-                                    <FormItemDisplay
-                                        title='Giờ đóng cửa'
-                                        placeholder='Nhập giờ đóng cửa !'
-                                        {...field}
-                                        require
-                                        type='time'
-                                    />
+                                    <FormItemDisplay title={t('label_closing_time')} {...field} require type='time' />
                                 );
                             }}
                         />
@@ -237,11 +228,11 @@ const FormOpening = ({ onCloseModal, id }: { onCloseModal: () => void; id: numbe
                             htmlFor={idQuickCreate}
                             className='cursor-pointer select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                         >
-                            Thêm nhanh 5 ngày
+                            {t('add_5_btn')}
                         </label>
                     </div>
                     <button className='mt-3 flex h-14 w-full flex-col items-center justify-center rounded-md border-transparent bg-card p-3 text-foreground'>
-                        Submit
+                        {t('submit')}
                     </button>
                 </form>
             </Form>
